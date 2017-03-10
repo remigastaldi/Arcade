@@ -8,47 +8,15 @@
 ## Last update Sat Feb 11 20:09:42 2017
 ##
 
-ECHO            =       /bin/echo -e
-DEFAULT         =       "\033[00m"
-GREEN           =       "\033[0;32m"
-TEAL            =       "\033[1;36m"
-RED             =       "\033[0;31m"
+all:
+	@make -C snake/
 
-CC              =       g++
+clean:
+	@make clean -C snake/
 
-RM              =       rm -f
+fclean:	clean
+	@make fclean -C snake/
 
-CXXFLAGS	+=	-I./includes
-CXXFLAGS	+=	-Wextra -Wall -W -fPIC -shared
+re: fclean all
 
-SNNAME          =       lib_arcade_snake.so
-SNSRC           =       src/lib_arcade_snake.cpp
-SNOBJ           =       $(SNSRC:.cpp=.o)
-
-all             :	title $(SNNAME)
-			@cp $(SNNAME) ../
-
-title		:
-			@$(ECHO) $(GREEN)GAME $(TEAL)LIBS$(DEFAULT)
-
-
-$(SNNAME)       :	$(SNOBJ)
-			@$(CC) -o $(SNNAME) $(SNOBJ) $(CXXFLAGS) && \
-			 $(ECHO) $(GREEN) "[OK]" $(TEAL) $(SNNAME) $(DEFAULT)  || \
-			 $(ECHO) $(RED) "[XX]" $(TEAL) $(SNNAME)
-
-clean           :
-			@rm -f $(SNOBJ)
-
-fclean          :       clean
-			@$(RM) $(SNNAME)
-			@$(RM) ../$(SNNAME)
-
-re              :       fclean all
-
-.PHONNY         :       all clean fclean re
-
-.cpp.o		:
-			@$(CC) $(CXXFLAGS) -c $< -o $@  && \
-			 $(ECHO) $(GREEN) "[OK]" $(TEAL) $< $(DEFAULT) || \
-			 $(ECHO) $(RED) "[XX]" $(TEAL) $< $(DEFAULT)
+.PHONNY: all clean fclean re

@@ -8,47 +8,15 @@
 ## Last update Sat Feb 11 20:09:42 2017
 ##
 
-ECHO            =       /bin/echo -e
-DEFAULT         =       "\033[00m"
-GREEN           =       "\033[0;32m"
-TEAL            =       "\033[1;36m"
-RED             =       "\033[0;31m"
+all:
+	@make -C ncurses/ --no-print-directory
 
-CC              =       g++
+clean:
+	@make clean -C ncurses/ --no-print-directory
 
-RM              =       rm -f
+fclean:	clean
+	@make fclean -C ncurses/ --no-print-directory
 
-CXXFLAGS	+=	-I./includes
-CXXFLAGS	+=	-Wextra -Wall -W -fPIC -shared
+re: fclean all
 
-NCNAME          =       lib_arcade_ncurses.so
-NCSRC           =       src/lib_arcade_ncurses.cpp
-NCOBJ           =       $(NCSRC:.cpp=.o)
-
-all             :	title $(NCNAME)
-			@cp $(NCNAME) ../
-
-title		:
-			@$(ECHO) $(GREEN)GRAPHICALS $(TEAL)LIBS$(DEFAULT)
-
-
-$(NCNAME)         :	$(NCOBJ)
-			@$(CC) -o $(NCNAME) $(NCOBJ) $(CXXFLAGS) && \
-			 $(ECHO) $(GREEN) "[OK]" $(TEAL) $(NCNAME) $(DEFAULT)  || \
-			 $(ECHO) $(RED) "[XX]" $(TEAL) $(NCNAME)
-
-clean           :
-			@rm -f $(NCOBJ)
-
-fclean          :       clean
-			@$(RM) $(NCNAME)
-			@$(RM) ../$(NCNAME)
-
-re              :       fclean all
-
-.PHONNY         :       all clean fclean re
-
-.cpp.o		:
-			@$(CC) $(CXXFLAGS) -c $< -o $@  && \
-			 $(ECHO) $(GREEN) "[OK]" $(TEAL) $< $(DEFAULT) || \
-			 $(ECHO) $(RED) "[XX]" $(TEAL) $< $(DEFAULT)
+.PHONNY: all clean fclean re

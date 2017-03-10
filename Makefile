@@ -32,8 +32,8 @@ OBJ             =       $(SRC:.cpp=.o)
 all             :	title $(NAME)
 
 title		:
-			@cd games/ && $(MAKE)
-			@cd libs/ && $(MAKE)
+			@make -C games/ --no-print-directory
+			@make -C libs/ --no-print-directory
 			@$(ECHO) $(RED)"\n\n\
 \t  _|_|    _|_|_|      _|_|_|    _|_|    _|_|_|    _|_|_|_|	\n \
 \t_|    _|  _|    _|  _|        _|    _|  _|    _|  _|		\n \
@@ -48,13 +48,13 @@ $(NAME)         :	$(OBJ)
 			 $(ECHO) $(RED) "[XX]" $(TEAL) $(NAME)
 
 clean           :
-			@cd games/ && $(MAKE) clean
-			@cd libs/ && $(MAKE) clean
+			@make clean -C games/ --no-print-directory
+			@make clean -C libs/ --no-print-directory
 			@rm -f $(OBJ)
 
 fclean          :       clean
-			@cd games/ && $(MAKE) fclean
-			@cd libs/ && $(MAKE) fclean
+			@make fclean -C games/ --no-print-directory
+			@make fclean -C libs/ --no-print-directory
 			@$(RM) $(NAME)
 
 re              :       fclean all
