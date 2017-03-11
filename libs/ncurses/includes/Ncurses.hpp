@@ -5,15 +5,15 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 19:29:04 2017 gastal_r
-** Last update	Sat Mar 11 19:51:39 2017 gastal_r
+** Last update	Sat Mar 11 20:59:49 2017 gastal_r
 */
 
-#ifndef                 NCURSES_HPP_
-#define                 NCURSES_HPP_
+#ifndef           NCURSES_HPP_
+#define           NCURSES_HPP_
 
-#include                <curses.h>
+#include          <curses.h>
 
-class                   Ncurses
+class             Ncurses
 {
 public:
     static void   Clear()           { clear(); }
