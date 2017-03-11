@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 19:29:04 2017 gastal_r
-** Last update	Sat Mar 11 19:29:08 2017 gastal_r
+** Last update	Sat Mar 11 19:51:39 2017 gastal_r
 */
 
 #ifndef                 NCURSES_HPP_
@@ -16,99 +16,39 @@
 class                   Ncurses
 {
 public:
-    static      WINDOW *mInitscr()
+    static void   Clear()           { clear(); }
+    static WINDOW *Initscr()        { return (initscr()); }
+    static int    Cbreak()          { return (cbreak());  }
+    static int    StartColor(void)  { return (start_color()); }
+    static int    Endwin(void)      { return (endwin());  }
+    static int    Refresh()         { return (refresh()); }
+    static int    Noecho()          { return (noecho());  }
+    static int    Wrefresh(WINDOW *win)   { return (wrefresh(win)); }
+    static int    CursSet(int visibility) { return (curs_set(visibility)); }
+    static int    Werase(WINDOW *win)     { return (werase(win)); }
+    static int    Nodelay(WINDOW *win, bool bf)     { return (nodelay(win, bf));  }
+    static int    Mvwin(WINDOW *win, int y, int x)  { return (mvwin(win, y, x));  }
+    static int    Wattron(WINDOW *win, int attrs)   { return (wattron(win, attrs)); }
+    static int    Wattroff(WINDOW *win, int attrs)  { return (wattroff(win, attrs)); }
+    static WINDOW *Newwin(int nlines, int ncols, int begin_y, int begin_x)
     {
-        return (initscr());
+      return newwin(nlines, ncols, begin_y, begin_x);
     }
-
-    static int mStartColor(void)
+    static int    Mvwprintw(WINDOW *win, int y, int x, const char *fmt)
     {
-        return (start_color());
+      return (mvwprintw(win, y, x, fmt));
     }
-
-    static int mCursSet(int visibility)
-    {
-        return (curs_set(visibility));
-    }
-
-    static int mEndwin(void)
-    {
-        return (endwin());
-    }
-
-    static void mClear()
-    {
-        clear();
-    }
-
-    static int mRefresh()
-    {
-        return (refresh());
-    }
-
-    static int mMvwin(WINDOW *win, int y, int x)
-    {
-        return (mvwin(win, y, x));
-    }
-
-    static int mWrefresh(WINDOW *win)
-    {
-        return (wrefresh(win));
-    }
-
-    static int mInitPair(short pair, short f, short b)
-    {
-        return (init_pair(pair, f, b));
-    }
-
-    static WINDOW *mNewwin(int nlines, int ncols, int begin_y, int begin_x)
-    {
-        return newwin(nlines, ncols, begin_y, begin_x);
-    }
-
-    static int  mMvwprintw(WINDOW *win, int y, int x, const char *fmt)
-    {
-        return (mvwprintw(win, y, x, fmt));
-    }
-
-    static int  mWattron(WINDOW *win, int attrs)
-    {
-        return (wattron(win, attrs));
-    }
-
-    static int  mWattroff(WINDOW *win, int attrs)
-    {
-        return (wattroff(win, attrs));
-    }
-
-    static int mWerase(WINDOW *win)
-    {
-        return (werase(win));
-    }
-
-    static int mBox(WINDOW *win, chtype verch, chtype horch)
+    static int    Box(WINDOW *win, chtype verch, chtype horch)
     {
         return (box(win, verch, horch));
     }
-
-    static int mCbreak()
-    {
-        return (cbreak());
-    }
-
-    static int mNodelay(WINDOW *win, bool bf)
-    {
-        return (nodelay(win, bf));
-    }
-
-    static int mNoecho()
-    {
-        return (noecho());
-    }
-
-    static int mWresize(WINDOW *win, int lines, int column)
+    static int    Wresize(WINDOW *win, int lines, int column)
     {
       return wresize(win, lines, column);
+    }
+    static int    InitPair(short pair, short f, short b)
+    {
+      return (init_pair(pair, f, b));
     }
 };
 
