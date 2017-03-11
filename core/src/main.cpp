@@ -5,13 +5,15 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:42:03 2017 gastal_r
-** Last update	Sat Mar 11 23:51:37 2017 gastal_r
+** Last update	Sat Mar 11 23:54:09 2017 gastal_r
 */
 
 #include  "Core.hpp"
 
 int       main(int ac, char *av[])
 {
+  (void)ac;
+  (void)av;
   void    *handle;
   void    (*fptr)(void);
   void    (*fptr2)(void);
