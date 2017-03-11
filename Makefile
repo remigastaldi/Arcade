@@ -16,7 +16,7 @@ RED             =       "\033[1;31m"
 YELLOW		=	"\033[1;33m"
 BLUE		=	"\033[1;34m"
 
-CC              =       g++
+CC              =       g++ -g -g3
 
 RM              =       rm -f
 
@@ -24,8 +24,10 @@ NAME            =       arcade
 
 CXXFLAGS	+=	-I./core/includes
 CXXFLAGS	+=	-Wextra -Wall -W
+CXXFLAGS	+=	-ldl
 
-SRC             =       core/src/main.cpp
+SRC             =       core/src/main.cpp	\
+			core/src/core.cpp
 
 OBJ             =       $(SRC:.cpp=.o)
 

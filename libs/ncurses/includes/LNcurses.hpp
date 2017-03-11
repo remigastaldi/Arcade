@@ -5,13 +5,16 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:10:52 2017 gastal_r
-** Last update	Sat Mar 11 20:59:23 2017 gastal_r
+** Last update	Sat Mar 11 22:51:51 2017 gastal_r
 */
 
 #ifndef       _LNcurses_HPP_
 #define       _LNcurses_HPP_
 
-class LNcurses {
+#include      <iostream>
+
+class LNcurses
+{
 private:
   /* data */
 public:

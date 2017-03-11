@@ -5,19 +5,23 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:09:59 2017 gastal_r
-** Last update	Sat Mar 11 20:46:58 2017 gastal_r
+** Last update	Sat Mar 11 23:40:25 2017 gastal_r
 */
 
-#ifndef     _CORE_HPP_
-#define     _CORE_HPP_
+#ifndef         _CORE_HPP_
+#define         _CORE_HPP_
+#include        <dlfcn.h>
 
-class Core
+class           Core
 {
 public:
   Core ();
-  virtual ~Core ();
-  Core(const Core &obj);
-  Core  &operator=(const Core &obj);
+  virtual       ~Core ();
+  Core(const    Core &obj);
+  Core &operator=(const Core &obj);
+
+  static void   *Dlopen(const char *filename, int flag);
+  static void   *Dlsym(void *handle, const char *symbol);
 
 private:
   /* data */
