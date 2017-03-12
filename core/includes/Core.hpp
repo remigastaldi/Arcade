@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:09:59 2017 gastal_r
-** Last update	Sat Mar 11 23:40:25 2017 gastal_r
+** Last update	Sun Mar 12 18:35:24 2017 gastal_r
 */
 
 #ifndef         _CORE_HPP_
@@ -19,6 +19,8 @@ public:
   virtual       ~Core ();
   Core(const    Core &obj);
   Core &operator=(const Core &obj);
+
+  void          initGraphicalLib();
 
   static void   *Dlopen(const char *filename, int flag);
   static void   *Dlsym(void *handle, const char *symbol);

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:42:03 2017 gastal_r
-** Last update	Sat Mar 11 23:54:09 2017 gastal_r
+** Last update	Sun Mar 12 17:27:23 2017 gastal_r
 */
 
 #include  "Core.hpp"
@@ -15,16 +15,16 @@ int       main(int ac, char *av[])
   (void)ac;
   (void)av;
   void    *handle;
-  void    (*fptr)(void);
-  void    (*fptr2)(void);
+  void    (*grap)(void);
+  void    (*play)(void);
 
   handle = Core::Dlopen("libs/lib_arcade_ncurses.so", RTLD_LOCAL | RTLD_LAZY);
-  *(void **)(&fptr) = Core::Dlsym(handle, "test");
+  *(void **)(&grap) = dlsym(handle, "test");
   handle = Core::Dlopen("games/lib_arcade_snake.so", RTLD_LOCAL | RTLD_LAZY);
-  *(void **)(&fptr2) = Core::Dlsym(handle, "play");
+  *(void **)(&play) = Core::Dlsym(handle, "play");
 
-  (*fptr)();
-  (*fptr2)();
+  (*play)();
+  (*grap)();
 
   return (0);
 }
