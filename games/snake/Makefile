@@ -22,7 +22,7 @@ CXXFLAGS	+=	-I./includes
 CXXFLAGS	+=	-Wextra -Wall -W -fPIC -shared
 
 SNNAME          =       ../lib_arcade_snake.so
-SNSRC           =       src/lSnake.cpp
+SNSRC           =       src/LSnake.cpp
 SNOBJ           =       $(SNSRC:.cpp=.o)
 
 all             :	title $(SNNAME)

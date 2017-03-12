@@ -27,7 +27,7 @@ CXXFLAGS	+=	-Wextra -Wall -W
 CXXFLAGS	+=	-ldl
 
 SRC             =       core/src/main.cpp	\
-			core/src/core.cpp
+			core/src/Core.cpp
 
 OBJ             =       $(SRC:.cpp=.o)
 
