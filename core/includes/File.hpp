@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Mon Mar 13 16:23:03 2017 gastal_r
-** Last update	Mon Mar 13 21:39:35 2017 gastal_r
+** Last update	Tue Mar 14 00:10:10 2017 gastal_r
 */
 
 #ifndef         _FILE_HPP_
@@ -24,8 +24,8 @@ public:
   File (const std::string);
   virtual ~File (){};
 
-  bool          checkExtension(std::string str);
-  std::vector<std::string> getLibs();
+  bool          checkExtension(const std::string &str) const;
+  std::vector<std::string> getLibs() const;
 
   static DIR    *Opendir(const char *name)
   {

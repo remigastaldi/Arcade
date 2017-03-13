@@ -22,6 +22,7 @@ namespace	        arcade
     virtual       ~IGame(){};
 
     virtual void  play() = 0;
+    virtual void  close() = 0;
   };
 }
 

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Mon Mar 13 16:22:53 2017 gastal_r
-** Last update	Mon Mar 13 21:42:49 2017 gastal_r
+** Last update	Tue Mar 14 00:19:09 2017 gastal_r
 */
 
 #include                   "File.hpp"
@@ -15,14 +15,14 @@ File::File (const std::string path)
   _path = path;
 }
 
-bool                      File::checkExtension(std::string str)
+bool                      File::checkExtension(const std::string &str) const
 {
   if (str.substr(str.find_last_of(".") + 1) == "so")
     return (true);
   return (false);
 }
-
-std::vector<std::string>   File::getLibs()
+#include <sstream>
+std::vector<std::string>   File::getLibs() const
 {
   dirent                   *de;
   DIR                      *dir;
@@ -37,7 +37,12 @@ std::vector<std::string>   File::getLibs()
       if (de == NULL)
         break;
       if (de->d_type != DT_DIR && checkExtension(de->d_name))
-        result.push_back(std::string( de->d_name ));
+      {
+        std::ostringstream path;
+
+        path << _path << de->d_name;
+        result.push_back(path.str());
+      }
     }
     File::Closedir(dir);
     std::sort(result.begin(), result.end());

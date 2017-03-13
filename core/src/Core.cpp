@@ -5,17 +5,26 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Mon Mar 13 21:44:05 2017 gastal_r
+** Last update	Tue Mar 14 00:22:09 2017 gastal_r
 */
 
 #include        "Core.hpp"
 
-Core::Core(std::string lib)
+Core::Core(const std::string &lib)
 {
   openLibsDir();
   openGamesDir();
   openLib(lib);
-  //openGame(std::string("games/lib_arcade_snake.so"));
+
+  _currentGame = "games/lib_arcade_snake.so";
+  _currentGraph = "lib/lib_arcade_ncurses.so";
+  openGame(std::string("games/lib_arcade_snake.so"));
+  switchGame(arcade::NEXT);
+  switchLib(arcade::NEXT);
+  _currentGame = "games/lib_arcade_pacman.so";
+  _currentGraph = "lib/lib_arcade_sfml.so";
+  switchGame(arcade::PREV);
+  switchLib(arcade::PREV);
 }
 
 Core::~Core()
@@ -23,13 +32,12 @@ Core::~Core()
 
 void            Core::openLib(std::string name)
 {
-    void    *handle;
     arcade::IGraph *(*create_lib)();
 
-    handle = Core::Dlopen(name.c_str(), RTLD_LOCAL | RTLD_LAZY);
-    if (!handle)
+    _graphHandle = Core::Dlopen(name.c_str(), RTLD_LOCAL | RTLD_LAZY);
+    if (!_graphHandle)
       throw arcade::Exception("Cannot load library: ", name);
-    create_lib = reinterpret_cast<arcade::IGraph* (*)()>(dlsym(handle, "createGraph"));
+    create_lib = reinterpret_cast<arcade::IGraph* (*)()>(dlsym(_graphHandle, "createGraph"));
     if (!create_lib)
       throw arcade::Exception("Cannot load library symbol");
     _graph = create_lib();
@@ -37,13 +45,12 @@ void            Core::openLib(std::string name)
 
 void            Core::openGame(std::string name)
 {
-    void    *handle;
     arcade::IGame *(*create_game)();
 
-    handle = Core::Dlopen(name.c_str(), RTLD_LOCAL | RTLD_LAZY);
-    if (!handle)
-    throw arcade::Exception("Cannot load game: ", name);
-    create_game = reinterpret_cast<arcade::IGame* (*)()>(dlsym(handle, "createGame"));
+    _gameHandle = Core::Dlopen(name.c_str(), RTLD_LOCAL | RTLD_LAZY);
+    if (!_gameHandle)
+      throw arcade::Exception("Cannot load game: ", name);
+    create_game = reinterpret_cast<arcade::IGame* (*)()>(dlsym(_gameHandle, "createGame"));
     if (!create_game)
       throw arcade::Exception("Cannot load game symbol");
     _game = create_game();
@@ -51,25 +58,82 @@ void            Core::openGame(std::string name)
 
 void            Core::openLibsDir()
 {
-  File files("./lib/");
+  File files(GRAPH_DIR);
   _libs = files.getLibs();
 }
 
 void            Core::openGamesDir()
 {
-  File files("./games/");
-  _libs = files.getLibs();
+  File files(GAME_DIR);
+  _games = files.getLibs();
 }
 
-void            Core::switchGame(arcade::MoveType)
-{}
+void            Core::switchGame(arcade::MoveType m)
+{
+  std::string   name;
 
-void            Core::changeLib(arcade::MoveType)
-{}
+  openGamesDir();
+  if (_games.size() == 1)
+    return;
+  if (m == arcade::NEXT)
+  {
+    size_t pos = find(_games.begin(), _games.end(), _currentGame) - _games.begin();
+    if (pos + 1 == _games.size())
+      name = *_games.begin();
+    else
+      name = _games[pos + 1];
+  }
+  else
+  {
+    size_t pos = find(_games.begin(), _games.end(), _currentGame) - _games.begin();
+    if (pos  == 0)
+      name = *(_games.end() - 1);
+    else
+      name = _games[pos - 1];
+  }
+  _game->close();
+  delete(_game);
+  Dlclose(_gameHandle);
+  openGame(name);
+}
 
-arcade::IGraph  *Core::getLib()
+void            Core::switchLib(arcade::MoveType m)
+{
+  std::string   name;
+
+  openLibsDir();
+  if (_libs.size() == 1)
+    return;
+  if (m == arcade::NEXT)
+  {
+    size_t pos = find(_libs.begin(), _libs.end(), _currentGraph) - _libs.begin();
+    if (pos + 1 == _libs.size())
+      name = *_libs.begin();
+    else
+      name = _libs[pos + 1];
+  }
+  else
+  {
+    size_t pos = find(_libs.begin(), _libs.end(), _currentGraph) - _libs.begin();
+    if (pos  == 0)
+      name = *_libs.end();
+    else
+      name = _libs[pos - 1];
+  }
+  _graph->aClose();
+  delete(_graph);
+  Dlclose(_graphHandle);
+  openLib(name);
+}
+
+arcade::IGraph  *Core::getLib() const
 {
   return (_graph);
+}
+
+void            *Core::Dlsym(void *handle, const char *symbol)
+{
+  return (dlsym(handle, symbol));
 }
 
 void            *Core::Dlopen(const char *filename, int flag)
@@ -77,7 +141,7 @@ void            *Core::Dlopen(const char *filename, int flag)
   return (dlopen(filename, flag));
 }
 
-void            *Core::Dlsym(void *handle, const char *symbol)
+int             Core::Dlclose(void *handle)
 {
-  return (dlsym(handle, symbol));
+  return (dlclose(handle));
 }
