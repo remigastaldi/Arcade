@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:09:59 2017 gastal_r
-** Last update	Tue Mar 14 00:22:08 2017 gastal_r
+** Last update	Tue Mar 14 00:36:43 2017 gastal_r
 */
 
 #ifndef         _CORE_HPP_
@@ -28,13 +28,13 @@ public:
   Core(const std::string &lib);
   virtual       ~Core();
 
-  void          openLib(std::string lib);
-  void          openGame(std::string game);
+  void          openLib(const std::string &lib);
+  void          openGame(const std::string &game);
   void          openLibsDir();
   void          openGamesDir();
 
-  void          switchGame(arcade::MoveType);
-  void          switchLib(arcade::MoveType);
+  void          switchGame(const arcade::MoveType);
+  void          switchLib(const arcade::MoveType);
   arcade::IGraph  *getLib() const;
 
   static void   *Dlsym(void *handle, const char *symbol);

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Tue Mar 14 00:25:52 2017 gastal_r
+** Last update	Tue Mar 14 00:36:55 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -26,9 +26,12 @@ Core::Core(const std::string &lib)
 }
 
 Core::~Core()
-{}
+{
+  delete(_graph);
+  delete(_game);
+}
 
-void            Core::openLib(std::string name)
+void            Core::openLib(const std::string &name)
 {
     arcade::IGraph *(*create_lib)();
 
@@ -42,7 +45,7 @@ void            Core::openLib(std::string name)
     _currentGraph = name;
 }
 
-void            Core::openGame(std::string name)
+void            Core::openGame(const std::string &name)
 {
     arcade::IGame *(*create_game)();
 
@@ -68,7 +71,7 @@ void            Core::openGamesDir()
   _games = files.getLibs();
 }
 
-void            Core::switchGame(arcade::MoveType m)
+void            Core::switchGame(const arcade::MoveType m)
 {
   std::string   name;
 
@@ -97,7 +100,7 @@ void            Core::switchGame(arcade::MoveType m)
   openGame(name);
 }
 
-void            Core::switchLib(arcade::MoveType m)
+void            Core::switchLib(const arcade::MoveType m)
 {
   std::string   name;
 
