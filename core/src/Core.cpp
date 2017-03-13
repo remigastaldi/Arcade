@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Mon Mar 13 18:28:09 2017 gastal_r
+** Last update	Mon Mar 13 21:44:05 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -28,15 +28,10 @@ void            Core::openLib(std::string name)
 
     handle = Core::Dlopen(name.c_str(), RTLD_LOCAL | RTLD_LAZY);
     if (!handle)
-    {
-      std::cerr << "Cannot load library: " << dlerror() << '\n';
-    }
-    dlerror();
+      throw arcade::Exception("Cannot load library: ", name);
     create_lib = reinterpret_cast<arcade::IGraph* (*)()>(dlsym(handle, "createGraph"));
-    const char* dlsym_error = dlerror();
-    if (dlsym_error) {
-      std::cerr << "Cannot load symbol create: " << dlsym_error << '\n';
-    }
+    if (!create_lib)
+      throw arcade::Exception("Cannot load library symbol");
     _graph = create_lib();
 }
 
@@ -47,15 +42,10 @@ void            Core::openGame(std::string name)
 
     handle = Core::Dlopen(name.c_str(), RTLD_LOCAL | RTLD_LAZY);
     if (!handle)
-    {
-      std::cerr << "Cannot load library: " << dlerror() << '\n';
-    }
-    dlerror();
+    throw arcade::Exception("Cannot load game: ", name);
     create_game = reinterpret_cast<arcade::IGame* (*)()>(dlsym(handle, "createGame"));
-    const char* dlsym_error = dlerror();
-    if (dlsym_error) {
-      std::cerr << "Cannot load symbol create: " << dlsym_error << '\n';
-    }
+    if (!create_game)
+      throw arcade::Exception("Cannot load game symbol");
     _game = create_game();
 }
 

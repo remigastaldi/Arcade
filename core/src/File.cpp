@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Mon Mar 13 16:22:53 2017 gastal_r
-** Last update	Mon Mar 13 16:50:41 2017 gastal_r
+** Last update	Mon Mar 13 21:42:49 2017 gastal_r
 */
 
 #include                   "File.hpp"
@@ -42,5 +42,7 @@ std::vector<std::string>   File::getLibs()
     File::Closedir(dir);
     std::sort(result.begin(), result.end());
   }
+  else
+    throw arcade::Exception(_path, " Folder doesn't exist");
   return (result);
 }

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:42:03 2017 gastal_r
-** Last update	Mon Mar 13 17:37:37 2017 gastal_r
+** Last update	Mon Mar 13 21:19:34 2017 gastal_r
 */
 
 #include  "Core.hpp"
@@ -17,8 +17,16 @@ int       main(int ac, char *av[])
     std::cout << "Need argument" << std::endl;
     return (0);
   }
-  Core *core = new Core(std::string(av[1]));
-  (void) core;
+  try
+  {
+    std::string filename(av[1]);
+    Core  core(filename);
 
+  }
+  catch (std::exception const &error)
+  {
+    std::cerr << "Error: " << error.what() << std::endl;
+    return (-1);
+  }
   return (0);
 }
