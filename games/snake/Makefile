@@ -18,11 +18,11 @@ CC              =       g++
 
 RM              =       rm -f
 
-CXXFLAGS	+=	-I./includes -I../../core/includes/
+CXXFLAGS	+=	-I./includes -I../../interfaces/ -I../../core/includes/
 CXXFLAGS	+=	-Wextra -Wall -W -fPIC -shared
 
 SNNAME          =       ../lib_arcade_snake.so
-SNSRC           =       src/LSnake.cpp
+SNSRC           =       src/LSnake.cpp \
 #			../../core/src/Core.cpp
 SNOBJ           =       $(SNSRC:.cpp=.o)
 

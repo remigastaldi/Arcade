@@ -59,4 +59,3 @@ namespace		arcade
 }
 
 #endif	//		__ARCADE_PROTOCOL_HPP__
-

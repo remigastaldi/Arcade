@@ -5,21 +5,24 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:10:52 2017 gastal_r
-** Last update	Sun Mar 12 18:37:32 2017 gastal_r
+** Last update	Mon Mar 13 18:22:46 2017 gastal_r
 */
 
 #ifndef       _LNcurses_HPP_
 #define       _LNcurses_HPP_
 
-#include      <iostream>
+#include      "IGraph.hh"
 
-class LNcurses
+class LNcurses : public arcade::IGraph
 {
 public:
   LNcurses ();
   virtual ~LNcurses ();
-  LNcurses(const LNcurses &obj);
-  LNcurses  &operator=(const LNcurses &obj);
+
+  void        aInit(size_t, size_t);
+  void        aClose();
+  void        aTile(size_t, size_t, arcade::TileType);
+  void        aRefresh();
 
 private:
 };

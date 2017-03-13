@@ -22,11 +22,12 @@ RM              =       rm -f
 
 NAME            =       arcade
 
-CXXFLAGS	+=	-I./core/includes
+CXXFLAGS	+=	-I./core/includes -I./interfaces
 CXXFLAGS	+=	-Wextra -Wall -W
 CXXFLAGS	+=	-ldl
 
 SRC             =       core/src/main.cpp	\
+			core/src/File.cpp	\
 			core/src/Core.cpp
 
 OBJ             =       $(SRC:.cpp=.o)

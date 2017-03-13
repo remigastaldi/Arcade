@@ -5,22 +5,36 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Mon Mar 13 00:41:46 2017 gastal_r
+** Last update	Mon Mar 13 17:44:21 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
 #include          "ICore.hh"
+#include          "IGame.hh"
 
-LSnake::LSnake()
-{}
+LSnake::LSnake(arcade::ICore *core)
+{
+  _core = core;
+}
 
 LSnake::~LSnake()
 {}
 
-extern "C" void   play(ICore &core)
+void              LSnake::play()
 {
-  std::cout << "PLAY" << '\n';
+  std::cout << "BITE" << '\n';
+}
 
-  core.initGraphicalLib();
-  core.nextGame();
+extern "C"
+{
+  LSnake         *createGame(arcade::ICore *core)
+  {
+    std::cout << "GAME" << '\n';
+    return (new LSnake(core));
+  }
+
+  void            deleteGame(arcade::IGame *game)
+  {
+    delete(game);
+  }
 }

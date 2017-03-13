@@ -18,7 +18,7 @@ CC              =       g++
 
 RM              =       rm -f
 
-CXXFLAGS	+=	-I./includes
+CXXFLAGS	+=	-I./includes -I../../interfaces/
 CXXFLAGS	+=	-Wextra -Wall -W -fPIC -shared
 
 NCNAME          =       ../lib_arcade_ncurses.so
