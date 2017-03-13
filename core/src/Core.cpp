@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Tue Mar 14 00:22:09 2017 gastal_r
+** Last update	Tue Mar 14 00:25:52 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -21,8 +21,6 @@ Core::Core(const std::string &lib)
   openGame(std::string("games/lib_arcade_snake.so"));
   switchGame(arcade::NEXT);
   switchLib(arcade::NEXT);
-  _currentGame = "games/lib_arcade_pacman.so";
-  _currentGraph = "lib/lib_arcade_sfml.so";
   switchGame(arcade::PREV);
   switchLib(arcade::PREV);
 }
@@ -41,6 +39,7 @@ void            Core::openLib(std::string name)
     if (!create_lib)
       throw arcade::Exception("Cannot load library symbol");
     _graph = create_lib();
+    _currentGraph = name;
 }
 
 void            Core::openGame(std::string name)
@@ -54,6 +53,7 @@ void            Core::openGame(std::string name)
     if (!create_game)
       throw arcade::Exception("Cannot load game symbol");
     _game = create_game();
+    _currentGame = name;
 }
 
 void            Core::openLibsDir()
