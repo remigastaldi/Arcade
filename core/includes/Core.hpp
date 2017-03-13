@@ -5,14 +5,18 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:09:59 2017 gastal_r
-** Last update	Sun Mar 12 18:35:24 2017 gastal_r
+** Last update	Mon Mar 13 00:40:45 2017 gastal_r
 */
 
 #ifndef         _CORE_HPP_
 #define         _CORE_HPP_
-#include        <dlfcn.h>
 
-class           Core
+#include        <dlfcn.h>
+#include        <iostream>
+#include        "ICore.hh"
+#include        "Protocol.hpp"
+
+class           Core : public ICore
 {
 public:
   Core ();
@@ -20,13 +24,15 @@ public:
   Core(const    Core &obj);
   Core &operator=(const Core &obj);
 
+  void          startGame();
   void          initGraphicalLib();
+  void          nextGame();
 
   static void   *Dlopen(const char *filename, int flag);
   static void   *Dlsym(void *handle, const char *symbol);
 
 private:
-  /* data */
+  int _test;
 };
 
 

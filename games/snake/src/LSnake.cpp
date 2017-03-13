@@ -5,14 +5,22 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Sun Mar 12 00:56:38 2017 gastal_r
+** Last update	Mon Mar 13 00:41:46 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
+#include          "ICore.hh"
 
+LSnake::LSnake()
+{}
 
-extern "C" void   play()
+LSnake::~LSnake()
+{}
+
+extern "C" void   play(ICore &core)
 {
   std::cout << "PLAY" << '\n';
 
+  core.initGraphicalLib();
+  core.nextGame();
 }

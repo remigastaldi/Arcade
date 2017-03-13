@@ -35,7 +35,7 @@ all             :	title $(NAME)
 
 title		:
 			@make -C games/ --no-print-directory
-			@make -C libs/ --no-print-directory
+			@make -C lib/ --no-print-directory
 			@$(ECHO) $(RED)"\n\n\
 \t  _|_|    _|_|_|      _|_|_|    _|_|    _|_|_|    _|_|_|_|	\n \
 \t_|    _|  _|    _|  _|        _|    _|  _|    _|  _|		\n \
@@ -51,12 +51,12 @@ $(NAME)         :	$(OBJ)
 
 clean           :
 			@make clean -C games/ --no-print-directory
-			@make clean -C libs/ --no-print-directory
+			@make clean -C lib/ --no-print-directory
 			@rm -f $(OBJ)
 
 fclean          :       clean
 			@make fclean -C games/ --no-print-directory
-			@make fclean -C libs/ --no-print-directory
+			@make fclean -C lib/ --no-print-directory
 			@$(RM) $(NAME)
 
 re              :       fclean all
