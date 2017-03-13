@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Tue Mar 14 00:36:55 2017 gastal_r
+** Last update	Tue Mar 14 00:44:36 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -16,19 +16,19 @@ Core::Core(const std::string &lib)
   openGamesDir();
   openLib(lib);
 
-  _currentGame = "games/lib_arcade_snake.so";
+/*  _currentGame = "games/lib_arcade_snake.so";
   _currentGraph = "lib/lib_arcade_ncurses.so";
   openGame(std::string("games/lib_arcade_snake.so"));
   switchGame(arcade::NEXT);
   switchLib(arcade::NEXT);
   switchGame(arcade::PREV);
-  switchLib(arcade::PREV);
+  switchLib(arcade::PREV); */
 }
 
 Core::~Core()
 {
-  delete(_graph);
-  delete(_game);
+  /* delete(_graph);
+  delete(_game); */
 }
 
 void            Core::openLib(const std::string &name)
