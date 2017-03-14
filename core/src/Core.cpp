@@ -37,7 +37,7 @@ void            Core::openLib(const std::string &name)
 
     _graphHandle = Core::Dlopen(name.c_str(), RTLD_LOCAL | RTLD_LAZY);
     if (!_graphHandle)
-      throw arcade::Exception("Cannot load library: ", name);
+      throw arcade::Exception(name, " doesn't exist or isn't in lib folder");
     create_lib = reinterpret_cast<arcade::IGraph* (*)()>(dlsym(_graphHandle, "createGraph"));
     if (!create_lib)
       throw arcade::Exception("Cannot load library symbol");
@@ -51,7 +51,7 @@ void            Core::openGame(const std::string &name)
 
     _gameHandle = Core::Dlopen(name.c_str(), RTLD_LOCAL | RTLD_LAZY);
     if (!_gameHandle)
-      throw arcade::Exception("Cannot load game: ", name);
+      throw arcade::Exception(name, " doesn't exist or isn't in lib folder");
     create_game = reinterpret_cast<arcade::IGame* (*)()>(dlsym(_gameHandle, "createGame"));
     if (!create_game)
       throw arcade::Exception("Cannot load game symbol");
