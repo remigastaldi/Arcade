@@ -19,31 +19,31 @@ CC              =       g++
 
 RM              =       rm -f
 
-CXXFLAGS	+=	-I./includes -I../../interfaces/ -I../../core/includes/
+CXXFLAGS	+=	-I./includes -I../../interfaces/
 CXXFLAGS	+=	-Wextra -Wall -W -fPIC -shared
 
-SNNAME          =       ../lib_arcade_snake.so
-SNSRC           =       src/LSnake.cpp
-SNOBJ           =       $(SNSRC:.cpp=.o)
+NCNAME          =       ../lib_arcade_sfml.so
+NCSRC           =       src/Sfml.cpp
+NCOBJ           =       $(NCSRC:.cpp=.o)
 
-all             :	title $(SNNAME)
-			@cp $(SNNAME) ../../
+all             :	title $(NCNAME)
+			@cp $(NCNAME) ../../
 
 title		:
-			@$(ECHO) $(YELLOW)SNAKE $(DEFAULT)
+			@$(ECHO) $(YELLOW)SFML $(DEFAULT)
 
 
-$(SNNAME)       :	$(SNOBJ)
-			@$(CC) -o $(SNNAME) $(SNOBJ) $(CXXFLAGS) && \
-			 $(ECHO) $(GREEN) "[OK]" $(TEAL) $(SNNAME) $(DEFAULT)  || \
-			 $(ECHO) $(RED) "[XX]" $(TEAL) $(SNNAME)
+$(NCNAME)         :	$(NCOBJ)
+			@$(CC) -o $(NCNAME) $(NCOBJ) $(CXXFLAGS) && \
+			 $(ECHO) $(GREEN) "[OK]" $(TEAL) $(NCNAME) $(DEFAULT)  || \
+			 $(ECHO) $(RED) "[XX]" $(TEAL) $(NCNAME)
 
 clean           :
-			@rm -f $(SNOBJ)
+			@rm -f $(NCOBJ)
 
 fclean          :       clean
-			@$(RM) $(SNNAME)
-			@$(RM) ../$(SNNAME)
+			@$(RM) $(NCNAME)
+			@$(RM) ../$(NCNAME)
 
 re              :       fclean all
 

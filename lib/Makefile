@@ -10,12 +10,15 @@
 
 all:
 	@make -C ncurses/ --no-print-directory
+	@make -C sfml/ --no-print-directory
 
 clean:
 	@make clean -C ncurses/ --no-print-directory
+	@make clean -C sfml/ --no-print-directory
 
 fclean:	clean
 	@make fclean -C ncurses/ --no-print-directory
+	@make fclean -C sfml/ --no-print-directory
 
 re: fclean all
 

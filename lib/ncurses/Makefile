@@ -13,6 +13,7 @@ DEFAULT         =       "\033[00m"
 GREEN           =       "\033[0;32m"
 TEAL            =       "\033[1;36m"
 RED             =       "\033[0;31m"
+YELLOW          =       "\033[1;33m"
 
 CC              =       g++
 
@@ -29,7 +30,7 @@ all             :	title $(NCNAME)
 			@cp $(NCNAME) ../../
 
 title		:
-			@$(ECHO) $(GREEN)GRAPHICALS $(TEAL)LIBS$(DEFAULT)
+			@$(ECHO) $(YELLOW)NCURSES $(DEFAULT)
 
 
 $(NCNAME)         :	$(NCOBJ)

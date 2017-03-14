@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Mon Mar 13 23:01:13 2017 gastal_r
+** Last update	Tue Mar 14 00:49:53 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -17,7 +17,10 @@ LNcurses::~LNcurses()
 {}
 
 void        LNcurses::aInit(size_t, size_t)
-{}
+{
+  std::cout << "INIT LIB" << '\n';
+  
+}
 
 void        LNcurses::aClose()
 {
