@@ -5,17 +5,15 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Mon Mar 13 22:56:40 2017 gastal_r
+** Last update	Tue Mar 14 14:50:17 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
 #include          "ICore.hh"
 #include          "IGame.hh"
 
-LSnake::LSnake(arcade::ICore *core)
-{
-  _core = core;
-}
+LSnake::LSnake()
+{}
 
 LSnake::~LSnake()
 {}
@@ -32,10 +30,10 @@ void              LSnake::close()
 
 extern "C"
 {
-  LSnake         *createGame(arcade::ICore *core)
+  LSnake         *createGame()
   {
     std::cout << "GAME" << '\n';
-    return (new LSnake(core));
+    return (new LSnake());
   }
 
   void            deleteGame(arcade::IGame *game)

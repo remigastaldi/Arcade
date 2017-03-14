@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:10:52 2017 gastal_r
-** Last update	Mon Mar 13 23:00:38 2017 gastal_r
+** Last update	Tue Mar 14 16:00:21 2017 gastal_r
 */
 
 #ifndef       _LNcurses_HPP_
@@ -22,7 +22,9 @@ public:
   void        aInit(size_t, size_t);
   void        aClose();
   void        aTile(size_t, size_t, arcade::TileType);
-  void        aRefresh();
+  void        aTile(size_t, size_t, void *){};
+  void       *aGetTexture(const std::string &){return (NULL);}
+void        aRefresh();
 
 private:
 };

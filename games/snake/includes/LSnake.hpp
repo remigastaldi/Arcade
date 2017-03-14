@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 23:42:03 2017 gastal_r
-** Last update	Mon Mar 13 22:54:03 2017 gastal_r
+** Last update	Tue Mar 14 14:50:16 2017 gastal_r
 */
 
 #ifndef         _LSnake_HPP_
@@ -19,14 +19,13 @@
 class           LSnake : public arcade::IGame
 {
 public:
-  LSnake(arcade::ICore *);
+  LSnake();
   virtual       ~LSnake();
 
   void          play();
   void          close();
 
 private:
-  arcade::ICore *_core;
 };
 
 #endif        /* !_LSnake_HPP_ */

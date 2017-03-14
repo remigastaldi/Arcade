@@ -24,6 +24,8 @@ namespace	       arcade
     virtual void aInit(size_t, size_t) = 0;
     virtual void aClose() = 0;
     virtual void aTile(size_t, size_t, arcade::TileType) = 0;
+    virtual void aTile(size_t x, size_t y, void *texture) = 0;
+    virtual void *aGetTexture(const std::string &) = 0;
     virtual void aRefresh() = 0;
   };
 }

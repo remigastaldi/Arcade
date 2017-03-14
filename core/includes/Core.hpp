@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:09:59 2017 gastal_r
-** Last update	Tue Mar 14 00:36:43 2017 gastal_r
+** Last update	Tue Mar 14 13:14:40 2017 gastal_r
 */
 
 #ifndef         _CORE_HPP_
@@ -18,11 +18,12 @@
 #include        "ICore.hh"
 #include        "IGraph.hh"
 #include        "IGame.hh"
+#include        "Gui.hpp"
 
 #define GAME_DIR  "games/"
 #define GRAPH_DIR "lib/"
 
-class           Core : public arcade::ICore
+class           Core : public arcade::ICore, public Gui
 {
 public:
   Core(const std::string &lib);
@@ -32,6 +33,8 @@ public:
   void          openGame(const std::string &game);
   void          openLibsDir();
   void          openGamesDir();
+
+  void          startCore();
 
   void          switchGame(const arcade::MoveType);
   void          switchLib(const arcade::MoveType);
