@@ -23,14 +23,14 @@ CXXFLAGS	+=	-I./includes -I../../interfaces/
 CXXFLAGS	+=	-Wextra -Wall -W -fPIC -shared
 
 NCNAME          =       ../lib_arcade_sfml.so
-NCSRC           =       src/Sfml.cpp
+NCSRC           =       src/LSfml.cpp
 NCOBJ           =       $(NCSRC:.cpp=.o)
 
 all             :	title $(NCNAME)
 			@cp $(NCNAME) ../../
 
 title		:
-			@$(ECHO) $(YELLOW)SFML $(DEFAULT)
+			@$(ECHO) $(YELLOW)LSFML $(DEFAULT)
 
 
 $(NCNAME)         :	$(NCOBJ)
