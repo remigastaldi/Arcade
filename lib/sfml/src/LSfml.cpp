@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Tue Mar 14 15:52:09 2017 gastal_r
+** Last update	Tue Mar 14 18:54:41 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -56,6 +56,32 @@ void            *LSfml::aGetTexture(const std::string &path)
   if (!texture->loadFromFile(path))
     throw arcade::Exception("Failed to load ", path);
   return (texture);
+}
+
+sf::Color     LSfml::fillColor(arcade::Color color)
+{
+  sf::Color   n;
+
+  (color == arcade::BLUE ? n = sf::Color::Blue :
+   (color == arcade::RED ? n = sf::Color::Red :
+    (color == arcade::GREEN ? n = sf::Color::Green :
+     (color == arcade::YELLOW ? n = sf::Color::Yellow : sf::Color::Black))));
+  return (n);
+}
+
+void          LSfml::aPutText(size_t x, size_t y, const std::string &fontPath,
+                              size_t size, arcade::Color color, const std::string &text)
+{
+  sf::Font font;
+
+  font.loadFromFile(fontPath);
+  sf::Text sfText(text, font);
+  sfText.setCharacterSize(30);
+  sfText.setStyle(sf::Text::Bold);
+  sfText.setFillColor(fillColor(color));
+  sfText.setPosition(x, y);
+  sfText.setCharacterSize(size);
+  _win.draw(sfText);
 }
 
 void            LSfml::aRefresh()

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Tue Mar 14 16:05:01 2017 gastal_r
+** Last update	Tue Mar 14 18:55:34 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -76,9 +76,11 @@ void            Core::startCore()
   _graph->aInit(1080, 720);
   setGraph(_graph);
   startGui();
-  _graph->aTile(10, 10, arcade::TileType::BLOCK);
+/*  _graph->aTile(10, 10, arcade::TileType::BLOCK);
   void *text = _graph->aGetTexture("core/mooncat.jpg");
-  _graph->aTile(200, 20, text);
+  _graph->aTile(200, 20, text); */
+  _graph->aPutText(10, 10, "core/PressStart2P.ttf",
+                  60, arcade::GREEN, "ARCADE");
   _graph->aRefresh();
   while (getStatus() == CONTINUE)
   {

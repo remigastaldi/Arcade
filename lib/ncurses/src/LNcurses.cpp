@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Tue Mar 14 00:49:53 2017 gastal_r
+** Last update	Tue Mar 14 18:45:04 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -19,7 +19,7 @@ LNcurses::~LNcurses()
 void        LNcurses::aInit(size_t, size_t)
 {
   std::cout << "INIT LIB" << '\n';
-  
+
 }
 
 void        LNcurses::aClose()
@@ -28,6 +28,10 @@ void        LNcurses::aClose()
 }
 
 void        LNcurses::aTile(size_t, size_t, arcade::TileType)
+{}
+
+void        aPutText(size_t, size_t, const std::string &,
+                    size_t, arcade::Color, const std::string &)
 {}
 
 void        LNcurses::aRefresh()
