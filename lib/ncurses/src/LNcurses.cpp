@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Tue Mar 14 18:45:04 2017 gastal_r
+** Last update	Wed Mar 15 10:29:21 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -30,7 +30,7 @@ void        LNcurses::aClose()
 void        LNcurses::aTile(size_t, size_t, arcade::TileType)
 {}
 
-void        aPutText(size_t, size_t, const std::string &,
+void        LNcurses::aPutText(size_t, size_t, const std::string &,
                     size_t, arcade::Color, const std::string &)
 {}
 
