@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Tue Mar 14 18:54:41 2017 gastal_r
+** Last update	Wed Mar 15 13:36:03 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -87,6 +87,22 @@ void          LSfml::aPutText(size_t x, size_t y, const std::string &fontPath,
 void            LSfml::aRefresh()
 {
   _win.display();
+}
+
+arcade::CommandType   LSfml::aCommand()
+{
+  _win.pollEvent(_event);
+  if (_event.type == sf::Event::KeyPressed)
+  {
+    switch (_event.key.code)
+    {
+      case sf::Keyboard::Escape :
+        return (arcade::CommandType::ESCAPE);
+      default :
+        return (arcade::CommandType::UNDEFINED);
+    }
+  }
+  return (arcade::CommandType::UNDEFINED);
 }
 
 extern "C"

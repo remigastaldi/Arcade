@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:10:52 2017 gastal_r
-** Last update	Wed Mar 15 10:22:44 2017 gastal_r
+** Last update	Wed Mar 15 13:28:27 2017 gastal_r
 */
 
 #ifndef       _LNcurses_HPP_
@@ -27,6 +27,7 @@ public:
   void        aPutText(size_t, size_t, const std::string &,
                       size_t, arcade::Color, const std::string &);
   void        aRefresh();
+  arcade::CommandType aCommand();
 
 private:
 };

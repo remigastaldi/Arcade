@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:55:17 2017 gastal_r
-** Last update	Tue Mar 14 14:38:44 2017 gastal_r
+** Last update	Wed Mar 15 13:34:55 2017 gastal_r
 */
 
 #ifndef         _GUI_HPP_
@@ -29,6 +29,7 @@ public:
   void          startGui();
 
   Status        &getStatus();
+  void          setStatus(const Status status) {_status = status; }
 private:
   arcade::IGraph *_graph;
   Status          _status;

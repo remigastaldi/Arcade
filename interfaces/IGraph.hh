@@ -11,8 +11,8 @@
 #ifndef		       IGRAPH_HH__
 # define	       IGRAPH_HH__
 
-#include        "Protocol.hpp"
 #include        <iostream>
+#include        "Protocol.hpp"
 
 namespace	       arcade
 {
@@ -38,6 +38,7 @@ namespace	       arcade
     virtual void aPutText(size_t, size_t, const std::string &,
                           size_t, arcade::Color, const std::string &) = 0;
     virtual void aRefresh() = 0;
+    virtual arcade::CommandType aCommand() = 0;
   };
 }
 
