@@ -1,11 +1,11 @@
-/*
+  /*
 ** core.cpp for Arcade
 **
 ** Made by	gastal_r
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Tue Mar 14 18:55:34 2017 gastal_r
+** Last update	Tue Mar 14 20:06:07 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -36,6 +36,9 @@ void            Core::openLib(const std::string &name)
     arcade::IGraph *(*create_lib)();
 
     _graphHandle = Core::Dlopen(name.c_str(), RTLD_LOCAL | RTLD_LAZY);
+    if (!_graphHandle) {
+        std::cerr << "Cannot load library: " << dlerror() << '\n';
+    }
     if (!_graphHandle)
       throw arcade::Exception(name, " doesn't exist or isn't in lib folder");
     create_lib = reinterpret_cast<arcade::IGraph* (*)()>(dlsym(_graphHandle, "createGraph"));
@@ -79,9 +82,10 @@ void            Core::startCore()
 /*  _graph->aTile(10, 10, arcade::TileType::BLOCK);
   void *text = _graph->aGetTexture("core/mooncat.jpg");
   _graph->aTile(200, 20, text); */
-  _graph->aPutText(10, 10, "core/PressStart2P.ttf",
+  _graph->aPutText(10, 10, "core/res/fonts/press_start.ttf",
                   60, arcade::GREEN, "ARCADE");
   _graph->aRefresh();
+  switchLib(arcade::NEXT);
   while (getStatus() == CONTINUE)
   {
 
