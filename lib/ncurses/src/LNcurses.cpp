@@ -19,12 +19,25 @@ LNcurses::~LNcurses()
 void        LNcurses::aInit(size_t, size_t)
 {
   std::cout << "INIT LIB" << '\n';
-
+  Ncurses::Newterm(NULL, stderr, stdin);
+  Ncurses::Noecho();
+  Ncurses::Cbreak();
+  Ncurses::CursSet(0);
+  Ncurses::Keypad(stdscr, TRUE);
+  Ncurses::Nodelay(stdscr, TRUE);
+  
+  Ncurses::InitPair(1, COLOR_WHITE, COLOR_WHITE);
+  Ncurses::InitPair(2, COLOR_GREEN, COLOR_GREEN);
+  Ncurses::InitPair(3, COLOR_RED, COLOR_RED);
+  Ncurses::InitPair(4, COLOR_BLACK, COLOR_WHITE);
+  Ncurses::InitPair(5, COLOR_RED, COLOR_BLACK);
+  Ncurses::InitPair(6, COLOR_WHITE, COLOR_BLACK);
+  Ncurses::InitPair(7, COLOR_MAGENTA, COLOR_MAGENTA);
 }
 
 void        LNcurses::aClose()
 {
-  std::cout << "CLOSE LIB" << '\n';
+  Ncurses::Endwin();
 }
 
 void        LNcurses::aTile(size_t, size_t, arcade::TileType)

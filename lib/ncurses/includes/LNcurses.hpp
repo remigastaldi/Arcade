@@ -12,6 +12,7 @@
 #define       _LNcurses_HPP_
 
 #include      "IGraph.hh"
+#include      "Ncurses.hpp"
 
 class LNcurses : public arcade::IGraph
 {
@@ -27,7 +28,7 @@ public:
   void        aPutText(size_t, size_t, const std::string &,
                       size_t, arcade::Color, const std::string &);
   void        aRefresh();
-  arcade::CommandType aCommand();
+  arcade::CommandType aCommand() {;}
   std::string   aChar(){};
 
 private:

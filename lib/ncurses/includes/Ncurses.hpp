@@ -16,40 +16,48 @@
 class             Ncurses
 {
 public:
-    static void   Clear()           { clear(); }
-    static WINDOW *Initscr()        { return (initscr()); }
-    static int    Cbreak()          { return (cbreak());  }
-    static int    StartColor(void)  { return (start_color()); }
-    static int    Endwin(void)      { return (endwin());  }
-    static int    Refresh()         { return (refresh()); }
-    static int    Noecho()          { return (noecho());  }
-    static int    Wrefresh(WINDOW *win)   { return (wrefresh(win)); }
-    static int    CursSet(int visibility) { return (curs_set(visibility)); }
-    static int    Werase(WINDOW *win)     { return (werase(win)); }
-    static int    Nodelay(WINDOW *win, bool bf)     { return (nodelay(win, bf));  }
-    static int    Mvwin(WINDOW *win, int y, int x)  { return (mvwin(win, y, x));  }
-    static int    Wattron(WINDOW *win, int attrs)   { return (wattron(win, attrs)); }
-    static int    Wattroff(WINDOW *win, int attrs)  { return (wattroff(win, attrs)); }
-    static WINDOW *Newwin(int nlines, int ncols, int begin_y, int begin_x)
-    {
-      return newwin(nlines, ncols, begin_y, begin_x);
-    }
-    static int    Mvwprintw(WINDOW *win, int y, int x, const char *fmt)
-    {
-      return (mvwprintw(win, y, x, fmt));
-    }
-    static int    Box(WINDOW *win, chtype verch, chtype horch)
-    {
-        return (box(win, verch, horch));
-    }
-    static int    Wresize(WINDOW *win, int lines, int column)
-    {
-      return wresize(win, lines, column);
-    }
-    static int    InitPair(short pair, short f, short b)
-    {
-      return (init_pair(pair, f, b));
-    }
+  static void   Clear()           { clear(); }
+  static WINDOW *Initscr()        { return (initscr()); }
+  static int    Cbreak()          { return (cbreak());  }
+  static int    StartColor(void)  { return (start_color()); }
+  static int    Endwin(void)      { return (endwin());  }
+  static int    Refresh()         { return (refresh()); }
+  static int    Noecho()          { return (noecho());  }
+  static int    Wrefresh(WINDOW *win)   { return (wrefresh(win)); }
+  static int    CursSet(int visibility) { return (curs_set(visibility)); }
+  static int    Werase(WINDOW *win)     { return (werase(win)); }
+  static int    Nodelay(WINDOW *win, bool bf)     { return (nodelay(win, bf));  }
+  static int    Mvwin(WINDOW *win, int y, int x)  { return (mvwin(win, y, x));  }
+  static int    Wattron(WINDOW *win, int attrs)   { return (wattron(win, attrs)); }
+  static int    Wattroff(WINDOW *win, int attrs)  { return (wattroff(win, attrs)); }
+  static WINDOW *Newwin(int nlines, int ncols, int begin_y, int begin_x)
+  {
+    return newwin(nlines, ncols, begin_y, begin_x);
+  }
+  static int    Mvwprintw(WINDOW *win, int y, int x, const char *fmt)
+  {
+    return (mvwprintw(win, y, x, fmt));
+  }
+  static int    Box(WINDOW *win, chtype verch, chtype horch)
+  {
+    return (box(win, verch, horch));
+  }
+  static int    Wresize(WINDOW *win, int lines, int column)
+  {
+    return wresize(win, lines, column);
+  }
+  static int    InitPair(short pair, short f, short b)
+  {
+    return (init_pair(pair, f, b));
+  }
+  static SCREEN *Newterm(char *type, FILE *outfd, FILE *infd)
+  {
+    return (newterm(type, outfd, infd));
+  }
+  static int	Keypad(WINDOW *win, bool bf)
+  {
+    return (keypad(win, bf));
+  }
 };
 
 #endif
