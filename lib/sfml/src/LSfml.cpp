@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Thu Mar 16 21:40:56 2017 gastal_r
+** Last update Fri Mar 17 00:46:17 2017 Leo Hubert Froideval
 */
 
 #include        "LSfml.hpp"
@@ -28,12 +28,38 @@ void            LSfml::aInit(size_t width, size_t height)
 void            LSfml::aClose()
 {}
 
-void            LSfml::aTile(size_t x, size_t y, arcade::TileType)
+void            LSfml::aTile(size_t x, size_t y, arcade::TileType type)
 {
   sf::RectangleShape rectangle;
 
+  switch (type) {
+    case arcade::TileType::BLOCK:
+      rectangle.setFillColor(sf::Color::Red);
+      break;
+    case arcade::TileType::EMPTY:
+      rectangle.setFillColor(sf::Color::White);
+      break;
+    case arcade::TileType::OBSTACLE:
+      rectangle.setFillColor(sf::Color::Green);
+      break;
+    case arcade::TileType::EVIL_DUDE:
+      rectangle.setFillColor(sf::Color::Yellow);
+      break;
+    case arcade::TileType::EVIL_SHOOT:
+      rectangle.setFillColor(sf::Color::Blue);
+      break;
+    case arcade::TileType::MY_SHOOT:
+      rectangle.setFillColor(sf::Color::Black);
+      break;
+    case arcade::TileType::POWERUP:
+      rectangle.setFillColor(sf::Color::Cyan);
+      break;
+    case arcade::TileType::OTHER:
+      rectangle.setFillColor(sf::Color::Magenta);
+      break;
+  }
+
   rectangle.setSize(sf::Vector2f(10, 10));
-  rectangle.setFillColor(sf::Color::Green);
   rectangle.setPosition(x, y);
   _win.draw(rectangle);
 }

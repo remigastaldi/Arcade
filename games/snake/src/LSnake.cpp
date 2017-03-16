@@ -37,27 +37,25 @@ void	LSnake::initMap()
   _map->width = 50;
   _map->height = 50;
   for (int i = 0 ; i < _map->width * _map->height ; ++i)
-    _map->tile[i] = arcade::TileType::EMPTY;
+  {
+    if ((i % _map->width) == 0 || (i % _map->width) == _map->width - 1)
+      _map->tile[i] = arcade::TileType::BLOCK;
+    else if ((i / _map->width) == 0 || (i / _map->width) == _map->height - 1)
+      _map->tile[i] = arcade::TileType::BLOCK;
+    else
+      _map->tile[i] = arcade::TileType::EMPTY;
+
+  }
+
   // for (int i = 0 ; i < _map->width * _map->height ; ++i)
   //   std::cout << (int)_map->tile[i] << std::endl;
 }
 
 void			LSnake::printMap(arcade::ICore &core)
 {
-  int			x;
-  int			y;
-
-  x = 0;
-  y = 0;
-  while (x <= _map->width && y <= _map->height)
+  for (int i = 0 ; i < _map->width * _map->height ; ++i)
   {
-    core.getLib()->aTile(x * 10, y * 10, arcade::TileType::BLOCK);
-    if (x >= _map->width)
-    {
-      x = 0;
-      y++;
-    }
-    x++;
+    core.getLib()->aTile((i % _map->width) * 10 , (i / _map->width) * 10 , _map->tile[i]);
   }
   core.getLib()->aRefresh();
 }
