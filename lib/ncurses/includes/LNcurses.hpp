@@ -28,8 +28,8 @@ public:
   void        aPutText(size_t, size_t, const std::string &,
                       size_t, arcade::Color, const std::string &);
   void        aRefresh();
-  arcade::CommandType aCommand() {;}
-  std::string   aChar(){};
+  arcade::CommandType aCommand() {return (arcade::CommandType::UNDEFINED);}
+  std::string   aChar(){return(NULL);};
 
 private:
 };
