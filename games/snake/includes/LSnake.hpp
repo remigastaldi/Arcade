@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 23:42:03 2017 gastal_r
-** Last update	Tue Mar 14 14:50:16 2017 gastal_r
+** Last update Thu Mar 16 23:38:22 2017 Leo Hubert Froideval
 */
 
 #ifndef         _LSnake_HPP_
@@ -26,12 +26,14 @@ public:
   LSnake();
   virtual       ~LSnake();
 
+  void		printMap(arcade::ICore &core);
   void		mainLoop(arcade::ICore &, bool);
-  void		initMap(arcade::GetMap &);
+  void		initMap();
   void          play(arcade::ICore &);
   void          close();
 
 private:
+  arcade::GetMap  *_map;
 };
 
 typedef struct	snake_part

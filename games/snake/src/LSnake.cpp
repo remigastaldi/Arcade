@@ -29,31 +29,52 @@ void				LSnake::play(arcade::ICore &core)
   mainLoop(core, false);
 }
 
-void	LSnake::initMap(arcade::GetMap &map)
+void	LSnake::initMap()
 {
-  map.type = arcade::CommandType::UNDEFINED;
-  map.width = 50;
-  map.height = 50;
-  for (int i = -1 ; i < map.width * map.height ; ++i)
-    map.tile[i] = arcade::TileType::EMPTY;
+  if ((_map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap)  * 50 * 50)) == NULL)
+    throw arcade::Exception("Malloc failed\n");
+  _map->type = arcade::CommandType::UNDEFINED;
+  _map->width = 50;
+  _map->height = 50;
+  for (int i = 0 ; i < _map->width * _map->height ; ++i)
+    _map->tile[i] = arcade::TileType::EMPTY;
+  // for (int i = 0 ; i < _map->width * _map->height ; ++i)
+  //   std::cout << (int)_map->tile[i] << std::endl;
+}
+
+void			LSnake::printMap(arcade::ICore &core)
+{
+  int			x;
+  int			y;
+
+  x = 0;
+  y = 0;
+  while (x <= _map->width && y <= _map->height)
+  {
+    core.getLib()->aTile(x * 10, y * 10, arcade::TileType::BLOCK);
+    if (x >= _map->width)
+    {
+      x = 0;
+      y++;
+    }
+    x++;
+  }
+  core.getLib()->aRefresh();
 }
 
 void			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
 {
-  arcade::GetMap	*map;
-
-  if ((map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap)  * 50 * 50)) == NULL)
-    throw arcade::Exception("Malloc failed\n");
-  initMap(*map);
-  while (map->type != arcade::CommandType::ESCAPE && map->type != arcade::CommandType::MENU)
+  initMap();
+  while (_map->type != arcade::CommandType::ESCAPE && _map->type != arcade::CommandType::MENU)
     {
       if (lPDM == true)
 	{
-	  
+
 	}
       else
 	{
-	  
+    _map->type = core.getLib()->aCommand();
+    printMap(core);
 	}
     }
 }
@@ -80,7 +101,7 @@ extern "C"
   {
     LSnake		snake;
     arcade::ICore	*core;
-    
+
     snake.mainLoop(*core, true);
   }
 }
