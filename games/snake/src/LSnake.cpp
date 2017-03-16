@@ -1,3 +1,4 @@
+
 /*
 ** lib_arcade_snake.cpp for cpp_arcade
 **
@@ -9,8 +10,6 @@
 */
 
 #include          "LSnake.hpp"
-#include          "ICore.hh"
-#include          "IGame.hh"
 
 LSnake::LSnake()
 {}
@@ -18,9 +17,45 @@ LSnake::LSnake()
 LSnake::~LSnake()
 {}
 
-void              LSnake::play()
+void				LSnake::play(arcade::ICore &core)
 {
-  std::cout << "PLAY" << '\n';
+  snake_part			initPos;
+  std::list<snake_part>		snake;
+
+  initPos._x = 30;
+  initPos._y = 30;
+  snake.push_back(initPos);
+
+  mainLoop(core, false);
+}
+
+void	LSnake::initMap(arcade::GetMap &map)
+{
+  map.type = arcade::CommandType::UNDEFINED;
+  map.width = 50;
+  map.height = 50;
+  for (int i = -1 ; i < map.width * map.height ; ++i)
+    map.tile[i] = arcade::TileType::EMPTY;
+}
+
+void			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
+{
+  arcade::GetMap	*map;
+
+  if ((map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap)  * 50 * 50)) == NULL)
+    throw arcade::Exception("Malloc failed\n");
+  initMap(*map);
+  while (map->type != arcade::CommandType::ESCAPE && map->type != arcade::CommandType::MENU)
+    {
+      if (lPDM == true)
+	{
+	  
+	}
+      else
+	{
+	  
+	}
+    }
 }
 
 void              LSnake::close()
@@ -39,5 +74,13 @@ extern "C"
   void            deleteGame(arcade::IGame *game)
   {
     delete(game);
+  }
+
+  void			Play()
+  {
+    LSnake		snake;
+    arcade::ICore	*core;
+    
+    snake.mainLoop(*core, true);
   }
 }

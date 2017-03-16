@@ -1,4 +1,4 @@
-  /*
+/*
 ** core.cpp for Arcade
 **
 ** Made by	gastal_r
@@ -15,7 +15,7 @@ Core::Core(const std::string &lib)
   openLibsDir();
   openGamesDir();
   openLib(lib);
-
+  openGame(std::string("games/lib_arcade_snake.so"));
 /*  _currentGame = "games/lib_arcade_snake.so";
   _currentGraph = "lib/lib_arcade_ncurses.so";
   openGame(std::string("games/lib_arcade_snake.so"));
@@ -87,25 +87,24 @@ void            Core::setGuiData()
 void            Core::startCore()
 {
   _graph->aInit(1080, 720);
-  setGraph(_graph);
-  setGuiData();
-  refreshGui();
-  _player = getName(*this);
-  guiSetPlayer(_player);
-  _graph->aClear();
-  refreshGui();
-  openGame(chooseGame(*this));
-
+  // setGraph(_graph);
+  // startGui();
+  // affDispLibs(_libs, _currentGraph);
+  // affDispGames(_games, _currentGame);
+  // _graph->aRefresh();
+  //chooseName();
   //_graph->aTile(10, 10, arcade::TileType::BLOCK);
 //  void *text = _graph->aGetTexture("core/mooncat.jpg");
   //_graph->aTile(200, 20, text);
 
 //  switchLib(arcade::NEXT);
-  while (getStatus() == CONTINUE)
-  {
-    if (_graph->aCommand() == arcade::CommandType::ESCAPE)
-      setStatus(Status::EXIT);
-  }
+  _graph->aClose();
+  _game->play(*this);
+  // while (getStatus() == CONTINUE)
+  // {
+  //   if (_graph->aCommand() == arcade::CommandType::ESCAPE)
+  //     setStatus(Status::EXIT);
+  // }
 }
 
 void            Core::switchGame(const arcade::MoveType m)
