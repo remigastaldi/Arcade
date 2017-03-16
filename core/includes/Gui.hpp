@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:55:17 2017 gastal_r
-** Last update	Thu Mar 16 14:55:07 2017 gastal_r
+** Last update	Thu Mar 16 21:20:01 2017 gastal_r
 */
 
 #ifndef         _GUI_HPP_
@@ -13,6 +13,7 @@
 
 #include        <vector>
 #include        "IGraph.hh"
+#include        "ICore.hh"
 
 enum Status
 {
@@ -27,16 +28,32 @@ public:
   virtual       ~Gui ();
 
   void          setGraph(arcade::IGraph *graph);
-  void          startGui();
-  void          affDispLibs(std::vector<std::string> , std::string);
-  void          affDispGames(std::vector<std::string> , std::string);
+  void          affGui();
+  void          affName();
+  void          affDispLibs();
+  void          affDispGames();
 
-  Status        &getStatus();
+  const std::string   getName(arcade::ICore &);
+  void                listGame();
+  const std::string   chooseGame(arcade::ICore &);
+
+  const Status  &getStatus();
   void          setStatus(const Status status) {_status = status; }
 
+  void          guiSetLibs(const std::vector<std::string> libs) {_libs = libs;}
+  void          guiSetCurrentGraph(const std::string &graph) {_currentGraph = graph;}
+  void          guiSetGames(const std::vector<std::string> games) {_games = games;}
+  void          guiSetCurrentGame(const std::string &game) {_currentGame = game;}
+  void          guiSetPlayer(const std::string &player) {_player = player;}
+
 private:
-  arcade::IGraph *_graph;
+  arcade::IGraph  *_graph;
   Status          _status;
+  std::string               _currentGame;
+  std::string               _currentGraph;
+  std::vector<std::string>  _games;
+  std::vector<std::string>  _libs;
+  std::string               _player;
 };
 
 

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Thu Mar 16 14:50:51 2017 gastal_r
+** Last update	Thu Mar 16 21:40:56 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -87,6 +87,11 @@ void          LSfml::aPutText(size_t x, size_t y, const std::string &fontPath,
   _win.draw(sfText);
 }
 
+void            LSfml::aClear()
+{
+  _win.clear();
+}
+
 void            LSfml::aRefresh()
 {
   _win.display();
@@ -102,6 +107,16 @@ arcade::CommandType   LSfml::aCommand()
     {
       case sf::Keyboard::Escape :
         return (arcade::CommandType::ESCAPE);
+      case sf::Keyboard::Up :
+        return (arcade::CommandType::GO_UP);
+      case sf::Keyboard::Down :
+        return (arcade::CommandType::GO_DOWN);
+      case sf::Keyboard::Left :
+        return (arcade::CommandType::GO_LEFT);
+      case sf::Keyboard::Right :
+        return (arcade::CommandType::GO_RIGHT);
+      case sf::Keyboard::Return :
+        return (arcade::CommandType::PLAY);
       default :
         return (arcade::CommandType::UNDEFINED);
     }
@@ -171,6 +186,10 @@ std::string       LSfml::aChar()
         return ("Z");
       case sf::Keyboard::BackSpace :
         return ("BACKSPACE");
+      case sf::Keyboard::Return :
+        return ("ENTER");
+      case sf::Keyboard::Escape :
+        return ("ESCAPE");
       default :
         return ("");
     }

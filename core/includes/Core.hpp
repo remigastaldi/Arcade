@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:09:59 2017 gastal_r
-** Last update	Tue Mar 14 13:14:40 2017 gastal_r
+** Last update	Thu Mar 16 19:02:05 2017 gastal_r
 */
 
 #ifndef         _CORE_HPP_
@@ -34,6 +34,8 @@ public:
   void          openLibsDir();
   void          openGamesDir();
 
+  void          setGuiData();
+  void          refreshGui() { affGui();}
   void          startCore();
 
   void          switchGame(const arcade::MoveType);
@@ -45,6 +47,7 @@ public:
   static int    Dlclose(void *handle);
 
 private:
+  std::string           _player;
   void                  *_graphHandle;
   void                  *_gameHandle;
   arcade::IGraph        *_graph;
