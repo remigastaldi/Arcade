@@ -74,15 +74,28 @@ void            Core::openGamesDir()
   _games = files.getLibs();
 }
 
+void            Core::setGuiData()
+{
+  guiSetLibs(_libs);
+  guiSetCurrentGraph(_currentGraph);
+  guiSetGames(_games);
+  guiSetCurrentGame(_currentGame);
+  guiSetPlayer(_player);
+  guiSetPlayer(_player);
+}
+
 void            Core::startCore()
 {
   _graph->aInit(1080, 720);
   setGraph(_graph);
-  startGui();
-  affDispLibs(_libs, _currentGraph);
-  affDispGames(_games, _currentGame);
-  _graph->aRefresh();
-  //chooseName();
+  setGuiData();
+  refreshGui();
+  _player = getName(*this);
+  guiSetPlayer(_player);
+  _graph->aClear();
+  refreshGui();
+  openGame(chooseGame(*this));
+
   //_graph->aTile(10, 10, arcade::TileType::BLOCK);
 //  void *text = _graph->aGetTexture("core/mooncat.jpg");
   //_graph->aTile(200, 20, text);

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 12 21:30:45 2017 gastal_r
-** Last update	Tue Mar 14 00:37:06 2017 gastal_r
+** Last update	Thu Mar 16 17:53:10 2017 gastal_r
 */
 
 #ifndef           _ICORE_HH_
@@ -25,6 +25,7 @@ namespace	        arcade
 
     virtual void    switchGame(const MoveType) = 0;
     virtual void    switchLib(const MoveType) = 0;
+    virtual void    refreshGui() = 0;
   };
 }
 

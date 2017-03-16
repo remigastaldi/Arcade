@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:07:35 2017 gastal_r
-** Last update	Thu Mar 16 10:21:22 2017 gastal_r
+** Last update	Thu Mar 16 17:14:11 2017 gastal_r
 */
 
 #ifndef         _LSFML_HPP_
@@ -31,6 +31,7 @@ public:
   sf::Color     fillColor(arcade::Color);
   void          aPutText(size_t, size_t, const std::string &,
                          size_t, arcade::Color, const std::string &);
+  void          aClear();
   void          aRefresh();
   arcade::CommandType aCommand();
   std::string   aChar();
