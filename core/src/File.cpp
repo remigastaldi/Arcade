@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Mon Mar 13 16:22:53 2017 gastal_r
-** Last update	Tue Mar 14 00:34:32 2017 gastal_r
+** Last update	Thu Mar 16 11:38:31 2017 gastal_r
 */
 
 #include                   "File.hpp"
@@ -21,7 +21,7 @@ bool                      File::checkExtension(const std::string &str) const
     return (true);
   return (false);
 }
-#include <sstream>
+
 std::vector<std::string>   File::getLibs()
 {
   dirent                   *de;
@@ -39,7 +39,6 @@ std::vector<std::string>   File::getLibs()
       if (de->d_type != DT_DIR && checkExtension(de->d_name))
       {
         std::ostringstream path;
-
         path << _path << de->d_name;
         result.push_back(path.str());
       }

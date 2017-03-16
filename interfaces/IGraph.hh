@@ -19,9 +19,12 @@ namespace	       arcade
   enum Color
   {
     BLACK,
+    WHITE,
     BLUE,
     RED,
     GREEN,
+    MAGENTA,
+    CYAN,
     YELLOW
   };
 

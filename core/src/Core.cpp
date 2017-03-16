@@ -79,16 +79,19 @@ void            Core::startCore()
   _graph->aInit(1080, 720);
   setGraph(_graph);
   startGui();
-/*  _graph->aTile(10, 10, arcade::TileType::BLOCK);
-  void *text = _graph->aGetTexture("core/mooncat.jpg");
-  _graph->aTile(200, 20, text); */
-  _graph->aPutText(10, 10, "core/res/fonts/press_start.ttf",
-                  60, arcade::GREEN, "ARCADE");
+  affDispLibs(_libs, _currentGraph);
+  affDispGames(_games, _currentGame);
   _graph->aRefresh();
-  switchLib(arcade::NEXT);
+  //chooseName();
+  //_graph->aTile(10, 10, arcade::TileType::BLOCK);
+//  void *text = _graph->aGetTexture("core/mooncat.jpg");
+  //_graph->aTile(200, 20, text);
+
+//  switchLib(arcade::NEXT);
   while (getStatus() == CONTINUE)
   {
-
+    if (_graph->aCommand() == arcade::CommandType::ESCAPE)
+      setStatus(Status::EXIT);
   }
 }
 

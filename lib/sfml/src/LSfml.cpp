@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Thu Mar 16 10:35:32 2017 gastal_r
+** Last update	Thu Mar 16 14:50:51 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -62,10 +62,13 @@ sf::Color     LSfml::fillColor(arcade::Color color)
 {
   sf::Color   n;
 
-  (color == arcade::BLUE ? n = sf::Color::Blue :
-   (color == arcade::RED ? n = sf::Color::Red :
-    (color == arcade::GREEN ? n = sf::Color::Green :
-     (color == arcade::YELLOW ? n = sf::Color::Yellow : sf::Color::Black))));
+  (color == arcade::WHITE ? n = sf::Color::White :
+   (color == arcade::BLUE ? n = sf::Color::Blue :
+    (color == arcade::RED ? n = sf::Color::Red :
+     (color == arcade::GREEN ? n = sf::Color::Green :
+      (color == arcade::MAGENTA ? n = sf::Color::Magenta :
+       (color == arcade::CYAN ? n = sf::Color::Cyan :
+         (color == arcade::YELLOW ? n = sf::Color::Yellow : sf::Color::Black)))))));
   return (n);
 }
 
@@ -166,6 +169,8 @@ std::string       LSfml::aChar()
         return ("Y");
       case sf::Keyboard::Z :
         return ("Z");
+      case sf::Keyboard::BackSpace :
+        return ("BACKSPACE");
       default :
         return ("");
     }

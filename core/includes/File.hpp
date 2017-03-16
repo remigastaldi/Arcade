@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Mon Mar 13 16:23:03 2017 gastal_r
-** Last update	Tue Mar 14 00:34:34 2017 gastal_r
+** Last update	Thu Mar 16 11:38:01 2017 gastal_r
 */
 
 #ifndef         _FILE_HPP_
@@ -16,6 +16,7 @@
 #include        <algorithm>
 #include        <vector>
 #include        <string>
+#include        <sstream>
 #include        "Exception.hpp"
 
 class File
