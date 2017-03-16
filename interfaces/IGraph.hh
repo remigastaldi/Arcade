@@ -39,6 +39,7 @@ namespace	       arcade
                           size_t, arcade::Color, const std::string &) = 0;
     virtual void aRefresh() = 0;
     virtual arcade::CommandType aCommand() = 0;
+    virtual std::string  aChar() = 0;
   };
 }
 

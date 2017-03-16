@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Wed Mar 15 13:36:03 2017 gastal_r
+** Last update	Thu Mar 16 10:35:32 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -92,6 +92,7 @@ void            LSfml::aRefresh()
 arcade::CommandType   LSfml::aCommand()
 {
   _win.pollEvent(_event);
+
   if (_event.type == sf::Event::KeyPressed)
   {
     switch (_event.key.code)
@@ -103,6 +104,73 @@ arcade::CommandType   LSfml::aCommand()
     }
   }
   return (arcade::CommandType::UNDEFINED);
+}
+
+std::string       LSfml::aChar()
+{
+  _win.pollEvent(_event);
+
+  if (_event.type == sf::Event::KeyPressed)
+  {
+    switch (_event.key.code)
+    {
+      case sf::Keyboard::A :
+        return ("A");
+      case sf::Keyboard::B :
+        return ("B");
+      case sf::Keyboard::C :
+        return ("C");
+      case sf::Keyboard::D :
+        return ("D");
+      case sf::Keyboard::E :
+        return ("E");
+      case sf::Keyboard::F :
+        return ("F");
+      case sf::Keyboard::G :
+        return ("G");
+      case sf::Keyboard::H :
+        return ("H");
+      case sf::Keyboard::I :
+        return ("I");
+      case sf::Keyboard::J :
+        return ("J");
+      case sf::Keyboard::K :
+        return ("K");
+      case sf::Keyboard::L :
+        return ("L");
+      case sf::Keyboard::M :
+        return ("M");
+      case sf::Keyboard::N :
+        return ("N");
+      case sf::Keyboard::O :
+        return ("O");
+      case sf::Keyboard::P :
+        return ("P");
+      case sf::Keyboard::Q :
+        return ("Q");
+      case sf::Keyboard::R :
+        return ("R");
+      case sf::Keyboard::S :
+        return ("S");
+      case sf::Keyboard::T :
+        return ("T");
+      case sf::Keyboard::U :
+        return ("U");
+      case sf::Keyboard::V :
+        return ("V");
+      case sf::Keyboard::W :
+        return ("W");
+      case sf::Keyboard::X :
+        return ("X");
+      case sf::Keyboard::Y :
+        return ("Y");
+      case sf::Keyboard::Z :
+        return ("Z");
+      default :
+        return ("");
+    }
+  }
+  return ("");
 }
 
 extern "C"

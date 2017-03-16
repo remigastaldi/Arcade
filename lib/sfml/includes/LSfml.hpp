@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:07:35 2017 gastal_r
-** Last update	Wed Mar 15 13:29:23 2017 gastal_r
+** Last update	Thu Mar 16 10:21:22 2017 gastal_r
 */
 
 #ifndef         _LSFML_HPP_
@@ -33,6 +33,7 @@ public:
                          size_t, arcade::Color, const std::string &);
   void          aRefresh();
   arcade::CommandType aCommand();
+  std::string   aChar();
 
 private:
   sf::RenderWindow _win;
