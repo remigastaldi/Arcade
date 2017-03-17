@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Wed Mar 15 10:29:21 2017 gastal_r
+** Last update Fri Mar 17 03:21:37 2017 Leo Hubert Froideval
 */
 
 #include          "LNcurses.hpp"
@@ -37,14 +37,14 @@ void        LNcurses::aInit(size_t, size_t)
   Ncurses::InitPair(6, COLOR_BLACK, COLOR_BLACK);
   Ncurses::InitPair(7, COLOR_CYAN, COLOR_CYAN);
   Ncurses::InitPair(8, COLOR_MAGENTA, COLOR_MAGENTA);
-  Ncurses::InitPair(9, COLOR_WHITE, COLOR_BLACK);
-  Ncurses::InitPair(10, COLOR_BLACK, COLOR_WHITE);
-  Ncurses::InitPair(11, COLOR_BLACK, COLOR_BLUE);
-  Ncurses::InitPair(12, COLOR_BLACK, COLOR_RED);
-  Ncurses::InitPair(13, COLOR_BLACK, COLOR_GREEN);
-  Ncurses::InitPair(14, COLOR_BLACK, COLOR_MAGENTA);
-  Ncurses::InitPair(15, COLOR_BLACK, COLOR_CYAN);
-  Ncurses::InitPair(16, COLOR_BLACK, COLOR_YELLOW);
+  Ncurses::InitPair(9, COLOR_BLACK, COLOR_WHITE);
+  Ncurses::InitPair(10, COLOR_WHITE, COLOR_BLACK);
+  Ncurses::InitPair(11, COLOR_BLUE, COLOR_BLACK);
+  Ncurses::InitPair(12, COLOR_RED, COLOR_BLACK);
+  Ncurses::InitPair(13, COLOR_GREEN, COLOR_BLACK);
+  Ncurses::InitPair(14, COLOR_MAGENTA, COLOR_BLACK);
+  Ncurses::InitPair(15, COLOR_CYAN, COLOR_BLACK);
+  Ncurses::InitPair(16, COLOR_YELLOW, COLOR_BLACK);
 }
 
 void        LNcurses::aClose()

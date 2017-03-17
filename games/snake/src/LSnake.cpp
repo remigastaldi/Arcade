@@ -29,8 +29,10 @@ void				LSnake::play(arcade::ICore &core)
   mainLoop(core, false);
 }
 
-void	LSnake::initMap()
+void	LSnake::initGame()
 {
+  arcade::Position head;
+
   if ((_map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap)  * 50 * 50)) == NULL)
     throw arcade::Exception("Malloc failed\n");
   _map->type = arcade::CommandType::UNDEFINED;
@@ -44,25 +46,59 @@ void	LSnake::initMap()
       _map->tile[i] = arcade::TileType::BLOCK;
     else
       _map->tile[i] = arcade::TileType::EMPTY;
-
   }
+
+  head.x = _map->width / 2;
+  head.y = _map->height / 2;
+
+  _position.push_back(head);
 
   // for (int i = 0 ; i < _map->width * _map->height ; ++i)
   //   std::cout << (int)_map->tile[i] << std::endl;
 }
 
-void			LSnake::printMap(arcade::ICore &core)
+void			LSnake::printGame(arcade::ICore &core)
 {
   for (int i = 0 ; i < _map->width * _map->height ; ++i)
   {
     core.getLib()->aTile((i % _map->width) + 1 , (i / _map->width) + 1, _map->tile[i]);
   }
+
+  for (std::vector<arcade::Position>::iterator it = _position.begin(); it != _position.end(); it++)
+  {
+    core.getLib()->aTile((*it).x + 1, (*it).y + 1, arcade::TileType::OTHER);
+  }
+
   core.getLib()->aRefresh();
+}
+
+void			LSnake::moveAction(arcade::ICore &core)
+{
+  switch (_map->type) {
+    case (arcade::CommandType::GO_UP):
+      for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin(); it--)
+      {
+
+      }
+      _position[0].y--;
+      break;
+    case (arcade::CommandType::GO_DOWN):
+      _position[0].y++;
+      break;
+    case (arcade::CommandType::GO_LEFT):
+      _position[0].x--;
+      break;
+    case (arcade::CommandType::GO_RIGHT):
+      _position[0].x++;
+      break;
+    default:
+      break;
+  }
 }
 
 void			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
 {
-  initMap();
+  initGame();
   while (_map->type != arcade::CommandType::ESCAPE && _map->type != arcade::CommandType::MENU)
     {
       if (lPDM == true)
@@ -72,8 +108,11 @@ void			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
       else
 	{
     _map->type = core.getLib()->aCommand();
-    printMap(core);
+    printGame(core);
 	}
+
+  moveAction(core);
+
     }
 }
 
@@ -100,7 +139,7 @@ extern "C"
     LSnake		snake;
     arcade::ICore	*core;
 
-    
+
     snake.mainLoop(*core, true);
     (void)core;
   }

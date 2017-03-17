@@ -18,7 +18,7 @@ class             Ncurses
 {
 public:
   static void   Clear()           { clear(); }
-  static int	Getch()		  { getch(); }
+  static int	Getch()		  { return getch(); }
   static WINDOW *Initscr()        { return (initscr()); }
   static int    Cbreak()          { return (cbreak());  }
   static int    StartColor(void)  { return (start_color()); }
