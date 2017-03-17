@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:09:59 2017 gastal_r
-** Last update	Fri Mar 17 02:11:26 2017 gastal_r
+** Last update	Fri Mar 17 03:55:56 2017 gastal_r
 */
 
 #ifndef         _CORE_HPP_
@@ -38,8 +38,8 @@ public:
   void          refreshGui() { affGui();}
   void          startCore();
 
-  void          switchGame(const arcade::MoveType);
-  void          switchLib(const arcade::MoveType);
+  void          switchGame(const arcade::CommandType);
+  void          switchLib(const arcade::CommandType);
   arcade::IGraph  *getLib() const;
   Save            &getSave();
 

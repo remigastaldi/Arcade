@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 12 21:30:45 2017 gastal_r
-** Last update	Fri Mar 17 02:11:31 2017 gastal_r
+** Last update	Fri Mar 17 03:56:05 2017 gastal_r
 */
 
 #ifndef           _ICORE_HH_
@@ -27,8 +27,8 @@ namespace	        arcade
   public:
     virtual         ~ICore () {};
 
-    virtual void    switchGame(const MoveType) = 0;
-    virtual void    switchLib(const MoveType) = 0;
+    virtual void    switchGame(const arcade::CommandType) = 0;
+    virtual void    switchLib(const arcade::CommandType) = 0;
     virtual void    refreshGui() = 0;
     virtual Save    &getSave() = 0;
     virtual arcade::IGraph  *getLib() const = 0;
