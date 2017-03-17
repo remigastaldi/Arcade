@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update Fri Mar 17 00:46:17 2017 Leo Hubert Froideval
+** Last update	Fri Mar 17 04:14:03 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -143,6 +143,8 @@ arcade::CommandType   LSfml::aCommand()
         return (arcade::CommandType::GO_RIGHT);
       case sf::Keyboard::Return :
         return (arcade::CommandType::PLAY);
+      case sf::Keyboard::Num3 :
+        return (arcade::CommandType::NEXT_LIB);
       default :
         return (arcade::CommandType::UNDEFINED);
     }

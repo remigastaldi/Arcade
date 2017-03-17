@@ -108,6 +108,8 @@ void			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
       else
 	{
     _map->type = core.getLib()->aCommand();
+    if (_map->type == arcade::CommandType::NEXT_LIB)
+      core.switchLib(arcade::CommandType::NEXT_LIB);
     printGame(core);
 	}
 

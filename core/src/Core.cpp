@@ -113,7 +113,6 @@ void            Core::switchGame(const arcade::CommandType m)
   openGamesDir();
   if (_games.size() == 1)
     return;
-  if (m == arcade::NEXT)
   if (m == arcade::CommandType::NEXT_LIB)
   {
     size_t pos = find(_games.begin(), _games.end(), _currentGame) - _games.begin();
@@ -136,7 +135,6 @@ void            Core::switchGame(const arcade::CommandType m)
   openGame(name);
 }
 
-void            Core::switchLib(const arcade::MoveType m)
 void            Core::switchLib(const arcade::CommandType m)
 {
   std::string   name;
@@ -144,7 +142,6 @@ void            Core::switchLib(const arcade::CommandType m)
   openLibsDir();
   if (_libs.size() == 1)
     return;
-  if (m == arcade::NEXT)
   if (m == arcade::CommandType::NEXT_LIB)
   {
     size_t pos = find(_libs.begin(), _libs.end(), _currentGraph) - _libs.begin();
@@ -165,6 +162,7 @@ void            Core::switchLib(const arcade::CommandType m)
   delete(_graph);
   Dlclose(_graphHandle);
   openLib(name);
+  _graph->aInit(1080, 720);
 }
 
 arcade::IGraph  *Core::getLib() const
