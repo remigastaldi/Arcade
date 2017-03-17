@@ -5,13 +5,17 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 23:42:03 2017 gastal_r
-** Last update Fri Mar 17 03:07:45 2017 Leo Hubert Froideval
+** Last update Fri Mar 17 15:01:26 2017 Leo Hubert Froideval
 */
 
 #ifndef         _LSnake_HPP_
 #define         _LSnake_HPP_
 
 #include	<algorithm>
+#include <iomanip>
+#include <chrono>
+#include <ctime>
+#include <thread>
 #include <vector>
 #include        <iostream>
 #include	<list>
@@ -24,25 +28,25 @@
 class           LSnake : public arcade::IGame
 {
 public:
-  typedef struct s_snake
-  {
-    int	x;
-    int	y;
-  }	t_snake;
 
   LSnake();
   virtual       ~LSnake();
 
-  void		moveAction(arcade::ICore &core);
+  void		changeAction(arcade::ICore &core);
+  void		move();
   void		printGame(arcade::ICore &core);
   void		mainLoop(arcade::ICore &, bool);
   void		initGame();
-  void          play(arcade::ICore &);
-  void          close();
+  void    play(arcade::ICore &);
+  void    close();
+  void		addQueue();
+  void		newApple();
 
 private:
   arcade::GetMap  *_map;
   std::vector<arcade::Position>	_position;
+  arcade::Position	_apple;
+  arcade::CommandType _direction;
 };
 
 typedef struct	snake_part
