@@ -5,17 +5,18 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Tue Mar 14 20:06:07 2017 gastal_r
+** Last update	Fri Mar 17 02:58:14 2017 gastal_r
 */
 
 #include        "Core.hpp"
 
 Core::Core(const std::string &lib)
 {
+  setStatus(CONTINUE);
   openLibsDir();
   openGamesDir();
   openLib(lib);
-  openGame(std::string("games/lib_arcade_snake.so"));
+  //openGame(std::string("games/lib_arcade_snake.so"));
 /*  _currentGame = "games/lib_arcade_snake.so";
   _currentGraph = "lib/lib_arcade_ncurses.so";
   openGame(std::string("games/lib_arcade_snake.so"));
@@ -81,30 +82,27 @@ void            Core::setGuiData()
   guiSetGames(_games);
   guiSetCurrentGame(_currentGame);
   guiSetPlayer(_player);
-  guiSetPlayer(_player);
 }
 
 void            Core::startCore()
 {
   _graph->aInit(1080, 720);
-  // setGraph(_graph);
-  // startGui();
-  // affDispLibs(_libs, _currentGraph);
-  // affDispGames(_games, _currentGame);
-  // _graph->aRefresh();
-  //chooseName();
-  //_graph->aTile(10, 10, arcade::TileType::BLOCK);
-//  void *text = _graph->aGetTexture("core/mooncat.jpg");
-  //_graph->aTile(200, 20, text);
-
-//  switchLib(arcade::NEXT);
-  _game->play(*this);
-  // while (getStatus() == CONTINUE)
-  // {
-  //   if (_graph->aCommand() == arcade::CommandType::ESCAPE)
-  //     setStatus(Status::EXIT);
-  // }
-  _graph->aClose();
+  setGraph(_graph);
+  setGuiData();
+  refreshGui();
+  _player = getName(*this);
+  guiSetPlayer(_player);
+  _save.saveSetPlayer(_player);
+  _save.loadPlayerSave();
+  _graph->aClear();
+  refreshGui();
+  chooseGame(*this);
+  //openGame(chooseGame(*this));
+  while (getStatus() == CONTINUE)
+  {
+  if (_graph->aCommand() == arcade::CommandType::ESCAPE)
+    setStatus(Status::EXIT);
+  }
 }
 
 void            Core::switchGame(const arcade::MoveType m)
@@ -168,6 +166,11 @@ void            Core::switchLib(const arcade::MoveType m)
 arcade::IGraph  *Core::getLib() const
 {
   return (_graph);
+}
+
+Save            &Core::getSave()
+{
+  return (_save);
 }
 
 void            *Core::Dlsym(void *handle, const char *symbol)

@@ -29,7 +29,8 @@ CXXFLAGS	+=	-ldl -lncurses
 SRC             =       core/src/main.cpp	\
 			core/src/File.cpp	\
 			core/src/Core.cpp	\
-			core/src/Gui.cpp
+			core/src/Gui.cpp	\
+			core/src/Save.cpp
 
 OBJ             =       $(SRC:.cpp=.o)
 

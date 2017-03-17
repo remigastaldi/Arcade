@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:09:59 2017 gastal_r
-** Last update	Thu Mar 16 19:02:05 2017 gastal_r
+** Last update	Fri Mar 17 02:11:26 2017 gastal_r
 */
 
 #ifndef         _CORE_HPP_
@@ -41,6 +41,7 @@ public:
   void          switchGame(const arcade::MoveType);
   void          switchLib(const arcade::MoveType);
   arcade::IGraph  *getLib() const;
+  Save            &getSave();
 
   static void   *Dlsym(void *handle, const char *symbol);
   static void   *Dlopen(const char *filename, int flag);
@@ -56,6 +57,7 @@ private:
   std::string           _currentGraph;
   std::vector<std::string> _games;
   std::vector<std::string> _libs;
+  Save                  _save;
 };
 
 
