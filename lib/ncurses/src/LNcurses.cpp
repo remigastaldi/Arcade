@@ -173,6 +173,24 @@ arcade::CommandType	LNcurses::aCommand()
     case (KEY_RIGHT) :
       return (arcade::CommandType::GO_RIGHT);
       break;
+    case (51) :
+      return (arcade::CommandType::PREV_LIB);
+      break;
+    case(52) :
+      return (arcade::CommandType::NEXT_LIB);
+      break;
+    case(53) :
+      return (arcade::CommandType::PREV_GAME);
+      break;
+    case (54) :
+      return (arcade::CommandType::NEXT_GAME);
+      break;
+    case (57) :
+      return (arcade::CommandType::RESTART);
+      break;
+    case (58) :
+      return (arcade::CommandType::MENU);
+      break;
     }
 }
 
