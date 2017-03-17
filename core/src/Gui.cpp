@@ -5,14 +5,13 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 11:01:41 2017 gastal_r
-** Last update	Thu Mar 16 21:57:16 2017 gastal_r
+** Last update	Fri Mar 17 03:08:50 2017 gastal_r
 */
 
 #include        "Gui.hpp"
 
 Gui::Gui()
-{
-}
+{}
 
 Gui::~Gui()
 {}
@@ -26,6 +25,11 @@ void            Gui::affName()
 {
   _graph->aPutText(500 - (_player.size() * 5), 650, "core/res/fonts/press_start.ttf",
                   20, arcade::MAGENTA, _player);
+  if (!_bestScore.empty())
+    _graph->aPutText(445, 680 , "core/res/fonts/press_start.ttf",
+                   18, arcade::WHITE, "Best: ");
+  _graph->aPutText(550, 680 , "core/res/fonts/press_start.ttf",
+                18, arcade::WHITE, _bestScore);
 }
 
 void            Gui::affGui()
@@ -110,12 +114,15 @@ const std::string     Gui::getName(arcade::ICore &core)
   return (name);
 }
 
-void                  Gui::listGame()
+void                  Gui::listGame(arcade::ICore &core, size_t selected)
 {
   std::vector<std::string>::iterator it;
   std::vector<std::string> game(_games);
   size_t i = 0;
 
+  _graph->aClear();
+  _graph->aPutText(345, 205 + 40 * selected, "core/res/fonts/press_start.ttf",
+                 25, arcade::YELLOW, "->");
   for (it = game.begin(); it != game.end(); ++it)
   {
     *it = (*it).substr(0, (*it).find_last_of("."));
@@ -124,6 +131,11 @@ void                  Gui::listGame()
                     30, arcade::CYAN, (*it));
     i++;
   }
+  _graph->aPutText(445, 680 , "core/res/fonts/press_start.ttf",
+                   18, arcade::WHITE, "Best: ");
+  _graph->aPutText(550, 680 , "core/res/fonts/press_start.ttf",
+                   18, arcade::WHITE, core.getSave().getSavedScore(_games[selected]));
+  core.refreshGui();
 }
 
 const std::string     Gui::chooseGame(arcade::ICore &core)
@@ -132,11 +144,7 @@ const std::string     Gui::chooseGame(arcade::ICore &core)
   std::vector<std::string>::iterator game;
 
   size_t i = 0;
-  _graph->aClear();
-  _graph->aPutText(345, 205, "core/res/fonts/press_start.ttf",
-    25, arcade::YELLOW, "->");
-  listGame();
-  core.refreshGui();
+  listGame(core, 0);
   while ((cmd = _graph->aCommand()) != arcade::CommandType::PLAY)
   {
     if (cmd != arcade::CommandType::UNDEFINED)
@@ -147,29 +155,17 @@ const std::string     Gui::chooseGame(arcade::ICore &core)
         return ("");
       }
       if (cmd == arcade::CommandType::GO_UP)
-      {
         (i == 0 ? i = _games.size() - 1: i--);
-        _graph->aClear();
-        _graph->aPutText(345, 205 + 40 * i, "core/res/fonts/press_start.ttf",
-          25, arcade::YELLOW, "->");
-        listGame();
-        core.refreshGui();
-        while ((cmd = _graph->aCommand()) == arcade::CommandType::GO_UP);
-      }
       else if (cmd == arcade::CommandType::GO_DOWN)
-      {
         (i == _games.size() - 1 ? i = 0: i++);
-        _graph->aClear();
-        _graph->aPutText(345, 205 + 40 * i, "core/res/fonts/press_start.ttf",
-          25, arcade::YELLOW, "->");
-        listGame();
-        core.refreshGui();
-        while ((cmd = _graph->aCommand()) == arcade::CommandType::GO_DOWN);
-      }
+      listGame(core, i);
+      while ((cmd = _graph->aCommand()) == arcade::CommandType::GO_UP);
+      while ((cmd = _graph->aCommand()) == arcade::CommandType::GO_DOWN);
     }
   }
   _currentGame = _games[i];
   _graph->aClear();
+  _bestScore = core.getSave().getSavedScore(_games[i]);
   affGui();
   return (_games[i]);
 }

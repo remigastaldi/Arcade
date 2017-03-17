@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:55:17 2017 gastal_r
-** Last update	Thu Mar 16 21:20:01 2017 gastal_r
+** Last update	Fri Mar 17 02:56:38 2017 gastal_r
 */
 
 #ifndef         _GUI_HPP_
@@ -34,7 +34,7 @@ public:
   void          affDispGames();
 
   const std::string   getName(arcade::ICore &);
-  void                listGame();
+  void                listGame(arcade::ICore &, size_t);
   const std::string   chooseGame(arcade::ICore &);
 
   const Status  &getStatus();
@@ -45,6 +45,7 @@ public:
   void          guiSetGames(const std::vector<std::string> games) {_games = games;}
   void          guiSetCurrentGame(const std::string &game) {_currentGame = game;}
   void          guiSetPlayer(const std::string &player) {_player = player;}
+  void          guiSetBestScore(std::string score) {_bestScore = score;}
 
 private:
   arcade::IGraph  *_graph;
@@ -54,6 +55,7 @@ private:
   std::vector<std::string>  _games;
   std::vector<std::string>  _libs;
   std::string               _player;
+  std::string               _bestScore;
 };
 
 
