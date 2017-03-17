@@ -106,6 +106,7 @@ void            Core::startCore()
 }
 
 void            Core::switchGame(const arcade::MoveType m)
+void            Core::switchGame(const arcade::CommandType m)
 {
   std::string   name;
 
@@ -113,6 +114,7 @@ void            Core::switchGame(const arcade::MoveType m)
   if (_games.size() == 1)
     return;
   if (m == arcade::NEXT)
+  if (m == arcade::CommandType::NEXT_LIB)
   {
     size_t pos = find(_games.begin(), _games.end(), _currentGame) - _games.begin();
     if (pos + 1 == _games.size())
@@ -135,6 +137,7 @@ void            Core::switchGame(const arcade::MoveType m)
 }
 
 void            Core::switchLib(const arcade::MoveType m)
+void            Core::switchLib(const arcade::CommandType m)
 {
   std::string   name;
 
@@ -142,6 +145,7 @@ void            Core::switchLib(const arcade::MoveType m)
   if (_libs.size() == 1)
     return;
   if (m == arcade::NEXT)
+  if (m == arcade::CommandType::NEXT_LIB)
   {
     size_t pos = find(_libs.begin(), _libs.end(), _currentGraph) - _libs.begin();
     if (pos + 1 == _libs.size())
