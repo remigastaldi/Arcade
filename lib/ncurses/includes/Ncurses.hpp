@@ -1,3 +1,4 @@
+
 /*
 ** Ncurses.hpp for Arcade
 **
@@ -62,6 +63,14 @@ public:
   static WINDOW *Subwin(WINDOW *orig, int nlines, int ncols, int begin_y, int begin_x)
   {
     return (subwin(orig, nlines, ncols, begin_y, begin_x));
+  }
+  static int	Attron(int attrs)
+  {
+    return (attron(attrs));
+  }
+  static int	Attroff(int attrs)
+  {
+    return (attroff(attrs));
   }
 };
 
