@@ -161,6 +161,18 @@ arcade::CommandType	LNcurses::aCommand()
     case (27) :
       return (arcade::CommandType::ESCAPE);
       break;
+    case (KEY_UP) :
+      return (arcade::CommandType::GO_UP);
+      break;
+    case (KEY_DOWN) :
+      return (arcade::CommandType::GO_DOWN);
+      break;
+    case (KEY_LEFT) :
+      return (arcade::CommandType::GO_LEFT);
+      break;
+    case (KEY_RIGHT) :
+      return (arcade::CommandType::GO_RIGHT);
+      break;
     }
 }
 
