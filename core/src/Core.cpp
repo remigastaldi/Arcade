@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Fri Mar 17 02:58:14 2017 gastal_r
+** Last update	Fri Mar 17 03:33:28 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -87,16 +87,16 @@ void            Core::setGuiData()
 void            Core::startCore()
 {
   _graph->aInit(1080, 720);
-  setGraph(_graph);
+/*setGraph(_graph);
   setGuiData();
-  refreshGui();
-  _player = getName(*this);
+  refreshGui(); */
+/*  _player = getName(*this);
   guiSetPlayer(_player);
   _save.saveSetPlayer(_player);
   _save.loadPlayerSave();
   _graph->aClear();
-  refreshGui();
-  chooseGame(*this);
+  refreshGui(); */
+//  chooseGame(*this);
   //openGame(chooseGame(*this));
   while (getStatus() == CONTINUE)
   {
