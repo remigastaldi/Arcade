@@ -55,7 +55,7 @@ void			LSnake::printMap(arcade::ICore &core)
 {
   for (int i = 0 ; i < _map->width * _map->height ; ++i)
   {
-    core.getLib()->aTile((i % _map->width) * 10 , (i / _map->width) * 10 , _map->tile[i]);
+    core.getLib()->aTile((i % _map->width) + 1 , (i / _map->width) + 1, _map->tile[i]);
   }
   core.getLib()->aRefresh();
 }
@@ -100,6 +100,8 @@ extern "C"
     LSnake		snake;
     arcade::ICore	*core;
 
+    
     snake.mainLoop(*core, true);
+    (void)core;
   }
 }

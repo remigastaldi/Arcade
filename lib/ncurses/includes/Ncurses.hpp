@@ -17,6 +17,7 @@ class             Ncurses
 {
 public:
   static void   Clear()           { clear(); }
+  static int	Getch()		  { getch(); }
   static WINDOW *Initscr()        { return (initscr()); }
   static int    Cbreak()          { return (cbreak());  }
   static int    StartColor(void)  { return (start_color()); }
@@ -57,6 +58,10 @@ public:
   static int	Keypad(WINDOW *win, bool bf)
   {
     return (keypad(win, bf));
+  }
+  static WINDOW *Subwin(WINDOW *orig, int nlines, int ncols, int begin_y, int begin_x)
+  {
+    return (subwin(orig, nlines, ncols, begin_y, begin_x));
   }
 };
 

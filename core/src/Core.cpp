@@ -98,13 +98,13 @@ void            Core::startCore()
   //_graph->aTile(200, 20, text);
 
 //  switchLib(arcade::NEXT);
-  _graph->aClose();
   _game->play(*this);
   // while (getStatus() == CONTINUE)
   // {
   //   if (_graph->aCommand() == arcade::CommandType::ESCAPE)
   //     setStatus(Status::EXIT);
   // }
+  _graph->aClose();
 }
 
 void            Core::switchGame(const arcade::MoveType m)

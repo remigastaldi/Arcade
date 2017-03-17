@@ -24,7 +24,7 @@ NAME            =       arcade
 
 CXXFLAGS	+=	-I./core/includes -I./interfaces
 CXXFLAGS	+=	-Wextra -Wall -W
-CXXFLAGS	+=	-ldl
+CXXFLAGS	+=	-ldl -lncurses
 
 SRC             =       core/src/main.cpp	\
 			core/src/File.cpp	\

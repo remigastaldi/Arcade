@@ -29,10 +29,11 @@ public:
                       size_t, arcade::Color, const std::string &);
   void        aClear() {};
   void        aRefresh();
-  arcade::CommandType aCommand() {return (arcade::CommandType::UNDEFINED);}
+  arcade::CommandType aCommand();
   std::string   aChar(){return(NULL);};
 
 private:
+  WINDOW	*_win;
 };
 
 #endif        /* !_LNcurses_HPP_ */
