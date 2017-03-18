@@ -152,13 +152,13 @@ void			LSnake::move()
 
 void			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
 {
-  std::time_t  cur_time = std::time(nullptr);
-  std::time_t  old_time = std::time(nullptr);
+  std::clock_t	cur_time = clock();
+  std::clock_t  old_time = clock();
 
   initGame();
   while (_map->type != arcade::CommandType::ESCAPE && _map->type != arcade::CommandType::MENU)
     {
-      cur_time = std::time(nullptr);
+      cur_time = clock();
 
       if (lPDM == true)
     	{
@@ -173,13 +173,11 @@ void			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
     	}
       
       changeAction();
-
-      if (cur_time > old_time)
-      	{
-      	  move();
-      	  old_time = std::time(nullptr);
-      	}
-
+      if (cur_time > old_time + 50000)
+	{
+	  move();
+	  old_time = clock();
+	}
     }
 }
 
