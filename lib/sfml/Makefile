@@ -21,7 +21,7 @@ RM              =       rm -f
 
 CXXFLAGS	+=	-I./includes -I../../interfaces/
 CXXFLAGS	+=	-Wextra -Wall -W -fPIC -shared
-CXXFLAGS        +=      -lsfml-graphics -lsfml-window -lsfml-system
+CXXFLAGS        +=      -lsfml-{graphics,window,system}
 
 NCNAME          =       ../lib_arcade_sfml.so
 NCSRC           =       src/LSfml.cpp

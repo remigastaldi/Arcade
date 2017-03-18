@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Fri Mar 17 04:14:03 2017 gastal_r
+** Last update	Sat Mar 18 21:35:44 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -18,15 +18,17 @@ LSfml::~LSfml()
 
 void            LSfml::aInit(size_t width, size_t height)
 {
-  std::cout << "TEST" << '\n';
-  _win.create(sf::VideoMode(width, height),"Arcade");
+  _win.create(sf::VideoMode(width, height),"Arcade",  sf::Style::Fullscreen);
   std::this_thread::sleep_for(std::chrono::milliseconds(100));
   _win.clear();
   _win.display();
+  _win.clear();
 }
 
 void            LSfml::aClose()
-{}
+{
+  _win.close();
+}
 
 void            LSfml::aTile(size_t x, size_t y, arcade::TileType type)
 {
@@ -59,8 +61,8 @@ void            LSfml::aTile(size_t x, size_t y, arcade::TileType type)
       break;
   }
 
-  rectangle.setSize(sf::Vector2f(10, 10));
-  rectangle.setPosition(x, y);
+  rectangle.setSize(sf::Vector2f(BLOCK_Y, BLOCK_Y));
+  rectangle.setPosition((x * BLOCK_Y) + X_PAD * BLOCK_X, (y * BLOCK_Y) + Y_PAD * BLOCK_Y);
   _win.draw(rectangle);
 }
 
@@ -71,7 +73,7 @@ void            LSfml::aTile(size_t x, size_t y, void *texture)
 
   sprite.setTexture(*test);
   sprite.scale(sf::Vector2f(1.f, 1.f));
-  sprite.setPosition(x, y);
+  sprite.setPosition((x * BLOCK_Y) + X_PAD * BLOCK_X, (y * BLOCK_Y) + Y_PAD * BLOCK_Y);
   _win.draw(sprite);
 }
 
@@ -105,10 +107,9 @@ void          LSfml::aPutText(size_t x, size_t y, const std::string &fontPath,
 
   font.loadFromFile(fontPath);
   sf::Text sfText(text, font);
-  sfText.setCharacterSize(30);
   sfText.setStyle(sf::Text::Bold);
   sfText.setFillColor(fillColor(color));
-  sfText.setPosition(x, y);
+  sfText.setPosition(x * BLOCK_X, (y * BLOCK_Y) + size);
   sfText.setCharacterSize(size);
   _win.draw(sfText);
 }
@@ -121,6 +122,7 @@ void            LSfml::aClear()
 void            LSfml::aRefresh()
 {
   _win.display();
+  _win.clear();
 }
 
 arcade::CommandType   LSfml::aCommand()
