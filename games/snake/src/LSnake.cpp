@@ -53,9 +53,6 @@ void	LSnake::initGame()
   _position.push_back(head);
 
   newApple();
-
-  // for (int i = 0 ; i < _map->width * _map->height ; ++i)
-  //   std::cout << (int)_map->tile[i] << std::endl;
 }
 
 void			LSnake::printGame(arcade::ICore &core)
@@ -74,15 +71,19 @@ void			LSnake::changeAction()
 {
   switch (_map->type) {
   case (arcade::CommandType::GO_UP):
-    _direction = arcade::CommandType::GO_UP;
+    if (_direction != arcade::CommandType::GO_DOWN)
+      _direction = arcade::CommandType::GO_UP;
     break;
   case (arcade::CommandType::GO_DOWN):
+    if (_direction != arcade::CommandType::GO_UP)
     _direction = arcade::CommandType::GO_DOWN;
     break;
   case (arcade::CommandType::GO_LEFT):
+    if (_direction != arcade::CommandType::GO_RIGHT)
     _direction = arcade::CommandType::GO_LEFT;
     break;
   case (arcade::CommandType::GO_RIGHT):
+    if (_direction != arcade::CommandType::GO_LEFT)
     _direction = arcade::CommandType::GO_RIGHT;
     break;
   default:
@@ -92,62 +93,33 @@ void			LSnake::changeAction()
 
 void			LSnake::move()
 {
-  switch (_direction) {
-  case (arcade::CommandType::GO_UP):
-    for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin(); it--)
-      {
-        (*it).x = (*(it - 1)).x;
-        (*it).y = (*(it - 1)).y;
-      }
-    _position[0].y--;
-    if (_position[0].x == _apple.x - 1 && _position[0].y == _apple.y - 1)
-      {
-	newApple();
-	addQueue();
-      }
-    break;
-  case (arcade::CommandType::GO_DOWN):
-    for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin(); it--)
-      {
-        (*it).x = (*(it - 1)).x;
-        (*it).y = (*(it - 1)).y;
-      }
-    _position[0].y++;
-    if (_position[0].x == _apple.x - 1 && _position[0].y == _apple.y - 1)
-      {
-	newApple();
-	addQueue();
-      }
-    break;
-  case (arcade::CommandType::GO_LEFT):
-    for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin(); it--)
-      {
-        (*it).x = (*(it - 1)).x;
-        (*it).y = (*(it - 1)).y;
-      }
-    _position[0].x--;
-    if (_position[0].x == _apple.x - 1 && _position[0].y == _apple.y - 1)
-      {
-	newApple();
-	addQueue();
-      }
-    break;
-  case (arcade::CommandType::GO_RIGHT):
-    for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin(); it--)
-      {
-        (*it).x = (*(it - 1)).x;
-        (*it).y = (*(it - 1)).y;
-      }
-    _position[0].x++;
-    if (_position[0].x == _apple.x - 1 && _position[0].y == _apple.y - 1)
-      {
-	newApple();
-	addQueue();
-      }
-    break;
-  default:
-    break;
-  }
+  for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin(); it--)
+    {
+      (*it).x = (*(it - 1)).x;
+      (*it).y = (*(it - 1)).y;
+    }
+  switch (_direction)
+    {
+    case (arcade::CommandType::GO_UP):
+      _position[0].y--;
+      break;
+    case (arcade::CommandType::GO_DOWN):
+      _position[0].y++;
+      break;
+    case (arcade::CommandType::GO_LEFT):
+      _position[0].x--;
+      break;
+    case (arcade::CommandType::GO_RIGHT):
+      _position[0].x++;
+      break;
+    default :
+      break;
+    }
+  if (_position[0].x == _apple.x - 1 && _position[0].y == _apple.y - 1)
+    {
+      newApple();
+      addQueue();
+    }
 }
 
 void			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
