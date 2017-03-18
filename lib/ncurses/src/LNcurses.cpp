@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Sat Mar 18 18:59:39 2017 gastal_r
+** Last update	Sun Mar 19 00:04:41 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -158,6 +158,11 @@ void        LNcurses::aPutText(size_t x, size_t y, const std::string &path,
     }
 }
 
+void            LNcurses::aClear()
+{
+  Ncurses::Clear();
+}
+
 void        LNcurses::aRefresh()
 {
   Ncurses::Wrefresh(_win);
@@ -169,39 +174,54 @@ arcade::CommandType	LNcurses::aCommand()
     {
     case (27) :
       return (arcade::CommandType::ESCAPE);
-      break;
     case (KEY_UP) :
       return (arcade::CommandType::GO_UP);
-      break;
     case (KEY_DOWN) :
       return (arcade::CommandType::GO_DOWN);
-      break;
     case (KEY_LEFT) :
       return (arcade::CommandType::GO_LEFT);
-      break;
     case (KEY_RIGHT) :
       return (arcade::CommandType::GO_RIGHT);
-      break;
     case (50) :
       return (arcade::CommandType::PREV_LIB);
-      break;
     case(51) :
       return (arcade::CommandType::NEXT_LIB);
-      break;
     case(52) :
       return (arcade::CommandType::PREV_GAME);
-      break;
     case (53) :
       return (arcade::CommandType::NEXT_GAME);
-      break;
     case (56) :
       return (arcade::CommandType::RESTART);
-      break;
     case (57) :
       return (arcade::CommandType::MENU);
-      break;
+    case (10) :
+      return (arcade::CommandType::PLAY);
     }
   return (arcade::CommandType::UNDEFINED);
+}
+
+std::string   LNcurses::aChar()
+{
+  std::string input;
+
+  Ncurses::Nodelay(stdscr, FALSE);
+  int value = Ncurses::Getch();
+  switch (value)
+  {
+    case 127 :
+      input = "BACKSPACE";
+      break;
+    case 10 :
+      input = "ENTER";
+      break;
+    case 27 :
+      input = "ESCAPE";
+      break;
+    default :
+      input = std::string(1, value);
+  }
+  Ncurses::Nodelay(stdscr, TRUE);
+  return (input);
 }
 
 extern "C"

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 11:01:41 2017 gastal_r
-** Last update	Sat Mar 18 22:41:46 2017 gastal_r
+** Last update	Sun Mar 19 00:02:13 2017 gastal_r
 */
 
 #include        "Gui.hpp"
@@ -81,6 +81,7 @@ const std::string     Gui::getName(arcade::ICore &core)
 
   while ((input = _graph->aChar()) != "ENTER")
   {
+    _graph->aClear();
     _graph->aPutText(pos_x(2) - 3 * BLOCK_X, pos_y(4), "core/res/fonts/press_start.ttf",
                   WIDTH / 60, arcade::MAGENTA, "ENTER NAME");
     if (!input.empty())
@@ -96,10 +97,9 @@ const std::string     Gui::getName(arcade::ICore &core)
         name += input;
     }
     _graph->aPutText(pos_x(2.15) - name.length(), pos_y(3), "core/res/fonts/freaky_font.ttf",
-    40, arcade::BLUE, name);
+    WIDTH / 40, arcade::BLUE, name);
     core.refreshGui();
     _graph->aRefresh();
-    _graph->aClear();
   }
   return (name);
 }
@@ -110,6 +110,7 @@ void                  Gui::listGame(arcade::ICore &core, size_t selected)
   std::vector<std::string> game(_games);
   size_t i = 0;
 
+  _graph->aClear();
   _graph->aPutText(pos_x(3), pos_y(3.3555) + pos_y(20) * selected, "core/res/fonts/press_start.ttf",
                  WIDTH / 70, arcade::YELLOW, "->");
   for (it = game.begin(); it != game.end(); ++it)
@@ -126,7 +127,6 @@ void                  Gui::listGame(arcade::ICore &core, size_t selected)
                    18, arcade::WHITE, core.getSave().getSavedScore(_games[selected]));
   core.refreshGui();
   _graph->aRefresh();
-  _graph->aClear();
 }
 
 const std::string     Gui::chooseGame(arcade::ICore &core)
@@ -155,9 +155,7 @@ const std::string     Gui::chooseGame(arcade::ICore &core)
     }
   }
   _currentGame = _games[i];
-  _graph->aClear();
   _bestScore = core.getSave().getSavedScore(_games[i]);
-  affGui();
   return (_games[i]);
 }
 
