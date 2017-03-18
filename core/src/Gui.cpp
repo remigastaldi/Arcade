@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 11:01:41 2017 gastal_r
-** Last update	Fri Mar 17 03:08:50 2017 gastal_r
+** Last update	Sat Mar 18 19:49:09 2017 gastal_r
 */
 
 #include        "Gui.hpp"
@@ -15,11 +15,6 @@ Gui::Gui()
 
 Gui::~Gui()
 {}
-
-void            Gui::setGraph(arcade::IGraph *graph)
-{
-    _graph = graph;
-}
 
 void            Gui::affName()
 {
@@ -34,12 +29,11 @@ void            Gui::affName()
 
 void            Gui::affGui()
 {
-  _graph->aPutText(430, 10, "core/res/fonts/press_start.ttf",
-                  40, arcade::RED, "ARCADE");
-  affDispLibs();
-  affDispGames();
-  affName();
-  _graph->aRefresh();
+  _graph->aPutText(((WIDTH / BLOCK_X) / 2) - (2 * BLOCK_X), (HEIGHT / BLOCK_Y) / 20, "core/res/fonts/press_start.ttf",
+                    WIDTH / 40, arcade::RED, "ARCADE");
+//  affDispLibs();
+  //affDispGames();
+  //affName();
 }
 
 void            Gui::affDispLibs()
@@ -50,12 +44,12 @@ void            Gui::affDispLibs()
   for (std::vector<std::string>::iterator it = libs.begin(); it != libs.end(); ++it)
   {
     if (*it == _currentGraph)
-      _graph->aPutText(20, 100 + 40 * i, "core/res/fonts/freaky_font.ttf",
-                    30, arcade::YELLOW, "->");
+      _graph->aPutText(pos_x(24), pos_y(10) + pos_y(30) * i,
+      "core/res/fonts/freaky_font.ttf",  WIDTH / 60, arcade::YELLOW, "->");
     *it = (*it).substr(0, (*it).find_last_of("."));
     *it = (*it).erase(0, (*it).find_last_of("_") + 1);
-    _graph->aPutText(50, 100 + 40 * i, "core/res/fonts/freaky_font.ttf",
-                    30, arcade::GREEN, (*it));
+    _graph->aPutText(pos_x(16), pos_y(10) + pos_y(30)  * i,
+    "core/res/fonts/freaky_font.ttf",   WIDTH / 60, arcade::GREEN, (*it));
     i++;
   }
 }
@@ -68,8 +62,8 @@ void            Gui::affDispGames()
   for (std::vector<std::string>::iterator it = games.begin(); it != games.end(); ++it)
   {
     if (*it == _currentGame)
-      _graph->aPutText(940, 100 + 40 * i, "core/res/fonts/freaky_font.ttf",
-                    30, arcade::YELLOW, "->");
+      _graph->aPutText(pos_x(1.2), pos_y(10) + pos_y(30) * i,
+       "core/res/fonts/freaky_font.ttf",  WIDTH / 60, arcade::YELLOW, "->");
     *it = (*it).substr(0, (*it).find_last_of("."));
     *it = (*it).erase(0, (*it).find_last_of("_") + 1);
     _graph->aPutText(970, 100 + 40 * i, "core/res/fonts/freaky_font.ttf",
@@ -120,7 +114,6 @@ void                  Gui::listGame(arcade::ICore &core, size_t selected)
   std::vector<std::string> game(_games);
   size_t i = 0;
 
-  _graph->aClear();
   _graph->aPutText(345, 205 + 40 * selected, "core/res/fonts/press_start.ttf",
                  25, arcade::YELLOW, "->");
   for (it = game.begin(); it != game.end(); ++it)

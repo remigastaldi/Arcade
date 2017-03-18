@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update Fri Mar 17 03:21:37 2017 Leo Hubert Froideval
+** Last update	Sat Mar 18 18:59:39 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -54,46 +54,55 @@ void        LNcurses::aClose()
 
 void        LNcurses::aTile(size_t x, size_t y, arcade::TileType tile)
 {
+  x = x * 2 - 1;
   switch (tile)
     {
     case (arcade::TileType::EMPTY) :
       Ncurses::Attron(COLOR_PAIR(1));
-      mvprintw(y, x, "W");
+      mvprintw(Y_PAD + y, X_PAD + x, "W");
+      mvprintw(Y_PAD + y, X_PAD + x + 1, "W");
       Ncurses::Attroff(COLOR_PAIR(1));
       break;
     case (arcade::TileType::BLOCK) :
       Ncurses::Attron(COLOR_PAIR(2));
-      mvprintw(y, x, "R");
+      mvprintw(Y_PAD + y, X_PAD + x, "R");
+      mvprintw(Y_PAD + y, X_PAD + x + 1, "R");
       Ncurses::Attroff(COLOR_PAIR(2));
       break;
     case (arcade::TileType::OBSTACLE) :
       Ncurses::Attron(COLOR_PAIR(3));
-      mvprintw(y, x, "G");
+      mvprintw(Y_PAD + y, X_PAD + x, "G");
+      mvprintw(Y_PAD + y, X_PAD + x + 1, "G");
       Ncurses::Attroff(COLOR_PAIR(3));
       break;
     case (arcade::TileType::EVIL_DUDE) :
       Ncurses::Attron(COLOR_PAIR(4));
-      mvprintw(y, x, "Y");
+      mvprintw(Y_PAD + y, X_PAD + x, "Y");
+      mvprintw(Y_PAD + y, X_PAD + x + 1, "Y");
       Ncurses::Attroff(COLOR_PAIR(4));
       break;
     case (arcade::TileType::EVIL_SHOOT) :
       Ncurses::Attron(COLOR_PAIR(5));
-      mvprintw(y, x, "U");
+      mvprintw(Y_PAD + y, X_PAD + x, "U");
+      mvprintw(Y_PAD + y, X_PAD + x + 1, "U");
       Ncurses::Attroff(COLOR_PAIR(5));
       break;
     case (arcade::TileType::MY_SHOOT) :
       Ncurses::Attron(COLOR_PAIR(6));
-      mvprintw(y, x, "K");
+      mvprintw(Y_PAD + y, X_PAD + x, "K");
+      mvprintw(Y_PAD + y, X_PAD + x + 1, "K");
       Ncurses::Attroff(COLOR_PAIR(6));
       break;
     case (arcade::TileType::POWERUP) :
       Ncurses::Attron(COLOR_PAIR(7));
-      mvprintw(y, x, "C");
+      mvprintw(Y_PAD + y, X_PAD + x, "C");
+      mvprintw(Y_PAD + y, X_PAD + x + 1, "C");
       Ncurses::Attroff(COLOR_PAIR(7));
       break;
     case (arcade::TileType::OTHER) :
       Ncurses::Attron(COLOR_PAIR(8));
-      mvprintw(y, x, "M");
+      mvprintw(Y_PAD + y, X_PAD + x, "M");
+      mvprintw(Y_PAD + y, X_PAD + x + 1, "M");
       Ncurses::Attroff(COLOR_PAIR(8));
       break;
     }
@@ -199,7 +208,6 @@ extern "C"
 {
   LNcurses        *createGraph()
   {
-    std::cout << "GRAPH" << '\n';
     return (new LNcurses());
   }
 

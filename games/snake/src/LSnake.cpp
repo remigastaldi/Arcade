@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Tue Mar 14 14:50:17 2017 gastal_r
+** Last update	Sat Mar 18 20:39:04 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -57,6 +57,7 @@ void	LSnake::initGame()
 
 void			LSnake::printGame(arcade::ICore &core)
 {
+  //core.refreshGui();
   for (int i = 0 ; i < _map->width * _map->height ; ++i)
     core.getLib()->aTile((i % _map->width) + 1 , (i / _map->width) + 1, _map->tile[i]);
 
@@ -65,6 +66,7 @@ void			LSnake::printGame(arcade::ICore &core)
 
   core.getLib()->aTile(_apple.x, _apple.y, arcade::TileType::POWERUP);
   core.getLib()->aRefresh();
+  //std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
 
 void			LSnake::changeAction()
@@ -143,7 +145,7 @@ void			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
 	    core.switchLib(arcade::CommandType::NEXT_LIB);
 	  printGame(core);
     	}
-      
+
       changeAction();
       if (cur_time > old_time + 50000)
 	{

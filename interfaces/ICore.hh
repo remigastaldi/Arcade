@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 12 21:30:45 2017 gastal_r
-** Last update	Fri Mar 17 03:56:05 2017 gastal_r
+** Last update	Fri Mar 17 10:34:13 2017 gastal_r
 */
 
 #ifndef           _ICORE_HH_
@@ -17,11 +17,6 @@
 
 namespace	        arcade
 {
-  enum MoveType
-  {
-    NEXT,
-    PREV
-  };
   class             ICore
   {
   public:

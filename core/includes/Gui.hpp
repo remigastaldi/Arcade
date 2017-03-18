@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:55:17 2017 gastal_r
-** Last update	Fri Mar 17 02:56:38 2017 gastal_r
+** Last update	Sat Mar 18 17:17:17 2017 gastal_r
 */
 
 #ifndef         _GUI_HPP_
@@ -27,7 +27,6 @@ public:
   Gui ();
   virtual       ~Gui ();
 
-  void          setGraph(arcade::IGraph *graph);
   void          affGui();
   void          affName();
   void          affDispLibs();
@@ -40,6 +39,7 @@ public:
   const Status  &getStatus();
   void          setStatus(const Status status) {_status = status; }
 
+  void          guiSetGraph(arcade::IGraph *graph) {_graph = graph;}
   void          guiSetLibs(const std::vector<std::string> libs) {_libs = libs;}
   void          guiSetCurrentGraph(const std::string &graph) {_currentGraph = graph;}
   void          guiSetGames(const std::vector<std::string> games) {_games = games;}

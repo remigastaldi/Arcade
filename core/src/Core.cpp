@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Fri Mar 17 03:33:28 2017 gastal_r
+** Last update	Sat Mar 18 20:36:29 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -16,7 +16,7 @@ Core::Core(const std::string &lib)
   openLibsDir();
   openGamesDir();
   openLib(lib);
-  //openGame(std::string("games/lib_arcade_snake.so"));
+  openGame(std::string("games/lib_arcade_snake.so"));
 /*  _currentGame = "games/lib_arcade_snake.so";
   _currentGraph = "lib/lib_arcade_ncurses.so";
   openGame(std::string("games/lib_arcade_snake.so"));
@@ -77,6 +77,7 @@ void            Core::openGamesDir()
 
 void            Core::setGuiData()
 {
+  guiSetGraph(_graph);
   guiSetLibs(_libs);
   guiSetCurrentGraph(_currentGraph);
   guiSetGames(_games);
@@ -86,26 +87,26 @@ void            Core::setGuiData()
 
 void            Core::startCore()
 {
-  _graph->aInit(1080, 720);
-/*setGraph(_graph);
+  _graph->aInit(WIDTH, HEIGHT);
+  guiSetGraph(_graph);
   setGuiData();
-  refreshGui(); */
+  refreshGui();
 /*  _player = getName(*this);
   guiSetPlayer(_player);
   _save.saveSetPlayer(_player);
   _save.loadPlayerSave();
   _graph->aClear();
-  refreshGui(); */
-//  chooseGame(*this);
-  //openGame(chooseGame(*this));
-  while (getStatus() == CONTINUE)
+  refreshGui();
+  //openGame(chooseGame(*this)); */
+  _game->play(*this);
+  /*while (getStatus() == CONTINUE)
   {
   if (_graph->aCommand() == arcade::CommandType::ESCAPE)
     setStatus(Status::EXIT);
-  }
+  } */
+  _graph->aClose();
 }
 
-void            Core::switchGame(const arcade::MoveType m)
 void            Core::switchGame(const arcade::CommandType m)
 {
   std::string   name;
@@ -133,6 +134,8 @@ void            Core::switchGame(const arcade::CommandType m)
   delete(_game);
   Dlclose(_gameHandle);
   openGame(name);
+  setGuiData();
+  _game->play(*this);
 }
 
 void            Core::switchLib(const arcade::CommandType m)
@@ -162,7 +165,8 @@ void            Core::switchLib(const arcade::CommandType m)
   delete(_graph);
   Dlclose(_graphHandle);
   openLib(name);
-  _graph->aInit(1080, 720);
+  _graph->aInit(1920, 1080);
+  setGuiData();
 }
 
 arcade::IGraph  *Core::getLib() const
