@@ -192,6 +192,7 @@ arcade::CommandType	LNcurses::aCommand()
       return (arcade::CommandType::MENU);
       break;
     }
+  return (arcade::CommandType::UNDEFINED);
 }
 
 extern "C"

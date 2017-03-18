@@ -12,11 +12,11 @@
 #define         _LSnake_HPP_
 
 #include	<algorithm>
-#include <iomanip>
-#include <chrono>
-#include <ctime>
-#include <thread>
-#include <vector>
+#include	<iomanip>
+#include	<chrono>
+#include	<ctime>
+#include	<thread>
+#include	<vector>
 #include        <iostream>
 #include	<list>
 #include        "ICore.hh"
@@ -32,27 +32,27 @@ public:
   LSnake();
   virtual       ~LSnake();
 
-  void		changeAction(arcade::ICore &core);
+  void		changeAction();
   void		move();
   void		printGame(arcade::ICore &core);
   void		mainLoop(arcade::ICore &, bool);
   void		initGame();
-  void    play(arcade::ICore &);
-  void    close();
+  void		play(arcade::ICore &);
+  void		close();
   void		addQueue();
   void		newApple();
 
 private:
-  arcade::GetMap  *_map;
+  arcade::GetMap		*_map;
   std::vector<arcade::Position>	_position;
-  arcade::Position	_apple;
-  arcade::CommandType _direction;
+  arcade::Position		_apple;
+  arcade::CommandType		_direction;
 };
 
-typedef struct	snake_part
+typedef struct			snake_part
 {
-  int		_x;
-  int		_y;
-}		snake_part;
+  int				_x;
+  int				_y;
+}				snake_part;
 
 #endif        /* !_LSnake_HPP_ */
