@@ -41,6 +41,7 @@ public:
   void		close();
   void		addQueue();
   void		newApple();
+  void		addScore(int);
   void		gameOver();
 
 private:
@@ -48,6 +49,7 @@ private:
   std::vector<arcade::Position>	_position;
   arcade::Position		_apple;
   arcade::CommandType		_direction;
+  int				_score;
 };
 
 
