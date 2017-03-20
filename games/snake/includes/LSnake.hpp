@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 23:42:03 2017 gastal_r
-** Last update Mon Mar 20 10:24:24 2017 Leo Hubert Froideval
+** Last update Mon Mar 20 11:00:21 2017 Leo Hubert Froideval
 */
 
 #ifndef         _LSnake_HPP_
@@ -41,6 +41,7 @@ public:
   void		close();
   void		addQueue();
   void		newApple();
+  void		gameOver();
 
 private:
   arcade::GetMap		*_map;
@@ -49,10 +50,5 @@ private:
   arcade::CommandType		_direction;
 };
 
-typedef struct			snake_part
-{
-  int				_x;
-  int				_y;
-}				snake_part;
 
 #endif        /* !_LSnake_HPP_ */

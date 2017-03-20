@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update Mon Mar 20 10:23:59 2017 Leo Hubert Froideval
+** Last update Mon Mar 20 11:22:54 2017 Leo Hubert Froideval
 */
 
 #include          "LSnake.hpp"
@@ -18,13 +18,6 @@ LSnake::~LSnake()
 
 arcade::CommandType				LSnake::play(arcade::ICore &core)
 {
-  snake_part			initPos;
-  std::list<snake_part>		snake;
-
-  initPos._x = 30;
-  initPos._y = 30;
-  snake.push_back(initPos);
-
   return (mainLoop(core, false));
 }
 
@@ -73,19 +66,19 @@ void			LSnake::changeAction()
 {
   switch (_map->type) {
   case (arcade::CommandType::GO_UP):
-    if (_direction != arcade::CommandType::GO_DOWN)
+    if (_direction != arcade::CommandType::GO_DOWN && _direction != arcade::CommandType::GO_UP)
       _direction = arcade::CommandType::GO_UP;
     break;
   case (arcade::CommandType::GO_DOWN):
-    if (_direction != arcade::CommandType::GO_UP)
+    if (_direction != arcade::CommandType::GO_UP && _direction != arcade::CommandType::GO_DOWN)
     _direction = arcade::CommandType::GO_DOWN;
     break;
   case (arcade::CommandType::GO_LEFT):
-    if (_direction != arcade::CommandType::GO_RIGHT)
+    if (_direction != arcade::CommandType::GO_RIGHT && _direction != arcade::CommandType::GO_LEFT)
     _direction = arcade::CommandType::GO_LEFT;
     break;
   case (arcade::CommandType::GO_RIGHT):
-    if (_direction != arcade::CommandType::GO_LEFT)
+    if (_direction != arcade::CommandType::GO_LEFT && _direction != arcade::CommandType::GO_RIGHT)
     _direction = arcade::CommandType::GO_RIGHT;
     break;
   default:
@@ -103,15 +96,23 @@ void			LSnake::move()
   switch (_direction)
     {
     case (arcade::CommandType::GO_UP):
+      if (_map->tile[_position[0].x + _map->width * _position[0].y - 1] == arcade::TileType::OTHER)
+        gameOver();
       _position[0].y--;
       break;
     case (arcade::CommandType::GO_DOWN):
+      if (_map->tile[_position[0].x + _map->width * _position[0].y + 1] == arcade::TileType::OTHER)
+        gameOver();
       _position[0].y++;
       break;
     case (arcade::CommandType::GO_LEFT):
+      if (_map->tile[_position[0].x - 1 + _map->width * _position[0].y] == arcade::TileType::OTHER)
+        gameOver();
       _position[0].x--;
       break;
     case (arcade::CommandType::GO_RIGHT):
+      if (_map->tile[_position[0].x + 1 + _map->width * _position[0].y] == arcade::TileType::OTHER)
+        gameOver();
       _position[0].x++;
       break;
     default :
@@ -147,13 +148,18 @@ arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
     	}
 
       changeAction();
-      if (cur_time > old_time + 50000)
+      if (cur_time > old_time + (50000 - _position.size()))
 	{
 	  move();
 	  old_time = clock();
 	}
     }
     return (_map->type);
+}
+
+void							LSnake::gameOver()
+{
+  exit(0);
 }
 
 void              LSnake::close()
@@ -182,7 +188,8 @@ extern "C"
 
   void            deleteGame(arcade::IGame *game)
   {
-    delete(game);
+    if (game != NULL)
+      delete(game);
   }
 
   void			Play()
