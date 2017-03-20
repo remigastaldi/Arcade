@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 23:42:03 2017 gastal_r
-** Last update Fri Mar 17 15:01:26 2017 Leo Hubert Froideval
+** Last update Mon Mar 20 10:24:24 2017 Leo Hubert Froideval
 */
 
 #ifndef         _LSnake_HPP_
@@ -35,9 +35,9 @@ public:
   void		changeAction();
   void		move();
   void		printGame(arcade::ICore &core);
-  void		mainLoop(arcade::ICore &, bool);
+  arcade::CommandType		mainLoop(arcade::ICore &, bool);
   void		initGame();
-  void		play(arcade::ICore &);
+  arcade::CommandType		play(arcade::ICore &);
   void		close();
   void		addQueue();
   void		newApple();

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Sat Mar 18 20:39:04 2017 gastal_r
+** Last update Mon Mar 20 10:23:59 2017 Leo Hubert Froideval
 */
 
 #include          "LSnake.hpp"
@@ -16,7 +16,7 @@ LSnake::LSnake()
 LSnake::~LSnake()
 {}
 
-void				LSnake::play(arcade::ICore &core)
+arcade::CommandType				LSnake::play(arcade::ICore &core)
 {
   snake_part			initPos;
   std::list<snake_part>		snake;
@@ -25,7 +25,7 @@ void				LSnake::play(arcade::ICore &core)
   initPos._y = 30;
   snake.push_back(initPos);
 
-  mainLoop(core, false);
+  return (mainLoop(core, false));
 }
 
 void	LSnake::initGame()
@@ -124,7 +124,7 @@ void			LSnake::move()
     }
 }
 
-void			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
+arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
 {
   std::clock_t	cur_time = clock();
   std::clock_t  old_time = clock();
@@ -153,6 +153,7 @@ void			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
 	  old_time = clock();
 	}
     }
+    return (_map->type);
 }
 
 void              LSnake::close()
