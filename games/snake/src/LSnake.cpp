@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update Tue Mar 21 23:40:53 2017 Leo Hubert Froideval
+** Last update Tue Mar 21 23:49:58 2017 Leo Hubert Froideval
 */
 
 #include          "LSnake.hpp"
@@ -160,6 +160,8 @@ arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
       	{
           std::string tmp;
           std::cin >> tmp;
+          if (tmp[0] == 0)
+            return (arcade::CommandType::ESCAPE);
           _map->type = lPDM_aCommand(tmp);
           if (_map->type == arcade::CommandType::GET_MAP)
             lPDM_getMap();
