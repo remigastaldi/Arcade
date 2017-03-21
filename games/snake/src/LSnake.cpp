@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Tue Mar 21 19:19:11 2017 gastal_r
+** Last update Tue Mar 21 23:40:53 2017 Leo Hubert Froideval
 */
 
 #include          "LSnake.hpp"
@@ -148,34 +148,42 @@ arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
   std::clock_t		old_time = clock();
 
   initGame();
-  core.setScore(std::to_string(_score));
+  if (lPDM == false)
+    core.setScore(std::to_string(_score)); //TODO
   while (_map->type != arcade::CommandType::ESCAPE && _map->type != arcade::CommandType::MENU)
     {
       cur_time = clock();
 
+      if (cur_time > old_time + (100000 - (int)_position.size()))
+      {
+        if (lPDM == true)
+      	{
+          std::string tmp;
+          std::cin >> tmp;
+          _map->type = lPDM_aCommand(tmp);
+          if (_map->type == arcade::CommandType::GET_MAP)
+            lPDM_getMap();
+      	}
+        else
+      	{
+          _map->type = core.getLib()->aCommand();
+          if (_map->type == arcade::CommandType::NEXT_LIB)
+    	        core.switchLib(arcade::CommandType::NEXT_LIB);
+      	}
 
-  if (cur_time > old_time + (100000 - (int)_position.size()))
-  {
-    if (lPDM == true)
-  	{
-  	}
-    else
-  	{
-      _map->type = core.getLib()->aCommand();
-      if (_map->type == arcade::CommandType::NEXT_LIB)
-	        core.switchLib(arcade::CommandType::NEXT_LIB);
-  	}
-    changeAction();
-    move(core);
-    printGame(core);
-	  old_time = clock();
-	}
+        changeAction();
+        move(core);
+        if (lPDM == false)
+          printGame(core);
+    	  old_time = clock();
+    	}
     }
     return (_map->type);
 }
 
 void							LSnake::gameOver(arcade::ICore &core)
 {
+  core.setScore(std::to_string(_score));
   core.getLib()->aClear();
   core.getLib()->aPutText(pos_x(2.7), pos_y(2.25), "core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::RED, "GAME OVER");
   core.getLib()->aPutText(pos_x(3.1), pos_y(1.8), "core/res/fonts/press_start.ttf", WIDTH / 100, arcade::Color::WHITE, "PRESS ENTER TO RESTART THE GAME.");
@@ -193,8 +201,6 @@ void							LSnake::gameOver(arcade::ICore &core)
 	  exit(0);
 	}
     }
-/*  if (std::stoi(core.getSave().getSavedScore(std::string("snake"))) < _score)
-    core.getSave().saveScore(std::to_string(_score)); */
 }
 
 void			LSnake::close()
@@ -220,6 +226,32 @@ void			LSnake::newApple()
       newApple();
 }
 
+arcade::CommandType		LSnake::lPDM_aCommand(std::string const &command)
+{
+    if (!command[0])
+      return (arcade::CommandType::UNDEFINED);
+    switch (command[0]) {
+      case 0:
+        return (arcade::CommandType::WHERE_AM_I);
+        break;
+      case 1:
+        return (arcade::CommandType::GET_MAP);
+        break;
+      case 2:
+        return (arcade::CommandType::GO_UP);
+        break;
+    }
+}
+
+void                  LSnake::lPDM_getMap() const
+{
+  for (int i = 0 ; i < _map->width * _map->height ; ++i)
+    {
+      std::cout << (int)_map->tile[i] << std::endl;
+    }
+}
+
+
 extern "C"
 {
   LSnake		*createGame()
@@ -238,11 +270,12 @@ extern "C"
     LSnake		snake;
     arcade::ICore	*core;
 
-
-    if ((core = (arcade::ICore *)malloc(sizeof(1))) != NULL)
-      {
-	snake.mainLoop(*core, true);
-	free(core);
-      }
+    std::cerr << "PLAY" << '\n';
+    snake.mainLoop(*core, true);
+  //   if ((core = (arcade::ICore *)malloc(sizeof(1))) != NULL)
+  //     {
+	// snake.mainLoop(*core, true);
+	// free(core);
+  //     }
   }
 }
