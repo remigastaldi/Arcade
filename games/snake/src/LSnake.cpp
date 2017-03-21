@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update Tue Mar 21 23:49:58 2017 Leo Hubert Froideval
+** Last update Tue Mar 21 23:55:39 2017 Leo Hubert Froideval
 */
 
 #include          "LSnake.hpp"
@@ -176,7 +176,9 @@ arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
         changeAction();
         move(core);
         if (lPDM == false)
+        {
           printGame(core);
+        }
     	  old_time = clock();
     	}
     }
@@ -243,6 +245,8 @@ arcade::CommandType		LSnake::lPDM_aCommand(std::string const &command)
         return (arcade::CommandType::GO_UP);
         break;
     }
+
+  return (arcade::CommandType::UNDEFINED);
 }
 
 void                  LSnake::lPDM_getMap() const
@@ -272,12 +276,7 @@ extern "C"
     LSnake		snake;
     arcade::ICore	*core;
 
-    std::cerr << "PLAY" << '\n';
     snake.mainLoop(*core, true);
-  //   if ((core = (arcade::ICore *)malloc(sizeof(1))) != NULL)
-  //     {
-	// snake.mainLoop(*core, true);
-	// free(core);
-  //     }
+    delete(core);
   }
 }
