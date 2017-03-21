@@ -165,14 +165,16 @@ void            Core::switchLib(const arcade::CommandType m)
   setGuiData();
 }
 
+void             Core::saveScore(size_t score)
+{
+  std::cout << std::stoul(_save.getSavedScore(_currentGame)) << '\n';
+  if (std::stoul(_save.getSavedScore(_currentGame)) < score)
+    _save.saveScore(_currentGame, std::to_string(score));
+}
+
 arcade::IGraph  *Core::getLib() const
 {
   return (_graph);
-}
-
-Save            &Core::getSave()
-{
-  return (_save);
 }
 
 void            *Core::Dlsym(void *handle, const char *symbol)
