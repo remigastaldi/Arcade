@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Mar 17 00:03:17 2017 gastal_r
-** Last update	Fri Mar 17 02:26:34 2017 gastal_r
+** Last update	Tue Mar 21 02:07:44 2017 gastal_r
 */
 
 #include        "Save.hpp"
@@ -58,4 +58,8 @@ const std::string     Save::getSavedScore(std::string name) const
       return ((*it).getValue());
   }
   return ("0");
+}
+
+void                  Save::saveScore(const std::string &score)
+{
 }

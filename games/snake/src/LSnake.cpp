@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update Mon Mar 20 11:22:54 2017 Leo Hubert Froideval
+** Last update	Tue Mar 21 13:38:29 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -28,16 +28,16 @@ void			LSnake::initGame()
   srand(time(NULL));
   if ((_map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap)  * 50 * 50)) == NULL)
     throw arcade::Exception("Malloc failed\n");
-  
+
   _map->type = arcade::CommandType::UNDEFINED;
   _map->width = 50;
   _map->height = 50;
   _score = 0;
-  
+
   for (int i = 0 ; i < _map->width * _map->height ; ++i)
     if (((i % _map->width) == 0 || (i % _map->width) == _map->width - 1) ||
 	((i / _map->width) == 0 || (i / _map->width) == _map->height - 1))
-      _map->tile[i] = arcade::TileType::BLOCK;
+      _map->tile[i] = arcade::TileType::OBSTACLE;
     else
       _map->tile[i] = arcade::TileType::EMPTY;
 
@@ -51,9 +51,7 @@ void			LSnake::initGame()
 
 void			LSnake::printGame(arcade::ICore &core)
 {
-  //core.refreshGui();
   core.getLib()->aClear();
-
   for (int i = 0 ; i < _map->width * _map->height ; ++i)
     core.getLib()->aTile((i % _map->width) + 1 , (i / _map->width) + 1, _map->tile[i]);
 
@@ -61,8 +59,8 @@ void			LSnake::printGame(arcade::ICore &core)
     core.getLib()->aTile((*it).x + 1, (*it).y + 1, arcade::TileType::OTHER);
 
   core.getLib()->aTile(_apple.x, _apple.y, arcade::TileType::POWERUP);
+  core.refreshGui();
   core.getLib()->aRefresh();
-  //std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
 
 void			LSnake::changeAction()
@@ -94,7 +92,7 @@ void			LSnake::addScore(int points)
   _score += points;
 }
 
-void			LSnake::move()
+void			LSnake::move(arcade::ICore &core)
 {
   int			nextTile;
   for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin(); it--)
@@ -102,7 +100,7 @@ void			LSnake::move()
       (*it).x = (*(it - 1)).x;
       (*it).y = (*(it - 1)).y;
     }
-  
+
   switch (_direction)
     {
     case (arcade::CommandType::GO_UP):
@@ -120,19 +118,20 @@ void			LSnake::move()
     default :
       break;
     }
-  
+
   nextTile = (_position[0].y) * 50 + _position[0].x;
   if (_map->tile[nextTile] != arcade::TileType::EMPTY &&
       _map->tile[nextTile] != arcade::TileType::POWERUP)
-    gameOver();
+    gameOver(core);
   for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin() + 1; it--)
     if (_position[0].x == (*it).x && _position[0].y == (*it).y)
-      gameOver();
+      gameOver(core);
   if (_position[0].x == _apple.x - 1 && _position[0].y == _apple.y - 1)
     {
       newApple();
       addQueue();
       addScore(10);
+      core.setScore(std::to_string(_score));
     }
 }
 
@@ -142,6 +141,7 @@ arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
   std::clock_t		old_time = clock();
 
   initGame();
+  core.setScore(std::to_string(_score));
   while (_map->type != arcade::CommandType::ESCAPE && _map->type != arcade::CommandType::MENU)
     {
       cur_time = clock();
@@ -161,16 +161,18 @@ arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
       changeAction();
       if (cur_time > old_time + (50000 - (int)_position.size()))
 	{
-	  move();
+	  move(core);
 	  old_time = clock();
 	}
     }
     return (_map->type);
 }
 
-void							LSnake::gameOver()
+void							LSnake::gameOver(arcade::ICore &core)
 {
-  exit(0);
+/*  if (std::stoi(core.getSave().getSavedScore(std::string("snake"))) < _score)
+    core.getSave().saveScore(std::to_string(_score)); */
+  //exit(0);
 }
 
 void              LSnake::close()

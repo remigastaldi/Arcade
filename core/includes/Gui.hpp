@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:55:17 2017 gastal_r
-** Last update	Sat Mar 18 17:17:17 2017 gastal_r
+** Last update	Tue Mar 21 01:14:56 2017 gastal_r
 */
 
 #ifndef         _GUI_HPP_
@@ -31,6 +31,7 @@ public:
   void          affName();
   void          affDispLibs();
   void          affDispGames();
+  void          affScore();
 
   const std::string   getName(arcade::ICore &);
   void                listGame(arcade::ICore &, size_t);
@@ -39,13 +40,14 @@ public:
   const Status  &getStatus();
   void          setStatus(const Status status) {_status = status; }
 
-  void          guiSetGraph(arcade::IGraph *graph) {_graph = graph;}
-  void          guiSetLibs(const std::vector<std::string> libs) {_libs = libs;}
-  void          guiSetCurrentGraph(const std::string &graph) {_currentGraph = graph;}
+  void          guiSetGraph(arcade::IGraph *graph)                {_graph = graph;}
+  void          guiSetLibs(const std::vector<std::string> libs)   {_libs = libs;}
+  void          guiSetCurrentGraph(const std::string &graph)      {_currentGraph = graph;}
   void          guiSetGames(const std::vector<std::string> games) {_games = games;}
   void          guiSetCurrentGame(const std::string &game) {_currentGame = game;}
-  void          guiSetPlayer(const std::string &player) {_player = player;}
-  void          guiSetBestScore(std::string score) {_bestScore = score;}
+  void          guiSetPlayer(const std::string &player)    {_player = player;}
+  void          guiSetBestScore(std::string score)         {_bestScore = score;}
+  void          guiSetScore(const std::string &score)      {_score = score;}
 
 private:
   arcade::IGraph  *_graph;
@@ -56,6 +58,7 @@ private:
   std::vector<std::string>  _libs;
   std::string               _player;
   std::string               _bestScore;
+  std::string               _score;
 };
 
 

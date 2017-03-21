@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Sat Mar 18 21:35:44 2017 gastal_r
+** Last update	Mon Mar 20 23:25:14 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -35,13 +35,13 @@ void            LSfml::aTile(size_t x, size_t y, arcade::TileType type)
   sf::RectangleShape rectangle;
 
   switch (type) {
-    case arcade::TileType::BLOCK:
+    case arcade::TileType::OBSTACLE:
       rectangle.setFillColor(sf::Color::Red);
       break;
     case arcade::TileType::EMPTY:
       rectangle.setFillColor(sf::Color::White);
       break;
-    case arcade::TileType::OBSTACLE:
+    case arcade::TileType::BLOCK:
       rectangle.setFillColor(sf::Color::Green);
       break;
     case arcade::TileType::EVIL_DUDE:
@@ -107,7 +107,7 @@ void          LSfml::aPutText(size_t x, size_t y, const std::string &fontPath,
 
   font.loadFromFile(fontPath);
   sf::Text sfText(text, font);
-  sfText.setStyle(sf::Text::Bold);
+  //sfText.setStyle(sf::Text::Bold);
   sfText.setFillColor(fillColor(color));
   sfText.setPosition(x * BLOCK_X, (y * BLOCK_Y) + size);
   sfText.setCharacterSize(size);
@@ -122,7 +122,6 @@ void            LSfml::aClear()
 void            LSfml::aRefresh()
 {
   _win.display();
-  _win.clear();
 }
 
 arcade::CommandType   LSfml::aCommand()

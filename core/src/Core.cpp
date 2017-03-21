@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Sat Mar 18 20:36:29 2017 gastal_r
+** Last update	Tue Mar 21 13:50:59 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -88,22 +88,18 @@ void            Core::setGuiData()
 void            Core::startCore()
 {
   _graph->aInit(WIDTH, HEIGHT);
-  guiSetGraph(_graph);
   setGuiData();
-  refreshGui();
 /*  _player = getName(*this);
   guiSetPlayer(_player);
   _save.saveSetPlayer(_player);
   _save.loadPlayerSave();
-  _graph->aClear();
-  refreshGui();
-  //openGame(chooseGame(*this)); */
+  openGame(chooseGame(*this)); */
   _game->play(*this);
-  /*while (getStatus() == CONTINUE)
+while (getStatus() == CONTINUE)
   {
   if (_graph->aCommand() == arcade::CommandType::ESCAPE)
     setStatus(Status::EXIT);
-  } */
+  }
   _graph->aClose();
 }
 

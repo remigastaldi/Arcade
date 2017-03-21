@@ -5,8 +5,10 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Mar 17 00:03:26 2017 gastal_r
-** Last update	Fri Mar 17 02:13:16 2017 gastal_r
+** Last update	Tue Mar 21 10:55:23 2017 gastal_r
 */
+
+#pragma once
 
 #include        <vector>
 #include        <string>
@@ -38,9 +40,10 @@ public:
   void        loadPlayerSave();
 
   const std::string     getSavedScore(std::string) const;
+  void                  saveScore(const std::string &);
 
 private:
   std::vector<Save::Data>  _saves;
   std::string        _player;
-  std::ifstream      _file;
+  std::fstream      _file;
 };

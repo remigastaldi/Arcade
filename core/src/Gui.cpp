@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 11:01:41 2017 gastal_r
-** Last update	Sun Mar 19 00:02:13 2017 gastal_r
+** Last update	Tue Mar 21 01:33:38 2017 gastal_r
 */
 
 #include        "Gui.hpp"
@@ -23,19 +23,26 @@ void            Gui::affName()
   if (!_bestScore.empty())
   {
      _graph->aPutText(pos_x(1.9), pos_y(1.05) , "core/res/fonts/press_start.ttf",
-                   18, arcade::WHITE, "Best: ");
+                   18, arcade::WHITE, "Best:");
      _graph->aPutText(pos_x(1.7), pos_y(1.05) , "core/res/fonts/press_start.ttf",
                    18, arcade::WHITE, _bestScore);
   }
 }
 
+void            Gui::affScore()
+{
+  _graph->aPutText(pos_x(1.15) , pos_y(2.5), "core/res/fonts/press_start.ttf",
+                  WIDTH / 30, arcade::YELLOW, _score);
+}
+
 void            Gui::affGui()
 {
-  _graph->aPutText(pos_x(2) - 2.5 * BLOCK_X, pos_y(20), "core/res/fonts/press_start.ttf",
+  _graph->aPutText(pos_x(2) - 2.5 * BLOCK_X, pos_y(80), "core/res/fonts/press_start.ttf",
                     WIDTH / 40, arcade::RED, "ARCADE");
   affDispLibs();
   affDispGames();
   affName();
+  affScore();
 }
 
 void            Gui::affDispLibs()

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Sun Mar 19 00:04:41 2017 gastal_r
+** Last update	Mon Mar 20 23:24:55 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -63,13 +63,13 @@ void        LNcurses::aTile(size_t x, size_t y, arcade::TileType tile)
       mvprintw(Y_PAD + y, X_PAD + x + 1, "W");
       Ncurses::Attroff(COLOR_PAIR(1));
       break;
-    case (arcade::TileType::BLOCK) :
+    case (arcade::TileType::OBSTACLE) :
       Ncurses::Attron(COLOR_PAIR(2));
       mvprintw(Y_PAD + y, X_PAD + x, "R");
       mvprintw(Y_PAD + y, X_PAD + x + 1, "R");
       Ncurses::Attroff(COLOR_PAIR(2));
       break;
-    case (arcade::TileType::OBSTACLE) :
+    case (arcade::TileType::BLOCK) :
       Ncurses::Attron(COLOR_PAIR(3));
       mvprintw(Y_PAD + y, X_PAD + x, "G");
       mvprintw(Y_PAD + y, X_PAD + x + 1, "G");
