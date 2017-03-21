@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 23:42:03 2017 gastal_r
-** Last update	Tue Mar 21 10:55:34 2017 gastal_r
+** Last update Tue Mar 21 18:01:37 2017 Leo Hubert Froideval
 */
 
 #ifndef         _LSnake_HPP_
@@ -51,6 +51,7 @@ private:
   std::vector<arcade::Position>	_position;
   arcade::Position		_apple;
   arcade::CommandType		_direction;
+  bool									_canChange;
   int				_score;
 };
 

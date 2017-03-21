@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Tue Mar 21 13:38:29 2017 gastal_r
+** Last update Tue Mar 21 18:02:38 2017 Leo Hubert Froideval
 */
 
 #include          "LSnake.hpp"
@@ -26,6 +26,7 @@ void			LSnake::initGame()
   arcade::Position	head;
 
   // srand(time(NULL));
+  _canChange = true;
   if ((_map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap)  * 50 * 50)) == NULL)
     throw arcade::Exception("Malloc failed\n");
 
@@ -67,6 +68,8 @@ void			LSnake::printGame(arcade::ICore &core)
 
 void			LSnake::changeAction()
 {
+  if (_canChange == false)
+    return;
   switch (_map->type) {
   case (arcade::CommandType::GO_UP):
     if (_direction != arcade::CommandType::GO_DOWN && _direction != arcade::CommandType::GO_UP)
@@ -87,6 +90,7 @@ void			LSnake::changeAction()
   default:
     break;
   }
+  _canChange = false;
 }
 
 void			LSnake::addScore(int points)
@@ -122,16 +126,16 @@ void			LSnake::move(arcade::ICore &core)
     }
 
   nextTile = (_position[0].y) * 50 + _position[0].x;
-  
+
   if (_map->tile[nextTile] != arcade::TileType::EMPTY &&
       _map->tile[nextTile] != arcade::TileType::POWERUP &&
       _map->tile[nextTile] != arcade::TileType::MY_SHOOT)
     gameOver(core);
-  
+
   for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin() + 1; it--)
     if (_position[0].x == (*it).x && _position[0].y == (*it).y)
       gameOver(core);
-  
+
   if (_position[0].x == _apple.x - 1 && _position[0].y == _apple.y - 1)
     {
       newApple();
@@ -139,6 +143,8 @@ void			LSnake::move(arcade::ICore &core)
       addScore(10);
       core.setScore(std::to_string(_score));
     }
+
+    _canChange = true;
 }
 
 arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
@@ -154,7 +160,7 @@ arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
 
       if (lPDM == true)
     	{
-	  
+
     	}
       else
     	{
@@ -176,7 +182,7 @@ arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
 
 void							LSnake::gameOver(arcade::ICore &core)
 {
-  core.getLib()->aClear();      
+  core.getLib()->aClear();
   core.getLib()->aPutText(pos_x(2.7), pos_y(2.25), "core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::RED, "GAME OVER");
   core.getLib()->aPutText(pos_x(3.1), pos_y(1.8), "core/res/fonts/press_start.ttf", WIDTH / 100, arcade::Color::WHITE, "PRESS ENTER TO RESTART THE GAME.");
   core.getLib()->aPutText(pos_x(2.7), pos_y(2.25), "core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::RED, "GAME OVER");
