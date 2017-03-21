@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Tue Mar 21 13:38:29 2017 gastal_r
+** Last update	Tue Mar 21 19:19:11 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -74,15 +74,15 @@ void			LSnake::changeAction()
     break;
   case (arcade::CommandType::GO_DOWN):
     if (_direction != arcade::CommandType::GO_UP && _direction != arcade::CommandType::GO_DOWN)
-    _direction = arcade::CommandType::GO_DOWN;
+      _direction = arcade::CommandType::GO_DOWN;
     break;
   case (arcade::CommandType::GO_LEFT):
     if (_direction != arcade::CommandType::GO_RIGHT && _direction != arcade::CommandType::GO_LEFT)
-    _direction = arcade::CommandType::GO_LEFT;
+      _direction = arcade::CommandType::GO_LEFT;
     break;
   case (arcade::CommandType::GO_RIGHT):
     if (_direction != arcade::CommandType::GO_LEFT && _direction != arcade::CommandType::GO_RIGHT)
-    _direction = arcade::CommandType::GO_RIGHT;
+      _direction = arcade::CommandType::GO_RIGHT;
     break;
   default:
     break;
@@ -97,6 +97,7 @@ void			LSnake::addScore(int points)
 void			LSnake::move(arcade::ICore &core)
 {
   int			nextTile;
+
   for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin(); it--)
     {
       (*it).x = (*(it - 1)).x;
@@ -122,16 +123,16 @@ void			LSnake::move(arcade::ICore &core)
     }
 
   nextTile = (_position[0].y) * 50 + _position[0].x;
-  
+
   if (_map->tile[nextTile] != arcade::TileType::EMPTY &&
       _map->tile[nextTile] != arcade::TileType::POWERUP &&
       _map->tile[nextTile] != arcade::TileType::MY_SHOOT)
     gameOver(core);
-  
+
   for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin() + 1; it--)
     if (_position[0].x == (*it).x && _position[0].y == (*it).y)
       gameOver(core);
-  
+
   if (_position[0].x == _apple.x - 1 && _position[0].y == _apple.y - 1)
     {
       newApple();
@@ -152,22 +153,21 @@ arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
     {
       cur_time = clock();
 
-      if (lPDM == true)
-    	{
-	  
-    	}
-      else
-    	{
-	  _map->type = core.getLib()->aCommand();
-	  if (_map->type == arcade::CommandType::NEXT_LIB)
-	    core.switchLib(arcade::CommandType::NEXT_LIB);
-	  printGame(core);
-    	}
 
-      changeAction();
-      if (cur_time > old_time + (50000 - (int)_position.size()))
-	{
-	  move(core);
+  if (cur_time > old_time + (100000 - (int)_position.size()))
+  {
+    if (lPDM == true)
+  	{
+  	}
+    else
+  	{
+      _map->type = core.getLib()->aCommand();
+      if (_map->type == arcade::CommandType::NEXT_LIB)
+	        core.switchLib(arcade::CommandType::NEXT_LIB);
+  	}
+    changeAction();
+    move(core);
+    printGame(core);
 	  old_time = clock();
 	}
     }
@@ -176,9 +176,25 @@ arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
 
 void							LSnake::gameOver(arcade::ICore &core)
 {
+  core.getLib()->aClear();
+  core.getLib()->aPutText(pos_x(2.7), pos_y(2.25), "core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::RED, "GAME OVER");
+  core.getLib()->aPutText(pos_x(3.1), pos_y(1.8), "core/res/fonts/press_start.ttf", WIDTH / 100, arcade::Color::WHITE, "PRESS ENTER TO RESTART THE GAME.");
+  core.getLib()->aPutText(pos_x(2.7), pos_y(2.25), "core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::RED, "GAME OVER");
+  core.getLib()->aRefresh();
+  while (1)
+    {
+      _map->type = core.getLib()->aCommand();
+      if (_map->type == arcade::CommandType::ESCAPE)
+	{
+	  exit(0);
+	}
+      if (_map->type == arcade::CommandType::MENU)
+	{
+	  exit(0);
+	}
+    }
 /*  if (std::stoi(core.getSave().getSavedScore(std::string("snake"))) < _score)
     core.getSave().saveScore(std::to_string(_score)); */
-  //exit(0);
 }
 
 void			LSnake::close()
@@ -199,6 +215,9 @@ void			LSnake::newApple()
   tile = (_apple.y) * 50 + _apple.x;
   if (_map->tile[tile] != arcade::TileType::EMPTY)
     newApple();
+  for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin(); it--)
+    if (_apple.x == (*it).x && _apple.y == (*it).y)
+      newApple();
 }
 
 extern "C"

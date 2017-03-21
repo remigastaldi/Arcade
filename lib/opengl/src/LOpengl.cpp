@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Tue Mar 21 13:52:05 2017 gastal_r
+** Last update	Tue Mar 21 19:24:53 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -49,9 +49,9 @@ void            LOpengl::aInit(size_t width, size_t height)
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
 
-  if (!_obstacle.loadFromFile("core/res/img/wall.jpg"))
+  if (!_obstacle.loadFromFile("core/res/img/tron.png"))
     throw arcade::Exception("Cannot load: ", "core/res/img/wall.jpg");
-  if (!_floor.loadFromFile("core/res/img/floor.jpg"))
+  if (!_floor.loadFromFile("core/res/img/tron.png"))
     throw arcade::Exception("Cannot load: ", "core/res/img/wood.jpg");
 _obstacle.generateMipmap();
 _floor.generateMipmap();
@@ -123,8 +123,12 @@ if (type == arcade::TileType::OTHER)
     case arcade::TileType::EVIL_SHOOT:
       break;
     case arcade::TileType::MY_SHOOT:
+      sf::Texture::bind(&_obstacle);
+      glTranslatef(x * 10, 500.f  -(y * 10), 10);
       break;
     case arcade::TileType::POWERUP:
+      sf::Texture::bind(&_obstacle);
+      glTranslatef(x * 10, 500.f  -(y * 10), 10);
       break;
     case arcade::TileType::OTHER:
     {
@@ -312,6 +316,7 @@ extern "C"
 {
   LOpengl        *createGraph()
   {
+    std::cout << "GRAPH" << '\n';
     return (new LOpengl());
   }
 

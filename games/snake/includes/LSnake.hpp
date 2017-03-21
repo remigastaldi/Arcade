@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 23:42:03 2017 gastal_r
-** Last update	Tue Mar 21 15:37:11 2017 gastal_r
+** Last update	Tue Mar 21 19:11:21 2017 gastal_r
 */
 
 #ifndef         _LSnake_HPP_
@@ -48,8 +48,8 @@ private:
   arcade::GetMap		*_map;
   std::vector<arcade::Position>	_position;
   arcade::Position		_apple;
-  arcade::CommandType		_direction;
-  int				_score;
+  arcade::CommandType	_direction;
+  int				          _score;
 };
 
 
