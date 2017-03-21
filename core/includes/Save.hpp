@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Mar 17 00:03:26 2017 gastal_r
-** Last update	Tue Mar 21 18:35:49 2017 gastal_r
+** Last update	Tue Mar 21 21:57:33 2017 gastal_r
 */
 
 #pragma once
@@ -53,6 +53,7 @@ public:
 
   void        saveSetPlayer(const std::string player) {_player = player;}
   void        loadPlayerSave();
+  void        checkExistingUser();
 
   const std::string     getSavedScore(std::string) const;
   void                  saveScore(std::string, const std::string &);

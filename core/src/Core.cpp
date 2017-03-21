@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Tue Mar 21 13:50:59 2017 gastal_r
+** Last update	Tue Mar 21 21:57:41 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -89,11 +89,12 @@ void            Core::startCore()
 {
   _graph->aInit(WIDTH, HEIGHT);
   setGuiData();
-/*  _player = getName(*this);
+  _save.loadPlayerSave();
+  _player = getName(*this);
   guiSetPlayer(_player);
   _save.saveSetPlayer(_player);
-  _save.loadPlayerSave();
-  openGame(chooseGame(*this)); */
+  _save.checkExistingUser();
+  openGame(chooseGame(*this));
   _game->play(*this);
 while (getStatus() == CONTINUE)
   {
@@ -167,8 +168,8 @@ void            Core::switchLib(const arcade::CommandType m)
 
 void             Core::saveScore(size_t score)
 {
-  std::cout << std::stoul(_save.getSavedScore(_currentGame)) << '\n';
-  if (std::stoul(_save.getSavedScore(_currentGame)) < score)
+  if (std::stoul(_save.getSavedScore(_currentGame)) < score
+      || std::stoul(_save.getSavedScore(_currentGame)) == 0)
     _save.saveScore(_currentGame, std::to_string(score));
 }
 

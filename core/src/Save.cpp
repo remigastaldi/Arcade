@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Mar 17 00:03:17 2017 gastal_r
-** Last update	Tue Mar 21 18:56:08 2017 gastal_r
+** Last update	Tue Mar 21 22:07:15 2017 gastal_r
 */
 
 #include        "Save.hpp"
@@ -14,9 +14,7 @@ Save::Save()
 {}
 
 Save::~Save()
-{
-  _file.close();
-}
+{}
 
 void            Save::loadPlayerSave()
 {
@@ -26,11 +24,13 @@ void            Save::loadPlayerSave()
   Save::Data    data;
   std::vector<Save::PlayerSave>::iterator it = _playerSave.begin();
 
-	_file.open(SAVE_PATH);
+	_file.open(SAVE_PATH, std::fstream::in);
   while(!_file.eof())
   {
     Save::PlayerSave playerSave;
     getline(_file, line);
+    if (line.empty() || line == "\n")
+      continue;
     playerSave.setPlayer(line);
     getline(_file, line);
     while ((pos = line.find(":")) != std::string::npos)
@@ -48,6 +48,21 @@ void            Save::loadPlayerSave()
    _playerSave.push_back(playerSave);
   }
   _file.close();
+}
+
+void                  Save::checkExistingUser()
+{
+  std::vector<Save::PlayerSave>::iterator it = _playerSave.begin();
+
+  while (it != _playerSave.end() && (*it).getPlayer() != _player)
+    ++it;
+  if (it == _playerSave.end())
+  {
+    Save::PlayerSave newPlayer;
+
+    newPlayer.setPlayer(_player);
+    _playerSave.push_back(newPlayer);
+  }
 }
 
 const std::string     Save::getSavedScore(std::string game) const
@@ -71,7 +86,6 @@ void                  Save::saveScore(std::string currentGame, const std::string
   _file.open(SAVE_PATH, std::fstream::out | std::fstream::trunc);
   for (std::vector<Save::PlayerSave>::iterator it = _playerSave.begin(); it != _playerSave.end(); ++it)
   {
-    std::cout << "bite" << '\n';
     if ((*it).getPlayer() == _player)
       (*it).addValue(currentGame, score);
     _file << (*it).getPlayer() << std::endl;
@@ -101,6 +115,13 @@ void               Save::PlayerSave::addValue(const std::string &game, const std
   for (std::vector<Save::Data>::iterator it = _data.begin(); it != _data.end(); ++it)
   {
     if ((*it).getGame() == game)
+    {
       (*it).setValue(score);
+      return;
+    }
   }
+  Save::Data data;
+  data.setGame(game);
+  data.setValue(score);
+  _data.push_back(data);
 }
