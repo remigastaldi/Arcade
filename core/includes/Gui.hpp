@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:55:17 2017 gastal_r
-** Last update	Tue Mar 21 01:14:56 2017 gastal_r
+** Last update	Tue Mar 21 22:59:33 2017 gastal_r
 */
 
 #ifndef         _GUI_HPP_
@@ -36,6 +36,8 @@ public:
   const std::string   getName(arcade::ICore &);
   void                listGame(arcade::ICore &, size_t);
   const std::string   chooseGame(arcade::ICore &);
+  void                affPlayersScores(arcade::ICore &, std::string);
+  void                affPlayersScores();
 
   const Status  &getStatus();
   void          setStatus(const Status status) {_status = status; }
@@ -59,6 +61,7 @@ private:
   std::string               _player;
   std::string               _bestScore;
   std::string               _score;
+  std::vector<std::string>  _bestPlayersScores;
 };
 
 

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Mar 17 00:03:26 2017 gastal_r
-** Last update	Tue Mar 21 21:57:33 2017 gastal_r
+** Last update	Tue Mar 21 23:06:57 2017 gastal_r
 */
 
 #pragma once
@@ -14,6 +14,7 @@
 #include        <string>
 #include        <fstream>
 #include        <iostream>
+#include        <algorithm>
 
 #define SAVE_PATH "res/save"
 
@@ -57,6 +58,7 @@ public:
 
   const std::string     getSavedScore(std::string) const;
   void                  saveScore(std::string, const std::string &);
+  const std::vector<std::string>  getBestPlayersScores(std::string);
 
 private:
   std::vector<Save::PlayerSave>  _playerSave;

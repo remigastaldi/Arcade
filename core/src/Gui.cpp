@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 11:01:41 2017 gastal_r
-** Last update	Tue Mar 21 01:33:38 2017 gastal_r
+** Last update	Tue Mar 21 23:13:28 2017 gastal_r
 */
 
 #include        "Gui.hpp"
@@ -19,7 +19,7 @@ Gui::~Gui()
 void            Gui::affName()
 {
   _graph->aPutText(pos_x(2.4) - _player.length() / 2, pos_y(1.05), "core/res/fonts/press_start.ttf",
-                  20, arcade::MAGENTA, _player);
+                  WIDTH / 90, arcade::MAGENTA, _player);
   if (!_bestScore.empty())
   {
      _graph->aPutText(pos_x(1.9), pos_y(1.05) , "core/res/fonts/press_start.ttf",
@@ -43,6 +43,7 @@ void            Gui::affGui()
   affDispGames();
   affName();
   affScore();
+  affPlayersScores();
 }
 
 void            Gui::affDispLibs()
@@ -132,6 +133,8 @@ void                  Gui::listGame(arcade::ICore &core, size_t selected)
                    18, arcade::WHITE, "Best: ");
   _graph->aPutText(pos_x(1.7), pos_y(1.05) , "core/res/fonts/press_start.ttf",
                    18, arcade::WHITE, core.getSave().getSavedScore(_games[selected]));
+
+  affPlayersScores(core, _games[selected]);
   core.refreshGui();
   _graph->aRefresh();
 }
@@ -163,7 +166,36 @@ const std::string     Gui::chooseGame(arcade::ICore &core)
   }
   _currentGame = _games[i];
   _bestScore = core.getSave().getSavedScore(_games[i]);
+  _bestPlayersScores = core.getSave().getBestPlayersScores(_games[i]);
   return (_games[i]);
+}
+
+void                  Gui::affPlayersScores(arcade::ICore &core, std::string game)
+{
+  game = game .substr(0, game .find_last_of("."));
+  game = game .erase(0, game .find_last_of("_") + 1);
+  std::vector<std::string> scores = core.getSave().getBestPlayersScores(game);
+
+  size_t i = 0;
+  for (std::vector<std::string>::const_iterator it = scores.begin(); it != scores.end(); ++it)
+  {
+    _graph->aPutText(pos_x(16), pos_y(2) + pos_y(30)  * i,
+    "core/res/fonts/freaky_font.ttf",   WIDTH / 70, arcade::YELLOW, (*it));
+    i++;
+  }
+}
+
+void                  Gui::affPlayersScores()
+{
+  size_t i = 0;
+
+  for (std::vector<std::string>::const_iterator it = _bestPlayersScores.begin();
+   it != _bestPlayersScores.end(); ++it)
+  {
+    _graph->aPutText(pos_x(16), pos_y(2) + pos_y(30)  * i,
+    "core/res/fonts/freaky_font.ttf",   WIDTH / 70, arcade::YELLOW, (*it));
+    i++;
+  }
 }
 
 const Status          &Gui::getStatus()

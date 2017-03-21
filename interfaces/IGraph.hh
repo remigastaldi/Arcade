@@ -20,7 +20,7 @@
 #define HEIGHT       1080
 #define pos_x(x)     (WIDTH / BLOCK_X) / x
 #define pos_y(y)     (HEIGHT / BLOCK_Y) / y
-#define X_PAD        pos_x(5)
+#define X_PAD        pos_x(3.5)
 #define Y_PAD        pos_y(6)
 
 namespace	       arcade

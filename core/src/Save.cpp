@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Mar 17 00:03:17 2017 gastal_r
-** Last update	Tue Mar 21 22:11:35 2017 gastal_r
+** Last update	Tue Mar 21 23:18:45 2017 gastal_r
 */
 
 #include        "Save.hpp"
@@ -78,6 +78,30 @@ const std::string     Save::getSavedScore(std::string game) const
       return ((*it).getValue(game));
   }
   return ("0");
+}
+
+bool        sortScores(std::string a, std::string b)
+{
+  a = a.erase(0, a.find_last_of(":") + 2);
+  b = b.erase(0, b.find_last_of(":") + 2);
+  return (std::stoi(a) > std::stoi(b));
+}
+
+const std::vector<std::string>   Save::getBestPlayersScores(std::string game)
+{
+  std::vector<std::string> scores;
+
+game = game.substr(0, game.find_last_of("."));
+game = game.erase(0, game.find_last_of("_") + 1);
+for (std::vector<Save::PlayerSave>::const_iterator it = _playerSave.begin(); it != _playerSave.end(); ++it)
+  {
+    std::string player = (*it).getPlayer();
+    player += ": ";
+    player += (*it).getValue(game);
+    scores.push_back(player);
+  }
+  std::sort(scores.begin(), scores.end(), sortScores);
+  return (scores);
 }
 
 void                  Save::saveScore(std::string currentGame, const std::string &score)
