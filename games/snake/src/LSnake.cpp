@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update Tue Mar 21 18:02:38 2017 Leo Hubert Froideval
+** Last update Tue Mar 21 18:30:59 2017 Leo Hubert Froideval
 */
 
 #include          "LSnake.hpp"
@@ -70,27 +70,31 @@ void			LSnake::changeAction()
 {
   if (_canChange == false)
     return;
+
   switch (_map->type) {
   case (arcade::CommandType::GO_UP):
     if (_direction != arcade::CommandType::GO_DOWN && _direction != arcade::CommandType::GO_UP)
       _direction = arcade::CommandType::GO_UP;
+    _canChange = false;
     break;
   case (arcade::CommandType::GO_DOWN):
     if (_direction != arcade::CommandType::GO_UP && _direction != arcade::CommandType::GO_DOWN)
-    _direction = arcade::CommandType::GO_DOWN;
+      _direction = arcade::CommandType::GO_DOWN;
+    _canChange = false;
     break;
   case (arcade::CommandType::GO_LEFT):
     if (_direction != arcade::CommandType::GO_RIGHT && _direction != arcade::CommandType::GO_LEFT)
-    _direction = arcade::CommandType::GO_LEFT;
+      _direction = arcade::CommandType::GO_LEFT;
+    _canChange = false;
     break;
   case (arcade::CommandType::GO_RIGHT):
     if (_direction != arcade::CommandType::GO_LEFT && _direction != arcade::CommandType::GO_RIGHT)
-    _direction = arcade::CommandType::GO_RIGHT;
+      _direction = arcade::CommandType::GO_RIGHT;
+    _canChange = false;
     break;
   default:
     break;
   }
-  _canChange = false;
 }
 
 void			LSnake::addScore(int points)
@@ -101,6 +105,8 @@ void			LSnake::addScore(int points)
 void			LSnake::move(arcade::ICore &core)
 {
   int			nextTile;
+
+  _canChange = true;
   for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin(); it--)
     {
       (*it).x = (*(it - 1)).x;
@@ -143,8 +149,6 @@ void			LSnake::move(arcade::ICore &core)
       addScore(10);
       core.setScore(std::to_string(_score));
     }
-
-    _canChange = true;
 }
 
 arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
@@ -167,13 +171,14 @@ arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
 	  _map->type = core.getLib()->aCommand();
 	  if (_map->type == arcade::CommandType::NEXT_LIB)
 	    core.switchLib(arcade::CommandType::NEXT_LIB);
-	  printGame(core);
     	}
 
       changeAction();
+
       if (cur_time > old_time + (50000 - (int)_position.size()))
 	{
 	  move(core);
+    printGame(core);
 	  old_time = clock();
 	}
     }
