@@ -176,9 +176,25 @@ arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
 
 void							LSnake::gameOver(arcade::ICore &core)
 {
+  core.getLib()->aClear();      
+  core.getLib()->aPutText(pos_x(2.7), pos_y(2.25), "core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::RED, "GAME OVER");
+  core.getLib()->aPutText(pos_x(3.1), pos_y(1.8), "core/res/fonts/press_start.ttf", WIDTH / 100, arcade::Color::WHITE, "PRESS ENTER TO RESTART THE GAME.");
+  core.getLib()->aPutText(pos_x(2.7), pos_y(2.25), "core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::RED, "GAME OVER");
+  core.getLib()->aRefresh();
+  while (1)
+    {
+      _map->type = core.getLib()->aCommand();
+      if (_map->type == arcade::CommandType::ESCAPE)
+	{
+	  exit(0);
+	}
+      if (_map->type == arcade::CommandType::MENU)
+	{
+	  exit(0);
+	}
+    }
 /*  if (std::stoi(core.getSave().getSavedScore(std::string("snake"))) < _score)
     core.getSave().saveScore(std::to_string(_score)); */
-  //exit(0);
 }
 
 void			LSnake::close()
@@ -199,6 +215,9 @@ void			LSnake::newApple()
   tile = (_apple.y) * 50 + _apple.x;
   if (_map->tile[tile] != arcade::TileType::EMPTY)
     newApple();
+  for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin(); it--)
+    if (_apple.x == (*it).x && _apple.y == (*it).y)
+      newApple();
 }
 
 extern "C"
