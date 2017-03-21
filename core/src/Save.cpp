@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Mar 17 00:03:17 2017 gastal_r
-** Last update	Tue Mar 21 22:07:15 2017 gastal_r
+** Last update	Tue Mar 21 22:11:35 2017 gastal_r
 */
 
 #include        "Save.hpp"
@@ -25,6 +25,8 @@ void            Save::loadPlayerSave()
   std::vector<Save::PlayerSave>::iterator it = _playerSave.begin();
 
 	_file.open(SAVE_PATH, std::fstream::in);
+  if (!_file.is_open())
+    return;
   while(!_file.eof())
   {
     Save::PlayerSave playerSave;
