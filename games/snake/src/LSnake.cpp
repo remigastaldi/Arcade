@@ -25,7 +25,7 @@ void			LSnake::initGame()
 {
   arcade::Position	head;
 
-  srand(time(NULL));
+  // srand(time(NULL));
   if ((_map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap)  * 50 * 50)) == NULL)
     throw arcade::Exception("Malloc failed\n");
 
@@ -55,8 +55,10 @@ void			LSnake::printGame(arcade::ICore &core)
   for (int i = 0 ; i < _map->width * _map->height ; ++i)
     core.getLib()->aTile((i % _map->width) + 1 , (i / _map->width) + 1, _map->tile[i]);
 
-  for (std::vector<arcade::Position>::iterator it = _position.begin(); it != _position.end(); it++)
-    core.getLib()->aTile((*it).x + 1, (*it).y + 1, arcade::TileType::OTHER);
+  core.getLib()->aTile(_position[0].x + 1, _position[0].y + 1, arcade::TileType::OTHER);
+  if (_position.size() > 1)
+    for (std::vector<arcade::Position>::iterator it = _position.begin() + 1; it != _position.end(); it++)
+      core.getLib()->aTile((*it).x + 1, (*it).y + 1, arcade::TileType::MY_SHOOT);
 
   core.getLib()->aTile(_apple.x, _apple.y, arcade::TileType::POWERUP);
   core.refreshGui();
@@ -120,12 +122,16 @@ void			LSnake::move(arcade::ICore &core)
     }
 
   nextTile = (_position[0].y) * 50 + _position[0].x;
+  
   if (_map->tile[nextTile] != arcade::TileType::EMPTY &&
-      _map->tile[nextTile] != arcade::TileType::POWERUP)
+      _map->tile[nextTile] != arcade::TileType::POWERUP &&
+      _map->tile[nextTile] != arcade::TileType::MY_SHOOT)
     gameOver(core);
+  
   for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin() + 1; it--)
     if (_position[0].x == (*it).x && _position[0].y == (*it).y)
       gameOver(core);
+  
   if (_position[0].x == _apple.x - 1 && _position[0].y == _apple.y - 1)
     {
       newApple();
@@ -148,7 +154,7 @@ arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
 
       if (lPDM == true)
     	{
-
+	  
     	}
       else
     	{
@@ -175,9 +181,8 @@ void							LSnake::gameOver(arcade::ICore &core)
   //exit(0);
 }
 
-void              LSnake::close()
+void			LSnake::close()
 {
-  std::cout << "CLOSE GAME" << '\n';
 }
 
 void			LSnake::addQueue()
@@ -200,7 +205,6 @@ extern "C"
 {
   LSnake		*createGame()
   {
-    std::cout << "GAME" << '\n';
     return (new LSnake());
   }
 

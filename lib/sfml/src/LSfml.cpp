@@ -230,7 +230,6 @@ extern "C"
 {
   LSfml        *createGraph()
   {
-    std::cout << "GRAPH" << '\n';
     return (new LSfml());
   }
 

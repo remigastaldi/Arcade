@@ -18,7 +18,6 @@ LNcurses::~LNcurses()
 
 void        LNcurses::aInit(size_t, size_t)
 {
-  std::cout << "INIT LIB" << '\n';
   Ncurses::Newterm(NULL, stderr, stdin);
   Ncurses::Noecho();
   Ncurses::Cbreak();

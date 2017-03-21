@@ -312,7 +312,6 @@ extern "C"
 {
   LOpengl        *createGraph()
   {
-    std::cout << "GRAPH" << '\n';
     return (new LOpengl());
   }
 
