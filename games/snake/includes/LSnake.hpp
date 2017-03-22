@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 23:42:03 2017 gastal_r
-** Last update	Tue Mar 21 19:11:21 2017 gastal_r
+** Last update Tue Mar 21 23:24:49 2017 Leo Hubert Froideval
 */
 
 #ifndef         _LSnake_HPP_
@@ -43,6 +43,12 @@ public:
   void		newApple();
   void		addScore(int);
   void		gameOver(arcade::ICore &);
+
+  /*
+  **  Fonctions pour la putain de moulinette
+  */
+  arcade::CommandType		lPDM_aCommand(std::string const &);
+  void                  lPDM_getMap() const;
 
 private:
   arcade::GetMap		*_map;
