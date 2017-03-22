@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Wed Mar 22 10:13:56 2017 gastal_r
+** Last update	Wed Mar 22 10:51:57 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -105,6 +105,13 @@ void        LNcurses::aTile(size_t x, size_t y, arcade::TileType tile)
       Ncurses::Attroff(COLOR_PAIR(8));
       break;
     }
+}
+
+void        LNcurses::aAssignTexture(const arcade::TileType tile, const std::string &path, const arcade::Color color)
+{
+  (void) tile;
+  (void) path;
+  (void) color;
 }
 
 void        LNcurses::aPutText(size_t x, size_t y, const std::string &path,

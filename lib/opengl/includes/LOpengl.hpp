@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:21 2017 gastal_r
-** Last update	Tue Mar 21 12:54:06 2017 gastal_r
+** Last update	Wed Mar 22 10:54:00 2017 gastal_r
 */
 
 #ifndef         _LOPENGL_HPP_
@@ -34,6 +34,7 @@ public:
   void          aClose();
   void          aTile(size_t, size_t, arcade::TileType);
   void          aTile(size_t, size_t, void *);
+  void          aAssignTexture(const arcade::TileType tile, const std::string &path, const arcade::Color color);
   void          *aGetTexture(const std::string &);
   sf::Color     fillColor(arcade::Color);
   void          aPutText(size_t, size_t, const std::string &,

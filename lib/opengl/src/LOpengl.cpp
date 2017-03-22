@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Wed Mar 22 10:30:40 2017 gastal_r
+** Last update	Wed Mar 22 23:07:43 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -49,9 +49,9 @@ void            LOpengl::aInit(size_t width, size_t height)
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
 
-  if (!_obstacle.loadFromFile("core/res/img/wall.jpg"))
-    throw arcade::Exception("Cannot load: ", "core/res/img/wall.jpg");
-  if (!_floor.loadFromFile("core/res/img/tron.png"))
+  if (!_obstacle.loadFromFile("core/res/img/wall2.png"))
+    throw arcade::Exception("Cannot load: ", "core/res/img/wall2.png");
+  if (!_floor.loadFromFile("core/res/img/floor2.png"))
     throw arcade::Exception("Cannot load: ", "core/res/img/wood.jpg");
 _obstacle.generateMipmap();
 _floor.generateMipmap();
@@ -154,6 +154,14 @@ void            LOpengl::aTile(size_t x, size_t y, void *texture)
   sprite.setPosition((x * BLOCK_Y) + X_PAD * BLOCK_X, (y * BLOCK_Y) + Y_PAD * BLOCK_Y);
   _win.draw(sprite);
 }
+
+void            LOpengl::aAssignTexture(const arcade::TileType tile, const std::string &path, const arcade::Color color)
+{
+  (void) tile;
+  (void) path;
+  (void) color;
+}
+
 
 void            *LOpengl::aGetTexture(const std::string &path)
 {

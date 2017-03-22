@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update Tue Mar 21 23:55:39 2017 Leo Hubert Froideval
+** Last update	Wed Mar 22 23:08:34 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -19,6 +19,15 @@ LSnake::~LSnake()
 arcade::CommandType				LSnake::play(arcade::ICore &core)
 {
   return (mainLoop(core, false));
+}
+
+void      LSnake::initTextures(arcade::ICore &core)
+{
+  core.getLib()->aAssignTexture(arcade::TileType::EMPTY, "core/res/img/floor2.png", arcade::Color::A_WHITE);
+  core.getLib()->aAssignTexture(arcade::TileType::OBSTACLE, "core/res/img/wall.png", arcade::Color::A_RED);
+  core.getLib()->aAssignTexture(arcade::TileType::OTHER, "core/res/img/tron.png", arcade::Color::A_BLACK);
+  core.getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, "core/res/img/wall3.png", arcade::Color::A_MAGENTA);
+  core.getLib()->aAssignTexture(arcade::TileType::POWERUP, "core/res/img/mooncat.jpg", arcade::Color::A_MAGENTA);
 }
 
 void			LSnake::initGame()
@@ -148,6 +157,7 @@ arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
   std::clock_t		old_time = clock();
 
   initGame();
+  initTextures(core);
   if (lPDM == false)
     core.setScore(std::to_string(_score)); //TODO
   while (_map->type != arcade::CommandType::ESCAPE && _map->type != arcade::CommandType::MENU)
@@ -170,7 +180,10 @@ arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
       	{
           _map->type = core.getLib()->aCommand();
           if (_map->type == arcade::CommandType::NEXT_LIB)
+          {
     	        core.switchLib(arcade::CommandType::NEXT_LIB);
+              initTextures(core);
+          }
       	}
 
         changeAction();
@@ -198,10 +211,12 @@ void							LSnake::gameOver(arcade::ICore &core)
       _map->type = core.getLib()->aCommand();
       if (_map->type == arcade::CommandType::ESCAPE)
 	{
+    core.saveScore(_score);
 	  exit(0);
 	}
       if (_map->type == arcade::CommandType::MENU)
 	{
+    core.saveScore(_score);
 	  exit(0);
 	}
     }

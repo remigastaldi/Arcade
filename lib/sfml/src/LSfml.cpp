@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Wed Mar 22 10:16:31 2017 gastal_r
+** Last update	Wed Mar 22 23:06:45 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -30,40 +30,73 @@ void            LSfml::aClose()
   _win.close();
 }
 
+sf::Uint8				*LSfml::fillPixelsColor(arcade::Color col)
+{
+  sf::Uint8 *pixels = new sf::Uint8[BLOCK_Y * BLOCK_Y * 4];
+
+  sf::Color color = fillColor(col);
+  for (int i = 0; i < BLOCK_Y * BLOCK_Y * 4; i +=4)
+  {
+    pixels[i] = color.r;
+    pixels[i+1] = color.g;
+    pixels[i+2] = color.b;
+    pixels[i+3] = color.a;
+  }
+  return (pixels);
+}
+
+sf::Sprite      LSfml::createSprite(const sf::Texture &texture)
+{
+  sf::Sprite sprite;
+
+  sprite.setTexture(texture);
+  sprite.setScale(sf::Vector2f(16.f / texture.getSize().x, 16.f / texture.getSize().x));
+  return (sprite);
+}
+
 void            LSfml::aTile(size_t x, size_t y, arcade::TileType type)
 {
-  sf::RectangleShape rectangle;
+  sf::Sprite sprite;
 
-  switch (type) {
-    case arcade::TileType::OBSTACLE:
-      rectangle.setFillColor(sf::Color::Red);
+  switch (type)
+  {
+    case arcade::TileType::EMPTY :
+      sprite = createSprite(_emptyTex);
       break;
-    case arcade::TileType::EMPTY:
-      rectangle.setFillColor(sf::Color::White);
+    case arcade::TileType::BLOCK :
+      sprite = createSprite(_blockTex);
       break;
-    case arcade::TileType::BLOCK:
-      rectangle.setFillColor(sf::Color::Green);
+    case arcade::TileType::OBSTACLE :
+      sprite = createSprite(_obstacleTex);
       break;
-    case arcade::TileType::EVIL_DUDE:
-      rectangle.setFillColor(sf::Color::Yellow);
+    case arcade::TileType::EVIL_DUDE :
+      sprite = createSprite(_evilDudeTex);
       break;
-    case arcade::TileType::EVIL_SHOOT:
-      rectangle.setFillColor(sf::Color::Blue);
+    case arcade::TileType::EVIL_SHOOT :
+      sprite = createSprite(_evilShotTex);
       break;
-    case arcade::TileType::MY_SHOOT:
-      rectangle.setFillColor(sf::Color::Black);
+    case arcade::TileType::MY_SHOOT :
+      sprite = createSprite(_myShootTex);
       break;
-    case arcade::TileType::POWERUP:
-      rectangle.setFillColor(sf::Color::Cyan);
+    case arcade::TileType::POWERUP :
+      sprite = createSprite(_powerupTex);
       break;
-    case arcade::TileType::OTHER:
-      rectangle.setFillColor(sf::Color::Magenta);
+    case arcade::TileType::OTHER :
+      sprite = createSprite(_otherTex);
       break;
   }
+  sprite.setPosition((x * BLOCK_Y) + X_PAD * BLOCK_X, (y * BLOCK_Y) + Y_PAD * BLOCK_Y);
+  _win.draw(sprite);
+}
 
-  rectangle.setSize(sf::Vector2f(BLOCK_Y, BLOCK_Y));
-  rectangle.setPosition((x * BLOCK_Y) + X_PAD * BLOCK_X, (y * BLOCK_Y) + Y_PAD * BLOCK_Y);
-  _win.draw(rectangle);
+sf::Texture     LSfml::createColoredTexture(const arcade::Color color)
+{
+  sf::Texture texture;
+
+  texture.create(BLOCK_Y, BLOCK_Y);
+  texture.update(fillPixelsColor(color));
+  texture.setSmooth(true);
+  return (texture);
 }
 
 void            LSfml::aTile(size_t x, size_t y, void *texture)
@@ -75,6 +108,45 @@ void            LSfml::aTile(size_t x, size_t y, void *texture)
   sprite.scale(sf::Vector2f(1.f, 1.f));
   sprite.setPosition((x * BLOCK_Y) + X_PAD * BLOCK_X, (y * BLOCK_Y) + Y_PAD * BLOCK_Y);
   _win.draw(sprite);
+}
+
+void            LSfml::aAssignTexture(const arcade::TileType tile, const std::string &path, const arcade::Color color)
+{
+  switch (tile)
+  {
+    case arcade::TileType::EMPTY :
+      if (!_emptyTex.loadFromFile(path))
+        _emptyTex = createColoredTexture(color);
+      break;
+    case arcade::TileType::BLOCK :
+      if (!_blockTex.loadFromFile(path))
+        _blockTex = createColoredTexture(color);
+      break;
+    case arcade::TileType::OBSTACLE :
+      if (!_obstacleTex.loadFromFile(path))
+        _obstacleTex = createColoredTexture(color);
+      break;
+    case arcade::TileType::EVIL_DUDE :
+      if (!_evilDudeTex.loadFromFile(path))
+        _evilDudeTex = createColoredTexture(color);
+      break;
+    case arcade::TileType::EVIL_SHOOT :
+      if (!_evilShotTex.loadFromFile(path))
+        _evilShotTex = createColoredTexture(color);
+      break;
+    case arcade::TileType::MY_SHOOT :
+      if (!_myShootTex.loadFromFile(path))
+        _myShootTex = createColoredTexture(color);
+      break;
+    case arcade::TileType::POWERUP :
+      if (!_powerupTex.loadFromFile(path))
+        _powerupTex = createColoredTexture(color);
+      break;
+    case arcade::TileType::OTHER :
+      if (!_otherTex.loadFromFile(path))
+        _otherTex = createColoredTexture(color);
+      break;
+      }
 }
 
 void            *LSfml::aGetTexture(const std::string &path)
@@ -107,7 +179,6 @@ void          LSfml::aPutText(size_t x, size_t y, const std::string &fontPath,
 
   font.loadFromFile(fontPath);
   sf::Text sfText(text, font);
-  //sfText.setStyle(sf::Text::Bold);
   sfText.setFillColor(fillColor(color));
   sfText.setPosition(x * BLOCK_X, (y * BLOCK_Y) + size);
   sfText.setCharacterSize(size);
