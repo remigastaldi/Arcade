@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Tue Mar 21 19:24:53 2017 gastal_r
+** Last update	Wed Mar 22 10:30:40 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -49,7 +49,7 @@ void            LOpengl::aInit(size_t width, size_t height)
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
 
-  if (!_obstacle.loadFromFile("core/res/img/tron.png"))
+  if (!_obstacle.loadFromFile("core/res/img/wall.jpg"))
     throw arcade::Exception("Cannot load: ", "core/res/img/wall.jpg");
   if (!_floor.loadFromFile("core/res/img/tron.png"))
     throw arcade::Exception("Cannot load: ", "core/res/img/wood.jpg");
@@ -168,13 +168,13 @@ sf::Color     LOpengl::fillColor(arcade::Color color)
 {
   sf::Color   n;
 
-  (color == arcade::WHITE ? n = sf::Color::White :
-   (color == arcade::BLUE ? n = sf::Color::Blue :
-    (color == arcade::RED ? n = sf::Color::Red :
-     (color == arcade::GREEN ? n = sf::Color::Green :
-      (color == arcade::MAGENTA ? n = sf::Color::Magenta :
-       (color == arcade::CYAN ? n = sf::Color::Cyan :
-         (color == arcade::YELLOW ? n = sf::Color::Yellow : sf::Color::Black)))))));
+  (color == arcade::A_WHITE ? n = sf::Color::White :
+   (color == arcade::A_BLUE ? n = sf::Color::Blue :
+    (color == arcade::A_RED ? n = sf::Color::Red :
+     (color == arcade::A_GREEN ? n = sf::Color::Green :
+      (color == arcade::A_MAGENTA ? n = sf::Color::Magenta :
+       (color == arcade::A_CYAN ? n = sf::Color::Cyan :
+         (color == arcade::A_YELLOW ? n = sf::Color::Yellow : sf::Color::Black)))))));
   return (n);
 }
 

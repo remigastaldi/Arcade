@@ -27,14 +27,14 @@ namespace	       arcade
 {
   enum Color
   {
-    BLACK,
-    WHITE,
-    BLUE,
-    RED,
-    GREEN,
-    MAGENTA,
-    CYAN,
-    YELLOW
+    A_BLACK,
+    A_RED,
+    A_GREEN,
+    A_YELLOW,
+    A_BLUE,
+    A_MAGENTA,
+    A_CYAN,
+    A_WHITE
   };
 
   class		       IGraph

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Mon Mar 20 23:24:55 2017 gastal_r
+** Last update	Wed Mar 22 10:13:56 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -114,42 +114,42 @@ void        LNcurses::aPutText(size_t x, size_t y, const std::string &path,
   (void)size;
   switch (color)
     {
-    case (arcade::Color::BLACK) :
+    case (arcade::Color::A_BLACK) :
       Ncurses::Attron(COLOR_PAIR(9));
       mvprintw(y, x, str.c_str());
       Ncurses::Attroff(COLOR_PAIR(9));
       break;
-    case (arcade::Color::WHITE) :
+    case (arcade::Color::A_WHITE) :
       Ncurses::Attron(COLOR_PAIR(10));
       mvprintw(y, x, str.c_str());
       Ncurses::Attroff(COLOR_PAIR(10));
       break;
-    case (arcade::Color::BLUE) :
+    case (arcade::Color::A_BLUE) :
       Ncurses::Attron(COLOR_PAIR(11));
       mvprintw(y, x, str.c_str());
       Ncurses::Attroff(COLOR_PAIR(11));
       break;
-    case (arcade::Color::RED) :
+    case (arcade::Color::A_RED) :
       Ncurses::Attron(COLOR_PAIR(12));
       mvprintw(y, x, str.c_str());
       Ncurses::Attroff(COLOR_PAIR(12));
       break;
-    case (arcade::Color::GREEN) :
+    case (arcade::Color::A_GREEN) :
       Ncurses::Attron(COLOR_PAIR(13));
       mvprintw(y, x, str.c_str());
       Ncurses::Attroff(COLOR_PAIR(13));
       break;
-    case (arcade::Color::MAGENTA) :
+    case (arcade::Color::A_MAGENTA) :
       Ncurses::Attron(COLOR_PAIR(14));
       mvprintw(y, x, str.c_str());
       Ncurses::Attroff(COLOR_PAIR(14));
       break;
-    case (arcade::Color::CYAN) :
+    case (arcade::Color::A_CYAN) :
       Ncurses::Attron(COLOR_PAIR(15));
       mvprintw(y, x, str.c_str());
       Ncurses::Attroff(COLOR_PAIR(15));
       break;
-    case (arcade::Color::YELLOW) :
+    case (arcade::Color::A_YELLOW) :
       Ncurses::Attron(COLOR_PAIR(16));
       mvprintw(y, x, str.c_str());
       Ncurses::Attroff(COLOR_PAIR(16));

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Mon Mar 20 23:25:14 2017 gastal_r
+** Last update	Wed Mar 22 10:16:31 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -90,13 +90,13 @@ sf::Color     LSfml::fillColor(arcade::Color color)
 {
   sf::Color   n;
 
-  (color == arcade::WHITE ? n = sf::Color::White :
-   (color == arcade::BLUE ? n = sf::Color::Blue :
-    (color == arcade::RED ? n = sf::Color::Red :
-     (color == arcade::GREEN ? n = sf::Color::Green :
-      (color == arcade::MAGENTA ? n = sf::Color::Magenta :
-       (color == arcade::CYAN ? n = sf::Color::Cyan :
-         (color == arcade::YELLOW ? n = sf::Color::Yellow : sf::Color::Black)))))));
+  (color == arcade::A_WHITE ? n = sf::Color::White :
+   (color == arcade::A_BLUE ? n = sf::Color::Blue :
+    (color == arcade::A_RED ? n = sf::Color::Red :
+     (color == arcade::A_GREEN ? n = sf::Color::Green :
+      (color == arcade::A_MAGENTA ? n = sf::Color::Magenta :
+       (color == arcade::A_CYAN ? n = sf::Color::Cyan :
+         (color == arcade::A_YELLOW ? n = sf::Color::Yellow : sf::Color::Black)))))));
   return (n);
 }
 

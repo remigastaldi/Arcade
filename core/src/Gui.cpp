@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 11:01:41 2017 gastal_r
-** Last update	Tue Mar 21 23:13:28 2017 gastal_r
+** Last update	Wed Mar 22 10:18:35 2017 gastal_r
 */
 
 #include        "Gui.hpp"
@@ -19,26 +19,26 @@ Gui::~Gui()
 void            Gui::affName()
 {
   _graph->aPutText(pos_x(2.4) - _player.length() / 2, pos_y(1.05), "core/res/fonts/press_start.ttf",
-                  WIDTH / 90, arcade::MAGENTA, _player);
+                  WIDTH / 90, arcade::A_MAGENTA, _player);
   if (!_bestScore.empty())
   {
      _graph->aPutText(pos_x(1.9), pos_y(1.05) , "core/res/fonts/press_start.ttf",
-                   18, arcade::WHITE, "Best:");
+                   18, arcade::A_WHITE, "Best:");
      _graph->aPutText(pos_x(1.7), pos_y(1.05) , "core/res/fonts/press_start.ttf",
-                   18, arcade::WHITE, _bestScore);
+                   18, arcade::A_WHITE, _bestScore);
   }
 }
 
 void            Gui::affScore()
 {
   _graph->aPutText(pos_x(1.15) , pos_y(2.5), "core/res/fonts/press_start.ttf",
-                  WIDTH / 30, arcade::YELLOW, _score);
+                  WIDTH / 30, arcade::A_YELLOW, _score);
 }
 
 void            Gui::affGui()
 {
   _graph->aPutText(pos_x(2) - 2.5 * BLOCK_X, pos_y(80), "core/res/fonts/press_start.ttf",
-                    WIDTH / 40, arcade::RED, "ARCADE");
+                    WIDTH / 40, arcade::A_RED, "ARCADE");
   affDispLibs();
   affDispGames();
   affName();
@@ -55,11 +55,11 @@ void            Gui::affDispLibs()
   {
     if (*it == _currentGraph)
       _graph->aPutText(pos_x(24), pos_y(10) + pos_y(30) * i,
-      "core/res/fonts/freaky_font.ttf",  WIDTH / 60, arcade::YELLOW, "->");
+      "core/res/fonts/freaky_font.ttf",  WIDTH / 60, arcade::A_YELLOW, "->");
     *it = (*it).substr(0, (*it).find_last_of("."));
     *it = (*it).erase(0, (*it).find_last_of("_") + 1);
     _graph->aPutText(pos_x(16), pos_y(10) + pos_y(30)  * i,
-    "core/res/fonts/freaky_font.ttf",   WIDTH / 60, arcade::GREEN, (*it));
+    "core/res/fonts/freaky_font.ttf",   WIDTH / 60, arcade::A_GREEN, (*it));
     i++;
   }
 }
@@ -73,11 +73,11 @@ void            Gui::affDispGames()
   {
     if (*it == _currentGame)
       _graph->aPutText(pos_x(1.2), pos_y(10) + pos_y(30) * i,
-       "core/res/fonts/freaky_font.ttf",  WIDTH / 60, arcade::YELLOW, "->");
+       "core/res/fonts/freaky_font.ttf",  WIDTH / 60, arcade::A_YELLOW, "->");
     *it = (*it).substr(0, (*it).find_last_of("."));
     *it = (*it).erase(0, (*it).find_last_of("_") + 1);
     _graph->aPutText(pos_x(1.16), pos_y(10) + pos_y(30) * i, "core/res/fonts/freaky_font.ttf",
-                    WIDTH / 60, arcade::CYAN, (*it));
+                    WIDTH / 60, arcade::A_CYAN, (*it));
     i++;
   }
 }
@@ -91,7 +91,7 @@ const std::string     Gui::getName(arcade::ICore &core)
   {
     _graph->aClear();
     _graph->aPutText(pos_x(2) - 3 * BLOCK_X, pos_y(4), "core/res/fonts/press_start.ttf",
-                  WIDTH / 60, arcade::MAGENTA, "ENTER NAME");
+                  WIDTH / 60, arcade::A_MAGENTA, "ENTER NAME");
     if (!input.empty())
     {
       if (input == "ESCAPE")
@@ -105,7 +105,7 @@ const std::string     Gui::getName(arcade::ICore &core)
         name += input;
     }
     _graph->aPutText(pos_x(2.15) - name.length(), pos_y(3), "core/res/fonts/freaky_font.ttf",
-    WIDTH / 40, arcade::BLUE, name);
+    WIDTH / 40, arcade::A_BLUE, name);
     core.refreshGui();
     _graph->aRefresh();
   }
@@ -120,19 +120,19 @@ void                  Gui::listGame(arcade::ICore &core, size_t selected)
 
   _graph->aClear();
   _graph->aPutText(pos_x(3), pos_y(3.3555) + pos_y(20) * selected, "core/res/fonts/press_start.ttf",
-                 WIDTH / 70, arcade::YELLOW, "->");
+                 WIDTH / 70, arcade::A_YELLOW, "->");
   for (it = game.begin(); it != game.end(); ++it)
   {
     *it = (*it).substr(0, (*it).find_last_of("."));
     *it = (*it).erase(0, (*it).find_last_of("_") + 1);
     _graph->aPutText(pos_x(2.7), pos_y(3.5) + pos_y(20) * i, "core/res/fonts/press_start.ttf",
-                    30, arcade::CYAN, (*it));
+                    30, arcade::A_CYAN, (*it));
     i++;
   }
   _graph->aPutText(pos_x(1.9), pos_y(1.05) , "core/res/fonts/press_start.ttf",
-                   18, arcade::WHITE, "Best: ");
+                   18, arcade::A_WHITE, "Best: ");
   _graph->aPutText(pos_x(1.7), pos_y(1.05) , "core/res/fonts/press_start.ttf",
-                   18, arcade::WHITE, core.getSave().getSavedScore(_games[selected]));
+                   18, arcade::A_WHITE, core.getSave().getSavedScore(_games[selected]));
 
   affPlayersScores(core, _games[selected]);
   core.refreshGui();
@@ -180,7 +180,7 @@ void                  Gui::affPlayersScores(arcade::ICore &core, std::string gam
   for (std::vector<std::string>::const_iterator it = scores.begin(); it != scores.end(); ++it)
   {
     _graph->aPutText(pos_x(16), pos_y(2) + pos_y(30)  * i,
-    "core/res/fonts/freaky_font.ttf",   WIDTH / 70, arcade::YELLOW, (*it));
+    "core/res/fonts/freaky_font.ttf",   WIDTH / 70, arcade::A_YELLOW, (*it));
     i++;
   }
 }
@@ -193,7 +193,7 @@ void                  Gui::affPlayersScores()
    it != _bestPlayersScores.end(); ++it)
   {
     _graph->aPutText(pos_x(16), pos_y(2) + pos_y(30)  * i,
-    "core/res/fonts/freaky_font.ttf",   WIDTH / 70, arcade::YELLOW, (*it));
+    "core/res/fonts/freaky_font.ttf",   WIDTH / 70, arcade::A_YELLOW, (*it));
     i++;
   }
 }

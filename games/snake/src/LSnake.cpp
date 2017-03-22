@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Tue Mar 21 19:19:11 2017 gastal_r
+** Last update	Wed Mar 22 10:12:58 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -177,9 +177,9 @@ arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
 void							LSnake::gameOver(arcade::ICore &core)
 {
   core.getLib()->aClear();
-  core.getLib()->aPutText(pos_x(2.7), pos_y(2.25), "core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::RED, "GAME OVER");
-  core.getLib()->aPutText(pos_x(3.1), pos_y(1.8), "core/res/fonts/press_start.ttf", WIDTH / 100, arcade::Color::WHITE, "PRESS ENTER TO RESTART THE GAME.");
-  core.getLib()->aPutText(pos_x(2.7), pos_y(2.25), "core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::RED, "GAME OVER");
+  core.getLib()->aPutText(pos_x(2.7), pos_y(2.25), "core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
+  core.getLib()->aPutText(pos_x(3.1), pos_y(1.8), "core/res/fonts/press_start.ttf", WIDTH / 100, arcade::Color::A_WHITE, "PRESS ENTER TO RESTART THE GAME.");
+  core.getLib()->aPutText(pos_x(2.7), pos_y(2.25), "core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
   core.getLib()->aRefresh();
   while (1)
     {
