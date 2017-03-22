@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Wed Mar 22 23:06:45 2017 gastal_r
+** Last update	Thu Mar 23 00:05:19 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -30,7 +30,7 @@ void            LSfml::aClose()
   _win.close();
 }
 
-sf::Uint8				*LSfml::fillPixelsColor(arcade::Color col)
+sf::Uint8				*LSfml::fillPixelsColor(const arcade::Color &col)
 {
   sf::Uint8 *pixels = new sf::Uint8[BLOCK_Y * BLOCK_Y * 4];
 
@@ -89,7 +89,7 @@ void            LSfml::aTile(size_t x, size_t y, arcade::TileType type)
   _win.draw(sprite);
 }
 
-sf::Texture     LSfml::createColoredTexture(const arcade::Color color)
+sf::Texture     LSfml::createColoredTexture(const arcade::Color &color)
 {
   sf::Texture texture;
 
@@ -158,7 +158,7 @@ void            *LSfml::aGetTexture(const std::string &path)
   return (texture);
 }
 
-sf::Color     LSfml::fillColor(arcade::Color color)
+sf::Color     LSfml::fillColor(const arcade::Color &color)
 {
   sf::Color   n;
 
