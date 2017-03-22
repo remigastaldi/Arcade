@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 23:42:03 2017 gastal_r
-** Last update	Wed Mar 22 21:10:21 2017 gastal_r
+** Last update	Thu Mar 23 00:19:32 2017 gastal_r
 */
 
 #ifndef         _LSnake_HPP_
@@ -24,6 +24,8 @@
 #include        "IGraph.hh"
 #include	"Protocol.hpp"
 #include	"Exception.hpp"
+
+#define   RES_PATH "games/snake/res/"
 
 class           LSnake : public arcade::IGame
 {

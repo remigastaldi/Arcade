@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Wed Mar 22 23:08:34 2017 gastal_r
+** Last update	Thu Mar 23 00:20:02 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -23,11 +23,11 @@ arcade::CommandType				LSnake::play(arcade::ICore &core)
 
 void      LSnake::initTextures(arcade::ICore &core)
 {
-  core.getLib()->aAssignTexture(arcade::TileType::EMPTY, "core/res/img/floor2.png", arcade::Color::A_WHITE);
-  core.getLib()->aAssignTexture(arcade::TileType::OBSTACLE, "core/res/img/wall.png", arcade::Color::A_RED);
-  core.getLib()->aAssignTexture(arcade::TileType::OTHER, "core/res/img/tron.png", arcade::Color::A_BLACK);
-  core.getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, "core/res/img/wall3.png", arcade::Color::A_MAGENTA);
-  core.getLib()->aAssignTexture(arcade::TileType::POWERUP, "core/res/img/mooncat.jpg", arcade::Color::A_MAGENTA);
+  core.getLib()->aAssignTexture(arcade::TileType::EMPTY, RES_PATH "img/floor2.png", arcade::Color::A_WHITE);
+  core.getLib()->aAssignTexture(arcade::TileType::OBSTACLE, RES_PATH "img/wall.png", arcade::Color::A_RED);
+  core.getLib()->aAssignTexture(arcade::TileType::OTHER, RES_PATH "img/tron.png", arcade::Color::A_BLACK);
+  core.getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, RES_PATH "img/wall3.png", arcade::Color::A_MAGENTA);
+  core.getLib()->aAssignTexture(arcade::TileType::POWERUP, RES_PATH "img/mooncat.jpg", arcade::Color::A_MAGENTA);
 }
 
 void			LSnake::initGame()
