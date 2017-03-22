@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Wed Mar 22 10:51:57 2017 gastal_r
+** Last update	Thu Mar 23 00:55:06 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -28,14 +28,14 @@ void        LNcurses::aInit(size_t, size_t)
   ESCDELAY = 0;
 
   Ncurses::StartColor();
-  Ncurses::InitPair(1, COLOR_WHITE, COLOR_WHITE);
-  Ncurses::InitPair(2, COLOR_RED, COLOR_RED);
-  Ncurses::InitPair(3, COLOR_GREEN, COLOR_GREEN);
-  Ncurses::InitPair(4, COLOR_YELLOW, COLOR_YELLOW);
-  Ncurses::InitPair(5, COLOR_BLUE, COLOR_BLUE);
-  Ncurses::InitPair(6, COLOR_BLACK, COLOR_BLACK);
-  Ncurses::InitPair(7, COLOR_CYAN, COLOR_CYAN);
-  Ncurses::InitPair(8, COLOR_MAGENTA, COLOR_MAGENTA);
+  Ncurses::InitPair(N_WHITE, COLOR_WHITE, COLOR_WHITE);
+  Ncurses::InitPair(N_RED, COLOR_RED, COLOR_RED);
+  Ncurses::InitPair(N_GREEN, COLOR_GREEN, COLOR_GREEN);
+  Ncurses::InitPair(N_YELLOW, COLOR_YELLOW, COLOR_YELLOW);
+  Ncurses::InitPair(N_BLUE, COLOR_BLUE, COLOR_BLUE);
+  Ncurses::InitPair(N_BLACK, COLOR_BLACK, COLOR_BLACK);
+  Ncurses::InitPair(N_CYAN, COLOR_CYAN, COLOR_CYAN);
+  Ncurses::InitPair(N_MAGENTA, COLOR_MAGENTA, COLOR_MAGENTA);
   Ncurses::InitPair(9, COLOR_BLACK, COLOR_WHITE);
   Ncurses::InitPair(10, COLOR_WHITE, COLOR_BLACK);
   Ncurses::InitPair(11, COLOR_BLUE, COLOR_BLACK);
@@ -51,67 +51,98 @@ void        LNcurses::aClose()
   Ncurses::Endwin();
 }
 
+void        LNcurses::printTile(size_t x, size_t y, const LNcurses::NColor &color)
+{
+  Ncurses::Attron(COLOR_PAIR(color));
+  mvprintw(Y_PAD + y, X_PAD + x, "W");
+  mvprintw(Y_PAD + y, X_PAD + x + 1, "W");
+  Ncurses::Attroff(COLOR_PAIR(color));
+}
+
 void        LNcurses::aTile(size_t x, size_t y, arcade::TileType tile)
 {
-  x = x * 2 - 1;
+  x = x * 2;
   switch (tile)
     {
     case (arcade::TileType::EMPTY) :
-      Ncurses::Attron(COLOR_PAIR(1));
-      mvprintw(Y_PAD + y, X_PAD + x, "W");
-      mvprintw(Y_PAD + y, X_PAD + x + 1, "W");
-      Ncurses::Attroff(COLOR_PAIR(1));
+      printTile(x, y, _emptyColor);
       break;
     case (arcade::TileType::OBSTACLE) :
-      Ncurses::Attron(COLOR_PAIR(2));
-      mvprintw(Y_PAD + y, X_PAD + x, "R");
-      mvprintw(Y_PAD + y, X_PAD + x + 1, "R");
-      Ncurses::Attroff(COLOR_PAIR(2));
+      printTile(x, y, _obstacleColor);
       break;
     case (arcade::TileType::BLOCK) :
-      Ncurses::Attron(COLOR_PAIR(3));
-      mvprintw(Y_PAD + y, X_PAD + x, "G");
-      mvprintw(Y_PAD + y, X_PAD + x + 1, "G");
-      Ncurses::Attroff(COLOR_PAIR(3));
+      printTile(x, y, _blockColor);
       break;
     case (arcade::TileType::EVIL_DUDE) :
-      Ncurses::Attron(COLOR_PAIR(4));
-      mvprintw(Y_PAD + y, X_PAD + x, "Y");
-      mvprintw(Y_PAD + y, X_PAD + x + 1, "Y");
-      Ncurses::Attroff(COLOR_PAIR(4));
+      printTile(x, y, _evilDudeColor);
       break;
     case (arcade::TileType::EVIL_SHOOT) :
-      Ncurses::Attron(COLOR_PAIR(5));
-      mvprintw(Y_PAD + y, X_PAD + x, "U");
-      mvprintw(Y_PAD + y, X_PAD + x + 1, "U");
-      Ncurses::Attroff(COLOR_PAIR(5));
+      printTile(x, y, _evilShootColor);
       break;
     case (arcade::TileType::MY_SHOOT) :
-      Ncurses::Attron(COLOR_PAIR(6));
-      mvprintw(Y_PAD + y, X_PAD + x, "K");
-      mvprintw(Y_PAD + y, X_PAD + x + 1, "K");
-      Ncurses::Attroff(COLOR_PAIR(6));
+      printTile(x, y, _myShootColor);
       break;
     case (arcade::TileType::POWERUP) :
-      Ncurses::Attron(COLOR_PAIR(7));
-      mvprintw(Y_PAD + y, X_PAD + x, "C");
-      mvprintw(Y_PAD + y, X_PAD + x + 1, "C");
-      Ncurses::Attroff(COLOR_PAIR(7));
+      printTile(x, y, _powerupColor);
       break;
     case (arcade::TileType::OTHER) :
-      Ncurses::Attron(COLOR_PAIR(8));
-      mvprintw(Y_PAD + y, X_PAD + x, "M");
-      mvprintw(Y_PAD + y, X_PAD + x + 1, "M");
-      Ncurses::Attroff(COLOR_PAIR(8));
+      printTile(x, y, _otherColor);
       break;
     }
 }
 
+LNcurses::NColor  LNcurses::fillColor(const arcade::Color &color)
+{
+  NColor   n;
+
+  (color == arcade::A_WHITE ? n = NColor::N_WHITE :
+   (color == arcade::A_BLUE ? n = NColor::N_BLUE :
+    (color == arcade::A_RED ? n = NColor::N_RED :
+     (color == arcade::A_GREEN ? n = NColor::N_GREEN :
+      (color == arcade::A_MAGENTA ? n = NColor::N_MAGENTA :
+       (color == arcade::A_CYAN ? n = NColor::N_CYAN :
+         (color == arcade::A_YELLOW ? n = NColor::N_YELLOW : NColor::N_BLACK)))))));
+  return (n);
+}
+
 void        LNcurses::aAssignTexture(const arcade::TileType tile, const std::string &path, const arcade::Color color)
 {
-  (void) tile;
   (void) path;
-  (void) color;
+
+  switch (tile)
+  {
+    case arcade::TileType::EMPTY :
+      _emptyColor = fillColor(color);
+      break;
+    case arcade::TileType::BLOCK :
+      _blockColor = fillColor(color);
+      break;
+    case arcade::TileType::OBSTACLE :
+      _obstacleColor = fillColor(color);
+      break;
+    case arcade::TileType::EVIL_DUDE :
+      _evilDudeColor = fillColor(color);
+      break;
+    case arcade::TileType::EVIL_SHOOT :
+      _evilShootColor = fillColor(color);
+      break;
+    case arcade::TileType::MY_SHOOT :
+      _myShootColor = fillColor(color);
+      break;
+    case arcade::TileType::POWERUP :
+      _powerupColor = fillColor(color);
+      break;
+    case arcade::TileType::OTHER :
+      _otherColor = fillColor(color);
+      break;
+    }
+}
+
+void        LNcurses::printText(size_t x, size_t y, int color, const std::string &str)
+{
+  Ncurses::Attron(COLOR_PAIR(color));
+  mvprintw(y, x, str.c_str());
+  Ncurses::Attroff(COLOR_PAIR(color));
 }
 
 void        LNcurses::aPutText(size_t x, size_t y, const std::string &path,
@@ -122,44 +153,28 @@ void        LNcurses::aPutText(size_t x, size_t y, const std::string &path,
   switch (color)
     {
     case (arcade::Color::A_BLACK) :
-      Ncurses::Attron(COLOR_PAIR(9));
-      mvprintw(y, x, str.c_str());
-      Ncurses::Attroff(COLOR_PAIR(9));
+      printText(x, y, 9, str);
       break;
     case (arcade::Color::A_WHITE) :
-      Ncurses::Attron(COLOR_PAIR(10));
-      mvprintw(y, x, str.c_str());
-      Ncurses::Attroff(COLOR_PAIR(10));
+      printText(x, y, 10, str);
       break;
     case (arcade::Color::A_BLUE) :
-      Ncurses::Attron(COLOR_PAIR(11));
-      mvprintw(y, x, str.c_str());
-      Ncurses::Attroff(COLOR_PAIR(11));
+      printText(x, y, 11, str);
       break;
     case (arcade::Color::A_RED) :
-      Ncurses::Attron(COLOR_PAIR(12));
-      mvprintw(y, x, str.c_str());
-      Ncurses::Attroff(COLOR_PAIR(12));
+      printText(x, y, 12, str);
       break;
     case (arcade::Color::A_GREEN) :
-      Ncurses::Attron(COLOR_PAIR(13));
-      mvprintw(y, x, str.c_str());
-      Ncurses::Attroff(COLOR_PAIR(13));
+      printText(x, y, 13, str);
       break;
     case (arcade::Color::A_MAGENTA) :
-      Ncurses::Attron(COLOR_PAIR(14));
-      mvprintw(y, x, str.c_str());
-      Ncurses::Attroff(COLOR_PAIR(14));
+      printText(x, y, 14, str);
       break;
     case (arcade::Color::A_CYAN) :
-      Ncurses::Attron(COLOR_PAIR(15));
-      mvprintw(y, x, str.c_str());
-      Ncurses::Attroff(COLOR_PAIR(15));
+      printText(x, y, 15, str);
       break;
     case (arcade::Color::A_YELLOW) :
-      Ncurses::Attron(COLOR_PAIR(16));
-      mvprintw(y, x, str.c_str());
-      Ncurses::Attroff(COLOR_PAIR(16));
+      printText(x, y, 16, str);
       break;
     }
 }

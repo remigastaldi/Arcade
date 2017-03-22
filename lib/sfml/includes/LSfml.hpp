@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:07:35 2017 gastal_r
-** Last update	Thu Mar 23 00:04:49 2017 gastal_r
+** Last update	Thu Mar 23 00:47:43 2017 gastal_r
 */
 
 #ifndef         _LSFML_HPP_
@@ -51,7 +51,7 @@ private:
   sf::Texture      _blockTex;
   sf::Texture      _obstacleTex;
   sf::Texture      _evilDudeTex;
-  sf::Texture      _evilShotTex;
+  sf::Texture      _evilShootTex;
   sf::Texture      _myShootTex;
   sf::Texture      _powerupTex;
   sf::Texture      _otherTex;

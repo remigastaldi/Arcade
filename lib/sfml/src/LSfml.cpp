@@ -73,7 +73,7 @@ void            LSfml::aTile(size_t x, size_t y, arcade::TileType type)
       sprite = createSprite(_evilDudeTex);
       break;
     case arcade::TileType::EVIL_SHOOT :
-      sprite = createSprite(_evilShotTex);
+      sprite = createSprite(_evilShootTex);
       break;
     case arcade::TileType::MY_SHOOT :
       sprite = createSprite(_myShootTex);
@@ -131,8 +131,8 @@ void            LSfml::aAssignTexture(const arcade::TileType tile, const std::st
         _evilDudeTex = createColoredTexture(color);
       break;
     case arcade::TileType::EVIL_SHOOT :
-      if (!_evilShotTex.loadFromFile(path))
-        _evilShotTex = createColoredTexture(color);
+      if (!_evilShootTex.loadFromFile(path))
+        _evilShootTex = createColoredTexture(color);
       break;
     case arcade::TileType::MY_SHOOT :
       if (!_myShootTex.loadFromFile(path))
