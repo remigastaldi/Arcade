@@ -35,7 +35,7 @@ void			LSnake::initGame()
 {
   arcade::Position	head;
 
-  // srand(time(NULL));
+  srand(time(NULL));
   if ((_map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap)  * 50 * 50)) == NULL)
     throw arcade::Exception("Malloc failed\n");
 
@@ -77,25 +77,26 @@ void			LSnake::printGame()
 
 void			LSnake::changeAction()
 {
-  switch (_map->type) {
-  case (arcade::CommandType::GO_UP):
-    if (_direction != arcade::CommandType::GO_DOWN && _direction != arcade::CommandType::GO_UP)
-      _direction = arcade::CommandType::GO_UP;
-    break;
-  case (arcade::CommandType::GO_DOWN):
-    if (_direction != arcade::CommandType::GO_UP && _direction != arcade::CommandType::GO_DOWN)
-      _direction = arcade::CommandType::GO_DOWN;
-    break;
-  case (arcade::CommandType::GO_LEFT):
-    if (_direction != arcade::CommandType::GO_RIGHT && _direction != arcade::CommandType::GO_LEFT)
-      _direction = arcade::CommandType::GO_LEFT;
-    break;
-  case (arcade::CommandType::GO_RIGHT):
-    if (_direction != arcade::CommandType::GO_LEFT && _direction != arcade::CommandType::GO_RIGHT)
-      _direction = arcade::CommandType::GO_RIGHT;
-    break;
-  default:
-    break;
+  switch (_map->type)
+    {
+    case (arcade::CommandType::GO_UP):
+      if (_direction != arcade::CommandType::GO_DOWN)
+	_direction = arcade::CommandType::GO_UP;
+      break;
+    case (arcade::CommandType::GO_DOWN):
+      if (_direction != arcade::CommandType::GO_UP)
+	_direction = arcade::CommandType::GO_DOWN;
+      break;
+    case (arcade::CommandType::GO_LEFT):
+      if (_direction != arcade::CommandType::GO_RIGHT)
+	_direction = arcade::CommandType::GO_LEFT;
+      break;
+    case (arcade::CommandType::GO_RIGHT):
+      if (_direction != arcade::CommandType::GO_LEFT)
+	_direction = arcade::CommandType::GO_RIGHT;
+      break;
+    default:
+      break;
   }
 }
 
@@ -104,52 +105,83 @@ void			LSnake::addScore(int points)
   _score += points;
 }
 
-void			LSnake::move()
+bool			LSnake::checkNextTile(int y, int x)
 {
   int			nextTile;
 
-  for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin(); it--)
-    {
-      (*it).x = (*(it - 1)).x;
-      (*it).y = (*(it - 1)).y;
-    }
+  nextTile = (y) * 50 + x;
+  if (_map->tile[nextTile] == arcade::TileType::EMPTY ||
+      _map->tile[nextTile] == arcade::TileType::POWERUP)
+    for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin() + 1; it--)
+      {
+	if (x == (*it).x && y == (*it).y)
+	  return (false);
+      }
+  else
+    return (false);
 
-  switch (_direction)
-    {
-    case (arcade::CommandType::GO_UP):
-      _position[0].y--;
-      break;
-    case (arcade::CommandType::GO_DOWN):
-      _position[0].y++;
-      break;
-    case (arcade::CommandType::GO_LEFT):
-      _position[0].x--;
-      break;
-    case (arcade::CommandType::GO_RIGHT):
-      _position[0].x++;
-      break;
-    default :
-      break;
-    }
-
-  nextTile = (_position[0].y) * _map->width + _position[0].x;
-
-  if (_map->tile[nextTile] != arcade::TileType::EMPTY &&
-      _map->tile[nextTile] != arcade::TileType::POWERUP &&
-      _map->tile[nextTile] != arcade::TileType::MY_SHOOT)
-    gameOver();
-
-  for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin() + 1; it--)
-    if (_position[0].x == (*it).x && _position[0].y == (*it).y)
-      gameOver();
-
-  if (_position[0].x == _apple.x - 1 && _position[0].y == _apple.y - 1)
+  if (x == _apple.x - 1 && y == _apple.y - 1)
     {
       newApple();
       addQueue();
       addScore(10);
-      _core->setScore(std::to_string(_score));
+      if (_lPDM == false)
+	_core->setScore(std::to_string(_score));
     }
+  return (true);
+}
+
+void			LSnake::move()
+{
+  bool			canMove;
+
+  canMove = true;
+  switch (_direction)
+    {
+    case (arcade::CommandType::GO_UP):
+      canMove = checkNextTile(_position[0].y - 1, _position[0].x);
+      break;
+    case (arcade::CommandType::GO_DOWN):
+      canMove = checkNextTile(_position[0].y + 1, _position[0].x);
+      break;
+    case (arcade::CommandType::GO_LEFT):
+      canMove = checkNextTile(_position[0].y, _position[0].x - 1);
+      break;
+    case (arcade::CommandType::GO_RIGHT):
+      canMove = checkNextTile(_position[0].y, _position[0].x + 1);
+      break;
+    default:
+      break;
+    }
+
+  if (canMove == true)
+    {
+      for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin(); it--)
+	{
+	  (*it).x = (*(it - 1)).x;
+	  (*it).y = (*(it - 1)).y;
+	}
+
+      switch (_direction)
+	{
+	case (arcade::CommandType::GO_UP):
+	  _position[0].y--;
+	  break;
+	case (arcade::CommandType::GO_DOWN):
+	  _position[0].y++;
+	  break;
+	case (arcade::CommandType::GO_LEFT):
+	  _position[0].x--;
+	  break;
+	case (arcade::CommandType::GO_RIGHT):
+	  _position[0].x++;
+	  break;
+	default:
+	  break;
+	}
+    }
+  else
+    gameOver();
 }
 
 arcade::CommandType			LSnake::mainLoop(bool lPDM)
@@ -157,6 +189,7 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
   std::clock_t		cur_time = clock();
   std::clock_t		old_time = clock();
 
+  _lPDM = lPDM;
   initGame();
   initTextures();
   if (lPDM == false)
@@ -167,15 +200,42 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
 
       if (cur_time > old_time + (100000 - (int)_position.size()))
       {
-        if (lPDM == true)
+        if (_lPDM == true)
       	{
           std::string tmp;
           std::cin >> tmp;
           if (tmp[0] == 0)
             return (arcade::CommandType::ESCAPE);
           _map->type = lPDM_aCommand(tmp);
-          if (_map->type == arcade::CommandType::GET_MAP)
-            lPDM_getMap();
+	  switch(_map->type)
+	    {
+	    case (arcade::CommandType::GET_MAP):
+	      lPDM_getMap();
+	      break;
+	    case ( arcade::CommandType::WHERE_AM_I):
+	      lPDM_whereAmI();
+	      break;
+	    case (arcade::CommandType::GO_UP):
+	      lPDM_move(arcade::CommandType::GO_UP);
+	      break;
+	    case (arcade::CommandType::GO_DOWN):
+	      lPDM_move(arcade::CommandType::GO_DOWN);
+	      break;
+	    case (arcade::CommandType::GO_LEFT):
+	      lPDM_move(arcade::CommandType::GO_LEFT);
+	      break;
+	    case (arcade::CommandType::GO_RIGHT):
+	      lPDM_move(arcade::CommandType::GO_RIGHT);
+	      break;
+	    case (arcade::CommandType::PLAY):
+	      lPDM_play();
+	      break;
+	    case (arcade::CommandType::MENU):
+	      lPDM_menu();
+	      break;
+	    default:
+	      break;
+	    }
       	}
         else
       	{
@@ -202,13 +262,13 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
         changeAction();
         move();
         if (lPDM == false)
-        {
-          printGame();
-        }
-    	  old_time = clock();
-    	}
+	  {
+	    printGame();
+	  }
+	old_time = clock();
+      }
     }
-    return (_map->type);
+  return (_map->type);
 }
 
 void							LSnake::gameOver()
@@ -224,12 +284,12 @@ void							LSnake::gameOver()
       _map->type = _core->getLib()->aCommand();
       if (_map->type == arcade::CommandType::ESCAPE)
 	{
-    _core->saveScore(_score);
+	  _core->saveScore(_score);
 	  exit(0);
 	}
       if (_map->type == arcade::CommandType::MENU)
 	{
-    _core->saveScore(_score);
+	  _core->saveScore(_score);
 	  exit(0);
 	}
     }
@@ -262,29 +322,66 @@ arcade::CommandType		LSnake::lPDM_aCommand(std::string const &command)
 {
     if (!command[0])
       return (arcade::CommandType::UNDEFINED);
-    switch (command[0]) {
+    switch (command[0])
+      {
       case 0:
-        return (arcade::CommandType::WHERE_AM_I);
-        break;
+	return (arcade::CommandType::WHERE_AM_I);
       case 1:
-        return (arcade::CommandType::GET_MAP);
-        break;
+	return (arcade::CommandType::GET_MAP);
       case 2:
         return (arcade::CommandType::GO_UP);
-        break;
-    }
+      case 3:
+	return (arcade::CommandType::GO_DOWN);
+      case 4:
+	return (arcade::CommandType::GO_LEFT);
+      case 5:
+	return (arcade::CommandType::GO_RIGHT);
+      case 9:
+	return (arcade::CommandType::PLAY);
+      default:
+	break;
+      }
 
   return (arcade::CommandType::UNDEFINED);
 }
 
-void                  LSnake::lPDM_getMap() const
+ void                  LSnake::lPDM_getMap() const
+ {
+   write(1, &_map, sizeof(arcade::GetMap));
+   // for (int i = 0 ; i < _map->width * _map->height ; ++i)
+   //   {
+   //     std::cout << (int)_map->tile[i] << std::endl;
+   //   }
+ }
+
+ void			LSnake::lPDM_whereAmI()
+ {
+  arcade::WhereAmI	*snake;
+  int			length;
+  int			i;
+
+  i = -1;
+  length = 0;
+  for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin(); it--)
+    length++;
+  if ((snake = (arcade::WhereAmI *)malloc(sizeof(arcade::WhereAmI)  * length)) == NULL)
+    return ;
+  snake->type = _map->type;
+  snake->lenght = length;
+  for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin(); it--)
+    snake->position[i] = *it;
+  write(1, &snake, sizeof(arcade::WhereAmI));
+ }
+
+void			LSnake::lPDM_move(arcade::CommandType direction)
 {
-  for (int i = 0 ; i < _map->width * _map->height ; ++i)
-    {
-      std::cout << (int)_map->tile[i] << std::endl;
-    }
+  (void)direction;
 }
 
+void			LSnake::lPDM_play()
+{
+  
+}
 
 extern "C"
 {
