@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 11:01:41 2017 gastal_r
-** Last update	Wed Mar 22 10:18:35 2017 gastal_r
+** Last update	Thu Mar 23 16:16:54 2017 gastal_r
 */
 
 #include        "Gui.hpp"
@@ -87,7 +87,7 @@ const std::string     Gui::getName(arcade::ICore &core)
   std::string input;
   std::string name;
 
-  while ((input = _graph->aChar()) != "ENTER")
+  while ((input = _graph->aChar()) != "ENTER" || name.empty())
   {
     _graph->aClear();
     _graph->aPutText(pos_x(2) - 3 * BLOCK_X, pos_y(4), "core/res/fonts/press_start.ttf",
@@ -101,7 +101,7 @@ const std::string     Gui::getName(arcade::ICore &core)
       }
       else if (input == "BACKSPACE" && !name.empty())
         name.pop_back();
-      else if (input != "BACKSPACE" && name.size() + 1 < 10)
+      else if (input != "BACKSPACE" && input != "ENTER" && name.size() + 1 < 10)
         name += input;
     }
     _graph->aPutText(pos_x(2.15) - name.length(), pos_y(3), "core/res/fonts/freaky_font.ttf",
