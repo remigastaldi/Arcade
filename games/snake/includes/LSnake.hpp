@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 23:42:03 2017 gastal_r
-** Last update	Thu Mar 23 00:19:32 2017 gastal_r
+** Last update Thu Mar 23 20:27:32 2017 Leo Hubert Froideval
 */
 
 #ifndef         _LSnake_HPP_
@@ -35,17 +35,17 @@ public:
   virtual       ~LSnake();
 
   void		changeAction();
-  void		move(arcade::ICore &);
-  void		printGame(arcade::ICore &core);
-  arcade::CommandType		mainLoop(arcade::ICore &, bool);
-  void    initTextures(arcade::ICore &core);
+  void    initTextures();
+  void		move();
+  void		printGame();
+  arcade::CommandType		mainLoop(bool);
   void		initGame();
   arcade::CommandType		play(arcade::ICore &);
   void		close();
   void		addQueue();
   void		newApple();
   void		addScore(int);
-  void		gameOver(arcade::ICore &);
+  void		gameOver();
 
   /*
   **  Fonctions pour la putain de moulinette
@@ -54,11 +54,12 @@ public:
   void                  lPDM_getMap() const;
 
 private:
-  arcade::GetMap		*_map;
-  std::vector<arcade::Position>	_position;
-  arcade::Position		_apple;
-  arcade::CommandType	_direction;
-  int				          _score;
+  arcade::GetMap		              *_map;
+  std::vector<arcade::Position>   _position;
+  arcade::Position		            _apple;
+  arcade::CommandType	            _direction;
+  int				                      _score;
+  arcade::ICore     				      *_core;
 };
 
 

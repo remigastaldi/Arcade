@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Thu Mar 23 17:55:00 2017 gastal_r
+** Last update Thu Mar 23 20:28:41 2017 Leo Hubert Froideval
 */
 
 #include          "LSnake.hpp"
@@ -18,16 +18,17 @@ LSnake::~LSnake()
 
 arcade::CommandType				LSnake::play(arcade::ICore &core)
 {
-  return (mainLoop(core, false));
+  _core = &core;
+  return (mainLoop(false));
 }
 
-void      LSnake::initTextures(arcade::ICore &core)
+void      LSnake::initTextures()
 {
-  core.getLib()->aAssignTexture(arcade::TileType::EMPTY, RES_PATH "img/floor2.png", arcade::Color::A_WHITE);
-  core.getLib()->aAssignTexture(arcade::TileType::OBSTACLE, RES_PATH "img/wall.png", arcade::Color::A_RED);
-  core.getLib()->aAssignTexture(arcade::TileType::OTHER, RES_PATH "img/tron.png", arcade::Color::A_BLACK);
-  core.getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, RES_PATH "img/wall3.png", arcade::Color::A_MAGENTA);
-  core.getLib()->aAssignTexture(arcade::TileType::POWERUP, RES_PATH "img/mooncat.jpg", arcade::Color::A_MAGENTA);
+  _core->getLib()->aAssignTexture(arcade::TileType::EMPTY, RES_PATH "img/floor2.png", arcade::Color::A_WHITE);
+  _core->getLib()->aAssignTexture(arcade::TileType::OBSTACLE, RES_PATH "img/wall.png", arcade::Color::A_RED);
+  _core->getLib()->aAssignTexture(arcade::TileType::OTHER, RES_PATH "img/tron.png", arcade::Color::A_BLACK);
+  _core->getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, RES_PATH "img/wall3.png", arcade::Color::A_MAGENTA);
+  _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, RES_PATH "img/mooncat.jpg", arcade::Color::A_MAGENTA);
 }
 
 void			LSnake::initGame()
@@ -58,20 +59,20 @@ void			LSnake::initGame()
   newApple();
 }
 
-void			LSnake::printGame(arcade::ICore &core)
+void			LSnake::printGame()
 {
-  core.getLib()->aClear();
+  _core->getLib()->aClear();
   for (int i = 0 ; i < _map->width * _map->height ; ++i)
-    core.getLib()->aTile((i % _map->width) + 1 , (i / _map->width) + 1, _map->tile[i]);
+    _core->getLib()->aTile((i % _map->width) + 1 , (i / _map->width) + 1, _map->tile[i]);
 
-  core.getLib()->aTile(_position[0].x + 1, _position[0].y + 1, arcade::TileType::OTHER);
+  _core->getLib()->aTile(_position[0].x + 1, _position[0].y + 1, arcade::TileType::OTHER);
   if (_position.size() > 1)
     for (std::vector<arcade::Position>::iterator it = _position.begin() + 1; it != _position.end(); it++)
-      core.getLib()->aTile((*it).x + 1, (*it).y + 1, arcade::TileType::MY_SHOOT);
+      _core->getLib()->aTile((*it).x + 1, (*it).y + 1, arcade::TileType::MY_SHOOT);
 
-  core.getLib()->aTile(_apple.x, _apple.y, arcade::TileType::POWERUP);
-  core.refreshGui();
-  core.getLib()->aRefresh();
+  _core->getLib()->aTile(_apple.x, _apple.y, arcade::TileType::POWERUP);
+  _core->refreshGui();
+  _core->getLib()->aRefresh();
 }
 
 void			LSnake::changeAction()
@@ -103,7 +104,7 @@ void			LSnake::addScore(int points)
   _score += points;
 }
 
-void			LSnake::move(arcade::ICore &core)
+void			LSnake::move()
 {
   int			nextTile;
 
@@ -131,35 +132,35 @@ void			LSnake::move(arcade::ICore &core)
       break;
     }
 
-  nextTile = (_position[0].y) * 50 + _position[0].x;
+  nextTile = (_position[0].y) * _map->width + _position[0].x;
 
   if (_map->tile[nextTile] != arcade::TileType::EMPTY &&
       _map->tile[nextTile] != arcade::TileType::POWERUP &&
       _map->tile[nextTile] != arcade::TileType::MY_SHOOT)
-    gameOver(core);
+    gameOver();
 
   for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin() + 1; it--)
     if (_position[0].x == (*it).x && _position[0].y == (*it).y)
-      gameOver(core);
+      gameOver();
 
   if (_position[0].x == _apple.x - 1 && _position[0].y == _apple.y - 1)
     {
       newApple();
       addQueue();
       addScore(10);
-      core.setScore(std::to_string(_score));
+      _core->setScore(std::to_string(_score));
     }
 }
 
-arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
+arcade::CommandType			LSnake::mainLoop(bool lPDM)
 {
   std::clock_t		cur_time = clock();
   std::clock_t		old_time = clock();
 
   initGame();
-  initTextures(core);
+  initTextures();
   if (lPDM == false)
-    core.setScore(std::to_string(_score)); //TODO
+    _core->setScore(std::to_string(_score));
   while (_map->type != arcade::CommandType::ESCAPE && _map->type != arcade::CommandType::MENU)
     {
       cur_time = clock();
@@ -178,16 +179,16 @@ arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
       	}
         else
       	{
-          _map->type = core.getLib()->aCommand();
+          _map->type = _core->getLib()->aCommand();
           switch (_map->type)
           {
             case arcade::CommandType::NEXT_LIB :
-              core.switchLib(arcade::CommandType::NEXT_LIB);
-              initTextures(core);
+              _core->switchLib(arcade::CommandType::NEXT_LIB);
+              initTextures();
               break;
             case arcade::CommandType::PREV_LIB :
-              core.switchLib(arcade::CommandType::PREV_LIB);
-              initTextures(core);
+              _core->switchLib(arcade::CommandType::PREV_LIB);
+              initTextures();
               break;
             case arcade::CommandType::NEXT_GAME :
               return(arcade::CommandType::NEXT_GAME);
@@ -199,10 +200,10 @@ arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
       	}
 
         changeAction();
-        move(core);
+        move();
         if (lPDM == false)
         {
-          printGame(core);
+          printGame();
         }
     	  old_time = clock();
     	}
@@ -210,25 +211,25 @@ arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
     return (_map->type);
 }
 
-void							LSnake::gameOver(arcade::ICore &core)
+void							LSnake::gameOver()
 {
-  core.setScore(std::to_string(_score));
-  core.getLib()->aClear();
-  core.getLib()->aPutText(pos_x(2.7), pos_y(2.25), "core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
-  core.getLib()->aPutText(pos_x(3.1), pos_y(1.8), "core/res/fonts/press_start.ttf", WIDTH / 100, arcade::Color::A_WHITE, "PRESS ENTER TO RESTART THE GAME.");
-  core.getLib()->aPutText(pos_x(2.7), pos_y(2.25), "core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
-  core.getLib()->aRefresh();
+  _core->setScore(std::to_string(_score));
+  _core->getLib()->aClear();
+  _core->getLib()->aPutText(pos_x(2.7), pos_y(2.25), "_core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
+  _core->getLib()->aPutText(pos_x(3.1), pos_y(1.8), "_core/res/fonts/press_start.ttf", WIDTH / 100, arcade::Color::A_WHITE, "PRESS ENTER TO RESTART THE GAME.");
+  _core->getLib()->aPutText(pos_x(2.7), pos_y(2.25), "_core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
+  _core->getLib()->aRefresh();
   while (1)
     {
-      _map->type = core.getLib()->aCommand();
+      _map->type = _core->getLib()->aCommand();
       if (_map->type == arcade::CommandType::ESCAPE)
 	{
-    core.saveScore(_score);
+    _core->saveScore(_score);
 	  exit(0);
 	}
       if (_map->type == arcade::CommandType::MENU)
 	{
-    core.saveScore(_score);
+    _core->saveScore(_score);
 	  exit(0);
 	}
     }
@@ -301,9 +302,7 @@ extern "C"
   void			Play()
   {
     LSnake		snake;
-    arcade::ICore	*core;
 
-    snake.mainLoop(*core, true);
-    delete(core);
+    snake.mainLoop(true);
   }
 }
