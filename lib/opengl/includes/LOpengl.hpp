@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:21 2017 gastal_r
-** Last update	Wed Mar 22 10:54:00 2017 gastal_r
+** Last update	Thu Mar 23 12:22:20 2017 gastal_r
 */
 
 #ifndef         _LOPENGL_HPP_
@@ -32,13 +32,19 @@ public:
 
   void          aInit(size_t, size_t);
   void          aClose();
+
+  void          loadCube();
+  void          loadTriangle();
+
   void          aTile(size_t, size_t, arcade::TileType);
   void          aTile(size_t, size_t, void *);
   void          aAssignTexture(const arcade::TileType tile, const std::string &path, const arcade::Color color);
   void          *aGetTexture(const std::string &);
+
   sf::Color     fillColor(arcade::Color);
   void          aPutText(size_t, size_t, const std::string &,
                          size_t, arcade::Color, const std::string &);
+
   void          aClear();
   void          aRefresh();
   arcade::CommandType aCommand();
@@ -96,6 +102,30 @@ private:
       -5,  5,  5,  0, 1,
        5, -5,  5,  1, 0,
        5,  5,  5,  1, 1
+  };
+
+  const GLfloat _triangle[180] =
+  {
+      -5,  5,  0,   0, 0,
+      -5, -5,  0,   0, 1,
+       0,  0,  5,   1, 0,
+
+      -5, -5,  0,   0, 0,
+       5, -5,  0,   0, 1,
+       0,  0,  5,   1, 0,
+
+       5, -5,  0,   0, 0,
+       5,  5,  0,   0, 1,
+       0,  0,  5,   1, 0,
+
+       5,  5,  0,   0, 0,
+      -5,  5,  0,   0, 1,
+       0,  0,  5,   1, 0,
+
+    /*  -5,  5,  0,   0, 0,
+       5,  5,  0,   0, 1,
+       5, -5,  0,   1, 0,
+      -5, -5,  0,   1, 1 */
   };
 };
 

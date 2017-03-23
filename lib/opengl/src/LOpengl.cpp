@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Wed Mar 22 23:07:43 2017 gastal_r
+** Last update	Thu Mar 23 12:26:48 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -21,6 +21,17 @@ LOpengl::~LOpengl()
 
 }
 
+void            LOpengl::loadCube()
+{
+  glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), _cube);
+  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _cube + 3);
+}
+
+void            LOpengl::loadTriangle()
+{
+  glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), _triangle);
+  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _triangle + 3);
+}
 
 void            LOpengl::aInit(size_t width, size_t height)
 {
@@ -43,23 +54,17 @@ void            LOpengl::aInit(size_t width, size_t height)
 
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-  glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), _cube);
-  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _cube + 3);
 
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
 
-  if (!_obstacle.loadFromFile("core/res/img/wall2.png"))
+  if (!_obstacle.loadFromFile("games/snake/res/img/wall2.png"))
     throw arcade::Exception("Cannot load: ", "core/res/img/wall2.png");
-  if (!_floor.loadFromFile("core/res/img/floor2.png"))
+  if (!_floor.loadFromFile("games/snake/res/img/floor2.png"))
     throw arcade::Exception("Cannot load: ", "core/res/img/wood.jpg");
 _obstacle.generateMipmap();
 _floor.generateMipmap();
 _win.setActive(false);
-
-/*  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  _win.display();
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); */
 }
 
 void            LOpengl::aClose()
@@ -83,25 +88,25 @@ if (type == arcade::TileType::OTHER)
 
   if (_player_x <= 26 && _player_y <= 26)
   gluLookAt(255.f  - (26 - _player_x) * (26 - _player_x) /3,
-            140.f  +  (26 - _player_y) * (26 - _player_y) /3, 90.f,
+            140.f  +  (26 - _player_y) * (26 - _player_y) /3, 110.f,
             255.f  - (26 - _player_x) * (26 - _player_x) /3,
             205.f  + (26 - _player_y) * (26 - _player_y) /3, 0.f,
             0.f, 0.f, 1.f);
   else if (_player_x > 26 && _player_y < 26)
   gluLookAt(255.f + ((26 - _player_x) * (26 - _player_x)) /3,
-              140.f + (26 - _player_y) * (26 - _player_y) /3, 90.f,
+              140.f + (26 - _player_y) * (26 - _player_y) /3, 110.f,
               255.f + ((26 - _player_x) * (26 - _player_x)) /3,
               205.f + (26 - _player_y) * (26 - _player_y) /3, 0.f,
               0.f, 0.f, 1.f);
   else if (_player_x < 26 && _player_y > 26)
   gluLookAt(255.f  - (26 - _player_x) * (26 - _player_x) /3,
-            140.f  -  (26 - _player_y) * (26 - _player_y) /2.5, 90.f,
+            140.f  -  (26 - _player_y) * (26 - _player_y) /2.5, 110.f,
             255.f  - (26 - _player_x) * (26 - _player_x) /3,
             205.f  - (26 - _player_y) * (26 - _player_y) /2.5, 0.f,
             0.f, 0.f, 1.f);
   else if (_player_x >= 26 && _player_y >= 26)
   gluLookAt(255.f + ((26 - _player_x) * (26 - _player_x)) /3,
-              140.f - (26 - _player_y) * (26 - _player_y) /2.5, 90.f,
+              140.f - (26 - _player_y) * (26 - _player_y) /2.5, 110.f,
               255.f + ((26 - _player_x) * (26 - _player_x)) /3,
               205.f - (26 - _player_y) * (26 - _player_y) /2.5, 0.f,
               0.f, 0.f, 1.f);
@@ -111,10 +116,12 @@ if (type == arcade::TileType::OTHER)
     case arcade::TileType::BLOCK:
       break;
     case arcade::TileType::EMPTY:
+      loadCube();
       sf::Texture::bind(&_floor);
       glTranslatef(x * 10, 500.f  -(y * 10), 0);
       break;
     case arcade::TileType::OBSTACLE:
+      loadCube();
       sf::Texture::bind(&_obstacle);
       glTranslatef(x * 10, 500.f  -(y * 10), 10);
       break;
@@ -123,19 +130,22 @@ if (type == arcade::TileType::OTHER)
     case arcade::TileType::EVIL_SHOOT:
       break;
     case arcade::TileType::MY_SHOOT:
+      loadTriangle();
       sf::Texture::bind(&_obstacle);
-      glTranslatef(x * 10, 500.f  -(y * 10), 10);
+      glTranslatef(x * 10, 500.f  -(y * 10), 5);
       break;
     case arcade::TileType::POWERUP:
+      loadTriangle();
       sf::Texture::bind(&_obstacle);
-      glTranslatef(x * 10, 500.f  -(y * 10), 10);
+      glTranslatef(x * 10, 500.f  -(y * 10), 5);
       break;
     case arcade::TileType::OTHER:
     {
       _player_x = x;
       _player_y = y;
+      loadTriangle();
       sf::Texture::bind(&_obstacle);
-      glTranslatef(x * 10, 500.f  -(y * 10), 10);
+      glTranslatef(x * 10, 500.f  -(y * 10), 5);
     }
       break;
   }
@@ -193,7 +203,6 @@ void          LOpengl::aPutText(size_t x, size_t y, const std::string &fontPath,
 
   font.loadFromFile(fontPath);
   sf::Text sfText(text, font);
-  //sfText.setStyle(sf::Text::Bold);
   sfText.setFillColor(fillColor(color));
   sfText.setPosition(x * BLOCK_X, (y * BLOCK_Y) + size);
   sfText.setCharacterSize(size);
