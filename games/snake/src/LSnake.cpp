@@ -275,9 +275,9 @@ void							LSnake::gameOver()
 {
   _core->setScore(std::to_string(_score));
   _core->getLib()->aClear();
-  _core->getLib()->aPutText(pos_x(2.7), pos_y(2.25), "_core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
-  _core->getLib()->aPutText(pos_x(3.1), pos_y(1.8), "_core/res/fonts/press_start.ttf", WIDTH / 100, arcade::Color::A_WHITE, "PRESS ENTER TO RESTART THE GAME.");
-  _core->getLib()->aPutText(pos_x(2.7), pos_y(2.25), "_core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
+  _core->getLib()->aPutText(pos_x(2.7), pos_y(2.25), "core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
+  _core->getLib()->aPutText(pos_x(3.1), pos_y(1.8), "core/res/fonts/press_start.ttf", WIDTH / 100, arcade::Color::A_WHITE, "PRESS ENTER TO RESTART THE GAME.");
+  _core->getLib()->aPutText(pos_x(2.7), pos_y(2.25), "core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
   _core->getLib()->aRefresh();
   while (1)
     {
