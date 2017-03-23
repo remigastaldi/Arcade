@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Thu Mar 23 23:15:36 2017 gastal_r
+** Last update Fri Mar 24 00:26:40 2017 Leo Hubert Froideval
 */
 
 #include          "LSnake.hpp"
@@ -65,7 +65,6 @@ void			LSnake::printGame()
   _core->getLib()->aTile(_position[0].x + 1, _position[0].y + 1, arcade::TileType::OTHER);
   for (int i = 0 ; i < _map->width * _map->height ; ++i)
     _core->getLib()->aTile((i % _map->width) + 1 , (i / _map->width) + 1, _map->tile[i]);
-
   _core->getLib()->aTile(_position[0].x + 1, _position[0].y + 1, arcade::TileType::OTHER);
   if (_position.size() > 1)
     for (std::vector<arcade::Position>::iterator it = _position.begin() + 1; it != _position.end(); it++)
@@ -376,7 +375,7 @@ void			LSnake::lPDM_move(arcade::CommandType direction)
 
 void			LSnake::lPDM_play()
 {
-  
+
 }
 
 extern "C"
