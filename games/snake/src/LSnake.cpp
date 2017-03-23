@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update Fri Mar 24 00:26:40 2017 Leo Hubert Froideval
+** Last update Fri Mar 24 00:42:23 2017 Leo Hubert Froideval
 */
 
 #include          "LSnake.hpp"
@@ -188,6 +188,7 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
 {
   std::clock_t		cur_time = clock();
   std::clock_t		old_time = clock();
+  arcade::CommandType lastCommand;
 
   _lPDM = lPDM;
   initGame();
@@ -199,70 +200,71 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
   while (_map->type != arcade::CommandType::ESCAPE && _map->type != arcade::CommandType::MENU)
     {
       cur_time = clock();
+      if (_lPDM == true)
+      {
+        std::string tmp;
+        std::cin >> tmp;
+        _map->type = lPDM_aCommand(tmp);
+      switch(_map->type)
+      {
+      case (arcade::CommandType::GET_MAP):
+      lPDM_getMap();
+      break;
+      case (arcade::CommandType::WHERE_AM_I):
+      lPDM_whereAmI();
+      break;
+      case (arcade::CommandType::GO_UP):
+      lPDM_move(arcade::CommandType::GO_UP);
+      break;
+      case (arcade::CommandType::GO_DOWN):
+      lPDM_move(arcade::CommandType::GO_DOWN);
+      break;
+      case (arcade::CommandType::GO_LEFT):
+      lPDM_move(arcade::CommandType::GO_LEFT);
+      break;
+      case (arcade::CommandType::GO_RIGHT):
+      lPDM_move(arcade::CommandType::GO_RIGHT);
+      break;
+      case (arcade::CommandType::PLAY):
+      lPDM_play();
+      break;
+      default:
+      break;
+      }
+      }
+      else
+      {
+        lastCommand = _core->getLib()->aCommand();
+        if (lastCommand != arcade::CommandType::UNDEFINED)
+          _map->type = lastCommand;
+        switch (_map->type)
+        {
+          case arcade::CommandType::NEXT_LIB :
+            _core->switchLib(arcade::CommandType::NEXT_LIB);
+            initTextures();
+            break;
+          case arcade::CommandType::PREV_LIB :
+            _core->switchLib(arcade::CommandType::PREV_LIB);
+            initTextures();
+            break;
+          case arcade::CommandType::NEXT_GAME :
+            return(arcade::CommandType::NEXT_GAME);
+          case arcade::CommandType::PREV_GAME :
+            return(arcade::CommandType::PREV_GAME);
+          default :
+            break;
+        }
+      }
 
       if (cur_time > old_time + (100000 - (int)_position.size()))
       {
-        if (_lPDM == true)
-      	{
-          std::string tmp;
-          std::cin >> tmp;
-          _map->type = lPDM_aCommand(tmp);
-	  switch(_map->type)
-	    {
-	    case (arcade::CommandType::GET_MAP):
-	      lPDM_getMap();
-	      break;
-	    case (arcade::CommandType::WHERE_AM_I):
-	      lPDM_whereAmI();
-	      break;
-	    case (arcade::CommandType::GO_UP):
-	      lPDM_move(arcade::CommandType::GO_UP);
-	      break;
-	    case (arcade::CommandType::GO_DOWN):
-	      lPDM_move(arcade::CommandType::GO_DOWN);
-	      break;
-	    case (arcade::CommandType::GO_LEFT):
-	      lPDM_move(arcade::CommandType::GO_LEFT);
-	      break;
-	    case (arcade::CommandType::GO_RIGHT):
-	      lPDM_move(arcade::CommandType::GO_RIGHT);
-	      break;
-	    case (arcade::CommandType::PLAY):
-	      lPDM_play();
-	      break;
-	    default:
-	      break;
-	    }
-      	}
-        else
-      	{
-          _map->type = _core->getLib()->aCommand();
-          switch (_map->type)
-          {
-            case arcade::CommandType::NEXT_LIB :
-              _core->switchLib(arcade::CommandType::NEXT_LIB);
-              initTextures();
-              break;
-            case arcade::CommandType::PREV_LIB :
-              _core->switchLib(arcade::CommandType::PREV_LIB);
-              initTextures();
-              break;
-            case arcade::CommandType::NEXT_GAME :
-              return(arcade::CommandType::NEXT_GAME);
-            case arcade::CommandType::PREV_GAME :
-              return(arcade::CommandType::PREV_GAME);
-            default :
-              break;
-          }
-      	}
-
         changeAction();
         move();
         if (lPDM == false)
-	  {
-	    printGame();
-	  }
-	old_time = clock();
+        {
+        printGame();
+        }
+	      old_time = clock();
       }
     }
   return (_map->type);
