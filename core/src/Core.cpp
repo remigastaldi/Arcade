@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Thu Mar 23 16:14:52 2017 gastal_r
+** Last update	Thu Mar 23 16:20:09 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -95,7 +95,10 @@ void            Core::startCore()
     return;
   guiSetPlayer(_player);
   _save.saveSetPlayer(_player);
-  openGame(chooseGame(*this));
+  chooseGame(*this);
+  if (getStatus() == EXIT)
+    return;
+  openGame(_currentGame);
   _save.checkExistingUser();
   _game->play(*this);
 while (getStatus() == CONTINUE)
