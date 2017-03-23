@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update Fri Mar 24 00:42:23 2017 Leo Hubert Froideval
+** Last update Fri Mar 24 00:51:05 2017 Leo Hubert Froideval
 */
 
 #include          "LSnake.hpp"
@@ -98,6 +98,7 @@ void			LSnake::changeAction()
     default:
       break;
   }
+  _map->type = arcade::CommandType::UNDEFINED;
 }
 
 void			LSnake::addScore(int points)
@@ -242,10 +243,12 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
           case arcade::CommandType::NEXT_LIB :
             _core->switchLib(arcade::CommandType::NEXT_LIB);
             initTextures();
+            _map->type = arcade::CommandType::UNDEFINED;
             break;
           case arcade::CommandType::PREV_LIB :
             _core->switchLib(arcade::CommandType::PREV_LIB);
             initTextures();
+            _map->type = arcade::CommandType::UNDEFINED;
             break;
           case arcade::CommandType::NEXT_GAME :
             return(arcade::CommandType::NEXT_GAME);
