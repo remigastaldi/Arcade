@@ -5,31 +5,24 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Thu Mar 23 16:20:09 2017 gastal_r
+** Last update	Thu Mar 23 16:24:42 2017 gastal_r
 */
 
 #include        "Core.hpp"
 
 Core::Core(const std::string &lib)
 {
+  _game = 0;
   setStatus(CONTINUE);
   openLibsDir();
   openGamesDir();
   openLib(lib);
-  openGame(std::string("games/lib_arcade_snake.so"));
-/*  _currentGame = "games/lib_arcade_snake.so";
-  _currentGraph = "lib/lib_arcade_ncurses.so";
-  openGame(std::string("games/lib_arcade_snake.so"));
-  switchGame(arcade::NEXT);
-  switchLib(arcade::NEXT);
-  switchGame(arcade::PREV);
-  switchLib(arcade::PREV); */
 }
 
 Core::~Core()
 {
-  /* delete(_graph);
-  delete(_game); */
+  _graph ? delete(_graph) : (void)0;
+  _game ? delete(_game) : (void)0;
 }
 
 void            Core::openLib(const std::string &name)
@@ -95,7 +88,7 @@ void            Core::startCore()
     return;
   guiSetPlayer(_player);
   _save.saveSetPlayer(_player);
-  chooseGame(*this);
+  _currentGame = chooseGame(*this);
   if (getStatus() == EXIT)
     return;
   openGame(_currentGame);

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Thu Mar 23 15:12:04 2017 gastal_r
+** Last update	Thu Mar 23 16:25:08 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -401,7 +401,6 @@ extern "C"
 {
   LOpengl        *createGraph()
   {
-    std::cout << "GRAPH" << '\n';
     return (new LOpengl());
   }
 
