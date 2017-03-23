@@ -192,9 +192,11 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
 
   _lPDM = lPDM;
   initGame();
-  initTextures();
   if (lPDM == false)
-    _core->setScore(std::to_string(_score));
+    {
+      initTextures();
+      _core->setScore(std::to_string(_score));
+    }
   while (_map->type != arcade::CommandType::ESCAPE && _map->type != arcade::CommandType::MENU)
     {
       cur_time = clock();
@@ -205,15 +207,13 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
       	{
           std::string tmp;
           std::cin >> tmp;
-          if (tmp[0] == 0)
-            return (arcade::CommandType::ESCAPE);
           _map->type = lPDM_aCommand(tmp);
 	  switch(_map->type)
 	    {
 	    case (arcade::CommandType::GET_MAP):
 	      lPDM_getMap();
 	      break;
-	    case ( arcade::CommandType::WHERE_AM_I):
+	    case (arcade::CommandType::WHERE_AM_I):
 	      lPDM_whereAmI();
 	      break;
 	    case (arcade::CommandType::GO_UP):
@@ -230,9 +230,6 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
 	      break;
 	    case (arcade::CommandType::PLAY):
 	      lPDM_play();
-	      break;
-	    case (arcade::CommandType::MENU):
-	      lPDM_menu();
 	      break;
 	    default:
 	      break;
@@ -326,6 +323,7 @@ arcade::CommandType		LSnake::lPDM_aCommand(std::string const &command)
     switch (command[0])
       {
       case 0:
+	std::cout << "LA PUTE\n";
 	return (arcade::CommandType::WHERE_AM_I);
       case 1:
 	return (arcade::CommandType::GET_MAP);
@@ -346,17 +344,13 @@ arcade::CommandType		LSnake::lPDM_aCommand(std::string const &command)
   return (arcade::CommandType::UNDEFINED);
 }
 
- void                  LSnake::lPDM_getMap() const
- {
-   write(1, &_map, sizeof(arcade::GetMap));
-   // for (int i = 0 ; i < _map->width * _map->height ; ++i)
-   //   {
-   //     std::cout << (int)_map->tile[i] << std::endl;
-   //   }
- }
+void                  LSnake::lPDM_getMap() const
+{
+  write(1, _map, sizeof(arcade::GetMap) * (_map->width * _map->height));
+}
 
- void			LSnake::lPDM_whereAmI()
- {
+void			LSnake::lPDM_whereAmI()
+{
   arcade::WhereAmI	*snake;
   int			length;
   int			i;
@@ -371,8 +365,9 @@ arcade::CommandType		LSnake::lPDM_aCommand(std::string const &command)
   snake->lenght = length;
   for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin(); it--)
     snake->position[i] = *it;
-  write(1, &snake, sizeof(arcade::WhereAmI));
- }
+  std::cout << "COUILLE MOLLE\n";
+  write(1, snake, sizeof(arcade::WhereAmI));
+}
 
 void			LSnake::lPDM_move(arcade::CommandType direction)
 {
