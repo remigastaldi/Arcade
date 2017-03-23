@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Thu Mar 23 00:20:02 2017 gastal_r
+** Last update	Thu Mar 23 17:55:00 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -179,10 +179,22 @@ arcade::CommandType			LSnake::mainLoop(arcade::ICore &core, bool lPDM)
         else
       	{
           _map->type = core.getLib()->aCommand();
-          if (_map->type == arcade::CommandType::NEXT_LIB)
+          switch (_map->type)
           {
-    	        core.switchLib(arcade::CommandType::NEXT_LIB);
+            case arcade::CommandType::NEXT_LIB :
+              core.switchLib(arcade::CommandType::NEXT_LIB);
               initTextures(core);
+              break;
+            case arcade::CommandType::PREV_LIB :
+              core.switchLib(arcade::CommandType::PREV_LIB);
+              initTextures(core);
+              break;
+            case arcade::CommandType::NEXT_GAME :
+              return(arcade::CommandType::NEXT_GAME);
+            case arcade::CommandType::PREV_GAME :
+              return(arcade::CommandType::PREV_GAME);
+            default :
+              break;
           }
       	}
 

@@ -5,13 +5,14 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Thu Mar 23 16:24:42 2017 gastal_r
+** Last update	Thu Mar 23 18:22:47 2017 gastal_r
 */
 
 #include        "Core.hpp"
 
 Core::Core(const std::string &lib)
 {
+  _graph = 0;
   _game = 0;
   setStatus(CONTINUE);
   openLibsDir();
@@ -80,6 +81,8 @@ void            Core::setGuiData()
 
 void            Core::startCore()
 {
+  arcade::CommandType gameReturn;
+
   _graph->aInit(WIDTH, HEIGHT);
   setGuiData();
   _save.loadPlayerSave();
@@ -93,11 +96,26 @@ void            Core::startCore()
     return;
   openGame(_currentGame);
   _save.checkExistingUser();
-  _game->play(*this);
-while (getStatus() == CONTINUE)
+  while (getStatus() == CONTINUE)
   {
-  if (_graph->aCommand() == arcade::CommandType::ESCAPE)
-    setStatus(Status::EXIT);
+    gameReturn = _game->play(*this);
+    switch (gameReturn)
+    {
+      case arcade::CommandType::ESCAPE :
+        return;
+      case arcade::CommandType::NEXT_GAME :
+        switchGame(arcade::CommandType::NEXT_GAME);
+        break;
+      case arcade::CommandType::PREV_GAME :
+        switchGame(arcade::CommandType::PREV_GAME);
+        break;
+      default :
+        break;
+    }
+    if (gameReturn == arcade::CommandType::ESCAPE)
+      return;
+    if (_graph->aCommand() == arcade::CommandType::ESCAPE)
+      setStatus(Status::EXIT);
   }
   _graph->aClose();
 }
@@ -109,7 +127,7 @@ void            Core::switchGame(const arcade::CommandType m)
   openGamesDir();
   if (_games.size() == 1)
     return;
-  if (m == arcade::CommandType::NEXT_LIB)
+  if (m == arcade::CommandType::NEXT_GAME)
   {
     size_t pos = find(_games.begin(), _games.end(), _currentGame) - _games.begin();
     if (pos + 1 == _games.size())
@@ -130,7 +148,6 @@ void            Core::switchGame(const arcade::CommandType m)
   Dlclose(_gameHandle);
   openGame(name);
   setGuiData();
-  _game->play(*this);
 }
 
 void            Core::switchLib(const arcade::CommandType m)
@@ -152,7 +169,7 @@ void            Core::switchLib(const arcade::CommandType m)
   {
     size_t pos = find(_libs.begin(), _libs.end(), _currentGraph) - _libs.begin();
     if (pos  == 0)
-      name = *_libs.end();
+      name = *(_libs.end() - 1);
     else
       name = _libs[pos - 1];
   }
