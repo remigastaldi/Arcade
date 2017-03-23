@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Thu Mar 23 18:36:11 2017 gastal_r
+** Last update	Thu Mar 23 21:45:40 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -20,8 +20,6 @@ void            LSfml::aInit(size_t width, size_t height)
 {
   _win.create(sf::VideoMode(width, height),"Arcade",  sf::Style::Fullscreen);
   std::this_thread::sleep_for(std::chrono::milliseconds(100));
-  _win.clear();
-  _win.display();
   _win.clear();
 }
 

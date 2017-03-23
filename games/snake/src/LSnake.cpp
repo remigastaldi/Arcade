@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update Thu Mar 23 20:28:41 2017 Leo Hubert Froideval
+** Last update	Thu Mar 23 23:15:36 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -62,6 +62,7 @@ void			LSnake::initGame()
 void			LSnake::printGame()
 {
   _core->getLib()->aClear();
+  _core->getLib()->aTile(_position[0].x + 1, _position[0].y + 1, arcade::TileType::OTHER);
   for (int i = 0 ; i < _map->width * _map->height ; ++i)
     _core->getLib()->aTile((i % _map->width) + 1 , (i / _map->width) + 1, _map->tile[i]);
 

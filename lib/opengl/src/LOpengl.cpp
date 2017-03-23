@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Thu Mar 23 17:09:02 2017 gastal_r
+** Last update	Thu Mar 23 22:55:43 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -138,6 +138,7 @@ if (type == arcade::TileType::OTHER)
               255.f + ((26 - _player_x) * (26 - _player_x)) /3,
               205.f - (26 - _player_y) * (26 - _player_y) /2.5, 0.f,
               0.f, 0.f, 1.f);
+
   glPushMatrix();
   switch (type)
   {
@@ -169,8 +170,6 @@ if (type == arcade::TileType::OTHER)
       break;
     case arcade::TileType::OTHER:
     {
-      _player_x = x;
-      _player_y = y;
       loadTriangle();
       sf::Texture::bind(&_otherTex);
       glTranslatef(x * 10, 500.f  -(y * 10), 5);
