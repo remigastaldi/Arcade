@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Mar 17 00:03:17 2017 gastal_r
-** Last update	Tue Mar 21 23:18:45 2017 gastal_r
+** Last update	Thu Mar 23 20:17:07 2017 gastal_r
 */
 
 #include        "Save.hpp"
@@ -101,6 +101,7 @@ for (std::vector<Save::PlayerSave>::const_iterator it = _playerSave.begin(); it 
     scores.push_back(player);
   }
   std::sort(scores.begin(), scores.end(), sortScores);
+  scores.resize(5);
   return (scores);
 }
 
