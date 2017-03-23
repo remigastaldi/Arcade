@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Thu Mar 23 12:26:48 2017 gastal_r
+** Last update	Thu Mar 23 15:12:04 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -58,18 +58,46 @@ void            LOpengl::aInit(size_t width, size_t height)
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
 
-  if (!_obstacle.loadFromFile("games/snake/res/img/wall2.png"))
-    throw arcade::Exception("Cannot load: ", "core/res/img/wall2.png");
-  if (!_floor.loadFromFile("games/snake/res/img/floor2.png"))
-    throw arcade::Exception("Cannot load: ", "core/res/img/wood.jpg");
-_obstacle.generateMipmap();
-_floor.generateMipmap();
 _win.setActive(false);
 }
 
 void            LOpengl::aClose()
 {
   _win.close();
+}
+
+sf::Uint8				*LOpengl::fillPixelsColor(const arcade::Color &col)
+{
+  sf::Uint8 *pixels = new sf::Uint8[BLOCK_Y * BLOCK_Y * 4];
+
+  sf::Color color = fillColor(col);
+  for (int i = 0; i < BLOCK_Y * BLOCK_Y * 4; i +=4)
+  {
+    pixels[i] = color.r;
+    pixels[i+1] = color.g;
+    pixels[i+2] = color.b;
+    pixels[i+3] = color.a;
+  }
+  return (pixels);
+}
+
+sf::Texture     LOpengl::createColoredTexture(const arcade::Color &color)
+{
+  sf::Texture texture;
+
+  texture.create(BLOCK_Y, BLOCK_Y);
+  texture.update(fillPixelsColor(color));
+  texture.setSmooth(true);
+  return (texture);
+}
+
+sf::Sprite      LOpengl::createSprite(const sf::Texture &texture)
+{
+  sf::Sprite sprite;
+
+  sprite.setTexture(texture);
+  sprite.setScale(sf::Vector2f(16.f / texture.getSize().x, 16.f / texture.getSize().x));
+  return (sprite);
 }
 
 void            LOpengl::aTile(size_t x, size_t y, arcade::TileType type)
@@ -117,12 +145,12 @@ if (type == arcade::TileType::OTHER)
       break;
     case arcade::TileType::EMPTY:
       loadCube();
-      sf::Texture::bind(&_floor);
+      sf::Texture::bind(&_emptyTex);
       glTranslatef(x * 10, 500.f  -(y * 10), 0);
       break;
     case arcade::TileType::OBSTACLE:
       loadCube();
-      sf::Texture::bind(&_obstacle);
+      sf::Texture::bind(&_obstacleTex);
       glTranslatef(x * 10, 500.f  -(y * 10), 10);
       break;
     case arcade::TileType::EVIL_DUDE:
@@ -131,12 +159,12 @@ if (type == arcade::TileType::OTHER)
       break;
     case arcade::TileType::MY_SHOOT:
       loadTriangle();
-      sf::Texture::bind(&_obstacle);
+      sf::Texture::bind(&_myShootTex);
       glTranslatef(x * 10, 500.f  -(y * 10), 5);
       break;
     case arcade::TileType::POWERUP:
       loadTriangle();
-      sf::Texture::bind(&_obstacle);
+      sf::Texture::bind(&_powerupTex);
       glTranslatef(x * 10, 500.f  -(y * 10), 5);
       break;
     case arcade::TileType::OTHER:
@@ -144,7 +172,7 @@ if (type == arcade::TileType::OTHER)
       _player_x = x;
       _player_y = y;
       loadTriangle();
-      sf::Texture::bind(&_obstacle);
+      sf::Texture::bind(&_otherTex);
       glTranslatef(x * 10, 500.f  -(y * 10), 5);
     }
       break;
@@ -167,9 +195,49 @@ void            LOpengl::aTile(size_t x, size_t y, void *texture)
 
 void            LOpengl::aAssignTexture(const arcade::TileType tile, const std::string &path, const arcade::Color color)
 {
-  (void) tile;
-  (void) path;
-  (void) color;
+  switch (tile)
+  {
+    case arcade::TileType::EMPTY :
+      if (!_emptyTex.loadFromFile(path))
+        _emptyTex = createColoredTexture(color);
+      _emptyTex.generateMipmap();
+      break;
+    case arcade::TileType::BLOCK :
+      if (!_blockTex.loadFromFile(path))
+        _blockTex = createColoredTexture(color);
+      _blockTex.generateMipmap();
+      break;
+    case arcade::TileType::OBSTACLE :
+      if (!_obstacleTex.loadFromFile(path))
+        _obstacleTex = createColoredTexture(color);
+      _obstacleTex.generateMipmap();
+      break;
+    case arcade::TileType::EVIL_DUDE :
+      if (!_evilDudeTex.loadFromFile(path))
+        _evilDudeTex = createColoredTexture(color);
+      _evilDudeTex.generateMipmap();
+      break;
+    case arcade::TileType::EVIL_SHOOT :
+      if (!_evilShootTex.loadFromFile(path))
+        _evilShootTex = createColoredTexture(color);
+      _evilShootTex.generateMipmap();
+      break;
+    case arcade::TileType::MY_SHOOT :
+      if (!_myShootTex.loadFromFile(path))
+        _myShootTex = createColoredTexture(color);
+      _myShootTex.generateMipmap();
+      break;
+    case arcade::TileType::POWERUP :
+      if (!_powerupTex.loadFromFile(path))
+        _powerupTex = createColoredTexture(color);
+      _powerupTex.generateMipmap();
+      break;
+    case arcade::TileType::OTHER :
+      if (!_otherTex.loadFromFile(path))
+        _otherTex = createColoredTexture(color);
+      _otherTex.generateMipmap();
+      break;
+      }
 }
 
 

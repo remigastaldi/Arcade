@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:21 2017 gastal_r
-** Last update	Thu Mar 23 12:22:20 2017 gastal_r
+** Last update	Thu Mar 23 15:09:56 2017 gastal_r
 */
 
 #ifndef         _LOPENGL_HPP_
@@ -36,11 +36,15 @@ public:
   void          loadCube();
   void          loadTriangle();
 
+  sf::Uint8     *fillPixelsColor(const arcade::Color &);
+  sf::Sprite    createSprite(const sf::Texture &texture);
+  sf::Texture   createColoredTexture(const arcade::Color &color);
+
   void          aTile(size_t, size_t, arcade::TileType);
   void          aTile(size_t, size_t, void *);
+
   void          aAssignTexture(const arcade::TileType tile, const std::string &path, const arcade::Color color);
   void          *aGetTexture(const std::string &);
-
   sf::Color     fillColor(arcade::Color);
   void          aPutText(size_t, size_t, const std::string &,
                          size_t, arcade::Color, const std::string &);
@@ -51,13 +55,19 @@ public:
   std::string   aChar();
 
 private:
-  int          _player_x;
-  int          _player_y;
+  int              _player_x;
+  int              _player_y;
   arcade::CommandType _dir;
   sf::RenderWindow _win;
   sf::Event        _event;
-  sf::Texture      _obstacle;
-  sf::Texture      _floor;
+  sf::Texture      _emptyTex;
+  sf::Texture      _blockTex;
+  sf::Texture      _obstacleTex;
+  sf::Texture      _evilDudeTex;
+  sf::Texture      _evilShootTex;
+  sf::Texture      _myShootTex;
+  sf::Texture      _powerupTex;
+  sf::Texture      _otherTex;
 
   const GLfloat _cube[180] =
   {
