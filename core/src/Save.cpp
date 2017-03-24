@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Mar 17 00:03:17 2017 gastal_r
-** Last update	Thu Mar 23 20:17:07 2017 gastal_r
+** Last update	Fri Mar 24 02:54:41 2017 gastal_r
 */
 
 #include        "Save.hpp"
@@ -124,7 +124,6 @@ void                  Save::saveScore(std::string currentGame, const std::string
       _file << std::endl;
   }
   _file.close();
-  exit(0);
 }
 
 const std::string   Save::PlayerSave::getValue(const std::string &game) const

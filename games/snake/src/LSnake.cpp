@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update Fri Mar 24 00:51:05 2017 Leo Hubert Froideval
+** Last update	Fri Mar 24 01:57:34 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -39,6 +39,7 @@ void			LSnake::initGame()
   if ((_map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap)  * 50 * 50)) == NULL)
     throw arcade::Exception("Malloc failed\n");
 
+  _exitStatus = arcade::CommandType::UNDEFINED;
   _map->type = arcade::CommandType::UNDEFINED;
   _map->width = 50;
   _map->height = 50;
@@ -263,6 +264,8 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
       {
         changeAction();
         move();
+        if (_exitStatus == arcade::CommandType::MENU || _exitStatus == arcade::CommandType::ESCAPE)
+          return (_exitStatus);
         if (lPDM == false)
         {
         printGame();
@@ -278,22 +281,24 @@ void							LSnake::gameOver()
   _core->setScore(std::to_string(_score));
   _core->getLib()->aClear();
   _core->getLib()->aPutText(pos_x(2.7), pos_y(2.25), "core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
-  _core->getLib()->aPutText(pos_x(3.1), pos_y(1.8), "core/res/fonts/press_start.ttf", WIDTH / 100, arcade::Color::A_WHITE, "PRESS ENTER TO RESTART THE GAME.");
+  _core->getLib()->aPutText(pos_x(2.8), pos_y(1.8), "core/res/fonts/press_start.ttf", WIDTH / 100, arcade::Color::A_WHITE, "PRESS ENTER TO PLAY AGAIN.");
   _core->getLib()->aPutText(pos_x(2.7), pos_y(2.25), "core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
   _core->getLib()->aRefresh();
   while (1)
     {
       _map->type = _core->getLib()->aCommand();
       if (_map->type == arcade::CommandType::ESCAPE)
-	{
-	  _core->saveScore(_score);
-	  exit(0);
-	}
-      if (_map->type == arcade::CommandType::MENU)
-	{
-	  _core->saveScore(_score);
-	  exit(0);
-	}
+	    {
+	      _core->saveScore(_score);
+        _exitStatus = arcade::CommandType::ESCAPE;
+        return;
+	    }
+      if (_map->type == arcade::CommandType::PLAY)
+	    {
+	      _core->saveScore(_score);
+        _exitStatus = arcade::CommandType::MENU;
+        return;
+	    }
     }
 }
 

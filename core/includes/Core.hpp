@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:09:59 2017 gastal_r
-** Last update	Tue Mar 21 15:46:37 2017 gastal_r
+** Last update	Fri Mar 24 03:06:00 2017 gastal_r
 */
 
 #ifndef         _CORE_HPP_
@@ -38,7 +38,9 @@ public:
   void          refreshGui() { affGui();}
   void          setScore(const std::string &score) { guiSetScore(score);}
   void          startCore();
+  void          coreLoop();
 
+  void          chooseGameMenu();
   void          switchGame(const arcade::CommandType);
   void          switchLib(const arcade::CommandType);
   void          saveScore(size_t score);

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:55:17 2017 gastal_r
-** Last update	Tue Mar 21 22:59:33 2017 gastal_r
+** Last update	Fri Mar 24 02:50:38 2017 gastal_r
 */
 
 #ifndef         _GUI_HPP_
@@ -50,7 +50,8 @@ public:
   void          guiSetPlayer(const std::string &player)    {_player = player;}
   void          guiSetBestScore(std::string score)         {_bestScore = score;}
   void          guiSetScore(const std::string &score)      {_score = score;}
-
+  void          guiClearBestScores();
+  
 private:
   arcade::IGraph  *_graph;
   Status          _status;

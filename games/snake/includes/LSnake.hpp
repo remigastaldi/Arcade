@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 23:42:03 2017 gastal_r
-** Last update Thu Mar 23 20:27:32 2017 Leo Hubert Froideval
+** Last update	Fri Mar 24 01:11:01 2017 gastal_r
 */
 
 #ifndef			        _LSnake_HPP_
@@ -66,7 +66,8 @@ private:
   arcade::CommandType	            _direction;
   int				                      _score;
   arcade::ICore     				      *_core;
-  bool				_lPDM;
+  bool				                    _lPDM;
+  arcade::CommandType             _exitStatus;
 };
 
 

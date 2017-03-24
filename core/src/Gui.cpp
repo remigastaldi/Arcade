@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 11:01:41 2017 gastal_r
-** Last update	Thu Mar 23 16:16:54 2017 gastal_r
+** Last update	Fri Mar 24 02:50:39 2017 gastal_r
 */
 
 #include        "Gui.hpp"
@@ -201,4 +201,10 @@ void                  Gui::affPlayersScores()
 const Status          &Gui::getStatus()
 {
   return (_status);
+}
+
+void                  Gui::guiClearBestScores()
+{
+  _bestPlayersScores.clear();
+  _bestScore.clear();
 }

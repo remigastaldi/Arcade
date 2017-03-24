@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Thu Mar 23 18:22:47 2017 gastal_r
+** Last update	Fri Mar 24 03:07:08 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -60,12 +60,14 @@ void            Core::openGame(const std::string &name)
 void            Core::openLibsDir()
 {
   File files(GRAPH_DIR);
+  _libs.clear();
   _libs = files.getLibs();
 }
 
 void            Core::openGamesDir()
 {
   File files(GAME_DIR);
+  _games.clear();
   _games = files.getLibs();
 }
 
@@ -79,10 +81,16 @@ void            Core::setGuiData()
   guiSetPlayer(_player);
 }
 
+void          Core::chooseGameMenu()
+{
+  _currentGame = chooseGame(*this);
+  if (getStatus() == EXIT)
+    return;
+  openGame(_currentGame);
+}
+
 void            Core::startCore()
 {
-  arcade::CommandType gameReturn;
-
   _graph->aInit(WIDTH, HEIGHT);
   setGuiData();
   _save.loadPlayerSave();
@@ -91,11 +99,17 @@ void            Core::startCore()
     return;
   guiSetPlayer(_player);
   _save.saveSetPlayer(_player);
-  _currentGame = chooseGame(*this);
+  chooseGameMenu();
   if (getStatus() == EXIT)
     return;
-  openGame(_currentGame);
   _save.checkExistingUser();
+  coreLoop();
+}
+
+void            Core::coreLoop()
+{
+  arcade::CommandType gameReturn;
+
   while (getStatus() == CONTINUE)
   {
     gameReturn = _game->play(*this);
@@ -108,6 +122,16 @@ void            Core::startCore()
         break;
       case arcade::CommandType::PREV_GAME :
         switchGame(arcade::CommandType::PREV_GAME);
+      case arcade::CommandType::MENU :
+        _game->close();
+        delete(_game);
+        _game = 0;
+        Dlclose(_gameHandle);
+        openGamesDir();
+        openLibsDir();
+        setGuiData();
+        guiClearBestScores();
+        chooseGameMenu();
         break;
       default :
         break;
@@ -117,7 +141,6 @@ void            Core::startCore()
     if (_graph->aCommand() == arcade::CommandType::ESCAPE)
       setStatus(Status::EXIT);
   }
-  _graph->aClose();
 }
 
 void            Core::switchGame(const arcade::CommandType m)
@@ -145,6 +168,7 @@ void            Core::switchGame(const arcade::CommandType m)
   }
   _game->close();
   delete(_game);
+  _game = 0;
   Dlclose(_gameHandle);
   openGame(name);
   setGuiData();
@@ -175,6 +199,7 @@ void            Core::switchLib(const arcade::CommandType m)
   }
   _graph->aClose();
   delete(_graph);
+  _graph = 0;
   Dlclose(_graphHandle);
   openLib(name);
   _graph->aInit(1920, 1080);
