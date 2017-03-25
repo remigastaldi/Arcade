@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Sat Mar 25 21:38:58 2017 gastal_r
+** Last update Sat Mar 25 22:46:27 2017 Leo Hubert Froideval
 */
 
 #include          "LSnake.hpp"
@@ -208,7 +208,7 @@ void			LSnake::move()
 	  break;
 	}
     }
-  else
+  else if (_lPDM != true)
     gameOver();
 }
 
@@ -230,36 +230,39 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
       t2 = std::chrono::high_resolution_clock::now();
       if (_lPDM == true)
 	{
-	  std::string	tmp;
-	  std::cin >> tmp;
-	  std::cout << tmp << std::endl;
-	  _map->type = lPDM_aCommand(tmp);
-	  switch(_map->type)
-	    {
-	    case (arcade::CommandType::GET_MAP):
-	      lPDM_getMap();
-	      break;
-	    case (arcade::CommandType::WHERE_AM_I):
-	      lPDM_whereAmI();
-	      break;
-	    case (arcade::CommandType::GO_UP):
-	      lPDM_move(arcade::CommandType::GO_UP);
-	      break;
-	    case (arcade::CommandType::GO_DOWN):
-	      lPDM_move(arcade::CommandType::GO_DOWN);
-	      break;
-	    case (arcade::CommandType::GO_LEFT):
-	      lPDM_move(arcade::CommandType::GO_LEFT);
-	      break;
-	    case (arcade::CommandType::GO_RIGHT):
-	      lPDM_move(arcade::CommandType::GO_RIGHT);
-	      break;
-	    case (arcade::CommandType::PLAY):
-	      move();
-	      break;
-	    default:
-	      break;
-	    }
+
+    while (!std::cin.eof())
+    {
+      _map->type = (arcade::CommandType)std::cin.get();
+      switch(_map->type)
+        {
+        case (arcade::CommandType::GET_MAP):
+          lPDM_getMap();
+          break;
+        case (arcade::CommandType::WHERE_AM_I):
+          lPDM_whereAmI();
+          break;
+        case (arcade::CommandType::GO_UP):
+              lPDM_move(arcade::CommandType::GO_UP);
+          break;
+        case (arcade::CommandType::GO_DOWN):
+          lPDM_move(arcade::CommandType::GO_DOWN);
+          break;
+        case (arcade::CommandType::GO_LEFT):
+          lPDM_move(arcade::CommandType::GO_LEFT);
+          break;
+        case (arcade::CommandType::GO_RIGHT):
+          lPDM_move(arcade::CommandType::GO_RIGHT);
+          break;
+        case (arcade::CommandType::PLAY):
+          move();
+          break;
+        default:
+          break;
+        }
+    }
+    return (arcade::CommandType::ESCAPE);
+
 	}
       else
 	{
@@ -287,7 +290,7 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
 	    }
 	}
 
-      if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 2)
+      if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 2 && _lPDM != true)
 	{
     //std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << '\n';
 	  changeAction();
@@ -297,8 +300,7 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
 	  if (lPDM == false)
 	      printGame();
     t1 = std::chrono::high_resolution_clock::now();
-	}
-    }
+	}  }
   return (_map->type);
 }
 
@@ -402,13 +404,14 @@ void			LSnake::lPDM_whereAmI()
 
   i = -1;
   length = 0;
-  for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin(); it--)
+  for (std::vector<arcade::Position>::iterator it = _position.end() - 1; it != _position.begin(); it--)
     length++;
   if ((snake = (arcade::WhereAmI *)malloc(sizeof(arcade::WhereAmI)  * length)) == NULL)
     return ;
+  std::cout << length << '\n';
   snake->type = _map->type;
   snake->lenght = length;
-  for (std::vector<arcade::Position>::iterator it = _position.end() - 1; it != _position.begin(); it--)
+  for (std::vector<arcade::Position>::iterator it = _position.end() - 2; it != _position.begin(); it--)
     snake->position[i] = *it;
   write(1, snake, sizeof(arcade::WhereAmI));
 }
