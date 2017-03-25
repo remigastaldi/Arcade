@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Sat Mar 25 16:38:13 2017 gastal_r
+** Last update	Sat Mar 25 22:19:50 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -22,6 +22,7 @@ Core::Core(const std::string &lib)
 
 Core::~Core()
 {
+  _graph->aClose();
   _graph ? delete(_graph) : (void)0;
   _game ? delete(_game) : (void)0;
 }
@@ -104,7 +105,6 @@ void            Core::startCore()
     return;
   _save.checkExistingUser();
   coreLoop();
-  _graph->aClose();
 }
 
 void            Core::coreLoop()

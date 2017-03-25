@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Sat Mar 25 20:32:31 2017 gastal_r
+** Last update	Sat Mar 25 22:28:25 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -243,6 +243,7 @@ std::string   LNcurses::aChar()
       input = std::string(1, value);
   }
   Ncurses::Nodelay(stdscr, TRUE);
+  std::transform(input.begin(), input.end(),input.begin(), ::toupper);
   return (input);
 }
 

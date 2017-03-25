@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 11:01:41 2017 gastal_r
-** Last update	Sat Mar 25 13:58:41 2017 gastal_r
+** Last update	Sat Mar 25 22:44:42 2017 gastal_r
 */
 
 #include        "Gui.hpp"
@@ -20,26 +20,26 @@ Gui::~Gui()
 void            Gui::affName()
 {
   _graph->aPutText(pos_x(2.4) - _player.length() / 2, pos_y(1.05), arcade::Font::PRESS_START,
-                  WIDTH / 90, arcade::A_MAGENTA, _player);
+                   WIDTH / 90, arcade::A_MAGENTA, _player);
   if (!_bestScore.empty())
   {
      _graph->aPutText(pos_x(1.9), pos_y(1.05) , arcade::Font::PRESS_START,
-                   18, arcade::A_WHITE, "Best:");
+                      WIDTH / 100, arcade::A_WHITE, "Best:");
      _graph->aPutText(pos_x(1.7), pos_y(1.05) , arcade::Font::PRESS_START,
-                   18, arcade::A_WHITE, _bestScore);
+                      WIDTH / 100, arcade::A_WHITE, _bestScore);
   }
 }
 
 void            Gui::affScore()
 {
   _graph->aPutText(pos_x(1.15) , pos_y(2.5), arcade::Font::PRESS_START,
-                  WIDTH / 30, arcade::A_YELLOW, _score);
+                   WIDTH / 30, arcade::A_YELLOW, _score);
 }
 
 void            Gui::affGui()
 {
   _graph->aPutText(pos_x(2) - 2.5 * BLOCK_X, pos_y(80), arcade::Font::PRESS_START,
-                    WIDTH / 40, arcade::A_RED, "ARCADE");
+                   WIDTH / 40, arcade::A_RED, "ARCADE");
   affDispLibs();
   affDispGames();
   affName();
@@ -55,12 +55,12 @@ void            Gui::affDispLibs()
   for (std::vector<std::string>::iterator it = libs.begin(); it != libs.end(); ++it)
   {
     if (*it == _currentGraph)
-      _graph->aPutText(pos_x(24), pos_y(10) + pos_y(30) * i,
-      arcade::Font::FREAKY,  WIDTH / 60, arcade::A_YELLOW, "->");
+      _graph->aPutText(pos_x(24), pos_y(10) + pos_y(30) * i, arcade::Font::FREAKY,
+                       WIDTH / 60, arcade::A_YELLOW, "->");
     *it = (*it).substr(0, (*it).find_last_of("."));
     *it = (*it).erase(0, (*it).find_last_of("_") + 1);
-    _graph->aPutText(pos_x(16), pos_y(10) + pos_y(30)  * i,
-    arcade::Font::FREAKY,   WIDTH / 60, arcade::A_GREEN, (*it));
+    _graph->aPutText(pos_x(16), pos_y(10) + pos_y(30)  * i, arcade::Font::FREAKY,
+                     WIDTH / 60, arcade::A_GREEN, (*it));
     i++;
   }
 }
@@ -73,12 +73,12 @@ void            Gui::affDispGames()
   for (std::vector<std::string>::iterator it = games.begin(); it != games.end(); ++it)
   {
     if (*it == _currentGame)
-      _graph->aPutText(pos_x(1.2), pos_y(10) + pos_y(30) * i,
-       arcade::Font::FREAKY,  WIDTH / 60, arcade::A_YELLOW, "->");
+      _graph->aPutText(pos_x(1.2), pos_y(10) + pos_y(30) * i, arcade::Font::FREAKY,
+                       WIDTH / 60, arcade::A_YELLOW, "->");
     *it = (*it).substr(0, (*it).find_last_of("."));
     *it = (*it).erase(0, (*it).find_last_of("_") + 1);
     _graph->aPutText(pos_x(1.16), pos_y(10) + pos_y(30) * i, arcade::Font::FREAKY,
-                    WIDTH / 60, arcade::A_CYAN, (*it));
+                     WIDTH / 60, arcade::A_CYAN, (*it));
     i++;
   }
 }
@@ -92,7 +92,7 @@ const std::string     Gui::getName(arcade::ICore &core)
   {
     _graph->aClear();
     _graph->aPutText(pos_x(2) - 3 * BLOCK_X, pos_y(4), arcade::Font::PRESS_START,
-                  WIDTH / 60, arcade::A_MAGENTA, "ENTER NAME");
+                     WIDTH / 60, arcade::A_MAGENTA, "ENTER NAME");
     if (!input.empty())
     {
       if (input == "ESCAPE")
@@ -106,7 +106,7 @@ const std::string     Gui::getName(arcade::ICore &core)
         name += input;
     }
     _graph->aPutText(pos_x(2.15) - name.length(), pos_y(3), arcade::Font::FREAKY,
-    WIDTH / 40, arcade::A_BLUE, name);
+                    WIDTH / 40, arcade::A_BLUE, name);
     core.refreshGui();
     _graph->aRefresh();
   }
@@ -121,19 +121,19 @@ void                  Gui::listGame(arcade::ICore &core, size_t selected)
 
   _graph->aClear();
   _graph->aPutText(pos_x(3), pos_y(3.3555) + pos_y(20) * selected, arcade::Font::PRESS_START,
-                 WIDTH / 70, arcade::A_YELLOW, "->");
+                   WIDTH / 70, arcade::A_YELLOW, "->");
   for (it = game.begin(); it != game.end(); ++it)
   {
     *it = (*it).substr(0, (*it).find_last_of("."));
     *it = (*it).erase(0, (*it).find_last_of("_") + 1);
     _graph->aPutText(pos_x(2.7), pos_y(3.5) + pos_y(20) * i, arcade::Font::PRESS_START,
-                    30, arcade::A_CYAN, (*it));
+                     WIDTH / 70, arcade::A_CYAN, (*it));
     i++;
   }
   _graph->aPutText(pos_x(1.9), pos_y(1.05) , arcade::Font::PRESS_START,
-                   18, arcade::A_WHITE, "Best: ");
+                   WIDTH / 100, arcade::A_WHITE, "Best: ");
   _graph->aPutText(pos_x(1.7), pos_y(1.05) , arcade::Font::PRESS_START,
-                   18, arcade::A_WHITE, core.getSave().getSavedScore(_games[selected]));
+                   WIDTH / 100, arcade::A_WHITE, core.getSave().getSavedScore(_games[selected]));
 
   affPlayersScores(core, _games[selected]);
   core.refreshGui();
@@ -143,7 +143,6 @@ void                  Gui::listGame(arcade::ICore &core, size_t selected)
 const std::string     Gui::chooseGame(arcade::ICore &core)
 {
   arcade::CommandType cmd;
-  std::vector<std::string>::iterator game;
 
   size_t i = 0;
   listGame(core, i);
@@ -156,6 +155,10 @@ const std::string     Gui::chooseGame(arcade::ICore &core)
         _status = EXIT;
         return ("");
       }
+      else if (cmd == arcade::CommandType::NEXT_LIB)
+        core.switchLib(arcade::CommandType::NEXT_LIB);
+      else if (cmd == arcade::CommandType::PREV_LIB)
+        core.switchLib(arcade::CommandType::PREV_LIB);
       if (cmd == arcade::CommandType::GO_UP)
         (i == 0 ? i = _games.size() - 1: i--);
       else if (cmd == arcade::CommandType::GO_DOWN)
@@ -180,8 +183,8 @@ void                  Gui::affPlayersScores(arcade::ICore &core, std::string gam
   size_t i = 0;
   for (std::vector<std::string>::const_iterator it = scores.begin(); it != scores.end(); ++it)
   {
-    _graph->aPutText(pos_x(16), pos_y(2) + pos_y(30)  * i,
-    arcade::Font::FREAKY,   WIDTH / 70, arcade::A_YELLOW, (*it));
+    _graph->aPutText(pos_x(16), pos_y(2) + pos_y(30)  * i, arcade::Font::FREAKY,
+                     WIDTH / 70, arcade::A_YELLOW, (*it));
     i++;
   }
 }
@@ -193,8 +196,8 @@ void                  Gui::affPlayersScores()
   for (std::vector<std::string>::const_iterator it = _bestPlayersScores.begin();
    it != _bestPlayersScores.end(); ++it)
   {
-    _graph->aPutText(pos_x(16), pos_y(2) + pos_y(30)  * i,
-    arcade::Font::FREAKY,   WIDTH / 70, arcade::A_YELLOW, (*it));
+    _graph->aPutText(pos_x(16), pos_y(2) + pos_y(30)  * i, arcade::Font::FREAKY,
+                     WIDTH / 70, arcade::A_YELLOW, (*it));
     i++;
   }
 }
