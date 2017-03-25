@@ -5,15 +5,22 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:55:17 2017 gastal_r
-** Last update	Fri Mar 24 02:50:38 2017 gastal_r
+** Last update	Sat Mar 25 12:14:22 2017 gastal_r
 */
 
 #ifndef         _GUI_HPP_
 #define         _GUI_HPP_
 
-#include        <vector>
-#include        "IGraph.hh"
-#include        "ICore.hh"
+#include          <iostream>
+#include          <vector>
+#include          <string>
+#include          "../../interfaces/Protocol.hpp"
+
+namespace arcade {
+  class ICore;
+  class IGraph;
+};
+
 
 enum Status
 {
@@ -51,7 +58,7 @@ public:
   void          guiSetBestScore(std::string score)         {_bestScore = score;}
   void          guiSetScore(const std::string &score)      {_score = score;}
   void          guiClearBestScores();
-  
+
 private:
   arcade::IGraph  *_graph;
   Status          _status;

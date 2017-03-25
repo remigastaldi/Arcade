@@ -5,12 +5,14 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:10:52 2017 gastal_r
-** Last update	Thu Mar 23 00:53:08 2017 gastal_r
+** Last update	Sat Mar 25 16:39:15 2017 gastal_r
 */
 
 #ifndef       _LNcurses_HPP_
 #define       _LNcurses_HPP_
 
+#include        <thread>
+#include        <chrono>
 #include      "IGraph.hh"
 #include      "Ncurses.hpp"
 
@@ -33,11 +35,11 @@ public:
   LNcurses ();
   virtual ~LNcurses ();
 
-  void        aInit(size_t, size_t);
+  void        aInit(arcade::ICore *, size_t, size_t);
   void        aClose();
 
   void        printTile(size_t x, size_t y, const LNcurses::NColor &color);
-  void        aTile(size_t, size_t, arcade::TileType);
+  void        aTile(size_t, size_t, arcade::TileType, const arcade::CommandType &);
   void        aTile(size_t, size_t, void *){};
 
   NColor      fillColor(const arcade::Color &color);
@@ -45,7 +47,7 @@ public:
   void        *aGetTexture(const std::string &){return (NULL);}
 
   void        printText(size_t x, size_t y, int color, const std::string &str);
-  void        aPutText(size_t, size_t, const std::string &,
+  void        aPutText(size_t, size_t, const arcade::Font &,
                       size_t, arcade::Color, const std::string &);
 
   void        aClear();

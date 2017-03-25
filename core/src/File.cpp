@@ -5,10 +5,11 @@
 ** Login	gastal_r
 **
 ** Started on	Mon Mar 13 16:22:53 2017 gastal_r
-** Last update	Thu Mar 16 11:38:31 2017 gastal_r
+** Last update	Sat Mar 25 12:17:46 2017 gastal_r
 */
 
 #include                   "File.hpp"
+#include "../../interfaces/Exception.hpp"
 
 File::File (const std::string path)
 {

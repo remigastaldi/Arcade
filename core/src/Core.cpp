@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Fri Mar 24 03:07:08 2017 gastal_r
+** Last update	Sat Mar 25 16:38:13 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -91,7 +91,7 @@ void          Core::chooseGameMenu()
 
 void            Core::startCore()
 {
-  _graph->aInit(WIDTH, HEIGHT);
+  _graph->aInit(this, WIDTH, HEIGHT);
   setGuiData();
   _save.loadPlayerSave();
   _player = getName(*this);
@@ -104,6 +104,7 @@ void            Core::startCore()
     return;
   _save.checkExistingUser();
   coreLoop();
+  _graph->aClose();
 }
 
 void            Core::coreLoop()
@@ -202,7 +203,7 @@ void            Core::switchLib(const arcade::CommandType m)
   _graph = 0;
   Dlclose(_graphHandle);
   openLib(name);
-  _graph->aInit(1920, 1080);
+  _graph->aInit(this, 1920, 1080);
   setGuiData();
 }
 

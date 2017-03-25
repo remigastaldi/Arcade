@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Thu Mar 23 00:55:06 2017 gastal_r
+** Last update	Sat Mar 25 16:41:08 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -16,7 +16,7 @@ LNcurses::LNcurses()
 LNcurses::~LNcurses()
 {}
 
-void        LNcurses::aInit(size_t, size_t)
+void        LNcurses::aInit(arcade::ICore *, size_t, size_t)
 {
   Ncurses::Newterm(NULL, stderr, stdin);
   Ncurses::Noecho();
@@ -59,7 +59,7 @@ void        LNcurses::printTile(size_t x, size_t y, const LNcurses::NColor &colo
   Ncurses::Attroff(COLOR_PAIR(color));
 }
 
-void        LNcurses::aTile(size_t x, size_t y, arcade::TileType tile)
+void        LNcurses::aTile(size_t x, size_t y, arcade::TileType tile, const arcade::CommandType &)
 {
   x = x * 2;
   switch (tile)
@@ -89,6 +89,7 @@ void        LNcurses::aTile(size_t x, size_t y, arcade::TileType tile)
       printTile(x, y, _otherColor);
       break;
     }
+    std::this_thread::sleep_for(std::chrono::nanoseconds(1));
 }
 
 LNcurses::NColor  LNcurses::fillColor(const arcade::Color &color)
@@ -145,7 +146,7 @@ void        LNcurses::printText(size_t x, size_t y, int color, const std::string
   Ncurses::Attroff(COLOR_PAIR(color));
 }
 
-void        LNcurses::aPutText(size_t x, size_t y, const std::string &path,
+void        LNcurses::aPutText(size_t x, size_t y, const arcade::Font &path,
                     size_t size, arcade::Color color, const std::string &str)
 {
   (void)path;

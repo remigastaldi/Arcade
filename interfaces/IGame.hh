@@ -12,10 +12,11 @@
 # define	        IGAME_HH__
 
 # include	        <unistd.h>
-# include	        "ICore.hh"
+//# include	        "ICore.hh"
 
 namespace	        arcade
 {
+  class           ICore;
   class           IGame
   {
   public:

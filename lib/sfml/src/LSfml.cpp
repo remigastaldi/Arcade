@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Thu Mar 23 21:45:40 2017 gastal_r
+** Last update	Sat Mar 25 16:09:06 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -16,8 +16,11 @@ LSfml::LSfml()
 LSfml::~LSfml()
 {}
 
-void            LSfml::aInit(size_t width, size_t height)
+void            LSfml::aInit(arcade::ICore *core, size_t width, size_t height)
 {
+  _core = core;
+  _freakyFont.loadFromFile("core/res/fonts/freaky_font.ttf");
+  _pressStartFont.loadFromFile("core/res/fonts/press_start.ttf");
   _win.create(sf::VideoMode(width, height),"Arcade",  sf::Style::Fullscreen);
   std::this_thread::sleep_for(std::chrono::milliseconds(100));
   _win.clear();
@@ -52,39 +55,15 @@ sf::Sprite      LSfml::createSprite(const sf::Texture &texture)
   return (sprite);
 }
 
-void            LSfml::aTile(size_t x, size_t y, arcade::TileType type)
+void            LSfml::aTile(size_t x, size_t y, arcade::TileType type, const arcade::CommandType &dir)
 {
-  sf::Sprite sprite;
+  LSfml::Data data;
 
-  switch (type)
-  {
-    case arcade::TileType::EMPTY :
-      sprite = createSprite(_emptyTex);
-      break;
-    case arcade::TileType::BLOCK :
-      sprite = createSprite(_blockTex);
-      break;
-    case arcade::TileType::OBSTACLE :
-      sprite = createSprite(_obstacleTex);
-      break;
-    case arcade::TileType::EVIL_DUDE :
-      sprite = createSprite(_evilDudeTex);
-      break;
-    case arcade::TileType::EVIL_SHOOT :
-      sprite = createSprite(_evilShootTex);
-      break;
-    case arcade::TileType::MY_SHOOT :
-      sprite = createSprite(_myShootTex);
-      break;
-    case arcade::TileType::POWERUP :
-      sprite = createSprite(_powerupTex);
-      break;
-    case arcade::TileType::OTHER :
-      sprite = createSprite(_otherTex);
-      break;
-  }
-  sprite.setPosition((x * BLOCK_Y) + X_PAD * BLOCK_X, (y * BLOCK_Y) + Y_PAD * BLOCK_Y);
-  _win.draw(sprite);
+  data.x = x;
+  data.y = y;
+  data.type = type;
+  data.dir = dir;
+  _data.push_back(data);
 }
 
 sf::Texture     LSfml::createColoredTexture(const arcade::Color &color)
@@ -170,17 +149,97 @@ sf::Color     LSfml::fillColor(const arcade::Color &color)
   return (n);
 }
 
-void          LSfml::aPutText(size_t x, size_t y, const std::string &fontPath,
+void          LSfml::aPutText(size_t x, size_t y, const arcade::Font &font,
                               size_t size, arcade::Color color, const std::string &text)
 {
-  sf::Font font;
+  sf::Text sfText;
 
-  font.loadFromFile(fontPath);
-  sf::Text sfText(text, font);
+  switch (font)
+  {
+    case arcade::Font::FREAKY :
+      sfText.setFont(_freakyFont);
+      break;
+    case arcade::Font::PRESS_START :
+      sfText.setFont(_pressStartFont);
+      break;
+  }
+  sfText.setString(text);
   sfText.setFillColor(fillColor(color));
   sfText.setPosition(x * BLOCK_X, (y * BLOCK_Y) + size);
   sfText.setCharacterSize(size);
   _win.draw(sfText);
+}
+
+void          LSfml::drawElem(size_t x, size_t y, arcade::TileType type, int dx, int dy)
+{
+  sf::Sprite sprite;
+
+  switch (type)
+  {
+    case arcade::TileType::EMPTY :
+      sprite = createSprite(_emptyTex);
+      break;
+    case arcade::TileType::BLOCK :
+      sprite = createSprite(_blockTex);
+      break;
+    case arcade::TileType::OBSTACLE :
+      sprite = createSprite(_obstacleTex);
+      break;
+    case arcade::TileType::EVIL_DUDE :
+      sprite = createSprite(_evilDudeTex);
+      break;
+    case arcade::TileType::EVIL_SHOOT :
+      sprite = createSprite(_evilShootTex);
+      break;
+    case arcade::TileType::MY_SHOOT :
+      sprite = createSprite(_myShootTex);
+      break;
+    case arcade::TileType::POWERUP :
+      sprite = createSprite(_powerupTex);
+      break;
+    case arcade::TileType::OTHER :
+      sprite = createSprite(_otherTex);
+      break;
+  }
+  sprite.setPosition((x * BLOCK_Y) + dx + X_PAD * BLOCK_X, (y * BLOCK_Y) - dy + Y_PAD * BLOCK_Y);
+  _win.draw(sprite);
+}
+
+void          LSfml::transition()
+{
+  for (int i = 0; i < 16; ++i)
+  {
+    aClear();
+    for (std::vector<LSfml::Data>::const_iterator it = _data.begin(); it != _data.end(); ++it)
+    {
+      if (it->dir != arcade::CommandType::UNDEFINED)
+      {
+        switch (it->dir)
+        {
+          case arcade::CommandType::GO_LEFT :
+            drawElem(it->x + 1, it->y, it->type, -i, 0);
+            break;
+          case arcade::CommandType::GO_RIGHT :
+            drawElem(it->x - 1, it->y, it->type, i, 0);
+            break;
+          case arcade::CommandType::GO_UP :
+            drawElem(it->x, it->y + 1, it->type, 0, i);
+            break;
+          case arcade::CommandType::GO_DOWN :
+            drawElem(it->x, it->y - 1, it->type, 0, -i);
+            break;
+          default:
+            drawElem(it->x, it->y, it->type, 0, 0);
+            break;
+      }
+      std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    }
+    else
+      drawElem(it->x, it->y, it->type, 0, 0);
+    }
+  _core->refreshGui();
+  _win.display();
+  }
 }
 
 void            LSfml::aClear()
@@ -190,6 +249,11 @@ void            LSfml::aClear()
 
 void            LSfml::aRefresh()
 {
+  if (!_data.empty())
+  {
+    transition();
+    _data.clear();
+  }
   _win.display();
 }
 

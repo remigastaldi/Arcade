@@ -5,10 +5,11 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Mar 17 00:03:26 2017 gastal_r
-** Last update	Tue Mar 21 23:06:57 2017 gastal_r
+** Last update	Sat Mar 25 11:25:43 2017 gastal_r
 */
 
-#pragma once
+#ifndef         _SAVE_HPP_
+#define         _SAVE_HPP_
 
 #include        <vector>
 #include        <string>
@@ -65,3 +66,5 @@ private:
   std::string        _player;
   std::fstream      _file;
 };
+
+#endif /* !_SAVE_HPP_ */

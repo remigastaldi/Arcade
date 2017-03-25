@@ -5,21 +5,16 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Thu Mar 23 22:55:43 2017 gastal_r
+** Last update	Sat Mar 25 16:08:24 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
 
 LOpengl::LOpengl()
-{
-  _player_x = 26;
-  _player_y = 26;
-}
+{}
 
 LOpengl::~LOpengl()
-{
-
-}
+{}
 
 void            LOpengl::loadCube()
 {
@@ -33,9 +28,17 @@ void            LOpengl::loadTriangle()
   glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _triangle + 3);
 }
 
-void            LOpengl::aInit(size_t width, size_t height)
+void            LOpengl::aInit(arcade::ICore *core, size_t width, size_t height)
 {
   sf::ContextSettings contextSettings;
+
+  _init = true;
+  _xView = 0.f;
+  _yView = 0.f;
+  _core = core;
+  _freakyFont.loadFromFile("core/res/fonts/freaky_font.ttf");
+  _pressStartFont.loadFromFile("core/res/fonts/press_start.ttf");
+
   contextSettings.depthBits = 24;
   _win.create(sf::VideoMode(width, height),"Arcade",  sf::Style::Fullscreen, contextSettings);
   std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -57,7 +60,6 @@ void            LOpengl::aInit(size_t width, size_t height)
 
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
-
 _win.setActive(false);
 }
 
@@ -100,44 +102,33 @@ sf::Sprite      LOpengl::createSprite(const sf::Texture &texture)
   return (sprite);
 }
 
-void            LOpengl::aTile(size_t x, size_t y, arcade::TileType type)
+void            LOpengl::aTile(size_t x, size_t y, arcade::TileType type, const arcade::CommandType &dir)
 {
-  glEnable(GL_TEXTURE_2D);
-  _win.setActive(true);
+  LOpengl::Data data;
+
+  data.x = x;
+  data.y = y;
+  data.type = type;
+  data.dir = dir;
+  _data.push_back(data);
+}
+
+void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, int dx, int dy)
+{
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
-if (type == arcade::TileType::OTHER)
-    {
-      _player_x = x;
-      _player_y = y;
-    }
-
-  if (_player_x <= 26 && _player_y <= 26)
-  gluLookAt(255.f  - (26 - _player_x) * (26 - _player_x) /3,
-            140.f  +  (26 - _player_y) * (26 - _player_y) /3, 110.f,
-            255.f  - (26 - _player_x) * (26 - _player_x) /3,
-            205.f  + (26 - _player_y) * (26 - _player_y) /3, 0.f,
+  if (type == arcade::TileType::OTHER)
+  {
+    _xView = -((x - 26.0) * 15.0) - dx * 1.5;
+    _yView = -((y - 26.0) * 15.0) + dy * 1.5;
+  }
+  gluLookAt(255.f - _xView / 2,
+            140.f + _yView / 2, 110.f,
+            255.f - _xView / 2,
+            205.f + _yView / 2, 0.f,
             0.f, 0.f, 1.f);
-  else if (_player_x > 26 && _player_y < 26)
-  gluLookAt(255.f + ((26 - _player_x) * (26 - _player_x)) /3,
-              140.f + (26 - _player_y) * (26 - _player_y) /3, 110.f,
-              255.f + ((26 - _player_x) * (26 - _player_x)) /3,
-              205.f + (26 - _player_y) * (26 - _player_y) /3, 0.f,
-              0.f, 0.f, 1.f);
-  else if (_player_x < 26 && _player_y > 26)
-  gluLookAt(255.f  - (26 - _player_x) * (26 - _player_x) /3,
-            140.f  -  (26 - _player_y) * (26 - _player_y) /2.5, 110.f,
-            255.f  - (26 - _player_x) * (26 - _player_x) /3,
-            205.f  - (26 - _player_y) * (26 - _player_y) /2.5, 0.f,
-            0.f, 0.f, 1.f);
-  else if (_player_x >= 26 && _player_y >= 26)
-  gluLookAt(255.f + ((26 - _player_x) * (26 - _player_x)) /3,
-              140.f - (26 - _player_y) * (26 - _player_y) /2.5, 110.f,
-              255.f + ((26 - _player_x) * (26 - _player_x)) /3,
-              205.f - (26 - _player_y) * (26 - _player_y) /2.5, 0.f,
-              0.f, 0.f, 1.f);
 
   glPushMatrix();
   switch (type)
@@ -147,12 +138,12 @@ if (type == arcade::TileType::OTHER)
     case arcade::TileType::EMPTY:
       loadCube();
       sf::Texture::bind(&_emptyTex);
-      glTranslatef(x * 10, 500.f  -(y * 10), 0);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 0);
       break;
     case arcade::TileType::OBSTACLE:
       loadCube();
       sf::Texture::bind(&_obstacleTex);
-      glTranslatef(x * 10, 500.f  -(y * 10), 10);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 10);
       break;
     case arcade::TileType::EVIL_DUDE:
       break;
@@ -161,24 +152,23 @@ if (type == arcade::TileType::OTHER)
     case arcade::TileType::MY_SHOOT:
       loadTriangle();
       sf::Texture::bind(&_myShootTex);
-      glTranslatef(x * 10, 500.f  -(y * 10), 5);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
       break;
     case arcade::TileType::POWERUP:
       loadTriangle();
       sf::Texture::bind(&_powerupTex);
-      glTranslatef(x * 10, 500.f  -(y * 10), 5);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
       break;
     case arcade::TileType::OTHER:
     {
       loadTriangle();
       sf::Texture::bind(&_otherTex);
-      glTranslatef(x * 10, 500.f  -(y * 10), 5);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
     }
       break;
   }
     glDrawArrays(GL_TRIANGLES, 0, 36);
   glPopMatrix();
-  _win.setActive(false);
 }
 
 void            LOpengl::aTile(size_t x, size_t y, void *texture)
@@ -263,13 +253,21 @@ sf::Color     LOpengl::fillColor(arcade::Color color)
   return (n);
 }
 
-void          LOpengl::aPutText(size_t x, size_t y, const std::string &fontPath,
+void          LOpengl::aPutText(size_t x, size_t y, const arcade::Font &font,
                               size_t size, arcade::Color color, const std::string &text)
 {
-  sf::Font font;
+  sf::Text sfText;
 
-  font.loadFromFile(fontPath);
-  sf::Text sfText(text, font);
+  switch (font)
+  {
+    case arcade::Font::FREAKY :
+      sfText.setFont(_freakyFont);
+      break;
+    case arcade::Font::PRESS_START :
+      sfText.setFont(_pressStartFont);
+      break;
+  }
+  sfText.setString(text);
   sfText.setFillColor(fillColor(color));
   sfText.setPosition(x * BLOCK_X, (y * BLOCK_Y) + size);
   sfText.setCharacterSize(size);
@@ -285,8 +283,56 @@ void            LOpengl::aClear()
   glClear(GL_DEPTH_BUFFER_BIT);
 }
 
+void            LOpengl::transition()
+{
+  glEnable(GL_TEXTURE_2D);
+  _win.setActive(true);
+  for (int i = 0; i < 10; ++i)
+  {
+    aClear();
+    for (std::vector<LOpengl::Data>::iterator it = _data.begin(); it != _data.end(); ++it)
+    {
+      if (it->dir != arcade::CommandType::UNDEFINED)
+      {
+        switch (it->dir)
+        {
+          case arcade::CommandType::GO_LEFT :
+            drawElem(it->x + 1, it->y, it->type, -i, 0);
+            it->type == arcade::TileType::OTHER ? _xView++ : 0;
+            break;
+          case arcade::CommandType::GO_RIGHT :
+            drawElem(it->x - 1, it->y, it->type, i, 0);
+            it->type == arcade::TileType::OTHER ? _xView-- : 0;
+            break;
+          case arcade::CommandType::GO_UP :
+            drawElem(it->x, it->y + 1, it->type, 0, i);
+            it->type == arcade::TileType::OTHER ? _yView++ : 0;
+            break;
+          case arcade::CommandType::GO_DOWN :
+            drawElem(it->x, it->y - 1, it->type, 0, -i);
+            it->type == arcade::TileType::OTHER ? _yView-- : 0;
+            break;
+          default:
+            drawElem(it->x, it->y, it->type, 0, 0);
+            break;
+      }
+      //std::this_thread::sleep_for(std::chrono::milliseconds(2));
+    }
+    else
+      drawElem(it->x, it->y, it->type, 0, 0);
+    }
+  _core->refreshGui();
+  _win.display();
+  }
+}
+
 void            LOpengl::aRefresh()
 {
+  if (!_data.empty())
+  {
+    transition();
+    _data.clear();
+  }
   _win.display();
 }
 

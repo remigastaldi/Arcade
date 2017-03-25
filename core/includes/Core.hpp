@@ -5,20 +5,13 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:09:59 2017 gastal_r
-** Last update	Fri Mar 24 03:06:00 2017 gastal_r
+** Last update	Sat Mar 25 11:43:37 2017 gastal_r
 */
 
 #ifndef         _CORE_HPP_
 #define         _CORE_HPP_
 
-#include        <dlfcn.h>
-#include        <iostream>
-#include        <vector>
-#include        "File.hpp"
 #include        "ICore.hh"
-#include        "IGraph.hh"
-#include        "IGame.hh"
-#include        "Gui.hpp"
 
 #define GAME_DIR  "games/"
 #define GRAPH_DIR "lib/"

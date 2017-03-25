@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 23:42:03 2017 gastal_r
-** Last update	Fri Mar 24 01:11:01 2017 gastal_r
+** Last update	Sat Mar 25 12:00:37 2017 gastal_r
 */
 
 #ifndef			        _LSnake_HPP_
@@ -20,10 +20,6 @@
 #include		        <iostream>
 #include			<list>
 #include		        "ICore.hh"
-#include			"IGame.hh"
-#include			"IGraph.hh"
-#include			"Protocol.hpp"
-#include			"Exception.hpp"
 
 #define				RES_PATH "games/snake/res/"
 

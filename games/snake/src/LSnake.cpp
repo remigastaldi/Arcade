@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Fri Mar 24 01:57:34 2017 gastal_r
+** Last update	Sat Mar 25 16:23:37 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -66,15 +66,15 @@ void			LSnake::initGame()
 void			LSnake::printGame()
 {
   _core->getLib()->aClear();
-  _core->getLib()->aTile(_position[0].x + 1, _position[0].y + 1, arcade::TileType::OTHER);
+  _core->getLib()->aTile(_position[0].x + 1, _position[0].y + 1, arcade::TileType::OTHER, _direction);
   for (int i = 0 ; i < _map->width * _map->height ; ++i)
-    _core->getLib()->aTile((i % _map->width) + 1 , (i / _map->width) + 1, _map->tile[i]);
-  _core->getLib()->aTile(_position[0].x + 1, _position[0].y + 1, arcade::TileType::OTHER);
+    _core->getLib()->aTile((i % _map->width) + 1 , (i / _map->width) + 1, _map->tile[i], arcade::CommandType::UNDEFINED);
+  _core->getLib()->aTile(_position[0].x + 1, _position[0].y + 1, arcade::TileType::OTHER, _direction);
   if (_position.size() > 1)
     for (std::vector<arcade::Position>::iterator it = _position.begin() + 1; it != _position.end(); it++)
-      _core->getLib()->aTile((*it).x + 1, (*it).y + 1, arcade::TileType::MY_SHOOT);
+      _core->getLib()->aTile((*it).x + 1, (*it).y + 1, arcade::TileType::MY_SHOOT, arcade::CommandType::UNDEFINED);
 
-  _core->getLib()->aTile(_apple.x, _apple.y, arcade::TileType::POWERUP);
+  _core->getLib()->aTile(_apple.x, _apple.y, arcade::TileType::POWERUP, arcade::CommandType::UNDEFINED);
   _core->refreshGui();
   _core->getLib()->aRefresh();
 }
@@ -270,7 +270,7 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
 	    }
 	}
 
-      if (cur_time > old_time + (100000 - ((int)_position.size() * 1000)))
+      if (cur_time > old_time + (100))
 	{
 	  changeAction();
 	  move();
@@ -288,9 +288,9 @@ void							LSnake::gameOver()
 {
   _core->setScore(std::to_string(_score));
   _core->getLib()->aClear();
-  _core->getLib()->aPutText(pos_x(2.7), pos_y(2.25), "core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
-  _core->getLib()->aPutText(pos_x(2.8), pos_y(1.8), "core/res/fonts/press_start.ttf", WIDTH / 100, arcade::Color::A_WHITE, "PRESS ENTER TO PLAY AGAIN.");
-  _core->getLib()->aPutText(pos_x(2.7), pos_y(2.25), "core/res/fonts/press_start.ttf", WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
+  _core->getLib()->aPutText(pos_x(2.7), pos_y(2.25), arcade::Font::PRESS_START, WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
+  _core->getLib()->aPutText(pos_x(2.8), pos_y(1.8), arcade::Font::PRESS_START, WIDTH / 100, arcade::Color::A_WHITE, "PRESS ENTER TO PLAY AGAIN.");
+  _core->getLib()->aPutText(pos_x(2.7), pos_y(2.25), arcade::Font::PRESS_START, WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
   _core->getLib()->aRefresh();
   while (1)
     {

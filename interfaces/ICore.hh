@@ -5,15 +5,25 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 12 21:30:45 2017 gastal_r
-** Last update	Tue Mar 21 15:47:14 2017 gastal_r
+** Last update	Sat Mar 25 12:29:26 2017 gastal_r
 */
 
 #ifndef           _ICORE_HH_
 #define           _ICORE_HH_
 
-#include         <string>
-#include         "Save.hpp"
-#include "IGraph.hh"
+#include          <dlfcn.h>
+#include          <iostream>
+#include          <vector>
+#include          <string>
+#include          "../core/includes/Gui.hpp"
+#include          "../core/includes/Save.hpp"
+#include          "Protocol.hpp"
+#include          "IGraph.hh"
+#include          "IGame.hh"
+#include			    "Exception.hpp"
+#include          "../core/includes/File.hpp"
+
+
 
 namespace	        arcade
 {
