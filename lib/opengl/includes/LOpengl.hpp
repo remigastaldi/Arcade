@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:21 2017 gastal_r
-** Last update	Sat Mar 25 16:05:47 2017 gastal_r
+** Last update	Sat Mar 25 23:21:20 2017 gastal_r
 */
 
 #ifndef         _LOPENGL_HPP_
@@ -106,12 +106,12 @@ private:
        5, -5, -5,  1, 0,
        5, -5,  5,  1, 1,
 
-      -5,  5, -5,  0, 0,
+    /*  -5,  5, -5,  0, 0,
        5,  5, -5,  1, 0,
       -5,  5,  5,  0, 1,
       -5,  5,  5,  0, 1,
        5,  5, -5,  1, 0,
-       5,  5,  5,  1, 1,
+       5,  5,  5,  1, 1, */
 
       -5, -5, -5,  0, 0,
        5, -5, -5,  1, 0,
