@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Sat Mar 25 23:16:45 2017 gastal_r
+** Last update	Sat Mar 25 23:24:14 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -51,7 +51,7 @@ sf::Sprite      LSfml::createSprite(const sf::Texture &texture)
   sf::Sprite sprite;
 
   sprite.setTexture(texture);
-  sprite.setScale(sf::Vector2f((float)BLOCK_Y / texture.getSize().x, (float)BLOCK_Y / texture.getSize().x));
+  sprite.setScale(sf::Vector2f((float)BLOCK_Y / texture.getSize().x, (float)BLOCK_Y / texture.getSize().y));
   return (sprite);
 }
 
