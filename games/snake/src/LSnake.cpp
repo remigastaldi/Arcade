@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Sat Mar 25 16:23:37 2017 gastal_r
+** Last update Sat Mar 25 17:55:28 2017 Leo Hubert Froideval
 */
 
 #include          "LSnake.hpp"
@@ -55,12 +55,29 @@ void			LSnake::initGame()
     else
     _map->tile[i] = arcade::TileType::EMPTY;
 
-  head.x = _map->width / 2;
-  head.y = _map->height / 2;
+  for (size_t i = 0; i < 5; i++)
+  {
 
-  _position.push_back(head);
+      head.x = _map->width / 2;
+      head.y = _map->height / 2 + i;
+
+      _position.push_back(head);
+  }
 
   newApple();
+}
+
+arcade::CommandType	LSnake::getDirection(arcade::Position const &cur, arcade::Position const &prev)
+{
+  if (cur.x - 1 == prev.x)
+    return (arcade::CommandType::GO_RIGHT);
+  else if (cur.x + 1 == prev.x)
+    return (arcade::CommandType::GO_LEFT);
+  else if (cur.y - 1 == prev.y)
+    return (arcade::CommandType::GO_DOWN);
+  else if (cur.y + 1 == prev.y)
+    return (arcade::CommandType::GO_UP);
+  return (arcade::CommandType::UNDEFINED);
 }
 
 void			LSnake::printGame()
@@ -71,8 +88,8 @@ void			LSnake::printGame()
     _core->getLib()->aTile((i % _map->width) + 1 , (i / _map->width) + 1, _map->tile[i], arcade::CommandType::UNDEFINED);
   _core->getLib()->aTile(_position[0].x + 1, _position[0].y + 1, arcade::TileType::OTHER, _direction);
   if (_position.size() > 1)
-    for (std::vector<arcade::Position>::iterator it = _position.begin() + 1; it != _position.end(); it++)
-      _core->getLib()->aTile((*it).x + 1, (*it).y + 1, arcade::TileType::MY_SHOOT, arcade::CommandType::UNDEFINED);
+    for (std::vector<arcade::Position>::iterator it = _position.begin() + 1; it != _position.end() - 1; it++)
+      _core->getLib()->aTile((*it).x + 1, (*it).y + 1, arcade::TileType::MY_SHOOT, getDirection((*it), (*(it + 1))));
 
   _core->getLib()->aTile(_apple.x, _apple.y, arcade::TileType::POWERUP, arcade::CommandType::UNDEFINED);
   _core->refreshGui();
@@ -120,7 +137,7 @@ bool			LSnake::checkNextTile(int y, int x)
     {
       if (_position.size() > 1)
 	{
-	  for (std::vector<arcade::Position>::iterator it = _position.end() - 1; it != _position.begin() + 1; it--)
+	  for (std::vector<arcade::Position>::iterator it = _position.end() - 2; it != _position.begin() + 1; it--)
 	    {
 	      if (x == (*it).x && y == (*it).y)
 		return (false);

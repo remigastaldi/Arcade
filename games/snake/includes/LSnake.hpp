@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 23:42:03 2017 gastal_r
-** Last update	Sat Mar 25 12:00:37 2017 gastal_r
+** Last update Sat Mar 25 17:55:15 2017 Leo Hubert Froideval
 */
 
 #ifndef			        _LSnake_HPP_
@@ -42,6 +42,7 @@ public:
   void		addScore(int);
   void		gameOver();
   bool				checkNextTile(int, int);
+  arcade::CommandType	getDirection(arcade::Position const &, arcade::Position const &);
 
   /*
   **  Fonctions pour la putain de moulinette
