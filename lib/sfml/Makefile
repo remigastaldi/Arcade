@@ -28,7 +28,6 @@ NCSRC           =       src/LSfml.cpp
 NCOBJ           =       $(NCSRC:.cpp=.o)
 
 all             :	title $(NCNAME)
-			@cp $(NCNAME) ../../
 
 title		:
 			@$(ECHO) $(YELLOW)LSFML $(DEFAULT)
@@ -44,7 +43,6 @@ clean           :
 
 fclean          :       clean
 			@$(RM) $(NCNAME)
-			@$(RM) ../$(NCNAME)
 
 re              :       fclean all
 

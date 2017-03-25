@@ -50,7 +50,7 @@ title		:
 $(NAME)         :	$(OBJ)
 			@$(CC) -o $(NAME) $(OBJ) $(CXXFLAGS) && \
 			 $(ECHO) $(YELLOW) "[OK]" $(BLUE) $(NAME) $(DEFAULT)  || \
-			 $(ECHO) $(RED) "[XX]" $(TEAL) $(NAME)
+			 $(ECHO) $(RED) "[XX]" $(TEAL) $(NAME) $(DEFAULT)
 
 clean           :
 			@make clean -C games/ --no-print-directory

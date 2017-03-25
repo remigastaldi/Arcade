@@ -29,7 +29,6 @@ NCSRC           =       src/LOpengl.cpp
 NCOBJ           =       $(NCSRC:.cpp=.o)
 
 all             :	title $(NCNAME)
-			@cp $(NCNAME) ../../
 
 title		:
 			@$(ECHO) $(YELLOW)OPENGL $(DEFAULT)
@@ -45,7 +44,6 @@ clean           :
 
 fclean          :       clean
 			@$(RM) $(NCNAME)
-			@$(RM) ../$(NCNAME)
 
 re              :       fclean all
 

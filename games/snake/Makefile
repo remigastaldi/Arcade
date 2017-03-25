@@ -27,7 +27,6 @@ SNSRC           =       src/LSnake.cpp
 SNOBJ           =       $(SNSRC:.cpp=.o)
 
 all             :	title $(SNNAME)
-			@cp $(SNNAME) ../../
 
 title		:
 			@$(ECHO) $(YELLOW)SNAKE $(DEFAULT)
@@ -43,7 +42,6 @@ clean           :
 
 fclean          :       clean
 			@$(RM) $(SNNAME)
-			@$(RM) ../$(SNNAME)
 
 re              :       fclean all
 

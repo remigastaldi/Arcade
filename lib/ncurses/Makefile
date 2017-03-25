@@ -27,7 +27,6 @@ NCSRC           =       src/LNcurses.cpp
 NCOBJ           =       $(NCSRC:.cpp=.o)
 
 all             :	title $(NCNAME)
-			@cp $(NCNAME) ../../
 
 title		:
 			@$(ECHO) $(YELLOW)NCURSES $(DEFAULT)
@@ -43,7 +42,6 @@ clean           :
 
 fclean          :       clean
 			@$(RM) $(NCNAME)
-			@$(RM) ../$(NCNAME)
 
 re              :       fclean all
 
