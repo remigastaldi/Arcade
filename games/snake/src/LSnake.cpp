@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update Sat Mar 25 17:55:28 2017 Leo Hubert Froideval
+** Last update	Sat Mar 25 20:40:16 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -214,8 +214,8 @@ void			LSnake::move()
 
 arcade::CommandType			LSnake::mainLoop(bool lPDM)
 {
-  std::clock_t		cur_time = clock();
-  std::clock_t		old_time = clock();
+  std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+  std::chrono::high_resolution_clock::time_point t2;
   arcade::CommandType lastCommand;
 
   _lPDM = lPDM;
@@ -227,7 +227,7 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
     }
   while (_map->type != arcade::CommandType::ESCAPE && _map->type != arcade::CommandType::MENU)
     {
-      cur_time = clock();
+      t2 = std::chrono::high_resolution_clock::now();
       if (_lPDM == true)
 	{
 	  std::string	tmp;
@@ -287,15 +287,16 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
 	    }
 	}
 
-      if (cur_time > old_time + (100))
+      if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 2)
 	{
+    //std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << '\n';
 	  changeAction();
 	  move();
 	  if (_exitStatus == arcade::CommandType::MENU || _exitStatus == arcade::CommandType::ESCAPE)
 	    return (_exitStatus);
 	  if (lPDM == false)
 	      printGame();
-	  old_time = clock();
+    t1 = std::chrono::high_resolution_clock::now();
 	}
     }
   return (_map->type);

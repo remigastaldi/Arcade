@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Sat Mar 25 16:41:08 2017 gastal_r
+** Last update	Sat Mar 25 20:32:31 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -89,7 +89,6 @@ void        LNcurses::aTile(size_t x, size_t y, arcade::TileType tile, const arc
       printTile(x, y, _otherColor);
       break;
     }
-    std::this_thread::sleep_for(std::chrono::nanoseconds(1));
 }
 
 LNcurses::NColor  LNcurses::fillColor(const arcade::Color &color)
@@ -188,6 +187,7 @@ void            LNcurses::aClear()
 void        LNcurses::aRefresh()
 {
   Ncurses::Wrefresh(_win);
+  std::this_thread::sleep_for(std::chrono::milliseconds(70));
 }
 
 arcade::CommandType	LNcurses::aCommand()

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Sat Mar 25 16:08:24 2017 gastal_r
+** Last update	Sat Mar 25 20:28:23 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -287,42 +287,50 @@ void            LOpengl::transition()
 {
   glEnable(GL_TEXTURE_2D);
   _win.setActive(true);
-  for (int i = 0; i < 10; ++i)
+  int i = 0;
+
+  std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+  while (i < 10)
   {
-    aClear();
-    for (std::vector<LOpengl::Data>::iterator it = _data.begin(); it != _data.end(); ++it)
+    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 2)
     {
-      if (it->dir != arcade::CommandType::UNDEFINED)
+      aClear();
+      for (std::vector<LOpengl::Data>::iterator it = _data.begin(); it != _data.end(); ++it)
       {
-        switch (it->dir)
+        if (it->dir != arcade::CommandType::UNDEFINED)
         {
-          case arcade::CommandType::GO_LEFT :
-            drawElem(it->x + 1, it->y, it->type, -i, 0);
-            it->type == arcade::TileType::OTHER ? _xView++ : 0;
-            break;
-          case arcade::CommandType::GO_RIGHT :
-            drawElem(it->x - 1, it->y, it->type, i, 0);
-            it->type == arcade::TileType::OTHER ? _xView-- : 0;
-            break;
-          case arcade::CommandType::GO_UP :
-            drawElem(it->x, it->y + 1, it->type, 0, i);
-            it->type == arcade::TileType::OTHER ? _yView++ : 0;
-            break;
-          case arcade::CommandType::GO_DOWN :
-            drawElem(it->x, it->y - 1, it->type, 0, -i);
-            it->type == arcade::TileType::OTHER ? _yView-- : 0;
-            break;
-          default:
-            drawElem(it->x, it->y, it->type, 0, 0);
-            break;
+          switch (it->dir)
+          {
+            case arcade::CommandType::GO_LEFT :
+              drawElem(it->x + 1, it->y, it->type, -i, 0);
+              it->type == arcade::TileType::OTHER ? _xView++ : 0;
+              break;
+            case arcade::CommandType::GO_RIGHT :
+              drawElem(it->x - 1, it->y, it->type, i, 0);
+              it->type == arcade::TileType::OTHER ? _xView-- : 0;
+              break;
+            case arcade::CommandType::GO_UP :
+              drawElem(it->x, it->y + 1, it->type, 0, i);
+              it->type == arcade::TileType::OTHER ? _yView++ : 0;
+              break;
+            case arcade::CommandType::GO_DOWN :
+              drawElem(it->x, it->y - 1, it->type, 0, -i);
+              it->type == arcade::TileType::OTHER ? _yView-- : 0;
+              break;
+            default:
+              drawElem(it->x, it->y, it->type, 0, 0);
+              break;
+          }
+        }
+        else
+          drawElem(it->x, it->y, it->type, 0, 0);
       }
-      //std::this_thread::sleep_for(std::chrono::milliseconds(2));
+      ++i;
+      _core->refreshGui();
+      _win.display();
+      t1 = std::chrono::high_resolution_clock::now();
     }
-    else
-      drawElem(it->x, it->y, it->type, 0, 0);
-    }
-  _core->refreshGui();
-  _win.display();
   }
 }
 

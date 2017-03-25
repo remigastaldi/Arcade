@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Sat Mar 25 16:09:06 2017 gastal_r
+** Last update	Sat Mar 25 20:39:02 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -207,38 +207,46 @@ void          LSfml::drawElem(size_t x, size_t y, arcade::TileType type, int dx,
 
 void          LSfml::transition()
 {
-  for (int i = 0; i < 16; ++i)
+  int  i = 0;
+
+  std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+  while (i < 16)
   {
-    aClear();
-    for (std::vector<LSfml::Data>::const_iterator it = _data.begin(); it != _data.end(); ++it)
+    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 2)
     {
-      if (it->dir != arcade::CommandType::UNDEFINED)
+      aClear();
+      for (std::vector<LSfml::Data>::const_iterator it = _data.begin(); it != _data.end(); ++it)
       {
-        switch (it->dir)
+        if (it->dir != arcade::CommandType::UNDEFINED)
         {
-          case arcade::CommandType::GO_LEFT :
-            drawElem(it->x + 1, it->y, it->type, -i, 0);
-            break;
-          case arcade::CommandType::GO_RIGHT :
-            drawElem(it->x - 1, it->y, it->type, i, 0);
-            break;
-          case arcade::CommandType::GO_UP :
-            drawElem(it->x, it->y + 1, it->type, 0, i);
-            break;
-          case arcade::CommandType::GO_DOWN :
-            drawElem(it->x, it->y - 1, it->type, 0, -i);
-            break;
-          default:
-            drawElem(it->x, it->y, it->type, 0, 0);
-            break;
+          switch (it->dir)
+          {
+            case arcade::CommandType::GO_LEFT :
+              drawElem(it->x + 1, it->y, it->type, -i, 0);
+              break;
+            case arcade::CommandType::GO_RIGHT :
+              drawElem(it->x - 1, it->y, it->type, i, 0);
+              break;
+            case arcade::CommandType::GO_UP :
+              drawElem(it->x, it->y + 1, it->type, 0, i);
+              break;
+            case arcade::CommandType::GO_DOWN :
+              drawElem(it->x, it->y - 1, it->type, 0, -i);
+              break;
+            default:
+              drawElem(it->x, it->y, it->type, 0, 0);
+              break;
+          }
       }
-      std::this_thread::sleep_for(std::chrono::milliseconds(1));
+      else
+        drawElem(it->x, it->y, it->type, 0, 0);
+      }
+      ++i;
+      _core->refreshGui();
+      _win.display();
+      t1 = std::chrono::high_resolution_clock::now();
     }
-    else
-      drawElem(it->x, it->y, it->type, 0, 0);
-    }
-  _core->refreshGui();
-  _win.display();
   }
 }
 
