@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update Sat Mar 25 22:46:27 2017 Leo Hubert Froideval
+** Last update Sat Mar 25 23:24:20 2017 Leo Hubert Froideval
 */
 
 #include          "LSnake.hpp"
@@ -393,7 +393,7 @@ arcade::CommandType		LSnake::lPDM_aCommand(std::string const &command)
 
 void                  LSnake::lPDM_getMap() const
 {
-  write(1, _map, sizeof(arcade::GetMap) * (_map->width * _map->height));
+  write(1, _map, sizeof(arcade::GetMap) + (_map->width * _map->height * sizeof(arcade::TileType)));
 }
 
 void			LSnake::lPDM_whereAmI()
@@ -402,18 +402,18 @@ void			LSnake::lPDM_whereAmI()
   int			length;
   int			i;
 
-  i = -1;
-  length = 0;
-  for (std::vector<arcade::Position>::iterator it = _position.end() - 1; it != _position.begin(); it--)
-    length++;
-  if ((snake = (arcade::WhereAmI *)malloc(sizeof(arcade::WhereAmI)  * length)) == NULL)
+  i = 0;
+  length = _position.size() - 1;
+  if ((snake = (arcade::WhereAmI *)malloc(sizeof(arcade::WhereAmI) + (length * sizeof(arcade::Position)))) == NULL)
     return ;
-  std::cout << length << '\n';
   snake->type = _map->type;
   snake->lenght = length;
-  for (std::vector<arcade::Position>::iterator it = _position.end() - 2; it != _position.begin(); it--)
+  for (std::vector<arcade::Position>::iterator it = _position.begin(); it != _position.end() - 1; it++)
+  {
     snake->position[i] = *it;
-  write(1, snake, sizeof(arcade::WhereAmI));
+    i++;
+  }
+  write(1, snake, sizeof(arcade::WhereAmI) + (length * sizeof(arcade::Position)));
 }
 
 void			LSnake::lPDM_move(arcade::CommandType direction)
