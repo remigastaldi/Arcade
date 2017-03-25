@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Sat Mar 25 20:39:02 2017 gastal_r
+** Last update	Sat Mar 25 21:54:28 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -51,7 +51,7 @@ sf::Sprite      LSfml::createSprite(const sf::Texture &texture)
   sf::Sprite sprite;
 
   sprite.setTexture(texture);
-  sprite.setScale(sf::Vector2f(16.f / texture.getSize().x, 16.f / texture.getSize().x));
+  sprite.setScale(sf::Vector2f((float)BLOCK_Y / texture.getSize().x, (float)BLOCK_Y / texture.getSize().x));
   return (sprite);
 }
 
@@ -210,7 +210,7 @@ void          LSfml::transition()
   int  i = 0;
 
   std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
-  while (i < 16)
+  while (i < BLOCK_Y)
   {
     std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
     if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 2)
