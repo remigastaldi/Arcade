@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Sat Mar 25 21:35:20 2017 gastal_r
+** Last update	Sat Mar 25 21:38:58 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -309,7 +309,7 @@ void							LSnake::gameOver()
   _core->getLib()->aPutText(pos_x(2.7), pos_y(2.25), arcade::Font::PRESS_START, WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
   _core->getLib()->aPutText(pos_x(2.8), pos_y(1.8), arcade::Font::PRESS_START, WIDTH / 100, arcade::Color::A_WHITE, "PRESS ENTER TO PLAY AGAIN.");
   _core->getLib()->aPutText(pos_x(2.7), pos_y(2.25), arcade::Font::PRESS_START, WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
-  _core->getLib()->aPutText(pos_x(2.2) - (std::to_string(_score).length() / 2) * BLOCK_X, pos_y(6), arcade::Font::PRESS_START,
+  _core->getLib()->aPutText(pos_x(2.1) - (std::to_string(_score).length()) * BLOCK_X, pos_y(6), arcade::Font::PRESS_START,
                             WIDTH / 15, arcade::Color::A_YELLOW, std::to_string(_score));
   _core->getLib()->aRefresh();
   while (1)
