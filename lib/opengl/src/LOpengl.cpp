@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Sat Mar 25 20:28:23 2017 gastal_r
+** Last update	Sun Mar 26 04:13:01 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -36,8 +36,8 @@ void            LOpengl::aInit(arcade::ICore *core, size_t width, size_t height)
   _xView = 0.f;
   _yView = 0.f;
   _core = core;
-  _freakyFont.loadFromFile("core/res/fonts/freaky_font.ttf");
-  _pressStartFont.loadFromFile("core/res/fonts/press_start.ttf");
+  _freakyFont.loadFromFile("lib/res/fonts/freaky_font.ttf");
+  _pressStartFont.loadFromFile("lib/res/fonts/press_start.ttf");
 
   contextSettings.depthBits = 24;
   _win.create(sf::VideoMode(width, height),"Arcade",  sf::Style::Fullscreen, contextSettings);
@@ -164,6 +164,7 @@ void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, int d
       loadTriangle();
       sf::Texture::bind(&_otherTex);
       glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
+      //glRotatef(1000.f, 0.f, 0.f, 1.f);
     }
       break;
   }

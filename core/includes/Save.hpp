@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Mar 17 00:03:26 2017 gastal_r
-** Last update	Sat Mar 25 11:25:43 2017 gastal_r
+** Last update	Sun Mar 26 04:06:12 2017 gastal_r
 */
 
 #ifndef         _SAVE_HPP_
@@ -17,7 +17,7 @@
 #include        <iostream>
 #include        <algorithm>
 
-#define SAVE_PATH "res/save"
+#define SAVE_PATH "core/res/save"
 
 class           Save
 {

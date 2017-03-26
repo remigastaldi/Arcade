@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Sat Mar 25 23:24:14 2017 gastal_r
+** Last update	Sun Mar 26 04:12:53 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -19,8 +19,8 @@ LSfml::~LSfml()
 void            LSfml::aInit(arcade::ICore *core, size_t width, size_t height)
 {
   _core = core;
-  _freakyFont.loadFromFile("core/res/fonts/freaky_font.ttf");
-  _pressStartFont.loadFromFile("core/res/fonts/press_start.ttf");
+  _freakyFont.loadFromFile("lib/res/fonts/freaky_font.ttf");
+  _pressStartFont.loadFromFile("lib/res/fonts/press_start.ttf");
   _win.create(sf::VideoMode(width, height),"Arcade",  sf::Style::Fullscreen);
   std::this_thread::sleep_for(std::chrono::milliseconds(100));
   _win.clear();
