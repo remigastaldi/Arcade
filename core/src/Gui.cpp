@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 11:01:41 2017 gastal_r
-** Last update	Sat Mar 25 22:44:42 2017 gastal_r
+** Last update	Sat Mar 25 23:47:20 2017 gastal_r
 */
 
 #include        "Gui.hpp"
@@ -38,7 +38,7 @@ void            Gui::affScore()
 
 void            Gui::affGui()
 {
-  _graph->aPutText(pos_x(2) - 2.5 * BLOCK_X, pos_y(80), arcade::Font::PRESS_START,
+  _graph->aPutText(pos_x(2.4), pos_y(80), arcade::Font::PRESS_START,
                    WIDTH / 40, arcade::A_RED, "ARCADE");
   affDispLibs();
   affDispGames();
