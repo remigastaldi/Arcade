@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Sat Mar 25 22:28:25 2017 gastal_r
+** Last update	Sun Mar 26 03:36:03 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -186,8 +186,13 @@ void            LNcurses::aClear()
 
 void        LNcurses::aRefresh()
 {
+  static std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+
+  std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+  while (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() < 100)
+    t2 = std::chrono::high_resolution_clock::now();
   Ncurses::Wrefresh(_win);
-  std::this_thread::sleep_for(std::chrono::milliseconds(70));
+  t1 = std::chrono::high_resolution_clock::now();
 }
 
 arcade::CommandType	LNcurses::aCommand()
