@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Sun Mar 26 16:17:33 2017 gastal_r
+** Last update	Sun Mar 26 16:24:24 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -136,7 +136,7 @@ void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, int d
     case arcade::TileType::BLOCK:
       loadCube();
       sf::Texture::bind(&_blockTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 0);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 10);
       break;
     case arcade::TileType::EMPTY:
       loadCube();
