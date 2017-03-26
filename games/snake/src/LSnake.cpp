@@ -15,7 +15,7 @@ LSnake::LSnake()
 
 LSnake::~LSnake()
 {
-  delete(_map);
+  _map ? delete(_map) : (void)0;
 }
 
 arcade::CommandType				LSnake::play(arcade::ICore &core)
