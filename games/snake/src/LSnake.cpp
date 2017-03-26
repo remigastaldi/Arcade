@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update Sun Mar 26 15:20:50 2017 Leo Hubert Froideval
+** Last update Sun Mar 26 16:13:24 2017 Leo Hubert Froideval
 */
 
 #include          "LSnake.hpp"
@@ -27,7 +27,7 @@ arcade::CommandType				LSnake::play(arcade::ICore &core)
 void      LSnake::initTextures()
 {
   _core->getLib()->aAssignTexture(arcade::TileType::EMPTY, RES_PATH "img/floor2.png", arcade::Color::A_WHITE);
-  _core->getLib()->aAssignTexture(arcade::TileType::OBSTACLE, RES_PATH "img/wall.png", arcade::Color::A_RED);
+  _core->getLib()->aAssignTexture(arcade::TileType::BLOCK, RES_PATH "img/wall.png", arcade::Color::A_RED);
   _core->getLib()->aAssignTexture(arcade::TileType::OTHER, RES_PATH "img/tron.png", arcade::Color::A_BLACK);
   _core->getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, RES_PATH "img/wall3.png", arcade::Color::A_MAGENTA);
   _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, RES_PATH "img/mooncat.jpg", arcade::Color::A_MAGENTA);
@@ -51,7 +51,7 @@ void			LSnake::initGame()
   for (int i = 0 ; i < _map->width * _map->height ; ++i)
     if (((i % _map->width) == 0 || (i % _map->width) == _map->width - 1) ||
 	((i / _map->width) == 0 || (i / _map->width) == _map->height - 1))
-      _map->tile[i] = arcade::TileType::OBSTACLE;
+      _map->tile[i] = arcade::TileType::BLOCK;
     else
     _map->tile[i] = arcade::TileType::EMPTY;
 
@@ -363,32 +363,6 @@ void			LSnake::newApple()
   // for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin(); it--)
   //   if (_apple.x == (*it).x && _apple.y == (*it).y)
   //     newApple();
-}
-
-arcade::CommandType		LSnake::lPDM_aCommand(std::string const &command)
-{
-    switch (command[0])
-      {
-      case 0:
-	return (arcade::CommandType::WHERE_AM_I);
-      case 1:
-	return (arcade::CommandType::GET_MAP);
-      case 2:
-        return (arcade::CommandType::GO_UP);
-      case 3:
-	return (arcade::CommandType::GO_DOWN);
-      case 4:
-	return (arcade::CommandType::GO_LEFT);
-      case 5:
-	return (arcade::CommandType::GO_RIGHT);
-      case 9:
-	return (arcade::CommandType::PLAY);
-      default:
-	return (arcade::CommandType::UNDEFINED);
-	break;
-      }
-
-  return (arcade::CommandType::UNDEFINED);
 }
 
 void                  LSnake::lPDM_getMap() const
