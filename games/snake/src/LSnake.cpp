@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update Sat Mar 25 23:24:20 2017 Leo Hubert Froideval
+** Last update Sun Mar 26 15:20:50 2017 Leo Hubert Froideval
 */
 
 #include          "LSnake.hpp"
@@ -15,7 +15,7 @@ LSnake::LSnake()
 
 LSnake::~LSnake()
 {
-  _map ? delete(_map) : (void)0;
+  _map ? free(_map) : (void)0;
 }
 
 arcade::CommandType				LSnake::play(arcade::ICore &core)

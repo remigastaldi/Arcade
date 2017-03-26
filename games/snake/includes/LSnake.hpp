@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 23:42:03 2017 gastal_r
-** Last update Sat Mar 25 17:55:15 2017 Leo Hubert Froideval
+** Last update Sun Mar 26 15:27:44 2017 Leo Hubert Froideval
 */
 
 #ifndef			        _LSnake_HPP_
@@ -17,9 +17,9 @@
 #include			<ctime>
 #include			<thread>
 #include			<vector>
-#include		        <iostream>
+#include		  <iostream>
 #include			<list>
-#include		        "ICore.hh"
+#include		  "ICore.hh"
 
 #define				RES_PATH "games/snake/res/"
 
