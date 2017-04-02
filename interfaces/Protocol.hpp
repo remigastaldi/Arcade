@@ -24,13 +24,13 @@ namespace		arcade
       SHOOT		= 7,		// SHOOT (FOR SOLAR FOX AND CENTIPEDE)
       ILLEGAL		= 8,		// THE INSTRUCTION WAS ILLEGAL
       PLAY		= 9, 		// PLAY A ROUND
-      ESCAPE = 10,
-      MENU = 11,
-      NEXT_LIB = 12,
-      PREV_LIB = 13,
-      PREV_GAME = 14,
-      NEXT_GAME = 15,
-      RESTART = 16,
+      ESCAPE		= 10,
+      MENU		= 11,
+      NEXT_LIB		= 12,
+      PREV_LIB		= 13,
+      PREV_GAME		= 14,
+      NEXT_GAME		= 15,
+      RESTART		= 16,
       UNDEFINED
     };
   enum class		TileType : uint16_t

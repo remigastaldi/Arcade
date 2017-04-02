@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Sun Mar 26 04:12:53 2017 gastal_r
+** Last update	Sun Apr 02 01:43:47 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -31,7 +31,7 @@ void            LSfml::aClose()
   _win.close();
 }
 
-sf::Uint8				*LSfml::fillPixelsColor(const arcade::Color &col)
+sf::Uint8				*LSfml::fillPixelsColor(arcade::Color col)
 {
   sf::Uint8 *pixels = new sf::Uint8[BLOCK_Y * BLOCK_Y * 4];
 
@@ -55,7 +55,7 @@ sf::Sprite      LSfml::createSprite(const sf::Texture &texture)
   return (sprite);
 }
 
-void            LSfml::aTile(size_t x, size_t y, arcade::TileType type, const arcade::CommandType &dir)
+void            LSfml::aTile(size_t x, size_t y, arcade::TileType type, arcade::CommandType dir)
 {
   LSfml::Data data;
 
@@ -66,7 +66,7 @@ void            LSfml::aTile(size_t x, size_t y, arcade::TileType type, const ar
   _data.push_back(data);
 }
 
-sf::Texture     LSfml::createColoredTexture(const arcade::Color &color)
+sf::Texture     LSfml::createColoredTexture(arcade::Color color)
 {
   sf::Texture texture;
 
@@ -86,7 +86,7 @@ void            LSfml::aTile(size_t x, size_t y, void *texture)
   _win.draw(sprite);
 }
 
-void            LSfml::aAssignTexture(const arcade::TileType tile, const std::string &path, const arcade::Color color)
+void            LSfml::aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color)
 {
   switch (tile)
   {
@@ -142,7 +142,7 @@ void            *LSfml::aGetTexture(const std::string &path)
   return (texture);
 }
 
-sf::Color     LSfml::fillColor(const arcade::Color &color)
+sf::Color     LSfml::fillColor(arcade::Color color)
 {
   sf::Color   n;
 
@@ -156,7 +156,7 @@ sf::Color     LSfml::fillColor(const arcade::Color &color)
   return (n);
 }
 
-void          LSfml::aPutText(size_t x, size_t y, const arcade::Font &font,
+void          LSfml::aPutText(size_t x, size_t y, arcade::Font font,
                               size_t size, arcade::Color color, const std::string &text)
 {
   sf::Text sfText;

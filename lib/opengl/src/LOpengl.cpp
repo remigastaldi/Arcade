@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Sun Mar 26 16:24:24 2017 gastal_r
+** Last update	Sun Apr 02 02:23:34 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -26,6 +26,10 @@ void            LOpengl::loadTriangle()
 {
   glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), _triangle);
   glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _triangle + 3);
+}
+
+void            LOpengl::loadShip()
+{
 }
 
 void            LOpengl::aInit(arcade::ICore *core, size_t width, size_t height)
@@ -68,7 +72,7 @@ void            LOpengl::aClose()
   _win.close();
 }
 
-sf::Uint8				*LOpengl::fillPixelsColor(const arcade::Color &col)
+sf::Uint8				*LOpengl::fillPixelsColor(arcade::Color col)
 {
   sf::Uint8 *pixels = new sf::Uint8[BLOCK_Y * BLOCK_Y * 4];
 
@@ -83,7 +87,7 @@ sf::Uint8				*LOpengl::fillPixelsColor(const arcade::Color &col)
   return (pixels);
 }
 
-sf::Texture     LOpengl::createColoredTexture(const arcade::Color &color)
+sf::Texture     LOpengl::createColoredTexture(arcade::Color color)
 {
   sf::Texture texture;
 
@@ -102,7 +106,7 @@ sf::Sprite      LOpengl::createSprite(const sf::Texture &texture)
   return (sprite);
 }
 
-void            LOpengl::aTile(size_t x, size_t y, arcade::TileType type, const arcade::CommandType &dir)
+void            LOpengl::aTile(size_t x, size_t y, arcade::TileType type, arcade::CommandType dir)
 {
   LOpengl::Data data;
 
@@ -165,13 +169,15 @@ void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, int d
     case arcade::TileType::OTHER:
     {
       loadTriangle();
-      sf::Texture::bind(&_otherTex);
+      sf::Texture::bind(&_emptyTex);
+      //sf::Texture::bind(&_otherTex);
       glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
-      //glRotatef(1000.f, 0.f, 0.f, 1.f);
+      //glScalef(2,2,2);
+      //glRotatef(-90.f, 0.f, 0.f, 1.f);
     }
       break;
   }
-    glDrawArrays(GL_TRIANGLES, 0, 36);
+  glDrawArrays(GL_TRIANGLES, 0, sizeof(_triangle) / sizeof(GLfloat) / 5);
   glPopMatrix();
 }
 
@@ -186,7 +192,7 @@ void            LOpengl::aTile(size_t x, size_t y, void *texture)
   _win.draw(sprite);
 }
 
-void            LOpengl::aAssignTexture(const arcade::TileType tile, const std::string &path, const arcade::Color color)
+void            LOpengl::aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color)
 {
   switch (tile)
   {
@@ -257,7 +263,7 @@ sf::Color     LOpengl::fillColor(arcade::Color color)
   return (n);
 }
 
-void          LOpengl::aPutText(size_t x, size_t y, const arcade::Font &font,
+void          LOpengl::aPutText(size_t x, size_t y, arcade::Font font,
                               size_t size, arcade::Color color, const std::string &text)
 {
   sf::Text sfText;
@@ -284,7 +290,7 @@ void          LOpengl::aPutText(size_t x, size_t y, const arcade::Font &font,
 void            LOpengl::aClear()
 {
   _win.clear();
-  glClear(GL_DEPTH_BUFFER_BIT);
+  glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 }
 
 void            LOpengl::transition()

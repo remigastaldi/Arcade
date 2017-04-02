@@ -12,7 +12,7 @@
 # define	        IGAME_HH__
 
 # include	        <unistd.h>
-//# include	        "ICore.hh"
+# include	        "Protocol.hpp"
 
 namespace	        arcade
 {

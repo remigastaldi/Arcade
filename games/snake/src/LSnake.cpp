@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update Sun Mar 26 15:20:50 2017 Leo Hubert Froideval
+** Last update	Sun Apr 02 01:29:44 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -88,7 +88,7 @@ void			LSnake::printGame()
     _core->getLib()->aTile((i % _map->width) + 1 , (i / _map->width) + 1, _map->tile[i], arcade::CommandType::UNDEFINED);
   _core->getLib()->aTile(_position[0].x + 1, _position[0].y + 1, arcade::TileType::OTHER, _direction);
   if (_position.size() > 1)
-    for (std::vector<arcade::Position>::iterator it = _position.begin() + 1; it != _position.end() - 1; it++)
+    for (std::vector<arcade::Position>::iterator it = _position.begin() + 1; it != _position.end() - 1; ++it)
       _core->getLib()->aTile((*it).x + 1, (*it).y + 1, arcade::TileType::MY_SHOOT, getDirection((*it), (*(it + 1))));
 
   _core->getLib()->aTile(_apple.x, _apple.y, arcade::TileType::POWERUP, arcade::CommandType::UNDEFINED);
@@ -137,7 +137,7 @@ bool			LSnake::checkNextTile(int y, int x)
     {
       if (_position.size() > 1)
 	{
-	  for (std::vector<arcade::Position>::iterator it = _position.end() - 2; it != _position.begin() + 1; it--)
+	  for (std::vector<arcade::Position>::iterator it = _position.end() - 2; it != _position.begin() + 1; --it)
 	    {
 	      if (x == (*it).x && y == (*it).y)
 		return (false);
@@ -352,7 +352,7 @@ void			LSnake::newApple()
     {
       _apple.x = (rand() % (_map->width - 2)) + 2;
       _apple.y = (rand() % (_map->height - 2)) + 2;
-      for (std::vector<arcade::Position>::iterator it = _position.end() - 1; it != _position.begin(); it--)
+      for (std::vector<arcade::Position>::iterator it = _position.end() - 1; it != _position.begin(); --it)
 	if (_apple.x == (*it).x && _apple.y == (*it).y)
 	  {
 	    _apple.x = 0;
@@ -408,12 +408,13 @@ void			LSnake::lPDM_whereAmI()
     return ;
   snake->type = _map->type;
   snake->lenght = length;
-  for (std::vector<arcade::Position>::iterator it = _position.begin(); it != _position.end() - 1; it++)
+  for (std::vector<arcade::Position>::iterator it = _position.begin(); it != _position.end() - 1; ++it)
   {
     snake->position[i] = *it;
     i++;
   }
   write(1, snake, sizeof(arcade::WhereAmI) + (length * sizeof(arcade::Position)));
+  free(snake);
 }
 
 void			LSnake::lPDM_move(arcade::CommandType direction)
