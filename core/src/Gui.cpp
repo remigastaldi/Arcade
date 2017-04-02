@@ -5,14 +5,17 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 11:01:41 2017 gastal_r
-** Last update	Sat Mar 25 23:47:20 2017 gastal_r
+** Last update	Sat Apr 01 23:57:55 2017 gastal_r
 */
 
 #include        "Gui.hpp"
 #include "../../interfaces/IGraph.hh"
 
 Gui::Gui()
-{}
+{
+  _graph = 0;
+  _status = CONTINUE;
+}
 
 Gui::~Gui()
 {}
@@ -202,7 +205,7 @@ void                  Gui::affPlayersScores()
   }
 }
 
-const Status          &Gui::getStatus()
+Status                Gui::getStatus()
 {
   return (_status);
 }

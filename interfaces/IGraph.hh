@@ -50,12 +50,11 @@ namespace	       arcade
 
     virtual void aInit(arcade::ICore *, size_t, size_t) = 0;
     virtual void aClose() = 0;
-    virtual void aTile(size_t, size_t, arcade::TileType,const  arcade::CommandType &) = 0;
+    virtual void aTile(size_t, size_t, arcade::TileType, arcade::CommandType) = 0;
     virtual void aTile(size_t x, size_t y, void *texture) = 0;
     virtual void *aGetTexture(const std::string &) = 0;
-    virtual void aAssignTexture(const arcade::TileType tile, const std::string &path, const arcade::Color color) = 0;
-    virtual void aPutText(size_t, size_t, const arcade::Font &,
-                          size_t, arcade::Color, const std::string &) = 0;
+    virtual void aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color) = 0;
+    virtual void aPutText(size_t, size_t, arcade::Font, size_t, arcade::Color, const std::string &) = 0;
     virtual void aClear() = 0;
     virtual void aRefresh() = 0;
     virtual arcade::CommandType aCommand() = 0;

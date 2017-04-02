@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Sun Mar 26 03:36:03 2017 gastal_r
+** Last update	Sun Apr 02 01:36:39 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -51,7 +51,7 @@ void        LNcurses::aClose()
   Ncurses::Endwin();
 }
 
-void        LNcurses::printTile(size_t x, size_t y, const LNcurses::NColor &color)
+void        LNcurses::printTile(size_t x, size_t y, LNcurses::NColor color)
 {
   Ncurses::Attron(COLOR_PAIR(color));
   mvprintw(Y_PAD + y, X_PAD + x, "W");
@@ -59,7 +59,7 @@ void        LNcurses::printTile(size_t x, size_t y, const LNcurses::NColor &colo
   Ncurses::Attroff(COLOR_PAIR(color));
 }
 
-void        LNcurses::aTile(size_t x, size_t y, arcade::TileType tile, const arcade::CommandType &)
+void        LNcurses::aTile(size_t x, size_t y, arcade::TileType tile, arcade::CommandType)
 {
   x = x * 2;
   switch (tile)
@@ -91,7 +91,7 @@ void        LNcurses::aTile(size_t x, size_t y, arcade::TileType tile, const arc
     }
 }
 
-LNcurses::NColor  LNcurses::fillColor(const arcade::Color &color)
+LNcurses::NColor  LNcurses::fillColor(arcade::Color color)
 {
   NColor   n;
 
@@ -105,7 +105,7 @@ LNcurses::NColor  LNcurses::fillColor(const arcade::Color &color)
   return (n);
 }
 
-void        LNcurses::aAssignTexture(const arcade::TileType tile, const std::string &path, const arcade::Color color)
+void        LNcurses::aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color)
 {
   (void) path;
 
@@ -145,7 +145,7 @@ void        LNcurses::printText(size_t x, size_t y, int color, const std::string
   Ncurses::Attroff(COLOR_PAIR(color));
 }
 
-void        LNcurses::aPutText(size_t x, size_t y, const arcade::Font &path,
+void        LNcurses::aPutText(size_t x, size_t y, arcade::Font path,
                     size_t size, arcade::Color color, const std::string &str)
 {
   (void)path;

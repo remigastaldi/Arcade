@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:09:59 2017 gastal_r
-** Last update	Sat Mar 25 11:43:37 2017 gastal_r
+** Last update	Sat Apr 01 23:43:11 2017 gastal_r
 */
 
 #ifndef         _CORE_HPP_
@@ -34,8 +34,8 @@ public:
   void          coreLoop();
 
   void          chooseGameMenu();
-  void          switchGame(const arcade::CommandType);
-  void          switchLib(const arcade::CommandType);
+  void          switchGame(arcade::CommandType);
+  void          switchLib(arcade::CommandType);
   void          saveScore(size_t score);
   Save            &getSave() { return (_save);}
   arcade::IGraph  *getLib() const;

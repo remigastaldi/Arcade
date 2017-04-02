@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 23:42:03 2017 gastal_r
-** Last update Sun Mar 26 15:27:44 2017 Leo Hubert Froideval
+** Last update	Sun Apr 02 01:29:42 2017 gastal_r
 */
 
 #ifndef			        _LSnake_HPP_
@@ -29,32 +29,28 @@ public:
   LSnake();
   virtual		        ~LSnake();
 
-  void		changeAction();
-  void    initTextures();
-  void		move();
-  void		printGame();
-  arcade::CommandType		mainLoop(bool);
   void		initGame();
-  arcade::CommandType		play(arcade::ICore &);
-  void		close();
-  void		addQueue();
+  void    initTextures();
+  void		changeAction();
+  void		printGame();
+  void		move();
   void		newApple();
+  void		addQueue();
   void		addScore(int);
   void		gameOver();
-  bool				checkNextTile(int, int);
-  arcade::CommandType	getDirection(arcade::Position const &, arcade::Position const &);
+  void		close();
+  bool		checkNextTile(int, int);
+  arcade::CommandType		mainLoop(bool);
+  arcade::CommandType		play(arcade::ICore &);
+  arcade::CommandType	  getDirection(arcade::Position const &, arcade::Position const &);
 
-  /*
-  **  Fonctions pour la putain de moulinette
-  */
-
-  arcade::CommandType		lPDM_aCommand(std::string const &);
   void				lPDM_getMap() const;
   void				lPDM_whereAmI();
   void				lPDM_move(arcade::CommandType);
   void				lPDM_play();
   void				lPDM_escape();
   void				lPDM_menu();
+  arcade::CommandType		lPDM_aCommand(std::string const &);
 
 private:
   arcade::GetMap		              *_map;

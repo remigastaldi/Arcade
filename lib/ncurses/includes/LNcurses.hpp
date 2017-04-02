@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:10:52 2017 gastal_r
-** Last update	Sat Mar 25 16:39:15 2017 gastal_r
+** Last update	Sun Apr 02 01:33:52 2017 gastal_r
 */
 
 #ifndef       _LNcurses_HPP_
@@ -38,22 +38,21 @@ public:
   void        aInit(arcade::ICore *, size_t, size_t);
   void        aClose();
 
-  void        printTile(size_t x, size_t y, const LNcurses::NColor &color);
-  void        aTile(size_t, size_t, arcade::TileType, const arcade::CommandType &);
+  void        printTile(size_t x, size_t y, LNcurses::NColor color);
+  void        aTile(size_t, size_t, arcade::TileType, arcade::CommandType);
   void        aTile(size_t, size_t, void *){};
 
-  NColor      fillColor(const arcade::Color &color);
-  void        aAssignTexture(const arcade::TileType tile, const std::string &path, const arcade::Color color);
-  void        *aGetTexture(const std::string &){return (NULL);}
+  NColor      fillColor(arcade::Color color);
+  void        aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color);
+  void        *aGetTexture(const std::string &) {return (NULL);}
 
   void        printText(size_t x, size_t y, int color, const std::string &str);
-  void        aPutText(size_t, size_t, const arcade::Font &,
-                      size_t, arcade::Color, const std::string &);
+  void        aPutText(size_t, size_t, arcade::Font, size_t, arcade::Color, const std::string &);
 
   void        aClear();
   void        aRefresh();
-  arcade::CommandType aCommand();
   std::string   aChar();
+  arcade::CommandType aCommand();
 
 private:
   WINDOW	*_win;

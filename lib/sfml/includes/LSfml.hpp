@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:07:35 2017 gastal_r
-** Last update	Sat Mar 25 16:32:58 2017 gastal_r
+** Last update	Sun Apr 02 01:42:47 2017 gastal_r
 */
 
 #ifndef         _LSFML_HPP_
@@ -34,18 +34,17 @@ public:
   void          aInit(arcade::ICore *, size_t, size_t);
   void          aClose();
 
-  sf::Uint8     *fillPixelsColor(const arcade::Color &);
+  sf::Uint8     *fillPixelsColor(arcade::Color);
   sf::Sprite    createSprite(const sf::Texture &texture);
-  sf::Texture   createColoredTexture(const arcade::Color &color);
+  sf::Texture   createColoredTexture(arcade::Color color);
 
-  void          aTile(size_t, size_t, arcade::TileType, const arcade::CommandType &);
+  void          aTile(size_t, size_t, arcade::TileType, arcade::CommandType);
   void          aTile(size_t, size_t, void *);
 
-  void          aAssignTexture(const arcade::TileType tile, const std::string &path, const arcade::Color color);
+  void          aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color);
   void          *aGetTexture(const std::string &);
-  sf::Color     fillColor(const arcade::Color &);
-  void          aPutText(size_t, size_t, const arcade::Font &,
-                         size_t, arcade::Color, const std::string &);
+  sf::Color     fillColor(arcade::Color);
+  void          aPutText(size_t, size_t, arcade::Font,size_t, arcade::Color, const std::string &);
 
   void          transition();
   void          drawElem(size_t x, size_t y, arcade::TileType type, int dx, int dy);

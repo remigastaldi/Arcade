@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Mar 17 00:03:26 2017 gastal_r
-** Last update	Sun Mar 26 04:06:12 2017 gastal_r
+** Last update	Sun Apr 02 01:25:06 2017 gastal_r
 */
 
 #ifndef         _SAVE_HPP_
@@ -24,10 +24,11 @@ class           Save
   class         Data
   {
   public:
-    void        setGame(const std::string game) {_game = game;}
-    void        setValue(const std::string value) {_value = value;}
+    void               setGame(const std::string &game)   {_game = game;}
+    void               setValue(const std::string &value) {_value = value;}
+
     const std::string  &getValue() const {return (_value);}
-    const std::string  &getGame() const {return (_game);}
+    const std::string  &getGame() const  {return (_game);}
 
   private:
     std::string _game;
@@ -38,11 +39,12 @@ class           Save
   {
   public:
     const std::string &getPlayer() const {return (_player);}
-    void        setPlayer(const std::string player) {_player = player;}
-    void        addSave(Save::Data data) {_data.push_back(data);}
-    std::vector<Save::Data> &getSave() {return (_data);}
-    const std::string  getValue(const std::string &) const;
-    void               addValue(const std::string &, const std::string &);
+    std::vector<Save::Data> &getSave()   {return (_data);}
+    const std::string getValue(const std::string &) const;
+
+    void              setPlayer(const std::string &player) {_player = player;}
+    void              addValue(const std::string &, const std::string &);
+    void              addSave(Save::Data data) {_data.push_back(data);}
 
   private:
     std::vector<Save::Data> _data;
@@ -53,7 +55,7 @@ public:
   Save ();
   virtual ~Save ();
 
-  void        saveSetPlayer(const std::string player) {_player = player;}
+  void        saveSetPlayer(const std::string &player) {_player = player;}
   void        loadPlayerSave();
   void        checkExistingUser();
 
@@ -64,7 +66,7 @@ public:
 private:
   std::vector<Save::PlayerSave>  _playerSave;
   std::string        _player;
-  std::fstream      _file;
+  std::fstream       _file;
 };
 
 #endif /* !_SAVE_HPP_ */
