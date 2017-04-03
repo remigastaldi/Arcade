@@ -22,6 +22,8 @@
 #include		  "ICore.hh"
 
 #define				RES_PATH "games/snake/res/"
+#define				MAPWIDTH 50
+#define				MAPHEIGHT 50
 
 class				LSnake : public arcade::IGame
 {
