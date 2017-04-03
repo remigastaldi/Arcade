@@ -19,7 +19,7 @@ CC              =       g++
 
 RM              =       rm -f
 
-CXXFLAGS	+=	-I./includes -I../../interfaces/ -I../../core/includes/
+CXXFLAGS	+=	-I./includes -I../../common/ -I../../core/includes/
 CXXFLAGS	+=	-Wextra -Wall -W -fPIC -shared
 
 SNNAME          =       ../lib_arcade_snake.so

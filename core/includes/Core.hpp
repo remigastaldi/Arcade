@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:09:59 2017 gastal_r
-** Last update	Mon Apr 03 16:32:09 2017 gastal_r
+** Last update	Mon Apr 03 18:33:51 2017 gastal_r
 */
 
 #ifndef         _CORE_HPP_
@@ -37,8 +37,10 @@ public:
   void          switchGame(arcade::CommandType);
   void          switchLib(arcade::CommandType);
   void          saveScore(size_t score);
+
   Save            &getSave() { return (_save);}
   arcade::IGraph  *getLib() const;
+  const std::string &getCurrentGame() const {return (_currentGame);}
 
   static void   *Dlsym(void *handle, const char *symbol);
   static void   *Dlopen(const char *filename, int flag);

@@ -9,7 +9,7 @@
 */
 
 #include        "Gui.hpp"
-#include "../../interfaces/IGraph.hh"
+#include "../../common/IGraph.hh"
 
 Gui::Gui()
 {
