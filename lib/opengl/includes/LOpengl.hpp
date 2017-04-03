@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:21 2017 gastal_r
-** Last update	Mon Apr 03 11:18:06 2017 gastal_r
+** Last update	Mon Apr 03 18:09:00 2017 gastal_r
 */
 
 #ifndef         _LOPENGL_HPP_
@@ -43,9 +43,7 @@ public:
   void          aInit(arcade::ICore *, size_t, size_t);
   void          aClose();
 
-  void          loadCube();
-  void          loadTriangle();
-  void          loadShip();
+  void          loadVertex(const std::string &);
 
   sf::Uint8     *fillPixelsColor(arcade::Color);
   sf::Sprite    createSprite(const sf::Texture &texture);
