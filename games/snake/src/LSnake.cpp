@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Mon Apr 03 11:45:45 2017 gastal_r
+** Last update	Mon Apr 03 20:52:02 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -83,15 +83,15 @@ arcade::CommandType	LSnake::getDirection(arcade::Position const &cur, arcade::Po
 void			LSnake::printGame()
 {
   _core->getLib()->aClear();
-  _core->getLib()->aTile(_position[0].x + 1, _position[0].y + 1, arcade::TileType::OTHER, _direction);
+  _core->getLib()->aTile(BLOCK_Y * (_position[0].x + 1), BLOCK_Y * (_position[0].y + 1), arcade::TileType::OTHER, _direction);
   for (int i = 0 ; i < MAPWIDTH * MAPHEIGHT ; ++i)
-    _core->getLib()->aTile((i % _map->width) + 1 , (i / _map->width) + 1, _map->tile[i], arcade::CommandType::UNDEFINED);
-  _core->getLib()->aTile(_position[0].x + 1, _position[0].y + 1, arcade::TileType::OTHER, _direction);
+    _core->getLib()->aTile(BLOCK_Y * ((i % _map->width) + 1) ,BLOCK_Y * ((i / _map->width) + 1), _map->tile[i], arcade::CommandType::UNDEFINED);
+  _core->getLib()->aTile(BLOCK_Y * (_position[0].x + 1), BLOCK_Y * (_position[0].y + 1), arcade::TileType::OTHER, _direction);
   if (_position.size() > 1)
     for (std::vector<arcade::Position>::iterator it = _position.begin() + 1; it != _position.end() - 1; ++it)
-      _core->getLib()->aTile((*it).x + 1, (*it).y + 1, arcade::TileType::MY_SHOOT, getDirection((*it), (*(it + 1))));
+      _core->getLib()->aTile(BLOCK_Y * ((*it).x + 1), BLOCK_Y * ((*it).y + 1), arcade::TileType::MY_SHOOT, getDirection((*it), (*(it + 1))));
 
-  _core->getLib()->aTile(_apple.x, _apple.y, arcade::TileType::POWERUP, arcade::CommandType::UNDEFINED);
+  _core->getLib()->aTile(BLOCK_Y * _apple.x, BLOCK_Y * _apple.y, arcade::TileType::POWERUP, arcade::CommandType::UNDEFINED);
   _core->refreshGui();
   _core->getLib()->aRefresh();
 }

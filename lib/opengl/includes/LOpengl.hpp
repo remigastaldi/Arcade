@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:21 2017 gastal_r
-** Last update	Mon Apr 03 18:41:19 2017 gastal_r
+** Last update	Mon Apr 03 21:43:47 2017 gastal_r
 */
 
 #ifndef         _LOPENGL_HPP_
@@ -16,6 +16,7 @@
 #endif
 
 //#define GL_GLEXT_PROTOTYPES
+#define BLOCK_OPENGL ((float) BLOCK_Y * 0.625)
 
 #include        <SFML/Graphics.hpp>
 #include        <SFML/OpenGL.hpp>

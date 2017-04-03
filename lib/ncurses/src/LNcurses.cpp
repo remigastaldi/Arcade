@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Sun Apr 02 01:36:39 2017 gastal_r
+** Last update	Mon Apr 03 19:27:24 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -61,6 +61,8 @@ void        LNcurses::printTile(size_t x, size_t y, LNcurses::NColor color)
 
 void        LNcurses::aTile(size_t x, size_t y, arcade::TileType tile, arcade::CommandType)
 {
+  x /= BLOCK_Y;
+  y /= BLOCK_Y;
   x = x * 2;
   switch (tile)
     {

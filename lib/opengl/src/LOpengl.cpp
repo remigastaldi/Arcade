@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Mon Apr 03 18:43:30 2017 gastal_r
+** Last update	Mon Apr 03 21:44:24 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -137,8 +137,8 @@ void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, arcad
 
   if (type == arcade::TileType::OTHER)
   {
-    _xView = -((x - 26.0) * 15.0) - dx * 1.5;
-    _yView = -((y - 26.0) * 15.0) + dy * 1.5;
+    _xView = -((x - 26.0 * BLOCK_Y)) - dx * 1.5;
+    _yView = -((y - 26.0 * BLOCK_Y)) + dy * 1.5;
   }
   gluLookAt(255.f - _xView / 2,
             140.f + _yView / 2, 110.f,
@@ -152,43 +152,43 @@ void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, arcad
     case arcade::TileType::BLOCK:
       loadVertex("BLOCK");
       sf::Texture::bind(&_blockTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 10);
+      glTranslatef(x * 0.625 + dx, 500.f  -(y * 0.625 - dy), 10);
       glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("BLOCK") / 5);
       break;
     case arcade::TileType::EMPTY:
       loadVertex("EMPTY");
       sf::Texture::bind(&_emptyTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 0);
+      glTranslatef(x * 0.625 + dx, 500.f  -(y * 0.625 - dy), 0);
       glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("EMPTY") / 5);
       break;
     case arcade::TileType::OBSTACLE:
       loadVertex("OBSTACLE");
       sf::Texture::bind(&_obstacleTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 10);
+      glTranslatef(x * 0.625 + dx, 500.f  -(y * 0.625 - dy), 10);
       glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("OBSTACLE") / 5);
       break;
     case arcade::TileType::EVIL_DUDE:
       loadVertex("EVIL_DUDE");
       sf::Texture::bind(&_evilDudeTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 10);
+      glTranslatef(x * 0.625 + dx, 500.f  -(y * 0.625 - dy), 10);
       glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("EVIL_DUDE") / 5);
       break;
     case arcade::TileType::EVIL_SHOOT:
       loadVertex("EVIL_SHOOT");
       sf::Texture::bind(&_evilDudeTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 10);
+      glTranslatef(x * 0.625 + dx, 500.f  -(y * 0.625 - dy), 10);
       glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("EVIL_SHOOT") / 5);
       break;
     case arcade::TileType::MY_SHOOT:
       loadVertex("MY_SHOOT");
       sf::Texture::bind(&_myShootTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
+      glTranslatef(x * 0.625 + dx, 500.f  -(y * 0.625 - dy), 5);
       glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("MY_SHOOT") / 5);
       break;
     case arcade::TileType::POWERUP:
       loadVertex("POWERUP");
       sf::Texture::bind(&_powerupTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
+      glTranslatef(x * 0.625 + dx, 500.f  -(y * 0.625 - dy), 5);
       glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("POWERUP") / 5);
       break;
     case arcade::TileType::OTHER:
@@ -196,7 +196,7 @@ void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, arcad
       loadVertex("OTHER");
       sf::Texture::bind(&_emptyTex);
       //sf::Texture::bind(&_otherTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
+      glTranslatef(x * 0.625 + dx, 500.f  -(y * 0.625 - dy), 5);
       //glScalef(2,2,4);
       checkRotation(dir);
       glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("OTHER") / 5);
@@ -347,19 +347,19 @@ void            LOpengl::transition()
           switch (it->dir)
           {
             case arcade::CommandType::GO_LEFT :
-              drawElem(it->x + 1, it->y, it->type, it->dir, -i, 0);
+              drawElem(it->x + BLOCK_Y, it->y, it->type, it->dir, -i, 0);
               it->type == arcade::TileType::OTHER ? _xView++ : 0;
               break;
             case arcade::CommandType::GO_RIGHT :
-              drawElem(it->x - 1, it->y, it->type, it->dir, i, 0);
+              drawElem(it->x - BLOCK_Y, it->y, it->type, it->dir, i, 0);
               it->type == arcade::TileType::OTHER ? _xView-- : 0;
               break;
             case arcade::CommandType::GO_UP :
-              drawElem(it->x, it->y + 1, it->type, it->dir, 0, i);
+              drawElem(it->x, it->y + BLOCK_Y, it->type, it->dir, 0, i);
               it->type == arcade::TileType::OTHER ? _yView++ : 0;
               break;
             case arcade::CommandType::GO_DOWN :
-              drawElem(it->x, it->y - 1, it->type, it->dir, 0, -i);
+              drawElem(it->x, it->y - BLOCK_Y, it->type, it->dir, 0, -i);
               it->type == arcade::TileType::OTHER ? _yView-- : 0;
               break;
             default:

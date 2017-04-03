@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:07:35 2017 gastal_r
-** Last update	Mon Apr 03 17:12:59 2017 gastal_r
+** Last update	Mon Apr 03 21:43:29 2017 gastal_r
 */
 
 #ifndef         _LSFML_HPP_
@@ -16,7 +16,7 @@
 #include        <chrono>
 #include        "IGraph.hh"
 
-#define BLOCK_Y_SFML ((float) BLOCK_Y + ((float)BLOCK_Y * 0.625))
+#define BLOCK_SFML ((float) BLOCK_Y * 1.625)
 
 class LSfml : public arcade::IGraph
 {
