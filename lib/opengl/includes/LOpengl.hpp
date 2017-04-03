@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:21 2017 gastal_r
-** Last update	Mon Apr 03 18:09:00 2017 gastal_r
+** Last update	Mon Apr 03 18:21:19 2017 gastal_r
 */
 
 #ifndef         _LOPENGL_HPP_
@@ -44,6 +44,7 @@ public:
   void          aClose();
 
   void          loadVertex(const std::string &);
+  void          checkRotation(arcade::CommandType dir);
 
   sf::Uint8     *fillPixelsColor(arcade::Color);
   sf::Sprite    createSprite(const sf::Texture &texture);
@@ -58,7 +59,7 @@ public:
   void          aPutText(size_t, size_t, arcade::Font, size_t, arcade::Color, const std::string &);
 
   void          transition();
-  void          drawElem(size_t x, size_t y, arcade::TileType type, int dx, int dy);
+  void          drawElem(size_t x, size_t y, arcade::TileType type, arcade::CommandType, int dx, int dy);
   void          aClear();
   void          aRefresh();
   arcade::CommandType aCommand();
