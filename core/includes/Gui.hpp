@@ -14,7 +14,7 @@
 #include          <iostream>
 #include          <vector>
 #include          <string>
-#include          "../../common/Protocol.hpp"
+#include          "../../interfaces/Protocol.hpp"
 
 namespace arcade {
   class ICore;

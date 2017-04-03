@@ -9,7 +9,7 @@
 */
 
 #include                   "File.hpp"
-#include "../../common/Exception.hpp"
+#include "../../interfaces/Exception.hpp"
 
 File::File (const std::string &path)
 {
