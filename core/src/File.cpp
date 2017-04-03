@@ -5,13 +5,13 @@
 ** Login	gastal_r
 **
 ** Started on	Mon Mar 13 16:22:53 2017 gastal_r
-** Last update	Sat Mar 25 12:17:46 2017 gastal_r
+** Last update	Mon Apr 03 00:47:12 2017 gastal_r
 */
 
 #include                   "File.hpp"
 #include "../../interfaces/Exception.hpp"
 
-File::File (const std::string path)
+File::File (const std::string &path)
 {
   _path = path;
 }
@@ -25,7 +25,6 @@ bool                      File::checkExtension(const std::string &str) const
 
 std::vector<std::string>   File::getLibs()
 {
-  dirent                   *de;
   DIR                      *dir;
   std::vector <std::string> result;
 
@@ -34,7 +33,7 @@ std::vector<std::string>   File::getLibs()
   {
     while (true)
     {
-      de = File::Readdir(dir);
+      dirent *de = File::Readdir(dir);
       if (de == NULL)
         break;
       if (de->d_type != DT_DIR && checkExtension(de->d_name))

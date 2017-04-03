@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 12 21:30:45 2017 gastal_r
-** Last update	Sun Apr 02 01:25:52 2017 gastal_r
+** Last update	Mon Apr 03 01:02:28 2017 gastal_r
 */
 
 #ifndef           _ICORE_HH_
@@ -21,7 +21,7 @@
 #include          "IGraph.hh"
 #include          "IGame.hh"
 #include			    "Exception.hpp"
-#include          "../core/includes/File.hpp"
+#include          "File.hpp"
 
 
 

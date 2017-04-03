@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Mon Mar 13 16:23:03 2017 gastal_r
-** Last update	Sat Mar 25 11:51:11 2017 gastal_r
+** Last update	Mon Apr 03 00:46:39 2017 gastal_r
 */
 
 #ifndef         _FILE_HPP_
@@ -21,7 +21,7 @@
 class File
 {
 public:
-  File (const std::string);
+  explicit File (const std::string &);
   virtual ~File (){};
 
   bool          checkExtension(const std::string &str) const;

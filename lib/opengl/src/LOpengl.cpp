@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Sun Apr 02 02:23:34 2017 gastal_r
+** Last update	Mon Apr 03 02:43:04 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -16,22 +16,6 @@ LOpengl::LOpengl()
 LOpengl::~LOpengl()
 {}
 
-void            LOpengl::loadCube()
-{
-  glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), _cube);
-  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _cube + 3);
-}
-
-void            LOpengl::loadTriangle()
-{
-  glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), _triangle);
-  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _triangle + 3);
-}
-
-void            LOpengl::loadShip()
-{
-}
-
 void            LOpengl::aInit(arcade::ICore *core, size_t width, size_t height)
 {
   sf::ContextSettings contextSettings;
@@ -40,8 +24,11 @@ void            LOpengl::aInit(arcade::ICore *core, size_t width, size_t height)
   _xView = 0.f;
   _yView = 0.f;
   _core = core;
+
   _freakyFont.loadFromFile("lib/res/fonts/freaky_font.ttf");
   _pressStartFont.loadFromFile("lib/res/fonts/press_start.ttf");
+  _objs.setGame("solar_fox");
+  _objs.loadObjs();
 
   contextSettings.depthBits = 24;
   _win.create(sf::VideoMode(width, height),"Arcade",  sf::Style::Fullscreen, contextSettings);
@@ -70,6 +57,22 @@ _win.setActive(false);
 void            LOpengl::aClose()
 {
   _win.close();
+}
+
+void            LOpengl::loadCube()
+{
+  glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex("cube"));
+  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex("cube") + 3);
+}
+
+void            LOpengl::loadTriangle()
+{
+  glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex("enemy"));
+  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex("enemy") + 3);
+}
+
+void            LOpengl::loadShip()
+{
 }
 
 sf::Uint8				*LOpengl::fillPixelsColor(arcade::Color col)
@@ -172,12 +175,12 @@ void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, int d
       sf::Texture::bind(&_emptyTex);
       //sf::Texture::bind(&_otherTex);
       glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
-      //glScalef(2,2,2);
-      //glRotatef(-90.f, 0.f, 0.f, 1.f);
+      //glScalef(2,2,4);
+      glRotatef(-90.f, 0.f, 0.f, 1.f);
+      glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("enemy") / 5);
     }
       break;
   }
-  glDrawArrays(GL_TRIANGLES, 0, sizeof(_triangle) / sizeof(GLfloat) / 5);
   glPopMatrix();
 }
 

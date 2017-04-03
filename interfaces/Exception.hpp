@@ -5,8 +5,11 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 02 17:13:18 2017 Full Name
-** Last update	Sat Apr 01 23:30:26 2017 gastal_r
+** Last update	Mon Apr 03 02:13:18 2017 gastal_r
 */
+
+#ifndef     _EXCEPTION_HPP_
+#define     _EXCEPTION_HPP_
 
 #include    <exception>
 #include    <string>
@@ -16,7 +19,7 @@ namespace arcade
   class Exception : public std::exception
   {
   public:
-    Exception(const std::string &message) : _message(message) {;}
+    explicit Exception(const std::string &message) : _message(message) {;}
     Exception(const std::string &message, const std::string &var) : _message(message)
     {
        _message += var;
@@ -28,3 +31,5 @@ namespace arcade
     std::string   _message;
   };
 }
+
+#endif /* !_EXCEPTION_HPP_ */

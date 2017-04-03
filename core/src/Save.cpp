@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Mar 17 00:03:17 2017 gastal_r
-** Last update	Fri Mar 24 02:54:41 2017 gastal_r
+** Last update	Mon Apr 03 01:24:13 2017 gastal_r
 */
 
 #include        "Save.hpp"
@@ -22,7 +22,6 @@ void            Save::loadPlayerSave()
   std::string   token;
   size_t        pos;
   Save::Data    data;
-  std::vector<Save::PlayerSave>::iterator it = _playerSave.begin();
 
 	_file.open(SAVE_PATH, std::fstream::in);
   if (!_file.is_open())
@@ -45,7 +44,6 @@ void            Save::loadPlayerSave()
       data.setValue(token);
       playerSave.addSave(data);
       line.erase(0, pos + 1);
-      ++it;
    }
    _playerSave.push_back(playerSave);
   }
@@ -70,7 +68,7 @@ void                  Save::checkExistingUser()
 const std::string     Save::getSavedScore(std::string game) const
 {
   game = game.substr(0, game.find_last_of("."));
-  game = game.erase(0, game.find_last_of("_") + 1);
+  game.erase(0, game.find_last_of("_") + 1);
 
   for (std::vector<Save::PlayerSave>::const_iterator it = _playerSave.begin(); it != _playerSave.end(); ++it)
   {
@@ -92,7 +90,7 @@ const std::vector<std::string>   Save::getBestPlayersScores(std::string game)
   std::vector<std::string> scores;
 
 game = game.substr(0, game.find_last_of("."));
-game = game.erase(0, game.find_last_of("_") + 1);
+game.erase(0, game.find_last_of("_") + 1);
 for (std::vector<Save::PlayerSave>::const_iterator it = _playerSave.begin(); it != _playerSave.end(); ++it)
   {
     std::string player = (*it).getPlayer();
@@ -108,7 +106,7 @@ for (std::vector<Save::PlayerSave>::const_iterator it = _playerSave.begin(); it 
 void                  Save::saveScore(std::string currentGame, const std::string &score)
 {
   currentGame = currentGame.substr(0, currentGame.find_last_of("."));
-  currentGame = currentGame.erase(0, currentGame.find_last_of("_") + 1);
+  currentGame.erase(0, currentGame.find_last_of("_") + 1);
 
   _file.open(SAVE_PATH, std::fstream::out | std::fstream::trunc);
   for (std::vector<Save::PlayerSave>::iterator it = _playerSave.begin(); it != _playerSave.end(); ++it)
