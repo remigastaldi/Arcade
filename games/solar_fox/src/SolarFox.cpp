@@ -10,8 +10,11 @@
 
 #include        "SolarFox.hpp"
 
-SolarFox::SolarFox()
-{}
+LSolarFox::LSolarFox()
+{
+}
 
-SolarFox::~SolarFox()
-{}
+LSolarFox::~LSolarFox()
+{
+}
+
