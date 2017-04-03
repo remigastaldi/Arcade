@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Sun Apr 02 01:29:44 2017 gastal_r
+** Last update	Mon Apr 03 11:45:45 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -290,7 +290,7 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
 	    }
 	}
 
-      if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 2 && _lPDM != true)
+      if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 6 && _lPDM != true)
 	{
     //std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << '\n';
 	  changeAction();

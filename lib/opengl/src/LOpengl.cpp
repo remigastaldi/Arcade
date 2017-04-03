@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Mon Apr 03 02:43:04 2017 gastal_r
+** Last update	Mon Apr 03 14:13:09 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -61,14 +61,14 @@ void            LOpengl::aClose()
 
 void            LOpengl::loadCube()
 {
-  glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex("cube"));
-  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex("cube") + 3);
+  glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex(std::string("cube")));
+  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex(std::string("cube")) + 3);
 }
 
 void            LOpengl::loadTriangle()
 {
-  glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex("enemy"));
-  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex("enemy") + 3);
+  glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex(std::string("enemy")));
+  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex(std::string("enemy")) + 3);
 }
 
 void            LOpengl::loadShip()
@@ -177,10 +177,10 @@ void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, int d
       glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
       //glScalef(2,2,4);
       glRotatef(-90.f, 0.f, 0.f, 1.f);
-      glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("enemy") / 5);
     }
       break;
   }
+  glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize(std::string("enemy")) / 5);
   glPopMatrix();
 }
 

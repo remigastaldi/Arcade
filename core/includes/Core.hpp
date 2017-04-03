@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:09:59 2017 gastal_r
-** Last update	Sat Apr 01 23:43:11 2017 gastal_r
+** Last update	Mon Apr 03 16:32:09 2017 gastal_r
 */
 
 #ifndef         _CORE_HPP_
@@ -19,7 +19,7 @@
 class           Core : public arcade::ICore, public Gui
 {
 public:
-  Core(const std::string &lib);
+  explicit Core(const std::string &lib);
   virtual       ~Core();
 
   void          openLib(const std::string &lib);

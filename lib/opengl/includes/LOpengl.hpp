@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:21 2017 gastal_r
-** Last update	Mon Apr 03 02:42:13 2017 gastal_r
+** Last update	Mon Apr 03 11:18:06 2017 gastal_r
 */
 
 #ifndef         _LOPENGL_HPP_
@@ -86,7 +86,6 @@ private:
   arcade::ICore    *_core;
   bool             _init;
   AObj             _objs;
-  std::vector<GLfloat> _test;
 };
 
 #endif          /* !_LOPENGL_HPP_ */

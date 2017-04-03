@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 23:42:03 2017 gastal_r
-** Last update	Sun Apr 02 01:29:42 2017 gastal_r
+** Last update	Mon Apr 03 11:33:47 2017 gastal_r
 */
 
 #ifndef			        _LSnake_HPP_
@@ -22,8 +22,8 @@
 #include		  "ICore.hh"
 
 #define				RES_PATH "games/snake/res/"
-#define				MAPWIDTH 50
-#define				MAPHEIGHT 50
+#define				MAPWIDTH 40
+#define				MAPHEIGHT 40
 
 class				LSnake : public arcade::IGame
 {

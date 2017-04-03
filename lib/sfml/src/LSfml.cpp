@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Sun Apr 02 01:43:47 2017 gastal_r
+** Last update	Mon Apr 03 17:13:25 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -51,7 +51,7 @@ sf::Sprite      LSfml::createSprite(const sf::Texture &texture)
   sf::Sprite sprite;
 
   sprite.setTexture(texture);
-  sprite.setScale(sf::Vector2f((float)BLOCK_Y / texture.getSize().x, (float)BLOCK_Y / texture.getSize().y));
+  sprite.setScale(sf::Vector2f(BLOCK_Y_SFML / texture.getSize().x, BLOCK_Y_SFML / texture.getSize().y));
   return (sprite);
 }
 
@@ -208,7 +208,7 @@ void          LSfml::drawElem(size_t x, size_t y, arcade::TileType type, int dx,
       sprite = createSprite(_otherTex);
       break;
   }
-  sprite.setPosition((x * BLOCK_Y) + dx + X_PAD * BLOCK_X, (y * BLOCK_Y) - dy + Y_PAD * BLOCK_Y);
+  sprite.setPosition((x * BLOCK_Y_SFML) + dx +  X_PAD * (BLOCK_X - 2), (y * BLOCK_Y_SFML) - dy);
   _win.draw(sprite);
 }
 
@@ -217,7 +217,7 @@ void          LSfml::transition()
   int  i = 0;
 
   std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
-  while (i < BLOCK_Y)
+  while (i < BLOCK_Y + 10)
   {
     std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
     if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 2)
