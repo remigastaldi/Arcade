@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Apr 02 23:40:58 2017 gastal_r
-** Last update	Mon Apr 03 02:31:44 2017 gastal_r
+** Last update	Mon Apr 03 17:51:48 2017 gastal_r
 */
 
 #ifndef       _AObj_HPP_
@@ -24,16 +24,16 @@ class         AObj
   class       Data
   {
   public:
-    void              setName(const std::string &name) {_name = name;}
+    void              addName(const std::string &name) {_name.push_back(name);}
     void              addVertex(float value)  {_vertex.push_back(value);}
 
-    const std::string &getName() const   {return (_name);}
+    bool              checkName(const std::string &) const;
     const GLfloat     *getVertex() const {return (&_vertex[0]);}
     size_t            getSize() const {return (_vertex.size());}
 
   private:
-    std::string           _name;
-    std::vector<GLfloat>  _vertex;
+    std::vector<std::string>  _name;
+    std::vector<GLfloat>      _vertex;
   };
 
 public:

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Apr 02 23:40:00 2017 gastal_r
-** Last update	Mon Apr 03 02:34:56 2017 gastal_r
+** Last update	Mon Apr 03 17:57:06 2017 gastal_r
 */
 
 #include    "AObj.hpp"
@@ -21,13 +21,17 @@ void        AObj::readObj(const std::string &path)
   Data  data;
   std::string line;
 
-  std::string name = path.substr(0, path.find_last_of("."));
-  name.erase(0, name.find_last_of("/") + 1);
-
-  data.setName(name);
   std::ifstream in(path, std::ios::in);
   if (!in)
     throw arcade::Exception("Cannot open ", path);
+  getline(in, line);
+  size_t pos;
+  while ((pos = line.find(':')) != std::string::npos)
+  {
+    std::string token = line.substr(0, pos);
+    data.addName(token);
+    line.erase(0, pos + 1);
+  }
   while (getline(in, line))
   {
     if (line.substr(0,1) != "#" && !line.empty())
@@ -83,11 +87,21 @@ void      AObj::loadObjs()
   }
 }
 
+bool            AObj::Data::checkName(const std::string &name) const
+{
+  for (std::vector<std::string>::const_iterator it = _name.begin(); it != _name.end(); ++it)
+  {
+    if (*it == name)
+      return (true);
+  }
+  return (false);
+}
+
 size_t          AObj::getObjSize(const std::string &name) const
 {
   for (std::vector<Data>::const_iterator it = _objs.begin(); it != _objs.end(); ++it)
   {
-    if (it->getName() == name)
+    if (it->checkName(name))
     {
       return (it->getSize());
     }
@@ -99,7 +113,7 @@ const GLfloat   *AObj::getObjVertex(const std::string &name) const
 {
   for (std::vector<Data>::const_iterator it = _objs.begin(); it != _objs.end(); ++it)
   {
-    if (it->getName() == name)
+    if (it->checkName(name))
     {
       return (it->getVertex());
     }

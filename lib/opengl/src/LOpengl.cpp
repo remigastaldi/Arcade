@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Mon Apr 03 14:13:09 2017 gastal_r
+** Last update	Mon Apr 03 17:58:34 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -61,14 +61,14 @@ void            LOpengl::aClose()
 
 void            LOpengl::loadCube()
 {
-  glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex(std::string("cube")));
-  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex(std::string("cube")) + 3);
+  glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex(std::string("EMPTY")));
+  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex(std::string("EMPTY")) + 3);
 }
 
 void            LOpengl::loadTriangle()
 {
-  glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex(std::string("enemy")));
-  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex(std::string("enemy")) + 3);
+  glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex(std::string("MY_SHOOT")));
+  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex(std::string("MY_SHOOT")) + 3);
 }
 
 void            LOpengl::loadShip()
@@ -180,7 +180,7 @@ void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, int d
     }
       break;
   }
-  glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize(std::string("enemy")) / 5);
+  glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize(std::string("EMPTY")) / 5);
   glPopMatrix();
 }
 
