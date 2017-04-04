@@ -8,7 +8,7 @@
 ** Last update	Sun Mar 26 04:12:03 2017 gastal_r
 */
 
-#include        "SolarFox.hpp"
+#include        "LSolarFox.hpp"
 
 LSolarFox::LSolarFox()
 {
@@ -79,6 +79,8 @@ void			LSolarFox::initGame(void)
 
 arcade::CommandType	LSolarFox::mainLoop(bool lPDM)
 {
+  std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+  std::chrono::high_resolution_clock::time_point t2;
   arcade::CommandType	lastCommand;
 
   _lPDM = lPDM;
@@ -118,6 +120,11 @@ arcade::CommandType	LSolarFox::mainLoop(bool lPDM)
 	{
 	  //lPDM 
 	}
+
+      if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 6 && _lPDM == false)
+      	{
+	  
+      	}
     }
   return (_map->type);
 }

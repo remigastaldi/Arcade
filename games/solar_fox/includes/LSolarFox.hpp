@@ -9,9 +9,11 @@
 */
 
 #ifndef         _LSOLAR_FOX_HPP_
-#define         _LSOLAR_FOX_HPP_
+# define         _LSOLAR_FOX_HPP_
 
-#include      "ICore.hh"
+# include	<chrono>
+# include	"Ship.hh"
+# include	"ICore.hh"
 
 class           LSolarFox : public arcade::IGame
 {
@@ -28,9 +30,10 @@ private:
   arcade::Position	_position;
   arcade::CommandType	_direction;
   int			_score;
-  bool			_lPDM;
   arcade::ICore		*_core;
+  bool			_lPDM;
   arcade::GetMap	*_map;
+    
 };
 
 #endif          /* !_SOLAR_FOX_HPP_ */

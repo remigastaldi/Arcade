@@ -5,7 +5,7 @@
 ## Login   <gastal_r>
 ##
 ## Started on  Sat Feb 11 18:22:43 2017
-## Last update Sat Feb 11 20:09:42 2017
+## Last update Tue Apr  4 18:04:33 2017 sellet_f
 ##
 
 ECHO            =       /bin/echo -e
@@ -23,7 +23,12 @@ CXXFLAGS	+=	-I./includes -I../../common/ -I../../core/includes/
 CXXFLAGS	+=	-Wextra -Wall -W -fPIC -shared
 
 SNNAME          =       ../lib_arcade_solar-fox.so
-SNSRC           =       src/SolarFox.cpp
+SNSRC           =       src/SolarFox.cpp	\
+			src/Object.cpp		\
+			src/Ship.cpp		\
+			src/EnemyShip.cpp	\
+			src/Missile.cpp		\
+			src/EnemyMissile.cpp
 SNOBJ           =       $(SNSRC:.cpp=.o)
 
 all             :	title $(SNNAME)
