@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Sun Apr 02 01:29:44 2017 gastal_r
+** Last update	Mon Apr 03 11:45:45 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -38,19 +38,19 @@ void			LSnake::initGame()
   arcade::Position	head;
 
   srand(time(NULL));
-  if ((_map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap) + (50 * 50 * sizeof(arcade::TileType)))) == NULL)
+  if ((_map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap) + (MAPWIDTH * MAPHEIGHT * sizeof(arcade::TileType)))) == NULL)
     throw arcade::Exception("Malloc failed\n");
 
   _exitStatus = arcade::CommandType::UNDEFINED;
   _map->type = arcade::CommandType::GO_UP;
   _direction = arcade::CommandType::GO_UP;
-  _map->width = 50;
-  _map->height = 50;
+  _map->width = MAPWIDTH;
+  _map->height = MAPHEIGHT;
   _score = 0;
 
-  for (int i = 0 ; i < _map->width * _map->height ; ++i)
-    if (((i % _map->width) == 0 || (i % _map->width) == _map->width - 1) ||
-	((i / _map->width) == 0 || (i / _map->width) == _map->height - 1))
+  for (int i = 0 ; i < MAPWIDTH * MAPHEIGHT ; ++i)
+    if (((i % MAPWIDTH) == 0 || (i % MAPWIDTH) == MAPWIDTH - 1) ||
+	((i / MAPHEIGHT) == 0 || (i / MAPHEIGHT) == MAPHEIGHT - 1))
       _map->tile[i] = arcade::TileType::OBSTACLE;
     else
     _map->tile[i] = arcade::TileType::EMPTY;
@@ -84,7 +84,7 @@ void			LSnake::printGame()
 {
   _core->getLib()->aClear();
   _core->getLib()->aTile(_position[0].x + 1, _position[0].y + 1, arcade::TileType::OTHER, _direction);
-  for (int i = 0 ; i < _map->width * _map->height ; ++i)
+  for (int i = 0 ; i < MAPWIDTH * MAPHEIGHT ; ++i)
     _core->getLib()->aTile((i % _map->width) + 1 , (i / _map->width) + 1, _map->tile[i], arcade::CommandType::UNDEFINED);
   _core->getLib()->aTile(_position[0].x + 1, _position[0].y + 1, arcade::TileType::OTHER, _direction);
   if (_position.size() > 1)
@@ -131,7 +131,7 @@ bool			LSnake::checkNextTile(int y, int x)
 {
   int			nextTile;
 
-  nextTile = (y) * 50 + x;
+  nextTile = (y) * MAPHEIGHT + x;
   if (_map->tile[nextTile] == arcade::TileType::EMPTY ||
       _map->tile[nextTile] == arcade::TileType::POWERUP)
     {
@@ -290,7 +290,7 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
 	    }
 	}
 
-      if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 2 && _lPDM != true)
+      if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 6 && _lPDM != true)
 	{
     //std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << '\n';
 	  changeAction();
@@ -345,20 +345,20 @@ void			LSnake::newApple()
 {
   int			tile;
 
-  _apple.x = (rand() % (_map->width - 2)) + 2;
-  _apple.y = (rand() % (_map->height - 2)) + 2;
-  tile = (_apple.y) * 50 + _apple.x;
+  _apple.x = (rand() % (MAPWIDTH - 2)) + 2;
+  _apple.y = (rand() % (MAPHEIGHT - 2)) + 2;
+  tile = (_apple.y) * MAPHEIGHT + _apple.x;
   while (_map->tile[tile] != arcade::TileType::EMPTY)
     {
-      _apple.x = (rand() % (_map->width - 2)) + 2;
-      _apple.y = (rand() % (_map->height - 2)) + 2;
+      _apple.x = (rand() % (MAPWIDTH - 2)) + 2;
+      _apple.y = (rand() % (MAPHEIGHT - 2)) + 2;
       for (std::vector<arcade::Position>::iterator it = _position.end() - 1; it != _position.begin(); --it)
 	if (_apple.x == (*it).x && _apple.y == (*it).y)
 	  {
 	    _apple.x = 0;
 	    _apple.y = 0;
 	  }
-      tile = (_apple.y) * 50 + _apple.x;
+      tile = (_apple.y) * MAPHEIGHT + _apple.x;
     }
   // for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin(); it--)
   //   if (_apple.x == (*it).x && _apple.y == (*it).y)
@@ -393,7 +393,7 @@ arcade::CommandType		LSnake::lPDM_aCommand(std::string const &command)
 
 void                  LSnake::lPDM_getMap() const
 {
-  write(1, _map, sizeof(arcade::GetMap) + (_map->width * _map->height * sizeof(arcade::TileType)));
+  write(1, _map, sizeof(arcade::GetMap) + (MAPWIDTH * MAPHEIGHT * sizeof(arcade::TileType)));
 }
 
 void			LSnake::lPDM_whereAmI()

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Sat Mar 25 22:19:50 2017 gastal_r
+** Last update	Mon Apr 03 16:37:15 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -130,6 +130,7 @@ void            Core::coreLoop()
         Dlclose(_gameHandle);
         openGamesDir();
         openLibsDir();
+        _currentGame.clear();
         setGuiData();
         guiClearBestScores();
         chooseGameMenu();

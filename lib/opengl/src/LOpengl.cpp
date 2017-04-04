@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Sun Apr 02 02:23:34 2017 gastal_r
+** Last update	Mon Apr 03 18:43:30 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -16,30 +16,15 @@ LOpengl::LOpengl()
 LOpengl::~LOpengl()
 {}
 
-void            LOpengl::loadCube()
-{
-  glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), _cube);
-  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _cube + 3);
-}
-
-void            LOpengl::loadTriangle()
-{
-  glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), _triangle);
-  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _triangle + 3);
-}
-
-void            LOpengl::loadShip()
-{
-}
-
 void            LOpengl::aInit(arcade::ICore *core, size_t width, size_t height)
 {
   sf::ContextSettings contextSettings;
 
-  _init = true;
   _xView = 0.f;
   _yView = 0.f;
   _core = core;
+  _checkLoadObj = true;
+
   _freakyFont.loadFromFile("lib/res/fonts/freaky_font.ttf");
   _pressStartFont.loadFromFile("lib/res/fonts/press_start.ttf");
 
@@ -117,7 +102,34 @@ void            LOpengl::aTile(size_t x, size_t y, arcade::TileType type, arcade
   _data.push_back(data);
 }
 
-void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, int dx, int dy)
+void          LOpengl::loadVertex(const std::string &type)
+{
+  glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex(type));
+  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex(type) + 3);
+}
+
+void          LOpengl::checkRotation(arcade::CommandType dir)
+{
+  switch (dir)
+  {
+    case arcade::CommandType::GO_UP :
+      glRotatef(-90.f, 0.f, 0.f, 1.f);
+      break;
+    case arcade::CommandType::GO_DOWN:
+      glRotatef(90.f, 0.f, 0.f, 1.f);
+      break;
+    case arcade::CommandType::GO_LEFT :
+      //glRotatef(0.f, 0.f, 0.f, 1.f);
+      break;
+    case arcade::CommandType::GO_RIGHT :
+      glRotatef(180.f, 0.f, 0.f, 1.f);
+      break;
+    default :
+      break;
+  }
+}
+
+void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, arcade::CommandType dir, int dx, int dy)
 {
 
   glMatrixMode(GL_MODELVIEW);
@@ -138,46 +150,59 @@ void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, int d
   switch (type)
   {
     case arcade::TileType::BLOCK:
-      loadCube();
+      loadVertex("BLOCK");
       sf::Texture::bind(&_blockTex);
       glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 10);
+      glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("BLOCK") / 5);
       break;
     case arcade::TileType::EMPTY:
-      loadCube();
+      loadVertex("EMPTY");
       sf::Texture::bind(&_emptyTex);
       glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 0);
+      glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("EMPTY") / 5);
       break;
     case arcade::TileType::OBSTACLE:
-      loadCube();
+      loadVertex("OBSTACLE");
       sf::Texture::bind(&_obstacleTex);
       glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 10);
+      glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("OBSTACLE") / 5);
       break;
     case arcade::TileType::EVIL_DUDE:
+      loadVertex("EVIL_DUDE");
+      sf::Texture::bind(&_evilDudeTex);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 10);
+      glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("EVIL_DUDE") / 5);
       break;
     case arcade::TileType::EVIL_SHOOT:
+      loadVertex("EVIL_SHOOT");
+      sf::Texture::bind(&_evilDudeTex);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 10);
+      glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("EVIL_SHOOT") / 5);
       break;
     case arcade::TileType::MY_SHOOT:
-      loadTriangle();
+      loadVertex("MY_SHOOT");
       sf::Texture::bind(&_myShootTex);
       glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
+      glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("MY_SHOOT") / 5);
       break;
     case arcade::TileType::POWERUP:
-      loadTriangle();
+      loadVertex("POWERUP");
       sf::Texture::bind(&_powerupTex);
       glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
+      glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("POWERUP") / 5);
       break;
     case arcade::TileType::OTHER:
     {
-      loadTriangle();
+      loadVertex("OTHER");
       sf::Texture::bind(&_emptyTex);
       //sf::Texture::bind(&_otherTex);
       glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
-      //glScalef(2,2,2);
-      //glRotatef(-90.f, 0.f, 0.f, 1.f);
+      //glScalef(2,2,4);
+      checkRotation(dir);
+      glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("OTHER") / 5);
     }
       break;
   }
-  glDrawArrays(GL_TRIANGLES, 0, sizeof(_triangle) / sizeof(GLfloat) / 5);
   glPopMatrix();
 }
 
@@ -194,6 +219,15 @@ void            LOpengl::aTile(size_t x, size_t y, void *texture)
 
 void            LOpengl::aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color)
 {
+  if (_checkLoadObj)
+  {
+    std::string game = _core->getCurrentGame().substr(0, _core->getCurrentGame().find_last_of("."));
+    game.erase(0, game.find_last_of("_") + 1);
+    _objs.setGame(game);
+    _objs.loadObjs();
+    _checkLoadObj = false;
+  }
+
   switch (tile)
   {
     case arcade::TileType::EMPTY :
@@ -313,28 +347,28 @@ void            LOpengl::transition()
           switch (it->dir)
           {
             case arcade::CommandType::GO_LEFT :
-              drawElem(it->x + 1, it->y, it->type, -i, 0);
+              drawElem(it->x + 1, it->y, it->type, it->dir, -i, 0);
               it->type == arcade::TileType::OTHER ? _xView++ : 0;
               break;
             case arcade::CommandType::GO_RIGHT :
-              drawElem(it->x - 1, it->y, it->type, i, 0);
+              drawElem(it->x - 1, it->y, it->type, it->dir, i, 0);
               it->type == arcade::TileType::OTHER ? _xView-- : 0;
               break;
             case arcade::CommandType::GO_UP :
-              drawElem(it->x, it->y + 1, it->type, 0, i);
+              drawElem(it->x, it->y + 1, it->type, it->dir, 0, i);
               it->type == arcade::TileType::OTHER ? _yView++ : 0;
               break;
             case arcade::CommandType::GO_DOWN :
-              drawElem(it->x, it->y - 1, it->type, 0, -i);
+              drawElem(it->x, it->y - 1, it->type, it->dir, 0, -i);
               it->type == arcade::TileType::OTHER ? _yView-- : 0;
               break;
             default:
-              drawElem(it->x, it->y, it->type, 0, 0);
+              drawElem(it->x, it->y, it->type, it->dir, 0, 0);
               break;
           }
         }
         else
-          drawElem(it->x, it->y, it->type, 0, 0);
+          drawElem(it->x, it->y, it->type, it->dir, 0, 0);
       }
       ++i;
       _core->refreshGui();

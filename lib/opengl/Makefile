@@ -19,13 +19,14 @@ CC              =       g++
 
 RM              =       rm -f
 
-CXXFLAGS	+=	-I./includes -I../../interfaces/
+CXXFLAGS	+=	-I./includes -I../../common/
 CXXFLAGS	+=	-Wextra -Wall -W -fPIC -shared
 CXXFLAGS        +=      -lsfml-{graphics,window,system}
-CXXFLAGS				+=     -lm -lGL -L/usr/X11R6/lib -lGLEW -lXi -lXmu -lGLU
+CXXFLAGS	+=    -lm -lGL -L/usr/X11R6/lib -lGLEW -lXi -lXmu -lGLU
 
 NCNAME          =       ../lib_arcade_opengl.so
-NCSRC           =       src/LOpengl.cpp
+NCSRC           =       src/LOpengl.cpp \
+			src/AObj.cpp
 NCOBJ           =       $(NCSRC:.cpp=.o)
 
 all             :	title $(NCNAME)

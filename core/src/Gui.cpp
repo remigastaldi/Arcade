@@ -5,11 +5,11 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 11:01:41 2017 gastal_r
-** Last update	Sat Apr 01 23:57:55 2017 gastal_r
+** Last update	Mon Apr 03 16:39:29 2017 gastal_r
 */
 
 #include        "Gui.hpp"
-#include "../../interfaces/IGraph.hh"
+#include "../../common/IGraph.hh"
 
 Gui::Gui()
 {
@@ -41,8 +41,9 @@ void            Gui::affScore()
 
 void            Gui::affGui()
 {
-  _graph->aPutText(pos_x(2.4), pos_y(80), arcade::Font::PRESS_START,
-                   WIDTH / 40, arcade::A_RED, "ARCADE");
+  if (_currentGame.empty())
+    _graph->aPutText(pos_x(2.4), pos_y(80), arcade::Font::PRESS_START,
+                    WIDTH / 40, arcade::A_RED, "ARCADE");
   affDispLibs();
   affDispGames();
   affName();

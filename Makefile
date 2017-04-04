@@ -22,7 +22,7 @@ RM              =       rm -f
 
 NAME            =       arcade
 
-CXXFLAGS	+=	-I./core/includes -I./interfaces
+CXXFLAGS	+=	-I./core/includes -I./common
 CXXFLAGS	+=	-Wextra -Wall -W
 CXXFLAGS	+=	-ldl -lncurses
 
