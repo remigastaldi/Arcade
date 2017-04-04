@@ -21,12 +21,16 @@ public:
 
   arcade::CommandType	play(arcade::ICore &);
   arcade::CommandType	mainLoop(bool);
+  void			initGame(void);
+  void			close(void);
+  void			initTextures(void);
 private:
   arcade::Position	_position;
   arcade::CommandType	_direction;
   int			_score;
   bool			_lPDM;
   arcade::ICore		*_core;
+  arcade::GetMap	*_map;
 };
 
 #endif          /* !_SOLAR_FOX_HPP_ */
