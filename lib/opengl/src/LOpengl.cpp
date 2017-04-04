@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Mon Apr 03 18:24:30 2017 gastal_r
+** Last update	Mon Apr 03 18:43:30 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -20,15 +20,13 @@ void            LOpengl::aInit(arcade::ICore *core, size_t width, size_t height)
 {
   sf::ContextSettings contextSettings;
 
-  _init = true;
   _xView = 0.f;
   _yView = 0.f;
   _core = core;
+  _checkLoadObj = true;
 
   _freakyFont.loadFromFile("lib/res/fonts/freaky_font.ttf");
   _pressStartFont.loadFromFile("lib/res/fonts/press_start.ttf");
-  _objs.setGame("solar_fox");
-  _objs.loadObjs();
 
   contextSettings.depthBits = 24;
   _win.create(sf::VideoMode(width, height),"Arcade",  sf::Style::Fullscreen, contextSettings);
@@ -221,6 +219,15 @@ void            LOpengl::aTile(size_t x, size_t y, void *texture)
 
 void            LOpengl::aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color)
 {
+  if (_checkLoadObj)
+  {
+    std::string game = _core->getCurrentGame().substr(0, _core->getCurrentGame().find_last_of("."));
+    game.erase(0, game.find_last_of("_") + 1);
+    _objs.setGame(game);
+    _objs.loadObjs();
+    _checkLoadObj = false;
+  }
+
   switch (tile)
   {
     case arcade::TileType::EMPTY :
