@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Mon Apr 03 11:45:45 2017 gastal_r
+** Last update Tue Apr 04 14:25:48 2017 Leo Hubert Froideval
 */
 
 #include          "LSnake.hpp"
@@ -217,6 +217,7 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
   std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
   std::chrono::high_resolution_clock::time_point t2;
   arcade::CommandType lastCommand;
+  arcade::CommandType command;
 
   _lPDM = lPDM;
   initGame();
@@ -233,7 +234,8 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
 
     while (!std::cin.eof())
     {
-      _map->type = (arcade::CommandType)std::cin.get();
+      std::cin.read((char *) &command, sizeof(arcade::CommandType));
+      _map->type = command;
       switch(_map->type)
         {
         case (arcade::CommandType::GET_MAP):
@@ -243,7 +245,7 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
           lPDM_whereAmI();
           break;
         case (arcade::CommandType::GO_UP):
-              lPDM_move(arcade::CommandType::GO_UP);
+          lPDM_move(arcade::CommandType::GO_UP);
           break;
         case (arcade::CommandType::GO_DOWN):
           lPDM_move(arcade::CommandType::GO_DOWN);
@@ -440,7 +442,6 @@ void			LSnake::lPDM_move(arcade::CommandType direction)
     default :
       break;
     }
-  move();
 }
 
 extern "C"
