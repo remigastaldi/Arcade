@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Sun Apr 02 01:36:39 2017 gastal_r
+** Last update	Wed Apr 05 13:55:18 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -59,10 +59,24 @@ void        LNcurses::printTile(size_t x, size_t y, LNcurses::NColor color)
   Ncurses::Attroff(COLOR_PAIR(color));
 }
 
-void        LNcurses::aTile(size_t x, size_t y, arcade::TileType tile, arcade::CommandType)
+void        LNcurses::aTile(size_t x, size_t y, int speed, arcade::TileType type, arcade::CommandType dir)
 {
-  x = x * 2;
-  switch (tile)
+  LNcurses::Data data;
+
+  data.x = x * 2;
+  data.y = y;
+  data.type = type;
+  data.dir = dir;
+  data.speed = speed;
+  data.cf = speed;
+  data.nbf = 0;
+  _data.insert(_data.begin(), data);
+}
+
+void          LNcurses::drawElem(size_t x, size_t y, arcade::TileType type, arcade::CommandType dir)
+{
+  (void) dir;
+  switch (type)
     {
     case (arcade::TileType::EMPTY) :
       printTile(x, y, _emptyColor);
@@ -89,6 +103,53 @@ void        LNcurses::aTile(size_t x, size_t y, arcade::TileType tile, arcade::C
       printTile(x, y, _otherColor);
       break;
     }
+}
+
+void        LNcurses::transition()
+{
+  int i = 0;
+
+  std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+  while (i < 10 / 2)
+  {
+    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 6)
+    {
+      aClear();
+      for (std::vector<LNcurses::Data>::iterator it = _data.begin(); it != _data.end(); ++it)
+      {
+        drawElem(it->x, it->y, it->type, it->dir);
+        if (it->dir != arcade::CommandType::UNDEFINED)
+        {
+          if (it->cf >= 10)
+          {
+            it->cf = it->speed;
+            if (it->nbf >= 10)
+            {
+              it = _data.erase(it);
+              it = it -1;
+            }
+            else
+              it->nbf += 2;
+          }
+          else
+          {
+            it->cf++;
+          }
+        }
+        else
+        {
+          if (i + 1 == 10 / 2)
+          {
+            it = _data.erase(it);
+            it = it -1;
+          }
+        }
+      }
+      ++i;
+      t1 = std::chrono::high_resolution_clock::now();
+    }
+  }
 }
 
 LNcurses::NColor  LNcurses::fillColor(arcade::Color color)
@@ -179,6 +240,11 @@ void        LNcurses::aPutText(size_t x, size_t y, arcade::Font path,
     }
 }
 
+void            LNcurses::aClearAnimBuffer()
+{
+  _data.clear();
+}
+
 void            LNcurses::aClear()
 {
   Ncurses::Clear();
@@ -186,13 +252,17 @@ void            LNcurses::aClear()
 
 void        LNcurses::aRefresh()
 {
-  static std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 
-  std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
-  while (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() < 100)
-    t2 = std::chrono::high_resolution_clock::now();
-  Ncurses::Wrefresh(_win);
-  t1 = std::chrono::high_resolution_clock::now();
+  if (!_data.empty())
+  {
+    static std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+    while (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() < 30)
+      t2 = std::chrono::high_resolution_clock::now();
+    t1 = std::chrono::high_resolution_clock::now(); transition();
+  }
+  else
+    Ncurses::Wrefresh(_win);
 }
 
 arcade::CommandType	LNcurses::aCommand()

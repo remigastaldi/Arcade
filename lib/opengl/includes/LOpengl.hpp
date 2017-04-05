@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:21 2017 gastal_r
-** Last update	Mon Apr 03 18:41:19 2017 gastal_r
+** Last update	Wed Apr 05 11:30:12 2017 gastal_r
 */
 
 #ifndef         _LOPENGL_HPP_
@@ -33,6 +33,9 @@ class           LOpengl : public arcade::IGraph
   public:
     int         x;
     int         y;
+    int         cf;
+    int         speed;
+    int         nbf;
     arcade::TileType    type;
     arcade::CommandType dir;
   };
@@ -50,7 +53,7 @@ public:
   sf::Sprite    createSprite(const sf::Texture &texture);
   sf::Texture   createColoredTexture(arcade::Color color);
 
-  void          aTile(size_t, size_t, arcade::TileType, arcade::CommandType);
+  void          aTile(size_t, size_t, int, arcade::TileType, arcade::CommandType);
   void          aTile(size_t, size_t, void *);
 
   void          aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color);
@@ -60,6 +63,7 @@ public:
 
   void          transition();
   void          drawElem(size_t x, size_t y, arcade::TileType type, arcade::CommandType, int dx, int dy);
+  void          aClearAnimBuffer();
   void          aClear();
   void          aRefresh();
   arcade::CommandType aCommand();

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Mon Apr 03 18:43:30 2017 gastal_r
+** Last update	Wed Apr 05 13:31:46 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -91,7 +91,7 @@ sf::Sprite      LOpengl::createSprite(const sf::Texture &texture)
   return (sprite);
 }
 
-void            LOpengl::aTile(size_t x, size_t y, arcade::TileType type, arcade::CommandType dir)
+void            LOpengl::aTile(size_t x, size_t y, int speed, arcade::TileType type, arcade::CommandType dir)
 {
   LOpengl::Data data;
 
@@ -99,6 +99,9 @@ void            LOpengl::aTile(size_t x, size_t y, arcade::TileType type, arcade
   data.y = y;
   data.type = type;
   data.dir = dir;
+  data.speed = speed;
+  data.cf = speed;
+  data.nbf = 0;
   _data.push_back(data);
 }
 
@@ -137,6 +140,8 @@ void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, arcad
 
   if (type == arcade::TileType::OTHER)
   {
+      //_xView = -((x - 26.0) * 10.0) - dx;
+      //_yView = -((y - 26.0) * 10.0) + dy;
     _xView = -((x - 26.0) * 15.0) - dx * 1.5;
     _yView = -((y - 26.0) * 15.0) + dy * 1.5;
   }
@@ -321,6 +326,11 @@ void          LOpengl::aPutText(size_t x, size_t y, arcade::Font font,
   _win.popGLStates();
 }
 
+void            LOpengl::aClearAnimBuffer()
+{
+  _data.clear();
+}
+
 void            LOpengl::aClear()
 {
   _win.clear();
@@ -331,14 +341,14 @@ void            LOpengl::transition()
 {
   glEnable(GL_TEXTURE_2D);
   _win.setActive(true);
-  int i = 0;
+  float i = 0;
 
-  std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
-  while (i < 10)
+  //std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+  while (i < 5)
   {
-    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
-    if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 2)
-    {
+    //std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+//    if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= )
+  //  {
       aClear();
       for (std::vector<LOpengl::Data>::iterator it = _data.begin(); it != _data.end(); ++it)
       {
@@ -347,34 +357,56 @@ void            LOpengl::transition()
           switch (it->dir)
           {
             case arcade::CommandType::GO_LEFT :
-              drawElem(it->x + 1, it->y, it->type, it->dir, -i, 0);
+              drawElem(it->x + 1, it->y, it->type, it->dir, -it->nbf, 0);
               it->type == arcade::TileType::OTHER ? _xView++ : 0;
               break;
             case arcade::CommandType::GO_RIGHT :
-              drawElem(it->x - 1, it->y, it->type, it->dir, i, 0);
+              drawElem(it->x - 1, it->y, it->type, it->dir, it->nbf, 0);
               it->type == arcade::TileType::OTHER ? _xView-- : 0;
               break;
             case arcade::CommandType::GO_UP :
-              drawElem(it->x, it->y + 1, it->type, it->dir, 0, i);
+              drawElem(it->x, it->y + 1, it->type, it->dir, 0, it->nbf);
               it->type == arcade::TileType::OTHER ? _yView++ : 0;
               break;
             case arcade::CommandType::GO_DOWN :
-              drawElem(it->x, it->y - 1, it->type, it->dir, 0, -i);
+              drawElem(it->x, it->y - 1, it->type, it->dir, 0, -it->nbf);
               it->type == arcade::TileType::OTHER ? _yView-- : 0;
               break;
             default:
               drawElem(it->x, it->y, it->type, it->dir, 0, 0);
               break;
           }
+          if (it->cf >= 10)
+          {
+            it->cf = it->speed;
+            if (it->nbf >= 10)
+            {
+              it = _data.erase(it);
+              it = it -1;
+            }
+            else
+              it->nbf += 10 / 5;
+          }
+          else
+          {
+            it->cf += 1;
+          }
         }
         else
+        {
           drawElem(it->x, it->y, it->type, it->dir, 0, 0);
+          if (i + 1 == 5)
+          {
+            it = _data.erase(it);
+            it = it -1;
+          }
+        }
       }
       ++i;
       _core->refreshGui();
       _win.display();
-      t1 = std::chrono::high_resolution_clock::now();
-    }
+    //  t1 = std::chrono::high_resolution_clock::now();
+    //}
   }
 }
 
@@ -383,7 +415,7 @@ void            LOpengl::aRefresh()
   if (!_data.empty())
   {
     transition();
-    _data.clear();
+    //_data.clear();
   }
   _win.display();
 }

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:10:52 2017 gastal_r
-** Last update	Sun Apr 02 01:33:52 2017 gastal_r
+** Last update	Wed Apr 05 11:25:48 2017 gastal_r
 */
 
 #ifndef       _LNcurses_HPP_
@@ -31,6 +31,18 @@ class LNcurses : public arcade::IGraph
     N_MAGENTA
   };
 
+  class         Data
+  {
+  public:
+    int         x;
+    int         y;
+    int         speed;
+    int         nbf;
+    int         cf;
+    arcade::TileType    type;
+    arcade::CommandType dir;
+  };
+
 public:
   LNcurses ();
   virtual ~LNcurses ();
@@ -39,7 +51,7 @@ public:
   void        aClose();
 
   void        printTile(size_t x, size_t y, LNcurses::NColor color);
-  void        aTile(size_t, size_t, arcade::TileType, arcade::CommandType);
+  void        aTile(size_t, size_t, int, arcade::TileType, arcade::CommandType);
   void        aTile(size_t, size_t, void *){};
 
   NColor      fillColor(arcade::Color color);
@@ -49,12 +61,16 @@ public:
   void        printText(size_t x, size_t y, int color, const std::string &str);
   void        aPutText(size_t, size_t, arcade::Font, size_t, arcade::Color, const std::string &);
 
-  void        aClear();
-  void        aRefresh();
+  void          transition();
+  void          drawElem(size_t x, size_t y, arcade::TileType type, arcade::CommandType);
+  void          aClearAnimBuffer();
+  void          aClear();
+  void          aRefresh();
   std::string   aChar();
   arcade::CommandType aCommand();
 
 private:
+  std::vector<LNcurses::Data>      _data;
   WINDOW	*_win;
   NColor   _emptyColor;
   NColor   _blockColor;

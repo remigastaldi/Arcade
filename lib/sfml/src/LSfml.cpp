@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Mon Apr 03 17:13:25 2017 gastal_r
+** Last update	Wed Apr 05 13:53:33 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -51,11 +51,11 @@ sf::Sprite      LSfml::createSprite(const sf::Texture &texture)
   sf::Sprite sprite;
 
   sprite.setTexture(texture);
-  sprite.setScale(sf::Vector2f(BLOCK_Y_SFML / texture.getSize().x, BLOCK_Y_SFML / texture.getSize().y));
+  sprite.setScale(sf::Vector2f(BLOCK_SFML / texture.getSize().x, BLOCK_SFML / texture.getSize().y));
   return (sprite);
 }
 
-void            LSfml::aTile(size_t x, size_t y, arcade::TileType type, arcade::CommandType dir)
+void            LSfml::aTile(size_t x, size_t y, int speed, arcade::TileType type, arcade::CommandType dir)
 {
   LSfml::Data data;
 
@@ -63,7 +63,10 @@ void            LSfml::aTile(size_t x, size_t y, arcade::TileType type, arcade::
   data.y = y;
   data.type = type;
   data.dir = dir;
-  _data.push_back(data);
+  data.speed = speed;
+  data.cf = speed;
+  data.nbf = 0;
+  _data.insert(_data.begin(), data);
 }
 
 sf::Texture     LSfml::createColoredTexture(arcade::Color color)
@@ -177,7 +180,7 @@ void          LSfml::aPutText(size_t x, size_t y, arcade::Font font,
   _win.draw(sfText);
 }
 
-void          LSfml::drawElem(size_t x, size_t y, arcade::TileType type, int dx, int dy)
+void          LSfml::drawElem(size_t x, size_t y, arcade::TileType type, float dx, float dy)
 {
   sf::Sprite sprite;
 
@@ -208,7 +211,7 @@ void          LSfml::drawElem(size_t x, size_t y, arcade::TileType type, int dx,
       sprite = createSprite(_otherTex);
       break;
   }
-  sprite.setPosition((x * BLOCK_Y_SFML) + dx +  X_PAD * (BLOCK_X - 2), (y * BLOCK_Y_SFML) - dy);
+  sprite.setPosition(((float)x * BLOCK_SFML) + dx +  X_PAD * (BLOCK_X - 2), ((float)y * BLOCK_SFML)- 30 - dy);
   _win.draw(sprite);
 }
 
@@ -217,44 +220,71 @@ void          LSfml::transition()
   int  i = 0;
 
   std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
-  while (i < BLOCK_Y + 10)
+  while (i < 9)
   {
     std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
-    if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 2)
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 3)
     {
       aClear();
-      for (std::vector<LSfml::Data>::const_iterator it = _data.begin(); it != _data.end(); ++it)
+      for (std::vector<LSfml::Data>::iterator it = _data.begin(); it != _data.end(); ++it)
       {
         if (it->dir != arcade::CommandType::UNDEFINED)
         {
           switch (it->dir)
           {
             case arcade::CommandType::GO_LEFT :
-              drawElem(it->x + 1, it->y, it->type, -i, 0);
+              drawElem(it->x + 1, it->y, it->type, -it->nbf , 0);
               break;
             case arcade::CommandType::GO_RIGHT :
-              drawElem(it->x - 1, it->y, it->type, i, 0);
+              drawElem(it->x - 1, it->y, it->type, it->nbf, 0);
               break;
             case arcade::CommandType::GO_UP :
-              drawElem(it->x, it->y + 1, it->type, 0, i);
+              drawElem(it->x, it->y + 1, it->type, 0, it->nbf);
               break;
             case arcade::CommandType::GO_DOWN :
-              drawElem(it->x, it->y - 1, it->type, 0, -i);
+              drawElem(it->x, it->y - 1, it->type, 0, -it->nbf);
               break;
             default:
               drawElem(it->x, it->y, it->type, 0, 0);
               break;
           }
+          if (it->cf >= 10)
+          {
+            it->cf = it->speed;
+            if (it->nbf >= BLOCK_SFML)
+            {
+              it = _data.erase(it);
+              it = it -1;
+            }
+            else
+              it->nbf += BLOCK_SFML / 9;
+          }
+          else
+          {
+            it->cf++;
+          }
       }
       else
+      {
         drawElem(it->x, it->y, it->type, 0, 0);
+        if (i + 1 == 9)
+        {
+          it = _data.erase(it);
+          it = it -1;
+        }
       }
-      ++i;
-      _core->refreshGui();
-      _win.display();
-      t1 = std::chrono::high_resolution_clock::now();
+    }
+    ++i;
+    _core->refreshGui();
+    _win.display();
+    t1 = std::chrono::high_resolution_clock::now();
     }
   }
+}
+
+void            LSfml::aClearAnimBuffer()
+{
+  _data.clear();
 }
 
 void            LSfml::aClear()
@@ -267,7 +297,6 @@ void            LSfml::aRefresh()
   if (!_data.empty())
   {
     transition();
-    _data.clear();
   }
   _win.display();
 }

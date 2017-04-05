@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:07:35 2017 gastal_r
-** Last update	Mon Apr 03 17:12:59 2017 gastal_r
+** Last update	Wed Apr 05 13:50:56 2017 gastal_r
 */
 
 #ifndef         _LSFML_HPP_
@@ -16,7 +16,7 @@
 #include        <chrono>
 #include        "IGraph.hh"
 
-#define BLOCK_Y_SFML ((float) BLOCK_Y + ((float)BLOCK_Y * 0.625))
+#define BLOCK_SFML 27.f
 
 class LSfml : public arcade::IGraph
 {
@@ -25,6 +25,9 @@ class LSfml : public arcade::IGraph
   public:
     int         x;
     int         y;
+    float       cf;
+    int         speed;
+    int         nbf;
     arcade::TileType    type;
     arcade::CommandType dir;
   };
@@ -40,7 +43,7 @@ public:
   sf::Sprite    createSprite(const sf::Texture &texture);
   sf::Texture   createColoredTexture(arcade::Color color);
 
-  void          aTile(size_t, size_t, arcade::TileType, arcade::CommandType);
+  void          aTile(size_t, size_t, int, arcade::TileType, arcade::CommandType);
   void          aTile(size_t, size_t, void *);
 
   void          aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color);
@@ -49,8 +52,9 @@ public:
   void          aPutText(size_t, size_t, arcade::Font,size_t, arcade::Color, const std::string &);
 
   void          transition();
-  void          drawElem(size_t x, size_t y, arcade::TileType type, int dx, int dy);
+  void          drawElem(size_t x, size_t y, arcade::TileType type, float dx, float dy);
   void          aClear();
+  void          aClearAnimBuffer();
   void          aRefresh();
   arcade::CommandType aCommand();
   std::string   aChar();

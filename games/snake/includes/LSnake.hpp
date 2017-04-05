@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 23:42:03 2017 gastal_r
-** Last update	Mon Apr 03 11:33:47 2017 gastal_r
+** Last update	Wed Apr 05 13:25:07 2017 gastal_r
 */
 
 #ifndef			        _LSnake_HPP_
@@ -24,6 +24,7 @@
 #define				RES_PATH "games/snake/res/"
 #define				MAPWIDTH 40
 #define				MAPHEIGHT 40
+#define       SNAKE_SPEED 9
 
 class				LSnake : public arcade::IGame
 {
@@ -63,6 +64,7 @@ private:
   arcade::ICore     				      *_core;
   bool				                    _lPDM;
   arcade::CommandType             _exitStatus;
+  int                             _speed;
 };
 
 

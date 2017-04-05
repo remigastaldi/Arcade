@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-// Last update Wed Apr  5 04:30:52 2017 sellet_f
+** Last update	Wed Apr 05 13:25:11 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -46,6 +46,7 @@ void			LSnake::initGame()
   _direction = arcade::CommandType::GO_UP;
   _map->width = MAPWIDTH;
   _map->height = MAPHEIGHT;
+  _speed = SNAKE_SPEED;
   _score = 0;
 
   for (int i = 0 ; i < MAPWIDTH * MAPHEIGHT ; ++i)
@@ -82,18 +83,53 @@ arcade::CommandType	LSnake::getDirection(arcade::Position const &cur, arcade::Po
 
 void			LSnake::printGame()
 {
-  _core->getLib()->aClear();
-  _core->getLib()->aTile(_position[0].x + 1, _position[0].y + 1, arcade::TileType::OTHER, _direction);
-  for (int i = 0 ; i < MAPWIDTH * MAPHEIGHT ; ++i)
-    _core->getLib()->aTile((i % _map->width) + 1 , (i / _map->width) + 1, _map->tile[i], arcade::CommandType::UNDEFINED);
-  _core->getLib()->aTile(_position[0].x + 1, _position[0].y + 1, arcade::TileType::OTHER, _direction);
-  if (_position.size() > 1)
-    for (std::vector<arcade::Position>::iterator it = _position.begin() + 1; it != _position.end() - 1; ++it)
-      _core->getLib()->aTile((*it).x + 1, (*it).y + 1, arcade::TileType::MY_SHOOT, getDirection((*it), (*(it + 1))));
 
-  _core->getLib()->aTile(_apple.x, _apple.y, arcade::TileType::POWERUP, arcade::CommandType::UNDEFINED);
-  _core->refreshGui();
-  _core->getLib()->aRefresh();
+  _core->getLib()->aClear();
+
+  if (_speed == 10)
+  {
+    _core->getLib()->aTile(_position[0].x + 1, _position[0].y + 1, SNAKE_SPEED, arcade::TileType::OTHER, _direction);
+    if (_position.size() > 1)
+      for (std::vector<arcade::Position>::iterator it = _position.begin() + 1; it != _position.end() - 1; ++it)
+        _core->getLib()->aTile((*it).x + 1, (*it).y + 1, SNAKE_SPEED, arcade::TileType::MY_SHOOT, getDirection((*it), (*(it + 1))));
+  _speed = SNAKE_SPEED;
+  }
+  else
+    _speed++;
+  _core->getLib()->aTile(_apple.x, _apple.y, 0,arcade::TileType::POWERUP, arcade::CommandType::UNDEFINED);
+
+static int i = 10;
+static int j = 10;
+static int x = 5;
+static int k = 5;
+
+if (i == 10)
+{
+  _core->getLib()->aTile(x, 20, 4, arcade::TileType::MY_SHOOT, arcade::CommandType::GO_RIGHT);
+  x++;
+  if (x == 40)
+    x = 5;
+  i = 4;
+}
+else
+  i++;
+
+if (j == 10)
+{
+  _core->getLib()->aTile(k, 21, 8, arcade::TileType::MY_SHOOT, arcade::CommandType::GO_RIGHT);
+  k++;
+  if (k == 40)
+    k = 5;
+  j = 8;
+}
+else
+  j++;
+
+for (int i = 0 ; i < MAPWIDTH * MAPHEIGHT ; ++i)
+  _core->getLib()->aTile((i % _map->width) + 1 , (i / _map->width) + 1, 0, _map->tile[i], arcade::CommandType::UNDEFINED);
+
+_core->refreshGui();
+_core->getLib()->aRefresh();
 }
 
 void			LSnake::changeAction()
@@ -292,22 +328,24 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
 	    }
 	}
 
-      if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 6 && _lPDM != true)
+  if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 16  && _lPDM != true)
 	{
-    //std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << '\n';
 	  changeAction();
-	  move();
-	  if (_exitStatus == arcade::CommandType::MENU || _exitStatus == arcade::CommandType::ESCAPE)
-	    return (_exitStatus);
-	  if (lPDM == false)
-	      printGame();
+    if (_speed == 10)
+      move();
+    if (_exitStatus == arcade::CommandType::MENU || _exitStatus == arcade::CommandType::ESCAPE)
+      return (_exitStatus);
+    if (lPDM == false)
+      printGame();
     t1 = std::chrono::high_resolution_clock::now();
-	}  }
+	 }
+  }
   return (_map->type);
 }
 
 void							LSnake::gameOver()
 {
+  _core->getLib()->aClearAnimBuffer();
   _core->setScore(std::to_string(_score));
   _core->getLib()->aClear();
   _core->getLib()->aPutText(pos_x(2.7), pos_y(2.25), arcade::Font::PRESS_START, WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
