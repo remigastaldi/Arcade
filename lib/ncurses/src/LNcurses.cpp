@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Wed Apr 05 20:27:30 2017 gastal_r
+** Last update	Wed Apr 05 23:12:14 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -258,7 +258,6 @@ void            LNcurses::aClear()
 
 void        LNcurses::aRefresh()
 {
-
   if (!_data.empty())
   {
     static std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();

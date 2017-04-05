@@ -5,13 +5,14 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:07:35 2017 gastal_r
-** Last update	Wed Apr 05 20:53:22 2017 gastal_r
+** Last update	Wed Apr 05 23:38:59 2017 gastal_r
 */
 
 #ifndef         _LSFML_HPP_
 #define         _LSFML_HPP_
 
 #include        <SFML/Graphics.hpp>
+#include        <SFML/Audio.hpp>
 #include        <thread>
 #include        <chrono>
 #include        "IGraph.hh"
@@ -48,6 +49,11 @@ public:
 
   void          aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color);
   void          *aGetTexture(const std::string &);
+
+  void          aAssignSound(arcade::Sound, const std::string &);
+  void          aPlaySound(arcade::Sound);
+  void          aPlayMusic(const std::string &);
+
   sf::Color     fillColor(arcade::Color);
   void          aPutText(size_t, size_t, arcade::Font,size_t, arcade::Color, const std::string &);
 
@@ -57,25 +63,36 @@ public:
   void          aClear();
   void          aClearAnimBuffer();
   void          aRefresh();
-  arcade::CommandType aCommand();
   std::string   aChar();
+  arcade::CommandType aCommand();
 
 private:
   std::vector<LSfml::Data> _data;
   arcade::ICore    *_core;
-  sf::RenderWindow _win;
-  sf::Event        _event;
-  sf::Font         _freakyFont;
-  sf::Font         _pressStartFont;
-  sf::Texture      _emptyTex;
-  sf::Texture      _blockTex;
-  sf::Texture      _obstacleTex;
-  sf::Texture      _evilDudeTex;
-  sf::Texture      _evilShootTex;
-  sf::Texture      _myShootTex;
-  sf::Texture      _powerupTex;
-  sf::Texture      _shipTex;
-  sf::Texture      _otherTex;
-};
+  sf::RenderWindow  _win;
+
+  sf::Event         _event;
+  sf::Font          _freakyFont;
+  sf::Font          _pressStartFont;
+
+  sf::Texture       _emptyTex;
+  sf::Texture       _blockTex;
+  sf::Texture       _obstacleTex;
+  sf::Texture       _evilDudeTex;
+  sf::Texture       _evilShootTex;
+  sf::Texture       _myShootTex;
+  sf::Texture       _powerupTex;
+  sf::Texture       _shipTex;
+  sf::Texture       _otherTex;
+
+  sf::Music         _music;
+  sf::SoundBuffer   _newGameSound;
+  sf::SoundBuffer   _gameOverSound;
+  sf::SoundBuffer   _shootSound;
+  sf::SoundBuffer   _powerupSound;
+  sf::SoundBuffer   _explosionSound;
+  sf::SoundBuffer   _deadSound;
+  sf::SoundBuffer   _otherSound;
+} ;
 
 #endif         /* !_LSFML_HPP_ */

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Wed Apr 05 21:45:34 2017 gastal_r
+** Last update	Wed Apr 05 23:52:01 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -149,6 +149,83 @@ void            *LSfml::aGetTexture(const std::string &path)
     throw arcade::Exception("Failed to load ", path);
   return (texture);
 }
+
+void            LSfml::aAssignSound(arcade::Sound sound, const std::string &path)
+{
+  switch (sound)
+  {
+    case arcade::NEW_GAME :
+      if (!_newGameSound.loadFromFile(path))
+        std::cerr << "Failed to load " << path << std::endl;
+    break;
+    case arcade::GAME_OVER :
+      if (!_gameOverSound.loadFromFile(path))
+        std::cerr << "Failed to load " << path << std::endl;
+    break;
+    case arcade::SHOOT :
+      if (!_shootSound.loadFromFile(path))
+        std::cerr << "Failed to load " << path << std::endl;
+    break;
+    case arcade::POWERUP :
+      if (!_powerupSound.loadFromFile(path))
+        std::cerr << "Failed to load " << path << std::endl;
+    break;
+    case arcade::EXPLOSION :
+      if (!_explosionSound.loadFromFile(path))
+        std::cerr << "Failed to load " << path << std::endl;
+    break;
+    case arcade::DEAD :
+      if (!_deadSound.loadFromFile(path))
+        std::cerr << "Failed to load " << path << std::endl;
+    break;
+    case arcade::OTHER :
+      if (!_otherSound.loadFromFile(path))
+        std::cerr << "Failed to load " << path << std::endl;
+    break;
+  }
+}
+
+void            LSfml::aPlaySound(arcade::Sound soundBuffer)
+{
+  sf::Sound sound;
+
+  switch (soundBuffer)
+  {
+    case arcade::NEW_GAME :
+      sound.setBuffer(_newGameSound);
+    break;
+    case arcade::GAME_OVER :
+      sound.setBuffer(_gameOverSound);
+    break;
+    case arcade::SHOOT :
+      sound.setBuffer(_shootSound);
+    break;
+    case arcade::POWERUP :
+      sound.setBuffer(_powerupSound);
+    break;
+    case arcade::EXPLOSION :
+      sound.setBuffer(_explosionSound);
+    break;
+    case arcade::DEAD :
+      sound.setBuffer(_deadSound);
+    break;
+    case arcade::OTHER :
+      sound.setBuffer(_otherSound);
+    break;
+  }
+  sound.play();
+}
+
+void          LSfml::aPlayMusic(const std::string &path)
+{
+  _music.stop();
+
+  if (!_music.openFromFile(path))
+    std::cerr << "Unable to open " << path << std::endl;
+  _music.play();
+  _music.setLoop(true);
+}
+
 
 sf::Color     LSfml::fillColor(arcade::Color color)
 {

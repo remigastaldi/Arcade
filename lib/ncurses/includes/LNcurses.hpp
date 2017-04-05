@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:10:52 2017 gastal_r
-** Last update	Wed Apr 05 20:29:49 2017 gastal_r
+** Last update	Wed Apr 05 23:39:18 2017 gastal_r
 */
 
 #ifndef       _LNcurses_HPP_
@@ -58,6 +58,10 @@ public:
   void        aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color);
   void        *aGetTexture(const std::string &) {return (NULL);}
 
+  void        aAssignSound(arcade::Sound, const std::string &) {};
+  void        aPlaySound(arcade::Sound) {};
+  void        aPlayMusic(const std::string &) {};
+
   void        printText(size_t x, size_t y, int color, const std::string &str);
   void        aPutText(size_t, size_t, arcade::Font, size_t, arcade::Color, const std::string &);
 
@@ -72,6 +76,7 @@ public:
 private:
   std::vector<LNcurses::Data>      _data;
   WINDOW	*_win;
+
   NColor   _emptyColor;
   NColor   _blockColor;
   NColor   _obstacleColor;
