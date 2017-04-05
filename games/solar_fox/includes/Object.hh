@@ -5,7 +5,7 @@
 // Login   <flavien.sellet@epitech.eu>
 // 
 // Started on  Tue Apr  4 16:19:14 2017 sellet_f
-// Last update Tue Apr  4 17:49:09 2017 sellet_f
+// Last update Wed Apr  5 17:45:48 2017 sellet_f
 //
 
 
@@ -30,6 +30,8 @@ public:
   unsigned int		getIt(void) const;
   unsigned int		getSpeed(void) const;
   arcade::CommandType	getDirection(void) const;
+
+  bool			checkPrint(Object);
 protected:
   unsigned int		_x;
   unsigned int		_y;
