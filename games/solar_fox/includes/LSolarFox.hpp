@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:08:10 2017 gastal_r
-** Last update	Sun Mar 26 04:11:40 2017 gastal_r
+** Last update Wed Apr 05 16:04:52 2017 Leo Hubert Froideval
 */
 
 #ifndef         _LSOLAR_FOX_HPP_
@@ -18,6 +18,10 @@
 # include	"Ship.hh"
 # include	<chrono>
 
+# define MAP_WIDTH 41
+# define MAP_HEIGHT 41
+# define SOLAR_SPEED 8
+
 class           LSolarFox : public arcade::IGame
 {
 public:
@@ -25,12 +29,16 @@ public:
   virtual ~LSolarFox ();
 
   arcade::CommandType		play(arcade::ICore &);
-  arcade::CommandType		mainLoop(bool);
-  void				initGame(void);
+  arcade::CommandType		mainLoop(void);
+  void				initGame(bool);
   void				close(void);
   void				initTextures(void);
   arcade::CommandType		getDirection(Object const &, Object const &);
   void				printGame(void);
+
+  void				lPDM_getMap() const;
+  void				lPDM_whereAmI();
+  void				lPDM_start();
 
 private:
   arcade::Position		_position;

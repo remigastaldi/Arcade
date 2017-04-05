@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Sun Mar 26 04:12:03 2017 gastal_r
+** Last update Wed Apr 05 16:05:53 2017 Leo Hubert Froideval
 */
 
 #include        "LSolarFox.hpp"
@@ -23,20 +23,20 @@ void		        LSolarFox::printGame(void)
   _core->getLib()->aClear();
 
   for (unsigned int i = 0 ; i < 50 * 53 ; i++)
-    _core->getLib()->aTile((i % _map->width) + 1, (i / _map->height) + 1, _map->tile[i], arcade::CommandType::UNDEFINED);
+    _core->getLib()->aTile((i % _map->width) + 1, (i / _map->height) + 1, SOLAR_SPEED, _map->tile[i], arcade::CommandType::UNDEFINED);
 
   if (_missile.size() > 1)
     for (std::vector<Missile>::iterator it = _missile.begin() ; it != _missile.end() - 1 ; ++it)
-      _core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, arcade::TileType::MY_SHOOT, getDirection((*it), (*(it + 1))));
+      _core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, SOLAR_SPEED, arcade::TileType::MY_SHOOT, getDirection((*it), (*(it + 1))));
 
   if (_enemyMissile.size() > 1)
     for (std::vector<EnemyMissile>::iterator it = _enemyMissile.begin() ; it != _enemyMissile.end() - 1 ; ++it)
-      _core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, arcade::TileType::EVIL_SHOOT, getDirection((*it), (*(it + 1))));
+      _core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, SOLAR_SPEED, arcade::TileType::EVIL_SHOOT, getDirection((*it), (*(it + 1))));
 
   for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() - 1 ; ++it)
-    _core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, arcade::TileType::EVIL_DUDE, getDirection((*it), (*(it + 1))));
+    _core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, SOLAR_SPEED, arcade::TileType::EVIL_DUDE, getDirection((*it), (*(it + 1))));
 
-  _core->getLib()->aTile(_ship.getX(), _ship.getY(), arcade::TileType::OTHER, arcade::CommandType::UNDEFINED);
+  _core->getLib()->aTile(_ship.getX(), _ship.getY(), SOLAR_SPEED, arcade::TileType::OTHER, arcade::CommandType::UNDEFINED);
 
   _core->refreshGui();
   _core->getLib()->aRefresh();
@@ -51,7 +51,7 @@ void			LSolarFox::initTextures(void)
   _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, "games/solar_fox/res/img/mooncat.jpg", arcade::Color::A_MAGENTA);
 }
 
-void			LSolarFox::initGame(void)
+void			LSolarFox::initGame(bool lPDM)
 {
   std::ifstream		file("games/solar_fox/res/map/level_1.map");
   int			sizeLine;
@@ -59,10 +59,14 @@ void			LSolarFox::initGame(void)
   std::string		line;
   int			j;
 
+  _lPDM = lPDM;
+
   j = -1;
   _score = 0;
   srand(time(NULL));
   _direction = arcade::CommandType::GO_UP;
+  _position.x = MAP_WIDTH / 2;
+  _position.y = MAP_HEIGHT / 2;
 
   if ((_map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap) + (50 * 53 * sizeof(arcade::TileType)))) == NULL)
     throw arcade::Exception("Malloc failed\n");
@@ -75,7 +79,7 @@ void			LSolarFox::initGame(void)
       std::getline(file, line);
       sizeLine = line.length();
       content += line;
-      
+
       while (getline(file, line))
       	{
       	  if ((unsigned int)sizeLine != line.length())
@@ -104,23 +108,16 @@ void			LSolarFox::initGame(void)
     throw arcade::Exception("Invalid file.");
 }
 
-arcade::CommandType	LSolarFox::mainLoop(bool lPDM)
+arcade::CommandType	LSolarFox::mainLoop(void)
 {
   std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
   std::chrono::high_resolution_clock::time_point t2;
   arcade::CommandType	lastCommand;
 
-  _lPDM = lPDM;
-  initGame();
-  if (_lPDM == false)
-    {
-      initTextures();
-      _core->setScore(std::to_string(_score));
-    }
+  initTextures();
+  _core->setScore(std::to_string(_score));
   while (_map->type != arcade::CommandType::ESCAPE && _map->type != arcade::CommandType::MENU)
     {
-      if (_lPDM == false)
-	{
 	  lastCommand = _core->getLib()->aCommand();
 	  if (lastCommand != arcade::CommandType::UNDEFINED)
 	    _map->type = lastCommand;
@@ -142,20 +139,14 @@ arcade::CommandType	LSolarFox::mainLoop(bool lPDM)
 	    default :
 	      break;
 	    }
-	}
-      else
-	{
-	  //lPDM 
-	}
 
-      if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 16 && _lPDM == false)
+      if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 16)
       	{
 	  // changeAction();
 	  // move();
-	  if (_lPDM == false)
-	    printGame();
-	  t1 = std::chrono::high_resolution_clock::now();
-      	}
+	       printGame();
+	       t1 = std::chrono::high_resolution_clock::now();
+        }
     }
   return (_map->type);
 }
@@ -176,12 +167,74 @@ arcade::CommandType	LSolarFox::getDirection(Object const &cur, Object const&prev
 arcade::CommandType	LSolarFox::play(arcade::ICore& core)
 {
   _core = &core;
-  return (mainLoop(false));
+  initGame(false);
+  return (mainLoop());
 }
 
 void			LSolarFox::close(void)
 {
 
+}
+
+void			LSolarFox::lPDM_getMap() const
+{
+  write(1, _map, sizeof(arcade::GetMap) + (_map->width * _map->height * sizeof(arcade::TileType)));
+}
+
+void			LSolarFox::lPDM_whereAmI()
+{
+  arcade::WhereAmI	*snake;
+  int			length;
+
+  length = 1;
+  if ((snake = (arcade::WhereAmI *)malloc(sizeof(arcade::WhereAmI) + (length * sizeof(arcade::Position)))) == NULL)
+    return ;
+  snake->type = _map->type;
+  snake->lenght = length;
+  snake->position[0] = _position;
+  write(1, snake, sizeof(arcade::WhereAmI) + (length * sizeof(arcade::Position)));
+  free(snake);
+}
+
+void			LSolarFox::lPDM_start()
+{
+  arcade::CommandType command;
+
+  while (!std::cin.eof())
+  {
+    std::cin.read((char *) &command, sizeof(arcade::CommandType));
+    _map->type = command;
+    switch(_map->type)
+      {
+      case (arcade::CommandType::GET_MAP):
+        lPDM_getMap();
+        break;
+      case (arcade::CommandType::WHERE_AM_I):
+        lPDM_whereAmI();
+        break;
+      case (arcade::CommandType::GO_UP):
+        if (_direction != arcade::CommandType::GO_DOWN)
+          _direction = arcade::CommandType::GO_UP;
+        break;
+      case (arcade::CommandType::GO_DOWN):
+        if (_direction != arcade::CommandType::GO_UP)
+          _direction = arcade::CommandType::GO_DOWN;
+        break;
+      case (arcade::CommandType::GO_LEFT):
+        if (_direction != arcade::CommandType::GO_RIGHT)
+          _direction = arcade::CommandType::GO_LEFT;
+        break;
+      case (arcade::CommandType::GO_RIGHT):
+        if (_direction != arcade::CommandType::GO_LEFT)
+          _direction = arcade::CommandType::GO_RIGHT;
+        break;
+      case (arcade::CommandType::PLAY):
+      //  move();
+        break;
+      default:
+        break;
+      }
+  }
 }
 
 extern "C"
@@ -201,7 +254,7 @@ extern "C"
   {
     LSolarFox		solarfox;
 
-    solarfox.mainLoop(true);
+    solarfox.initGame(true);
+    solarfox.lPDM_start();
   }
 }
-

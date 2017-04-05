@@ -22,7 +22,7 @@ RM              =       rm -f
 CXXFLAGS	+=	-I./includes -I../../common/ -I../../core/includes/
 CXXFLAGS	+=	-Wextra -Wall -W -fPIC -shared
 
-SNNAME          =       ../lib_arcade_solar-fox.so
+SNNAME          =       ../lib_arcade_solarfox.so
 SNSRC           =       src/SolarFox.cpp	\
 			src/Object.cpp		\
 			src/Ship.cpp		\
