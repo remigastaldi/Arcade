@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Mon Apr 03 16:37:15 2017 gastal_r
+** Last update	Wed Apr 05 16:10:02 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -123,6 +123,7 @@ void            Core::coreLoop()
         break;
       case arcade::CommandType::PREV_GAME :
         switchGame(arcade::CommandType::PREV_GAME);
+        break;
       case arcade::CommandType::MENU :
         _game->close();
         delete(_game);

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Wed Apr 05 13:31:46 2017 gastal_r
+** Last update	Wed Apr 05 16:21:30 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -49,7 +49,7 @@ void            LOpengl::aInit(arcade::ICore *core, size_t width, size_t height)
 
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
-_win.setActive(false);
+  _win.setActive(false);
 }
 
 void            LOpengl::aClose()
@@ -449,6 +449,8 @@ arcade::CommandType   LOpengl::aCommand()
       case sf::Keyboard::Num3 :
         return (arcade::CommandType::NEXT_LIB);
       case sf::Keyboard::Num4 :
+        return (arcade::CommandType::PREV_GAME);
+      case sf::Keyboard::Quote :
         return (arcade::CommandType::PREV_GAME);
       case sf::Keyboard::Num5 :
         return (arcade::CommandType::NEXT_GAME);

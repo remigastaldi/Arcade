@@ -5,13 +5,16 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update Wed Apr 05 16:02:32 2017 Leo Hubert Froideval
+** Last update	Wed Apr 05 16:54:02 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
 
 LSnake::LSnake()
-{}
+{
+  _map = 0;
+  _core = 0;
+}
 
 LSnake::~LSnake()
 {
