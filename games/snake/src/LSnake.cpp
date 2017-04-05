@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update Wed Apr 05 13:58:21 2017 Leo Hubert Froideval
+** Last update	Wed Apr 05 15:25:35 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -284,14 +284,19 @@ arcade::CommandType			LSnake::mainLoop()
 	      break;
 	    }
 
-      if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 6)
+      if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 16)
     	{
         //std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << '\n';
-    	  changeAction();
-    	  move();
+        changeAction();
+        if (_speed == 10)
+        {
+          move();
+        }
     	  if (_exitStatus == arcade::CommandType::MENU || _exitStatus == arcade::CommandType::ESCAPE)
+        {
     	    return (_exitStatus);
-    	  printGame();
+        }
+  	    printGame();
         t1 = std::chrono::high_resolution_clock::now();
     	}
     }
