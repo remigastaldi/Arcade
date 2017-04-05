@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Wed Apr 05 23:16:18 2017 gastal_r
+** Last update	Thu Apr 06 01:10:39 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -132,8 +132,8 @@ else
 for (int i = 0 ; i < MAP_WIDTH * MAP_HEIGHT ; ++i)
   _core->getLib()->aTile((i % _map->width) + 1 , (i / _map->width) + 1, 0, _map->tile[i], arcade::CommandType::UNDEFINED);
 
-_core->getLib()->aRefresh();
 _core->refreshGui();
+_core->getLib()->aRefresh();
 }
 
 void			LSnake::changeAction()

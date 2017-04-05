@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Wed Apr 05 23:49:51 2017 gastal_r
+** Last update	Thu Apr 06 00:58:28 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -424,8 +424,8 @@ void            LOpengl::aClear()
 
 void            LOpengl::transition()
 {
-  glEnable(GL_TEXTURE_2D);
   _win.setActive(true);
+  glEnable(GL_TEXTURE_2D);
   float i = 0;
 
   //std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
@@ -493,6 +493,7 @@ void            LOpengl::transition()
     //  t1 = std::chrono::high_resolution_clock::now();
     //}
   }
+  _win.setActive(false);
 }
 
 void            LOpengl::aRefresh()

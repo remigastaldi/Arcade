@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Wed Apr 05 23:12:14 2017 gastal_r
+** Last update	Thu Apr 06 01:10:29 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -118,7 +118,6 @@ void        LNcurses::transition()
     std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
     if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 6)
     {
-      aClear();
       for (std::vector<LNcurses::Data>::iterator it = _data.begin(); it != _data.end(); ++it)
       {
         drawElem(it->x, it->y, it->type, it->dir);
@@ -264,7 +263,8 @@ void        LNcurses::aRefresh()
     std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
     while (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() < 30)
       t2 = std::chrono::high_resolution_clock::now();
-    t1 = std::chrono::high_resolution_clock::now(); transition();
+    transition();
+    t1 = std::chrono::high_resolution_clock::now();
   }
   else
     Ncurses::Wrefresh(_win);
