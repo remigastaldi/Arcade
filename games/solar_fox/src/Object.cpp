@@ -5,7 +5,7 @@
 // Login   <flavien.sellet@epitech.eu>
 // 
 // Started on  Tue Apr  4 17:48:07 2017 sellet_f
-// Last update Tue Apr  4 18:59:23 2017 sellet_f
+// Last update Wed Apr  5 17:45:21 2017 sellet_f
 //
 
 #include "Object.hh"
@@ -58,4 +58,16 @@ unsigned int		Object::getSpeed(void) const
 arcade::CommandType	Object::getDirection(void) const
 {
   return (_direction);
+}
+
+bool			Object::checkPrint(Object obj)
+{
+  if (obj._it == 10)
+    {
+      obj._it = obj._speed;
+      return (true);
+    }
+  else
+    obj._it += 1;
+  return (false);
 }

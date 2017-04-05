@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update Wed Apr 05 16:05:53 2017 Leo Hubert Froideval
+// Last update Wed Apr  5 21:17:28 2017 sellet_f
 */
 
 #include        "LSolarFox.hpp"
@@ -22,19 +22,22 @@ void		        LSolarFox::printGame(void)
 {
   _core->getLib()->aClear();
 
-  for (unsigned int i = 0 ; i < 50 * 53 ; i++)
+  for (unsigned int i = 0 ; i < 41 * 41 ; i++)
     _core->getLib()->aTile((i % _map->width) + 1, (i / _map->height) + 1, SOLAR_SPEED, _map->tile[i], arcade::CommandType::UNDEFINED);
 
   if (_missile.size() > 1)
     for (std::vector<Missile>::iterator it = _missile.begin() ; it != _missile.end() - 1 ; ++it)
-      _core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, SOLAR_SPEED, arcade::TileType::MY_SHOOT, getDirection((*it), (*(it + 1))));
+      if ((*it).checkPrint((*it)) == true)
+  	_core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, SOLAR_SPEED, arcade::TileType::MY_SHOOT, getDirection((*it), (*(it + 1))));
 
   if (_enemyMissile.size() > 1)
     for (std::vector<EnemyMissile>::iterator it = _enemyMissile.begin() ; it != _enemyMissile.end() - 1 ; ++it)
-      _core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, SOLAR_SPEED, arcade::TileType::EVIL_SHOOT, getDirection((*it), (*(it + 1))));
+      if ((*it).checkPrint((*it)) == true)
+  	_core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, SOLAR_SPEED, arcade::TileType::EVIL_SHOOT, getDirection((*it), (*(it + 1))));
 
-  for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() - 1 ; ++it)
-    _core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, SOLAR_SPEED, arcade::TileType::EVIL_DUDE, getDirection((*it), (*(it + 1))));
+  for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
+    if ((*it).checkPrint((*it)) == true)
+      _core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, SOLAR_SPEED, arcade::TileType::EVIL_DUDE, getDirection((*it), (*(it + 1))));
 
   _core->getLib()->aTile(_ship.getX(), _ship.getY(), SOLAR_SPEED, arcade::TileType::OTHER, arcade::CommandType::UNDEFINED);
 
@@ -45,34 +48,32 @@ void		        LSolarFox::printGame(void)
 void			LSolarFox::initTextures(void)
 {
   _core->getLib()->aAssignTexture(arcade::TileType::EMPTY, "games/solar_fox/res/img/floor2.png", arcade::Color::A_WHITE);
-  _core->getLib()->aAssignTexture(arcade::TileType::OBSTACLE, "games/solar_fox/res/img/floor2.png", arcade::Color::A_RED);
+  _core->getLib()->aAssignTexture(arcade::TileType::BLOCK, "games/solar_fox/res/img/wall2.png", arcade::Color::A_RED);
   _core->getLib()->aAssignTexture(arcade::TileType::OTHER, "games/solar_fox/res/img/tron.png", arcade::Color::A_BLACK);
   _core->getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, "games/solar_fox/res/img/wall3.png", arcade::Color::A_MAGENTA);
   _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, "games/solar_fox/res/img/mooncat.jpg", arcade::Color::A_MAGENTA);
+  _core->getLib()->aAssignTexture(arcade::TileType::EVIL_DUDE, "games/solar_fox/res/img/wall.png", arcade::Color::A_BLUE);
 }
 
 void			LSolarFox::initGame(bool lPDM)
 {
   std::ifstream		file("games/solar_fox/res/map/level_1.map");
+  EnemyShip		enemyShip;
   int			sizeLine;
   std::string		content;
   std::string		line;
   int			j;
 
-  _lPDM = lPDM;
-
   j = -1;
   _score = 0;
+  _lPDM = lPDM;
   srand(time(NULL));
-  _direction = arcade::CommandType::GO_UP;
-  _position.x = MAP_WIDTH / 2;
-  _position.y = MAP_HEIGHT / 2;
-
-  if ((_map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap) + (50 * 53 * sizeof(arcade::TileType)))) == NULL)
+  
+  if ((_map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap) + (41 * 41 * sizeof(arcade::TileType)))) == NULL)
     throw arcade::Exception("Malloc failed\n");
   _map->type = arcade::CommandType::GO_UP;
-  _map->width = 50;
-  _map->height = 50;
+  _map->width = 41;
+  _map->height = 41;
 
   if (file)
     {
@@ -99,6 +100,23 @@ void			LSolarFox::initGame(bool lPDM)
 	  case '1' :
 	    _map->tile[++j] = arcade::TileType::POWERUP;
 	    break;
+	  case 'V' :
+	    _map->tile[++j] = arcade::TileType::OTHER;
+	    _ship.setX(i % _map->width);
+	    _ship.setY(i / _map->height);
+	    _ship.setSpeed(5);
+	    _ship.setIt(5);
+	    _ship.setDirection(arcade::CommandType::GO_UP);
+	    break;
+	  case 'E':
+	    _map->tile[++j] = arcade::TileType::EVIL_DUDE;
+	    enemyShip.setX(i % _map->width);
+	    enemyShip.setY(i / _map->height);
+	    enemyShip.setSpeed(5);
+	    enemyShip.setIt(5);
+	    enemyShip.setDirection(arcade::CommandType::UNDEFINED);
+	    _enemyShip.push_back(enemyShip);
+	    break;
 	  default :
 	    throw arcade::Exception("Invalid map.");
 	    break;
@@ -118,34 +136,37 @@ arcade::CommandType	LSolarFox::mainLoop(void)
   _core->setScore(std::to_string(_score));
   while (_map->type != arcade::CommandType::ESCAPE && _map->type != arcade::CommandType::MENU)
     {
-	  lastCommand = _core->getLib()->aCommand();
-	  if (lastCommand != arcade::CommandType::UNDEFINED)
-	    _map->type = lastCommand;
-	  switch(_map->type)
-	    {
-	    case arcade::CommandType::NEXT_LIB :
-	      _core->switchLib(arcade::CommandType::NEXT_LIB);
-	      initTextures();
-	      _map->type = arcade::CommandType::UNDEFINED;
-	      break;
-	    case arcade::CommandType::PREV_LIB :
-	      _core->switchLib(arcade::CommandType::PREV_LIB);
-	      initTextures();
-	      _map->type = arcade::CommandType::UNDEFINED;
-	    case arcade::CommandType::NEXT_GAME :
-	      return (arcade::CommandType::NEXT_GAME);
-	    case arcade::CommandType::PREV_GAME :
-	      return (arcade::CommandType::PREV_GAME);
-	    default :
-	      break;
-	    }
+      t2 = std::chrono::high_resolution_clock::now();
+      lastCommand = _core->getLib()->aCommand();
+      
+      if (lastCommand != arcade::CommandType::UNDEFINED)
+	_map->type = lastCommand;
+      
+      switch(_map->type)
+	{
+	case arcade::CommandType::NEXT_LIB :
+	  _core->switchLib(arcade::CommandType::NEXT_LIB);
+	  initTextures();
+	  _map->type = arcade::CommandType::UNDEFINED;
+	  break;
+	case arcade::CommandType::PREV_LIB :
+	  _core->switchLib(arcade::CommandType::PREV_LIB);
+	  initTextures();
+	  _map->type = arcade::CommandType::UNDEFINED;
+	case arcade::CommandType::NEXT_GAME :
+	  return (arcade::CommandType::NEXT_GAME);
+	case arcade::CommandType::PREV_GAME :
+	  return (arcade::CommandType::PREV_GAME);
+	default :
+	  break;
+	}
 
       if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 16)
       	{
 	  // changeAction();
 	  // move();
-	       printGame();
-	       t1 = std::chrono::high_resolution_clock::now();
+	  printGame();
+	  t1 = std::chrono::high_resolution_clock::now();
         }
     }
   return (_map->type);
