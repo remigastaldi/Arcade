@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:09:59 2017 gastal_r
-** Last update	Mon Apr 03 18:33:51 2017 gastal_r
+** Last update	Wed Apr 05 18:53:33 2017 gastal_r
 */
 
 #ifndef         _CORE_HPP_
@@ -30,6 +30,8 @@ public:
   void          setGuiData();
   void          refreshGui() { affGui();}
   void          setScore(const std::string &score) { guiSetScore(score);}
+  void          gameOver() { guiGameOver();}
+
   void          startCore();
   void          coreLoop();
 

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Wed Apr 05 16:21:30 2017 gastal_r
+** Last update	Wed Apr 05 19:09:12 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -154,49 +154,51 @@ void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, arcad
   glPushMatrix();
   switch (type)
   {
-    case arcade::TileType::BLOCK:
+    case arcade::TileType::BLOCK :
       loadVertex("BLOCK");
       sf::Texture::bind(&_blockTex);
       glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 10);
       glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("BLOCK") / 5);
       break;
-    case arcade::TileType::EMPTY:
+    case arcade::TileType::EMPTY :
       loadVertex("EMPTY");
       sf::Texture::bind(&_emptyTex);
       glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 0);
       glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("EMPTY") / 5);
       break;
-    case arcade::TileType::OBSTACLE:
+    case arcade::TileType::OBSTACLE :
       loadVertex("OBSTACLE");
       sf::Texture::bind(&_obstacleTex);
       glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 10);
       glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("OBSTACLE") / 5);
       break;
-    case arcade::TileType::EVIL_DUDE:
+    case arcade::TileType::EVIL_DUDE :
       loadVertex("EVIL_DUDE");
       sf::Texture::bind(&_evilDudeTex);
       glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 10);
       glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("EVIL_DUDE") / 5);
       break;
-    case arcade::TileType::EVIL_SHOOT:
+    case arcade::TileType::EVIL_SHOOT :
       loadVertex("EVIL_SHOOT");
       sf::Texture::bind(&_evilDudeTex);
       glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 10);
       glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("EVIL_SHOOT") / 5);
       break;
-    case arcade::TileType::MY_SHOOT:
+    case arcade::TileType::MY_SHOOT :
       loadVertex("MY_SHOOT");
       sf::Texture::bind(&_myShootTex);
       glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
       glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("MY_SHOOT") / 5);
       break;
-    case arcade::TileType::POWERUP:
+    case arcade::TileType::POWERUP :
       loadVertex("POWERUP");
       sf::Texture::bind(&_powerupTex);
       glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
       glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("POWERUP") / 5);
       break;
-    case arcade::TileType::OTHER:
+    case arcade::TileType::SHIP :
+      break;
+    case arcade::TileType::OTHER :
     {
       loadVertex("OTHER");
       sf::Texture::bind(&_emptyTex);
@@ -269,6 +271,8 @@ void            LOpengl::aAssignTexture(arcade::TileType tile, const std::string
       if (!_powerupTex.loadFromFile(path))
         _powerupTex = createColoredTexture(color);
       _powerupTex.generateMipmap();
+      break;
+    case arcade::TileType::SHIP :
       break;
     case arcade::TileType::OTHER :
       if (!_otherTex.loadFromFile(path))

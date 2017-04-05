@@ -31,6 +31,19 @@ namespace	       arcade
     FREAKY,
     PRESS_START
   };
+
+  enum    Sound
+  {
+    MUSIQUE,
+    NEW_GAME,
+    GAME_OVER,
+    SHOOT,
+    POWERUP,
+    EXPLOSION,
+    DEAD,
+    OTHER
+  };
+
   enum Color
   {
     A_BLACK,
