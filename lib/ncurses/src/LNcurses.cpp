@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Wed Apr 05 19:09:47 2017 gastal_r
+** Last update	Wed Apr 05 20:27:30 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -100,6 +100,7 @@ void          LNcurses::drawElem(size_t x, size_t y, arcade::TileType type, arca
       printTile(x, y, _powerupColor);
       break;
     case (arcade::TileType::SHIP) :
+      printTile(x, y, _shipColor);
       break;
     case (arcade::TileType::OTHER) :
       printTile(x, y, _otherColor);
@@ -196,7 +197,8 @@ void        LNcurses::aAssignTexture(arcade::TileType tile, const std::string &p
       _powerupColor = fillColor(color);
       break;
     case arcade::TileType::SHIP :
-        break;
+      _shipColor = fillColor(color);
+      break;
     case arcade::TileType::OTHER :
       _otherColor = fillColor(color);
       break;

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:10:52 2017 gastal_r
-** Last update	Wed Apr 05 11:25:48 2017 gastal_r
+** Last update	Wed Apr 05 20:29:49 2017 gastal_r
 */
 
 #ifndef       _LNcurses_HPP_
@@ -79,6 +79,7 @@ private:
   NColor   _evilShootColor;
   NColor   _myShootColor;
   NColor   _powerupColor;
+  NColor   _shipColor;
   NColor   _otherColor;
 };
 

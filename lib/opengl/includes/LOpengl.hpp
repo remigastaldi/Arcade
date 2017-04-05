@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:21 2017 gastal_r
-** Last update	Wed Apr 05 11:30:12 2017 gastal_r
+** Last update	Wed Apr 05 21:26:48 2017 gastal_r
 */
 
 #ifndef         _LOPENGL_HPP_
@@ -83,6 +83,7 @@ private:
   sf::Texture      _evilShootTex;
   sf::Texture      _myShootTex;
   sf::Texture      _powerupTex;
+  sf::Texture      _shipTex;
   sf::Texture      _otherTex;
   float            _xView;
   float            _yView;

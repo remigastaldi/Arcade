@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Wed Apr 05 19:08:02 2017 gastal_r
+** Last update	Wed Apr 05 21:45:34 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -129,6 +129,9 @@ void            LSfml::aAssignTexture(arcade::TileType tile, const std::string &
       _powerupTex.setSmooth(true);
       break;
     case arcade::TileType::SHIP :
+      if (!_shipTex.loadFromFile(path))
+        _shipTex = createColoredTexture(color);
+      _shipTex.setSmooth(true);
       break;
     case arcade::TileType::OTHER :
       if (!_otherTex.loadFromFile(path))
@@ -182,7 +185,29 @@ void          LSfml::aPutText(size_t x, size_t y, arcade::Font font,
   _win.draw(sfText);
 }
 
-void          LSfml::drawElem(size_t x, size_t y, arcade::TileType type, float dx, float dy)
+void          LSfml::checkRotation(arcade::CommandType dir, sf::Sprite &sprite)
+{
+  switch (dir)
+  {
+    case arcade::CommandType::GO_UP :
+      //sprite.setRotation(-90);
+      break;
+    case arcade::CommandType::GO_DOWN:
+      sprite.setRotation(180);
+      break;
+    case arcade::CommandType::GO_LEFT :
+      sprite.setRotation(-90);
+      //glRotatef(0.f, 0.f, 0.f, 1.f);
+      break;
+    case arcade::CommandType::GO_RIGHT :
+      sprite.setRotation(90);
+      break;
+    default :
+      break;
+  }
+}
+
+void          LSfml::drawElem(size_t x, size_t y, arcade::TileType type, arcade::CommandType dir, float dx, float dy)
 {
   sf::Sprite sprite;
 
@@ -210,9 +235,18 @@ void          LSfml::drawElem(size_t x, size_t y, arcade::TileType type, float d
       sprite = createSprite(_powerupTex);
       break;
     case arcade::TileType::SHIP :
+      sprite = createSprite(_shipTex);
+      sprite.setScale(sf::Vector2f(BLOCK_SFML * 3 / _shipTex.getSize().x, BLOCK_SFML * 3 / _shipTex.getSize().y));
+      if (dir == arcade::CommandType::GO_LEFT || dir == arcade::CommandType::GO_DOWN)
+        sprite.setOrigin((sprite.getLocalBounds().width / 2) + BLOCK_SFML * 2, (sprite.getLocalBounds().height / 2) - BLOCK_SFML * 2);
+      else
+        sprite.setOrigin((sprite.getLocalBounds().width / 2) - BLOCK_SFML * 2, (sprite.getLocalBounds().height / 2) - BLOCK_SFML * 2);
+      checkRotation(dir, sprite);
       break;
     case arcade::TileType::OTHER :
       sprite = createSprite(_otherTex);
+      checkRotation(dir, sprite);
+      break;
   }
   sprite.setPosition(((float)x * BLOCK_SFML) + dx +  X_PAD * (BLOCK_X - 2), ((float)y * BLOCK_SFML)- 30 - dy);
   _win.draw(sprite);
@@ -236,19 +270,19 @@ void          LSfml::transition()
           switch (it->dir)
           {
             case arcade::CommandType::GO_LEFT :
-              drawElem(it->x + 1, it->y, it->type, -it->nbf , 0);
+              drawElem(it->x + 1, it->y, it->type, it->dir, -it->nbf , 0);
               break;
             case arcade::CommandType::GO_RIGHT :
-              drawElem(it->x - 1, it->y, it->type, it->nbf, 0);
+              drawElem(it->x - 1, it->y, it->type, it->dir, it->nbf, 0);
               break;
             case arcade::CommandType::GO_UP :
-              drawElem(it->x, it->y + 1, it->type, 0, it->nbf);
+              drawElem(it->x, it->y + 1, it->type, it->dir, 0, it->nbf);
               break;
             case arcade::CommandType::GO_DOWN :
-              drawElem(it->x, it->y - 1, it->type, 0, -it->nbf);
+              drawElem(it->x, it->y - 1, it->type, it->dir, 0, -it->nbf);
               break;
             default:
-              drawElem(it->x, it->y, it->type, 0, 0);
+              drawElem(it->x, it->y, it->type, it->dir, 0, 0);
               break;
           }
           if (it->cf >= 10)
@@ -269,7 +303,7 @@ void          LSfml::transition()
       }
       else
       {
-        drawElem(it->x, it->y, it->type, 0, 0);
+        drawElem(it->x, it->y, it->type, it->dir, 0, 0);
         if (i + 1 == 9)
         {
           it = _data.erase(it);

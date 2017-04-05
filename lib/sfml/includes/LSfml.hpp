@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:07:35 2017 gastal_r
-** Last update	Wed Apr 05 13:50:56 2017 gastal_r
+** Last update	Wed Apr 05 20:53:22 2017 gastal_r
 */
 
 #ifndef         _LSFML_HPP_
@@ -52,7 +52,8 @@ public:
   void          aPutText(size_t, size_t, arcade::Font,size_t, arcade::Color, const std::string &);
 
   void          transition();
-  void          drawElem(size_t x, size_t y, arcade::TileType type, float dx, float dy);
+  void          checkRotation(arcade::CommandType, sf::Sprite &);
+  void          drawElem(size_t x, size_t y, arcade::TileType type, arcade::CommandType, float dx, float dy);
   void          aClear();
   void          aClearAnimBuffer();
   void          aRefresh();
@@ -73,6 +74,7 @@ private:
   sf::Texture      _evilShootTex;
   sf::Texture      _myShootTex;
   sf::Texture      _powerupTex;
+  sf::Texture      _shipTex;
   sf::Texture      _otherTex;
 };
 

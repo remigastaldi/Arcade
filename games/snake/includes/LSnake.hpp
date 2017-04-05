@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 23:42:03 2017 gastal_r
-** Last update Wed Apr 05 16:01:42 2017 Leo Hubert Froideval
+** Last update	Wed Apr 05 20:24:06 2017 gastal_r
 */
 
 #ifndef			        _LSnake_HPP_
@@ -21,7 +21,7 @@
 #include			<list>
 #include		  "ICore.hh"
 
-#define				RES_PATH "games/snake/res/"
+#define				SNAKE_RES "games/snake/res/"
 #define				MAP_WIDTH 40
 #define				MAP_HEIGHT 40
 #define       SNAKE_SPEED 9

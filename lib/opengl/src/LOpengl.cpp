@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Wed Apr 05 19:09:12 2017 gastal_r
+** Last update	Wed Apr 05 21:44:15 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -138,7 +138,7 @@ void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, arcad
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
-  if (type == arcade::TileType::OTHER)
+  if (type == arcade::TileType::OTHER || type == arcade::TileType::SHIP)
   {
       //_xView = -((x - 26.0) * 10.0) - dx;
       //_yView = -((y - 26.0) * 10.0) + dy;
@@ -197,14 +197,17 @@ void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, arcad
       glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("POWERUP") / 5);
       break;
     case arcade::TileType::SHIP :
+      loadVertex("SHIP");
+      sf::Texture::bind(&_shipTex);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
+      checkRotation(dir);
+      glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("SHIP") / 5);
       break;
     case arcade::TileType::OTHER :
     {
       loadVertex("OTHER");
-      sf::Texture::bind(&_emptyTex);
-      //sf::Texture::bind(&_otherTex);
+      sf::Texture::bind(&_otherTex);
       glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
-      //glScalef(2,2,4);
       checkRotation(dir);
       glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("OTHER") / 5);
     }
@@ -273,6 +276,9 @@ void            LOpengl::aAssignTexture(arcade::TileType tile, const std::string
       _powerupTex.generateMipmap();
       break;
     case arcade::TileType::SHIP :
+      if (!_shipTex.loadFromFile("games/solar_fox/res/img/floor2.png"))
+        _shipTex = createColoredTexture(color);
+      _shipTex.generateMipmap();
       break;
     case arcade::TileType::OTHER :
       if (!_otherTex.loadFromFile(path))
