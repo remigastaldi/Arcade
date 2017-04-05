@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update Tue Apr 04 14:25:48 2017 Leo Hubert Froideval
+// Last update Wed Apr  5 04:30:52 2017 sellet_f
 */
 
 #include          "LSnake.hpp"
