@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-// Last update Wed Apr  5 04:30:52 2017 sellet_f
+** Last update Wed Apr 05 13:58:21 2017 Leo Hubert Froideval
 */
 
 #include          "LSnake.hpp"
@@ -20,8 +20,9 @@ LSnake::~LSnake()
 
 arcade::CommandType				LSnake::play(arcade::ICore &core)
 {
+  initGame(false);
   _core = &core;
-  return (mainLoop(false));
+  return (mainLoop());
 }
 
 void      LSnake::initTextures()
@@ -33,10 +34,11 @@ void      LSnake::initTextures()
   _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, RES_PATH "img/mooncat.jpg", arcade::Color::A_MAGENTA);
 }
 
-void			LSnake::initGame()
+void			LSnake::initGame(bool lPDM)
 {
   arcade::Position	head;
 
+  _lPDM = lPDM;
   srand(time(NULL));
   if ((_map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap) + (MAPWIDTH * MAPHEIGHT * sizeof(arcade::TileType)))) == NULL)
     throw arcade::Exception("Malloc failed\n");
@@ -212,62 +214,17 @@ void			LSnake::move()
     gameOver();
 }
 
-arcade::CommandType			LSnake::mainLoop(bool lPDM)
+arcade::CommandType			LSnake::mainLoop()
 {
   std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
   std::chrono::high_resolution_clock::time_point t2;
   arcade::CommandType lastCommand;
-  arcade::CommandType command;
 
-  _lPDM = lPDM;
-  initGame();
-  if (lPDM == false)
-    {
-      initTextures();
-      _core->setScore(std::to_string(_score));
-    }
+  initTextures();
+  _core->setScore(std::to_string(_score));
   while (_map->type != arcade::CommandType::ESCAPE && _map->type != arcade::CommandType::MENU)
     {
       t2 = std::chrono::high_resolution_clock::now();
-      if (_lPDM == true)
-	{
-
-    while (!std::cin.eof())
-    {
-      std::cin.read((char *) &command, sizeof(arcade::CommandType));
-      _map->type = command;
-      switch(_map->type)
-        {
-        case (arcade::CommandType::GET_MAP):
-          lPDM_getMap();
-          break;
-        case (arcade::CommandType::WHERE_AM_I):
-          lPDM_whereAmI();
-          break;
-        case (arcade::CommandType::GO_UP):
-          lPDM_move(arcade::CommandType::GO_UP);
-          break;
-        case (arcade::CommandType::GO_DOWN):
-          lPDM_move(arcade::CommandType::GO_DOWN);
-          break;
-        case (arcade::CommandType::GO_LEFT):
-          lPDM_move(arcade::CommandType::GO_LEFT);
-          break;
-        case (arcade::CommandType::GO_RIGHT):
-          lPDM_move(arcade::CommandType::GO_RIGHT);
-          break;
-        case (arcade::CommandType::PLAY):
-          move();
-          break;
-        default:
-          break;
-        }
-    }
-    return (arcade::CommandType::ESCAPE);
-
-	}
-      else
-	{
 	  lastCommand = _core->getLib()->aCommand();
 	  if (lastCommand != arcade::CommandType::UNDEFINED)
 	    _map->type = lastCommand;
@@ -290,19 +247,18 @@ arcade::CommandType			LSnake::mainLoop(bool lPDM)
 	    default :
 	      break;
 	    }
-	}
 
-      if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 6 && _lPDM != true)
-	{
-    //std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << '\n';
-	  changeAction();
-	  move();
-	  if (_exitStatus == arcade::CommandType::MENU || _exitStatus == arcade::CommandType::ESCAPE)
-	    return (_exitStatus);
-	  if (lPDM == false)
-	      printGame();
-    t1 = std::chrono::high_resolution_clock::now();
-	}  }
+      if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 6)
+    	{
+        //std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << '\n';
+    	  changeAction();
+    	  move();
+    	  if (_exitStatus == arcade::CommandType::MENU || _exitStatus == arcade::CommandType::ESCAPE)
+    	    return (_exitStatus);
+    	  printGame();
+        t1 = std::chrono::high_resolution_clock::now();
+    	}
+    }
   return (_map->type);
 }
 
@@ -367,32 +323,6 @@ void			LSnake::newApple()
   //     newApple();
 }
 
-arcade::CommandType		LSnake::lPDM_aCommand(std::string const &command)
-{
-    switch (command[0])
-      {
-      case 0:
-	return (arcade::CommandType::WHERE_AM_I);
-      case 1:
-	return (arcade::CommandType::GET_MAP);
-      case 2:
-        return (arcade::CommandType::GO_UP);
-      case 3:
-	return (arcade::CommandType::GO_DOWN);
-      case 4:
-	return (arcade::CommandType::GO_LEFT);
-      case 5:
-	return (arcade::CommandType::GO_RIGHT);
-      case 9:
-	return (arcade::CommandType::PLAY);
-      default:
-	return (arcade::CommandType::UNDEFINED);
-	break;
-      }
-
-  return (arcade::CommandType::UNDEFINED);
-}
-
 void                  LSnake::lPDM_getMap() const
 {
   write(1, _map, sizeof(arcade::GetMap) + (MAPWIDTH * MAPHEIGHT * sizeof(arcade::TileType)));
@@ -419,29 +349,45 @@ void			LSnake::lPDM_whereAmI()
   free(snake);
 }
 
-void			LSnake::lPDM_move(arcade::CommandType direction)
+void			LSnake::lPDM_start()
 {
-  switch(direction)
-    {
-    case (arcade::CommandType::GO_UP) :
-      if (_direction != arcade::CommandType::GO_DOWN)
-	_direction = arcade::CommandType::GO_UP;
-      break;
-    case (arcade::CommandType::GO_DOWN) :
-      if (_direction != arcade::CommandType::GO_UP)
-	_direction = arcade::CommandType::GO_DOWN;
-      break;
-    case (arcade::CommandType::GO_LEFT) :
-      if (_direction != arcade::CommandType::GO_RIGHT)
-	_direction = arcade::CommandType::GO_LEFT;
-      break;
-    case (arcade::CommandType::GO_RIGHT) :
-      if (_direction != arcade::CommandType::GO_LEFT)
-	_direction = arcade::CommandType::GO_RIGHT;
-      break;
-    default :
-      break;
-    }
+  arcade::CommandType command;
+
+  while (!std::cin.eof())
+  {
+    std::cin.read((char *) &command, sizeof(arcade::CommandType));
+    _map->type = command;
+    switch(_map->type)
+      {
+      case (arcade::CommandType::GET_MAP):
+        lPDM_getMap();
+        break;
+      case (arcade::CommandType::WHERE_AM_I):
+        lPDM_whereAmI();
+        break;
+      case (arcade::CommandType::GO_UP):
+        if (_direction != arcade::CommandType::GO_DOWN)
+          _direction = arcade::CommandType::GO_UP;
+        break;
+      case (arcade::CommandType::GO_DOWN):
+        if (_direction != arcade::CommandType::GO_UP)
+          _direction = arcade::CommandType::GO_DOWN;
+        break;
+      case (arcade::CommandType::GO_LEFT):
+        if (_direction != arcade::CommandType::GO_RIGHT)
+          _direction = arcade::CommandType::GO_LEFT;
+        break;
+      case (arcade::CommandType::GO_RIGHT):
+        if (_direction != arcade::CommandType::GO_LEFT)
+          _direction = arcade::CommandType::GO_RIGHT;
+        break;
+      case (arcade::CommandType::PLAY):
+        move();
+        break;
+      default:
+        break;
+      }
+  }
 }
 
 extern "C"
@@ -461,6 +407,7 @@ extern "C"
   {
     LSnake		snake;
 
-    snake.mainLoop(true);
+    snake.initGame(true);
+    snake.lPDM_start();
   }
 }
