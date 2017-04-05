@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 12 21:30:45 2017 gastal_r
-** Last update	Mon Apr 03 18:34:19 2017 gastal_r
+** Last update	Wed Apr 05 18:49:15 2017 gastal_r
 */
 
 #ifndef           _ICORE_HH_
@@ -36,6 +36,7 @@ namespace	        arcade
     virtual void    switchLib(arcade::CommandType) = 0;
 
     virtual void    refreshGui() = 0;
+    virtual void    gameOver() = 0;
 
     virtual Save    &getSave() = 0;
     virtual arcade::IGraph  *getLib() const = 0;

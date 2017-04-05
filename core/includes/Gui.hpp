@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:55:17 2017 gastal_r
-** Last update	Sun Apr 02 01:19:20 2017 gastal_r
+** Last update	Wed Apr 05 18:53:58 2017 gastal_r
 */
 
 #ifndef         _GUI_HPP_
@@ -16,7 +16,8 @@
 #include          <string>
 #include          "../../common/Protocol.hpp"
 
-namespace arcade {
+namespace arcade
+{
   class ICore;
   class IGraph;
 };
@@ -58,6 +59,7 @@ public:
   void          guiSetBestScore(const std::string &score)   {_bestScore = score;}
   void          guiSetScore(const std::string &score)      {_score = score;}
   void          guiClearBestScores();
+  void          guiGameOver();
 
 private:
   arcade::IGraph            *_graph;

@@ -42,7 +42,8 @@ namespace		arcade
       EVIL_SHOOT	= 4,		// EVIL SHOOT
       MY_SHOOT		= 5,
       POWERUP		  = 6,		// POWERUP
-      OTHER		    = 7		// ANYTHING THAT WILL BE IGNORED BY THE KOALINETTE
+      OTHER		    = 7,		// ANYTHING THAT WILL BE IGNORED BY THE KOALINETTE
+      SHIP        = 8
     };
   /// The format is width, height, and width * height * sizeof(TileType) quantity of TileType
   struct		GetMap

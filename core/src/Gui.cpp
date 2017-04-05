@@ -5,11 +5,11 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 11:01:41 2017 gastal_r
-** Last update	Mon Apr 03 16:39:29 2017 gastal_r
+** Last update	Wed Apr 05 19:02:35 2017 gastal_r
 */
 
 #include        "Gui.hpp"
-#include "../../common/IGraph.hh"
+#include        "../../common/IGraph.hh"
 
 Gui::Gui()
 {
@@ -215,4 +215,15 @@ void                  Gui::guiClearBestScores()
 {
   _bestPlayersScores.clear();
   _bestScore.clear();
+}
+
+void                  Gui::guiGameOver()
+{
+  _graph->aClear();
+  _graph->aPutText(pos_x(2.7), pos_y(2.25), arcade::Font::PRESS_START, WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
+  _graph->aPutText(pos_x(2.8), pos_y(1.8), arcade::Font::PRESS_START, WIDTH / 100, arcade::Color::A_WHITE, "PRESS ENTER TO PLAY AGAIN.");
+  _graph->aPutText(pos_x(2.7), pos_y(2.25), arcade::Font::PRESS_START, WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
+  _graph->aPutText(pos_x(2.1) - _score.length() * BLOCK_X, pos_y(6), arcade::Font::PRESS_START,
+                            WIDTH / 15, arcade::Color::A_YELLOW, _score);
+  _graph->aRefresh();
 }

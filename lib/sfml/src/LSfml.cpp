@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Wed Apr 05 15:40:16 2017 gastal_r
+** Last update	Wed Apr 05 19:08:02 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -128,6 +128,8 @@ void            LSfml::aAssignTexture(arcade::TileType tile, const std::string &
         _powerupTex = createColoredTexture(color);
       _powerupTex.setSmooth(true);
       break;
+    case arcade::TileType::SHIP :
+      break;
     case arcade::TileType::OTHER :
       if (!_otherTex.loadFromFile(path))
         _otherTex = createColoredTexture(color);
@@ -207,9 +209,10 @@ void          LSfml::drawElem(size_t x, size_t y, arcade::TileType type, float d
     case arcade::TileType::POWERUP :
       sprite = createSprite(_powerupTex);
       break;
+    case arcade::TileType::SHIP :
+      break;
     case arcade::TileType::OTHER :
       sprite = createSprite(_otherTex);
-      break;
   }
   sprite.setPosition(((float)x * BLOCK_SFML) + dx +  X_PAD * (BLOCK_X - 2), ((float)y * BLOCK_SFML)- 30 - dy);
   _win.draw(sprite);
