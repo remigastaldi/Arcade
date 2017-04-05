@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 23:42:03 2017 gastal_r
-** Last update	Wed Apr 05 13:25:07 2017 gastal_r
+** Last update Wed Apr 05 13:53:17 2017 Leo Hubert Froideval
 */
 
 #ifndef			        _LSnake_HPP_
@@ -32,7 +32,7 @@ public:
   LSnake();
   virtual		        ~LSnake();
 
-  void		initGame();
+  void		initGame(bool);
   void    initTextures();
   void		changeAction();
   void		printGame();
@@ -43,17 +43,13 @@ public:
   void		gameOver();
   void		close();
   bool		checkNextTile(int, int);
-  arcade::CommandType		mainLoop(bool);
+  arcade::CommandType		mainLoop();
   arcade::CommandType		play(arcade::ICore &);
   arcade::CommandType	  getDirection(arcade::Position const &, arcade::Position const &);
 
   void				lPDM_getMap() const;
   void				lPDM_whereAmI();
-  void				lPDM_move(arcade::CommandType);
-  void				lPDM_play();
-  void				lPDM_escape();
-  void				lPDM_menu();
-  arcade::CommandType		lPDM_aCommand(std::string const &);
+  void				lPDM_start();
 
 private:
   arcade::GetMap		              *_map;
