@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-// Last update Wed Apr  5 20:18:28 2017 sellet_f
+// Last update Wed Apr  5 21:17:28 2017 sellet_f
 */
 
 #include        "LSolarFox.hpp"
@@ -35,7 +35,7 @@ void		        LSolarFox::printGame(void)
       if ((*it).checkPrint((*it)) == true)
   	_core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, SOLAR_SPEED, arcade::TileType::EVIL_SHOOT, getDirection((*it), (*(it + 1))));
 
-  for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() - 1 ; ++it)
+  for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
     if ((*it).checkPrint((*it)) == true)
       _core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, SOLAR_SPEED, arcade::TileType::EVIL_DUDE, getDirection((*it), (*(it + 1))));
 
@@ -48,10 +48,11 @@ void		        LSolarFox::printGame(void)
 void			LSolarFox::initTextures(void)
 {
   _core->getLib()->aAssignTexture(arcade::TileType::EMPTY, "games/solar_fox/res/img/floor2.png", arcade::Color::A_WHITE);
-  _core->getLib()->aAssignTexture(arcade::TileType::OBSTACLE, "games/solar_fox/res/img/floor2.png", arcade::Color::A_RED);
+  _core->getLib()->aAssignTexture(arcade::TileType::BLOCK, "games/solar_fox/res/img/wall2.png", arcade::Color::A_RED);
   _core->getLib()->aAssignTexture(arcade::TileType::OTHER, "games/solar_fox/res/img/tron.png", arcade::Color::A_BLACK);
   _core->getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, "games/solar_fox/res/img/wall3.png", arcade::Color::A_MAGENTA);
   _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, "games/solar_fox/res/img/mooncat.jpg", arcade::Color::A_MAGENTA);
+  _core->getLib()->aAssignTexture(arcade::TileType::EVIL_DUDE, "games/solar_fox/res/img/wall.png", arcade::Color::A_BLUE);
 }
 
 void			LSolarFox::initGame(bool lPDM)
@@ -63,38 +64,11 @@ void			LSolarFox::initGame(bool lPDM)
   std::string		line;
   int			j;
 
-  _lPDM = lPDM;
-
   j = -1;
   _score = 0;
+  _lPDM = lPDM;
   srand(time(NULL));
-  _direction = arcade::CommandType::GO_UP;
-  _position.x = MAP_WIDTH / 2;
-  _position.y = MAP_HEIGHT / 2;
-
-  enemyShip.setX(0);
-  enemyShip.setY(0);
-  enemyShip.setSpeed(5);
-  enemyShip.setIt(5);
-  enemyShip.setDirection(arcade::CommandType::GO_UP);
-
-  _enemyShip.push_back(enemyShip);
-
-  enemyShip.setX(40);
-  enemyShip.setDirection(arcade::CommandType::GO_RIGHT);
-
-  _enemyShip.push_back(enemyShip);
-
-  enemyShip.setY(40);
-  enemyShip.setDirection(arcade::CommandType::GO_DOWN);
-
-  _enemyShip.push_back(enemyShip);
-
-  enemyShip.setX(0);
-  enemyShip.setDirection(arcade::CommandType::GO_LEFT);
-
-  _enemyShip.push_back(enemyShip);
-
+  
   if ((_map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap) + (41 * 41 * sizeof(arcade::TileType)))) == NULL)
     throw arcade::Exception("Malloc failed\n");
   _map->type = arcade::CommandType::GO_UP;
@@ -125,6 +99,23 @@ void			LSolarFox::initGame(bool lPDM)
 	    break;
 	  case '1' :
 	    _map->tile[++j] = arcade::TileType::POWERUP;
+	    break;
+	  case 'V' :
+	    _map->tile[++j] = arcade::TileType::OTHER;
+	    _ship.setX(i % _map->width);
+	    _ship.setY(i / _map->height);
+	    _ship.setSpeed(5);
+	    _ship.setIt(5);
+	    _ship.setDirection(arcade::CommandType::GO_UP);
+	    break;
+	  case 'E':
+	    _map->tile[++j] = arcade::TileType::EVIL_DUDE;
+	    enemyShip.setX(i % _map->width);
+	    enemyShip.setY(i / _map->height);
+	    enemyShip.setSpeed(5);
+	    enemyShip.setIt(5);
+	    enemyShip.setDirection(arcade::CommandType::UNDEFINED);
+	    _enemyShip.push_back(enemyShip);
 	    break;
 	  default :
 	    throw arcade::Exception("Invalid map.");
