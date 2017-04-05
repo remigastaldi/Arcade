@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:08:10 2017 gastal_r
-** Last update Wed Apr 05 16:04:52 2017 Leo Hubert Froideval
+** Last update Wed Apr 05 21:48:12 2017 Leo Hubert Froideval
 */
 
 #ifndef         _LSOLAR_FOX_HPP_
@@ -33,6 +33,8 @@ public:
   void				initGame(bool);
   void				close(void);
   void				initTextures(void);
+  void				changeAction();
+  void        move();
   arcade::CommandType		getDirection(Object const &, Object const &);
   void				printGame(void);
 
@@ -41,8 +43,6 @@ public:
   void				lPDM_start();
 
 private:
-  arcade::Position		_position;
-  arcade::CommandType		_direction;
   int				_score;
   arcade::ICore			*_core;
   bool				_lPDM;
