@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-// Last update Wed Apr  5 21:17:28 2017 sellet_f
+** Last update Wed Apr 05 21:59:09 2017 Leo Hubert Froideval
 */
 
 #include        "LSolarFox.hpp"
@@ -22,24 +22,26 @@ void		        LSolarFox::printGame(void)
 {
   _core->getLib()->aClear();
 
+  _core->getLib()->aTile(_ship.getX(), _ship.getY(), _ship.getSpeed(), arcade::TileType::OTHER, _ship.getDirection());
+
   for (unsigned int i = 0 ; i < 41 * 41 ; i++)
-    _core->getLib()->aTile((i % _map->width) + 1, (i / _map->height) + 1, SOLAR_SPEED, _map->tile[i], arcade::CommandType::UNDEFINED);
+    _core->getLib()->aTile((i % _map->width) + 1, (i / _map->height) + 1, 0, _map->tile[i], arcade::CommandType::UNDEFINED);
 
   if (_missile.size() > 1)
     for (std::vector<Missile>::iterator it = _missile.begin() ; it != _missile.end() - 1 ; ++it)
       if ((*it).checkPrint((*it)) == true)
-  	_core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, SOLAR_SPEED, arcade::TileType::MY_SHOOT, getDirection((*it), (*(it + 1))));
+  	_core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, (*it).getSpeed(), arcade::TileType::MY_SHOOT, getDirection((*it), (*(it + 1))));
 
   if (_enemyMissile.size() > 1)
     for (std::vector<EnemyMissile>::iterator it = _enemyMissile.begin() ; it != _enemyMissile.end() - 1 ; ++it)
       if ((*it).checkPrint((*it)) == true)
-  	_core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, SOLAR_SPEED, arcade::TileType::EVIL_SHOOT, getDirection((*it), (*(it + 1))));
+  	_core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, (*it).getSpeed(), arcade::TileType::EVIL_SHOOT, getDirection((*it), (*(it + 1))));
 
   for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
     if ((*it).checkPrint((*it)) == true)
-      _core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, SOLAR_SPEED, arcade::TileType::EVIL_DUDE, getDirection((*it), (*(it + 1))));
+      _core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, (*it).getSpeed(), arcade::TileType::EVIL_DUDE, getDirection((*it), (*(it + 1))));
 
-  _core->getLib()->aTile(_ship.getX(), _ship.getY(), SOLAR_SPEED, arcade::TileType::OTHER, arcade::CommandType::UNDEFINED);
+  _core->getLib()->aTile(_ship.getX(), _ship.getY(), _ship.getSpeed(), arcade::TileType::OTHER, _ship.getDirection());
 
   _core->refreshGui();
   _core->getLib()->aRefresh();
@@ -68,7 +70,7 @@ void			LSolarFox::initGame(bool lPDM)
   _score = 0;
   _lPDM = lPDM;
   srand(time(NULL));
-  
+
   if ((_map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap) + (41 * 41 * sizeof(arcade::TileType)))) == NULL)
     throw arcade::Exception("Malloc failed\n");
   _map->type = arcade::CommandType::GO_UP;
@@ -126,6 +128,53 @@ void			LSolarFox::initGame(bool lPDM)
     throw arcade::Exception("Invalid file.");
 }
 
+void			LSolarFox::changeAction()
+{
+  arcade::CommandType direction;
+
+  direction = _ship.getDirection();
+  switch (_map->type)
+    {
+    case (arcade::CommandType::GO_UP):
+	     direction = arcade::CommandType::GO_UP;
+      break;
+    case (arcade::CommandType::GO_DOWN):
+	     direction = arcade::CommandType::GO_DOWN;
+      break;
+    case (arcade::CommandType::GO_LEFT):
+	     direction = arcade::CommandType::GO_LEFT;
+      break;
+    case (arcade::CommandType::GO_RIGHT):
+      direction = arcade::CommandType::GO_RIGHT;
+      break;
+    default:
+      break;
+  }
+  _ship.setDirection(direction);
+  _map->type = arcade::CommandType::UNDEFINED;
+}
+
+void    LSolarFox::move()
+{
+  switch (_ship.getDirection())
+    {
+    case (arcade::CommandType::GO_UP):
+      _ship.setY(_ship.getY() - 1);
+      break;
+    case (arcade::CommandType::GO_DOWN):
+      _ship.setY(_ship.getY() + 1);
+      break;
+    case (arcade::CommandType::GO_LEFT):
+      _ship.setX(_ship.getX() - 1);
+      break;
+    case (arcade::CommandType::GO_RIGHT):
+      _ship.setX(_ship.getX() + 1);
+      break;
+    default:
+      break;
+  }
+}
+
 arcade::CommandType	LSolarFox::mainLoop(void)
 {
   std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
@@ -138,10 +187,10 @@ arcade::CommandType	LSolarFox::mainLoop(void)
     {
       t2 = std::chrono::high_resolution_clock::now();
       lastCommand = _core->getLib()->aCommand();
-      
+
       if (lastCommand != arcade::CommandType::UNDEFINED)
-	_map->type = lastCommand;
-      
+	       _map->type = lastCommand;
+
       switch(_map->type)
 	{
 	case arcade::CommandType::NEXT_LIB :
@@ -163,10 +212,10 @@ arcade::CommandType	LSolarFox::mainLoop(void)
 
       if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 16)
       	{
-	  // changeAction();
-	  // move();
-	  printGame();
-	  t1 = std::chrono::high_resolution_clock::now();
+          changeAction();
+          move();
+	        printGame();
+          t1 = std::chrono::high_resolution_clock::now();
         }
     }
   return (_map->type);
@@ -212,7 +261,8 @@ void			LSolarFox::lPDM_whereAmI()
     return ;
   snake->type = _map->type;
   snake->lenght = length;
-  snake->position[0] = _position;
+  snake->position[0].x = _ship.getX();
+  snake->position[0].y = _ship.getY();
   write(1, snake, sizeof(arcade::WhereAmI) + (length * sizeof(arcade::Position)));
   free(snake);
 }
@@ -220,11 +270,13 @@ void			LSolarFox::lPDM_whereAmI()
 void			LSolarFox::lPDM_start()
 {
   arcade::CommandType command;
+  arcade::CommandType direction;
 
   while (!std::cin.eof())
   {
     std::cin.read((char *) &command, sizeof(arcade::CommandType));
     _map->type = command;
+    direction = _ship.getDirection();
     switch(_map->type)
       {
       case (arcade::CommandType::GET_MAP):
@@ -234,27 +286,24 @@ void			LSolarFox::lPDM_start()
         lPDM_whereAmI();
         break;
       case (arcade::CommandType::GO_UP):
-        if (_direction != arcade::CommandType::GO_DOWN)
-          _direction = arcade::CommandType::GO_UP;
+          direction = arcade::CommandType::GO_UP;
         break;
       case (arcade::CommandType::GO_DOWN):
-        if (_direction != arcade::CommandType::GO_UP)
-          _direction = arcade::CommandType::GO_DOWN;
+          direction = arcade::CommandType::GO_DOWN;
         break;
       case (arcade::CommandType::GO_LEFT):
-        if (_direction != arcade::CommandType::GO_RIGHT)
-          _direction = arcade::CommandType::GO_LEFT;
+          direction = arcade::CommandType::GO_LEFT;
         break;
       case (arcade::CommandType::GO_RIGHT):
-        if (_direction != arcade::CommandType::GO_LEFT)
-          _direction = arcade::CommandType::GO_RIGHT;
+          direction = arcade::CommandType::GO_RIGHT;
         break;
       case (arcade::CommandType::PLAY):
-      //  move();
+        move();
         break;
       default:
         break;
       }
+      _ship.setDirection(direction);
   }
 }
 
