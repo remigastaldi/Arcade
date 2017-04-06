@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 11:01:41 2017 gastal_r
-** Last update	Thu Apr 06 13:36:03 2017 gastal_r
+** Last update	Thu Apr 06 19:47:19 2017 gastal_r
 */
 
 #include        "Gui.hpp"
@@ -162,12 +162,12 @@ const std::string     Gui::chooseGame(arcade::ICore &core)
       else if (cmd == arcade::CommandType::NEXT_LIB)
         {
           core.switchLib(arcade::CommandType::NEXT_LIB);
-          _graph->aPlayMusic(CORE_RES "menu_music.ogg");
+          _graph->aPlayMusic(CORE_RES "sounds/menu_music.ogg");
         }
       else if (cmd == arcade::CommandType::PREV_LIB)
       {
         core.switchLib(arcade::CommandType::PREV_LIB);
-        _graph->aPlayMusic(CORE_RES "menu_music.ogg");
+        _graph->aPlayMusic(CORE_RES "sounds/menu_music.ogg");
       }
       if (cmd == arcade::CommandType::GO_UP)
         (i == 0 ? i = _games.size() - 1: i--);

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Thu Apr 06 18:31:24 2017 gastal_r
+** Last update	Thu Apr 06 22:11:11 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -19,8 +19,11 @@ LSfml::~LSfml()
 void            LSfml::aInit(arcade::ICore *core, size_t width, size_t height)
 {
   _core = core;
+
   _freakyFont.loadFromFile("lib/res/fonts/freaky_font.ttf");
   _pressStartFont.loadFromFile("lib/res/fonts/press_start.ttf");
+  loadSounds();
+
   _win.create(sf::VideoMode(width, height),"Arcade",  sf::Style::Fullscreen);
   std::this_thread::sleep_for(std::chrono::milliseconds(100));
   _win.clear();
@@ -150,38 +153,45 @@ void            *LSfml::aGetTexture(const std::string &path)
   return (texture);
 }
 
-void            LSfml::aAssignSound(arcade::Sound sound, const std::string &path)
+void            LSfml::loadSounds()
 {
-  switch (sound)
+  std::vector<std::string> path = _core->getSounds();
+
+  int i = 0;
+  for (std::vector<std::string>::const_iterator it = path.begin(); it != path.end(); ++it)
   {
-    case arcade::NEW_GAME :
-      if (!_newGameSound.loadFromFile(path))
-        std::cerr << "Failed to load " << path << std::endl;
-    break;
-    case arcade::GAME_OVER :
-      if (!_gameOverSound.loadFromFile(path))
-        std::cerr << "Failed to load " << path << std::endl;
-    break;
-    case arcade::SHOOT :
-      if (!_shootSound.loadFromFile(path))
-        std::cerr << "Failed to load " << path << std::endl;
-    break;
-    case arcade::POWERUP :
-      if (!_powerupSound.loadFromFile(path))
-        std::cerr << "Failed to load " << path << std::endl;
-    break;
-    case arcade::EXPLOSION :
-      if (!_explosionSound.loadFromFile(path))
-        std::cerr << "Failed to load " << path << std::endl;
-    break;
-    case arcade::DEAD :
-      if (!_deadSound.loadFromFile(path))
-        std::cerr << "Failed to load " << path << std::endl;
-    break;
-    case arcade::OTHER :
-      if (!_otherSound.loadFromFile(path))
-        std::cerr << "Failed to load " << path << std::endl;
-    break;
+    switch (i)
+    {
+      case 0 :
+        if (!_newGameSound.loadFromFile(*it))
+          std::cerr << "Failed to load " << *it << std::endl;
+      break;
+      case 1 :
+        if (!_gameOverSound.loadFromFile(*it))
+          std::cerr << "Failed to load " << *it << std::endl;
+      break;
+      case 2 :
+        if (!_myShootSound.loadFromFile(*it))
+          std::cerr << "Failed to load " << *it << std::endl;
+      break;
+      case 3 :
+        if (!_evilShootSound.loadFromFile(*it))
+          std::cerr << "Failed to load " << *it << std::endl;
+      break;
+      case 4 :
+        if (!_powerupSound.loadFromFile(*it))
+          std::cerr << "Failed to load " << *it << std::endl;
+      break;
+      case 5 :
+        if (!_explosionSound.loadFromFile(*it))
+          std::cerr << "Failed to load " << *it << std::endl;
+      break;
+      case 6 :
+        if (!_otherSound.loadFromFile(*it))
+          std::cerr << "Failed to load " << *it << std::endl;
+      break;
+    }
+    ++i;
   }
 }
 
@@ -197,17 +207,17 @@ void            LSfml::aPlaySound(arcade::Sound soundBuffer)
     case arcade::GAME_OVER :
       sound.setBuffer(_gameOverSound);
     break;
-    case arcade::SHOOT :
-      sound.setBuffer(_shootSound);
+    case arcade::MY_SHOOT :
+      sound.setBuffer(_myShootSound);
+    break;
+    case arcade::EVIL_SHOOT :
+      sound.setBuffer(_evilShootSound);
     break;
     case arcade::POWERUP :
       sound.setBuffer(_powerupSound);
     break;
     case arcade::EXPLOSION :
       sound.setBuffer(_explosionSound);
-    break;
-    case arcade::DEAD :
-      sound.setBuffer(_deadSound);
     break;
     case arcade::OTHER :
       sound.setBuffer(_otherSound);
@@ -222,6 +232,7 @@ void          LSfml::aPlayMusic(const std::string &path)
 
   if (!_music.openFromFile(path))
     std::cerr << "Unable to open " << path << std::endl;
+  _music.setVolume(60);
   _music.play();
   _music.setLoop(true);
 }

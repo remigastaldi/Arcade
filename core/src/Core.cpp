@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Thu Apr 06 15:31:35 2017 gastal_r
+** Last update	Thu Apr 06 22:09:04 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -93,7 +93,7 @@ void          Core::chooseGameMenu()
 void            Core::startCore()
 {
   _graph->aInit(this, WIDTH, HEIGHT);
-  _graph->aPlayMusic(CORE_RES "menu_music.ogg");
+  _graph->aPlayMusic(CORE_RES "sounds/menu_music.ogg");
   setGuiData();
   _save.loadPlayerSave();
   _player = getName(*this);
@@ -126,7 +126,7 @@ void            Core::coreLoop()
         switchGame(arcade::CommandType::PREV_GAME);
         break;
       case arcade::CommandType::MENU :
-        _graph->aPlayMusic(CORE_RES "menu_music.ogg");
+        _graph->aPlayMusic(CORE_RES "sounds/menu_music.ogg");
         _game->close();
         delete(_game);
         _game = 0;
@@ -216,6 +216,20 @@ void             Core::saveScore(size_t score)
   if (std::stoul(_save.getSavedScore(_currentGame)) < score
       || std::stoul(_save.getSavedScore(_currentGame)) == 0)
     _save.saveScore(_currentGame, std::to_string(score));
+}
+
+std::vector<std::string> Core::getSounds()
+{
+  std::vector<std::string> sounds;
+
+  sounds.push_back(CORE_RES "sounds/start_game.wav");
+  sounds.push_back(CORE_RES "sounds/game_over.wav");
+  sounds.push_back(CORE_RES "sounds/my_shoot.wav");
+  sounds.push_back(CORE_RES "sounds/enemy_shoot.wav");
+  sounds.push_back(CORE_RES "sounds/coin.wav");
+  sounds.push_back(CORE_RES "sounds/explosion.wav");
+  sounds.push_back(CORE_RES "sounds/select.ogg");
+  return (sounds);
 }
 
 arcade::IGraph  *Core::getLib() const

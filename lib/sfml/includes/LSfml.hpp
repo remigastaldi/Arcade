@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:07:35 2017 gastal_r
-** Last update	Wed Apr 05 23:38:59 2017 gastal_r
+** Last update	Thu Apr 06 22:09:49 2017 gastal_r
 */
 
 #ifndef         _LSFML_HPP_
@@ -50,7 +50,7 @@ public:
   void          aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color);
   void          *aGetTexture(const std::string &);
 
-  void          aAssignSound(arcade::Sound, const std::string &);
+  void          loadSounds();
   void          aPlaySound(arcade::Sound);
   void          aPlayMusic(const std::string &);
 
@@ -88,10 +88,10 @@ private:
   sf::Music         _music;
   sf::SoundBuffer   _newGameSound;
   sf::SoundBuffer   _gameOverSound;
-  sf::SoundBuffer   _shootSound;
+  sf::SoundBuffer   _myShootSound;
+  sf::SoundBuffer   _evilShootSound;
   sf::SoundBuffer   _powerupSound;
   sf::SoundBuffer   _explosionSound;
-  sf::SoundBuffer   _deadSound;
   sf::SoundBuffer   _otherSound;
 } ;
 

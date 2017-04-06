@@ -36,10 +36,10 @@ namespace	       arcade
   {
     NEW_GAME,
     GAME_OVER,
-    SHOOT,
+    MY_SHOOT,
+    EVIL_SHOOT,
     POWERUP,
     EXPLOSION,
-    DEAD,
     OTHER
   };
 
@@ -69,7 +69,6 @@ namespace	       arcade
     virtual void *aGetTexture(const std::string &) = 0;
     virtual void aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color) = 0;
 
-    virtual void aAssignSound(arcade::Sound, const std::string &) = 0;
     virtual void aPlaySound(arcade::Sound) = 0;
     virtual void aPlayMusic(const std::string &) = 0;
 

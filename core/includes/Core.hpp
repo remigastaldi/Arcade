@@ -5,12 +5,14 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:09:59 2017 gastal_r
-** Last update	Wed Apr 05 18:53:33 2017 gastal_r
+** Last update	Thu Apr 06 21:03:21 2017 gastal_r
 */
 
 #ifndef         _CORE_HPP_
 #define         _CORE_HPP_
 
+#include        <thread>
+#include        <chrono>
 #include        "ICore.hh"
 
 #define GAME_DIR  "games/"
@@ -40,6 +42,7 @@ public:
   void          switchLib(arcade::CommandType);
   void          saveScore(size_t score);
 
+  std::vector<std::string> getSounds();
   Save            &getSave() { return (_save);}
   arcade::IGraph  *getLib() const;
   const std::string &getCurrentGame() const {return (_currentGame);}
