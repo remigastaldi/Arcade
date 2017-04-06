@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 12 21:30:45 2017 gastal_r
-** Last update	Wed Apr 05 18:49:15 2017 gastal_r
+** Last update	Thu Apr 06 13:36:47 2017 gastal_r
 */
 
 #ifndef           _ICORE_HH_
@@ -23,6 +23,7 @@
 #include			    "Exception.hpp"
 #include          "File.hpp"
 
+#define CORE_RES  "core/res/"
 
 
 namespace	        arcade

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Wed Apr 05 16:10:02 2017 gastal_r
+** Last update	Thu Apr 06 15:31:35 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -93,6 +93,7 @@ void          Core::chooseGameMenu()
 void            Core::startCore()
 {
   _graph->aInit(this, WIDTH, HEIGHT);
+  _graph->aPlayMusic(CORE_RES "menu_music.ogg");
   setGuiData();
   _save.loadPlayerSave();
   _player = getName(*this);
@@ -109,7 +110,7 @@ void            Core::startCore()
 
 void            Core::coreLoop()
 {
-  arcade::CommandType gameReturn;
+  arcade::CommandType gameReturn = arcade::CommandType::UNDEFINED;
 
   while (getStatus() == CONTINUE)
   {
@@ -125,6 +126,7 @@ void            Core::coreLoop()
         switchGame(arcade::CommandType::PREV_GAME);
         break;
       case arcade::CommandType::MENU :
+        _graph->aPlayMusic(CORE_RES "menu_music.ogg");
         _game->close();
         delete(_game);
         _game = 0;

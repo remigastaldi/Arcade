@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Wed Apr 05 23:52:01 2017 gastal_r
+** Last update	Thu Apr 06 18:31:24 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -267,16 +267,19 @@ void          LSfml::checkRotation(arcade::CommandType dir, sf::Sprite &sprite)
   switch (dir)
   {
     case arcade::CommandType::GO_UP :
-      //sprite.setRotation(-90);
+      sprite.setOrigin((sprite.getLocalBounds().width / 2) - BLOCK_SFML, (sprite.getLocalBounds().height / 2));
+      sprite.setRotation(0);
       break;
     case arcade::CommandType::GO_DOWN:
+      sprite.setOrigin((sprite.getLocalBounds().width / 2) + BLOCK_SFML, (sprite.getLocalBounds().height / 2));
       sprite.setRotation(180);
       break;
     case arcade::CommandType::GO_LEFT :
+      sprite.setOrigin(sprite.getLocalBounds().width - (sprite.getLocalBounds().width / 3), sprite.getLocalBounds().height / 3);
       sprite.setRotation(-90);
-      //glRotatef(0.f, 0.f, 0.f, 1.f);
       break;
     case arcade::CommandType::GO_RIGHT :
+      sprite.setOrigin(sprite.getLocalBounds().width / 3, (sprite.getLocalBounds().height - (sprite.getLocalBounds().height / 3)));
       sprite.setRotation(90);
       break;
     default :
@@ -314,15 +317,11 @@ void          LSfml::drawElem(size_t x, size_t y, arcade::TileType type, arcade:
     case arcade::TileType::SHIP :
       sprite = createSprite(_shipTex);
       sprite.setScale(sf::Vector2f(BLOCK_SFML * 3 / _shipTex.getSize().x, BLOCK_SFML * 3 / _shipTex.getSize().y));
-      if (dir == arcade::CommandType::GO_LEFT || dir == arcade::CommandType::GO_DOWN)
-        sprite.setOrigin((sprite.getLocalBounds().width / 2) + BLOCK_SFML * 2, (sprite.getLocalBounds().height / 2) - BLOCK_SFML * 2);
-      else
-        sprite.setOrigin((sprite.getLocalBounds().width / 2) - BLOCK_SFML * 2, (sprite.getLocalBounds().height / 2) - BLOCK_SFML * 2);
       checkRotation(dir, sprite);
       break;
     case arcade::TileType::OTHER :
       sprite = createSprite(_otherTex);
-      checkRotation(dir, sprite);
+      //checkRotation(dir, sprite);
       break;
   }
   sprite.setPosition(((float)x * BLOCK_SFML) + dx +  X_PAD * (BLOCK_X - 2), ((float)y * BLOCK_SFML)- 30 - dy);
