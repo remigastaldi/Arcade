@@ -29,12 +29,12 @@ void		        LSolarFox::printGame(void)
   if (_missile.size() > 1)
     for (std::vector<Missile>::iterator it = _missile.begin() ; it != _missile.end() - 1 ; ++it)
       if ((*it).checkAction(true) == true)
-  	_core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, (*it).getSpeed(), arcade::TileType::MY_SHOOT, getDirection((*it), (*(it + 1))));
+  	_core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, (*it).getSpeed(), arcade::TileType::MY_SHOOT, (*it).getDirection());
 
   if (_enemyMissile.size() > 1)
     for (std::vector<EnemyMissile>::iterator it = _enemyMissile.begin() ; it != _enemyMissile.end() - 1 ; ++it)
       if ((*it).checkAction(true) == true)
-  	_core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, (*it).getSpeed(), arcade::TileType::EVIL_SHOOT, getDirection((*it), (*(it + 1))));
+  	_core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, (*it).getSpeed(), arcade::TileType::EVIL_SHOOT, (*it).getDirection());
 
   if (_ship.checkAction(true) == true)
     _core->getLib()->aTile(_ship.getX() + 1, _ship.getY() + 1, _ship.getSpeed(), arcade::TileType::OTHER, _ship.getDirection());
@@ -272,19 +272,6 @@ arcade::CommandType	LSolarFox::mainLoop(void)
         }
     }
   return (_map->type);
-}
-
-arcade::CommandType	LSolarFox::getDirection(Object const &cur, Object const&prev)
-{
-  if (cur.getX() - 1 == prev.getX())
-    return (arcade::CommandType::GO_RIGHT);
-  else if (cur.getX() + 1 == prev.getX())
-    return (arcade::CommandType::GO_LEFT);
-  else if (cur.getY() - 1 == prev.getY())
-    return (arcade::CommandType::GO_DOWN);
-  else if (cur.getY() + 1 == prev.getY())
-    return (arcade::CommandType::GO_UP);
-  return (arcade::CommandType::UNDEFINED);
 }
 
 arcade::CommandType	LSolarFox::play(arcade::ICore& core)

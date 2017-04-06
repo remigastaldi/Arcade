@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:08:10 2017 gastal_r
-** Last update Wed Apr 05 21:48:12 2017 Leo Hubert Froideval
+// Last update Thu Apr  6 13:42:28 2017 sellet_f
 */
 
 #ifndef         _Lsolarfox_HPP_
@@ -35,7 +35,6 @@ public:
   void				initTextures(void);
   void				changeAction();
   void        move();
-  arcade::CommandType		getDirection(Object const &, Object const &);
   void				printGame(void);
 
   void				lPDM_getMap() const;
