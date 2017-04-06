@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Thu Apr 06 01:10:29 2017 gastal_r
+** Last update	Thu Apr 06 18:40:56 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -54,8 +54,8 @@ void        LNcurses::aClose()
 void        LNcurses::printTile(size_t x, size_t y, LNcurses::NColor color)
 {
   Ncurses::Attron(COLOR_PAIR(color));
-  mvprintw(Y_PAD + y, X_PAD + x, "W");
-  mvprintw(Y_PAD + y, X_PAD + x + 1, "W");
+  mvprintw(Y_PAD + y, X_PAD + x, " ");
+  mvprintw(Y_PAD + y, X_PAD + x + 1, " ");
   Ncurses::Attroff(COLOR_PAIR(color));
 }
 
