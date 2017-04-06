@@ -255,6 +255,7 @@ arcade::CommandType	LSolarFox::mainLoop(void)
 	  _core->switchLib(arcade::CommandType::PREV_LIB);
 	  initTextures();
 	  _map->type = arcade::CommandType::UNDEFINED;
+	  break;
 	case arcade::CommandType::NEXT_GAME :
 	  return (arcade::CommandType::NEXT_GAME);
 	case arcade::CommandType::PREV_GAME :
