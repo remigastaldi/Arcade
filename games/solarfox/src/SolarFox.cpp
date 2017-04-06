@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Thu Apr 06 13:43:41 2017 gastal_r
+** Last update	Thu Apr 06 14:15:22 2017 gastal_r
 */
 
 #include        "LSolarFox.hpp"
@@ -52,17 +52,17 @@ void		        LSolarFox::printGame(void)
 
 void			LSolarFox::initTextures(void)
 {
-  _core->getLib()->aAssignTexture(arcade::TileType::EMPTY, "games/solarfox/res/img/floor2.png", arcade::Color::A_WHITE);
-  _core->getLib()->aAssignTexture(arcade::TileType::BLOCK, "games/solarfox/res/img/wall2.png", arcade::Color::A_RED);
-  _core->getLib()->aAssignTexture(arcade::TileType::OTHER, "games/solarfox/res/img/tron.png", arcade::Color::A_BLACK);
-  _core->getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, "games/solarfox/res/img/wall3.png", arcade::Color::A_MAGENTA);
-  _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, "games/solarfox/res/img/mooncat.jpg", arcade::Color::A_MAGENTA);
-  _core->getLib()->aAssignTexture(arcade::TileType::EVIL_DUDE, "games/solarfox/res/img/wall.png", arcade::Color::A_BLUE);
+  _core->getLib()->aAssignTexture(arcade::TileType::EMPTY, SOLAR_RES "img/floor2.png", arcade::Color::A_WHITE);
+  _core->getLib()->aAssignTexture(arcade::TileType::BLOCK, SOLAR_RES "img/wall2.png", arcade::Color::A_RED);
+  _core->getLib()->aAssignTexture(arcade::TileType::OTHER, SOLAR_RES "img/tron.png", arcade::Color::A_BLACK);
+  _core->getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, SOLAR_RES "img/wall3.png", arcade::Color::A_MAGENTA);
+  _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, SOLAR_RES "img/mooncat.jpg", arcade::Color::A_MAGENTA);
+  _core->getLib()->aAssignTexture(arcade::TileType::EVIL_DUDE, SOLAR_RES "img/wall.png", arcade::Color::A_BLUE);
 }
 
 void			LSolarFox::initGame(bool lPDM)
 {
-  std::ifstream		file("games/solarfox/res/map/level_1.map");
+  std::ifstream		file(SOLAR_RES "map/level_1.map");
   EnemyShip		enemyShip;
   int			sizeLine;
   std::string		content;

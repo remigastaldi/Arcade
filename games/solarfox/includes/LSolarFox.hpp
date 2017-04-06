@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:08:10 2017 gastal_r
-// Last update Thu Apr  6 13:42:28 2017 sellet_f
+** Last update	Thu Apr 06 14:15:23 2017 gastal_r
 */
 
 #ifndef         _Lsolarfox_HPP_
@@ -21,6 +21,7 @@
 # define MAP_WIDTH 41
 # define MAP_HEIGHT 41
 # define SOLAR_SPEED 8
+# define SOLAR_RES "games/solarfox/res/"
 
 class           LSolarFox : public arcade::IGame
 {
