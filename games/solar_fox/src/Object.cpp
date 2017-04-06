@@ -5,7 +5,7 @@
 // Login   <flavien.sellet@epitech.eu>
 // 
 // Started on  Tue Apr  4 17:48:07 2017 sellet_f
-// Last update Wed Apr  5 17:45:21 2017 sellet_f
+// Last update Thu Apr  6 11:31:37 2017 sellet_f
 //
 
 #include "Object.hh"
@@ -60,14 +60,15 @@ arcade::CommandType	Object::getDirection(void) const
   return (_direction);
 }
 
-bool			Object::checkPrint(Object obj)
+bool			Object::checkAction(bool canIcrement)
 {
-  if (obj._it == 10)
+  if (_it == 10)
     {
-      obj._it = obj._speed;
-      return (true);
+      if (canIcrement)
+	_it = _speed;
+      return (false);
     }
-  else
-    obj._it += 1;
+  else if (canIcrement)
+    _it += 1;
   return (false);
 }

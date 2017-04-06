@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-// Last update Thu Apr  6 02:42:32 2017 sellet_f
+// Last update Thu Apr  6 11:27:57 2017 sellet_f
 */
 
 #include        "LSolarFox.hpp"
@@ -22,26 +22,25 @@ void		        LSolarFox::printGame(void)
 {
   _core->getLib()->aClear();
 
-  // _core->getLib()->aTile(_ship.getX(), _ship.getY(), _ship.getSpeed(), arcade::TileType::OTHER, _ship.getDirection());
-
-  for (unsigned int i = 0 ; i < 41 * 41 ; i++)
-    _core->getLib()->aTile((i % _map->width) + 1, (i / _map->height) + 1, 0, _map->tile[i], arcade::CommandType::UNDEFINED);
-
   if (_missile.size() > 1)
     for (std::vector<Missile>::iterator it = _missile.begin() ; it != _missile.end() - 1 ; ++it)
-      if ((*it).checkPrint((*it)) == true)
+      if ((*it).checkAction(true) == true)
   	_core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, (*it).getSpeed(), arcade::TileType::MY_SHOOT, getDirection((*it), (*(it + 1))));
 
   if (_enemyMissile.size() > 1)
     for (std::vector<EnemyMissile>::iterator it = _enemyMissile.begin() ; it != _enemyMissile.end() - 1 ; ++it)
-      if ((*it).checkPrint((*it)) == true)
+      if ((*it).checkAction(true) == true)
   	_core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, (*it).getSpeed(), arcade::TileType::EVIL_SHOOT, getDirection((*it), (*(it + 1))));
 
+  if (_ship.checkAction(true) == true)
+    _core->getLib()->aTile(_ship.getX() + 1, _ship.getY() + 1, 6, arcade::TileType::OTHER, _ship.getDirection());
+
   for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
-    if ((*it).checkPrint((*it)) == true)
+    if ((*it).checkAction(true) == true)
       _core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, (*it).getSpeed(), arcade::TileType::EVIL_DUDE, getDirection((*it), (*(it + 1))));
 
-  // _core->getLib()->aTile(_ship.getX(), _ship.getY(), _ship.getSpeed(), arcade::TileType::OTHER, _ship.getDirection());
+  for (unsigned int i = 0 ; i < 41 * 41 ; i++)
+    _core->getLib()->aTile((i % _map->width) + 1, (i / _map->height) + 1, 0, _map->tile[i], arcade::CommandType::UNDEFINED);
 
   _core->refreshGui();
   _core->getLib()->aRefresh();
@@ -103,19 +102,19 @@ void			LSolarFox::initGame(bool lPDM)
 	    _map->tile[++j] = arcade::TileType::POWERUP;
 	    break;
 	  case 'V' :
-	    _map->tile[++j] = arcade::TileType::OTHER;
+	    _map->tile[++j] = arcade::TileType::EMPTY;
 	    _ship.setX(i % _map->width);
 	    _ship.setY(i / _map->height);
-	    _ship.setSpeed(5);
-	    _ship.setIt(5);
+	    _ship.setSpeed(7);
+	    _ship.setIt(10);
 	    _ship.setDirection(arcade::CommandType::GO_UP);
 	    break;
 	  case 'E':
-	    _map->tile[++j] = arcade::TileType::EVIL_DUDE;
+	    _map->tile[++j] = arcade::TileType::EMPTY;
 	    enemyShip.setX(i % _map->width);
 	    enemyShip.setY(i / _map->height);
-	    enemyShip.setSpeed(5);
-	    enemyShip.setIt(5);
+	    enemyShip.setSpeed(7);
+	    enemyShip.setIt(10);
 	    if ((i % _map->width == 1 && i / _map->height == 1) || (i % _map->width == 39 && i / _map->height == 39))
 	      enemyShip.setDirection(arcade::CommandType::GO_LEFT);
 	    else
@@ -167,90 +166,60 @@ void			LSolarFox::changeAction()
 
 void    LSolarFox::move()
 {
-  switch (_ship.getDirection())
-    {
-    case (arcade::CommandType::GO_UP):
-      if (_map->tile[(_ship.getY() - 1) * 41 + _ship.getX()] != arcade::TileType::BLOCK)
-	{
-	  _map->tile[_ship.getY() * 41 + _ship.getX()] = arcade::TileType::EMPTY;
-	  _map->tile[(_ship.getY() - 1) * 41 + _ship.getX()] = arcade::TileType::OTHER;
+  if (_ship.checkAction(false))
+    switch (_ship.getDirection())
+      {
+      case (arcade::CommandType::GO_UP):
+	if (_map->tile[(_ship.getY() - 1) * 41 + _ship.getX()] != arcade::TileType::BLOCK)
 	  _ship.setY(_ship.getY() - 1);
-	}
-      break;
-    case (arcade::CommandType::GO_DOWN):
-      if (_map->tile[(_ship.getY() + 1) * 41 + _ship.getX()] != arcade::TileType::BLOCK)
-	{
-	  _map->tile[_ship.getY() * 41 + _ship.getX()] = arcade::TileType::EMPTY;
-	  _map->tile[(_ship.getY() + 1) * 41 + _ship.getX()] = arcade::TileType::OTHER;
+	break;
+      case (arcade::CommandType::GO_DOWN):
+	if (_map->tile[(_ship.getY() + 1) * 41 + _ship.getX()] != arcade::TileType::BLOCK)
 	  _ship.setY(_ship.getY() + 1);
-	}
-      break;
-    case (arcade::CommandType::GO_LEFT):
-      if (_map->tile[_ship.getY() * 41 + _ship.getX() - 1] != arcade::TileType::BLOCK)
-	{
-	  _map->tile[_ship.getY() * 41 + _ship.getX()] = arcade::TileType::EMPTY;
-	  _map->tile[_ship.getY() * 41 + (_ship.getX() - 1)] = arcade::TileType::OTHER;
+	break;
+      case (arcade::CommandType::GO_LEFT):
+	if (_map->tile[_ship.getY() * 41 + _ship.getX() - 1] != arcade::TileType::BLOCK)
 	  _ship.setX(_ship.getX() - 1);
-	}
-      break;
-    case (arcade::CommandType::GO_RIGHT):
-      if (_map->tile[_ship.getY() * 41 + _ship.getX() + 1] != arcade::TileType::BLOCK)
-	{
-	  _map->tile[_ship.getY() * 41 + _ship.getX()] = arcade::TileType::EMPTY;
-	  _map->tile[_ship.getY() * 41 + (_ship.getX() + 1)] = arcade::TileType::OTHER;
+	break;
+      case (arcade::CommandType::GO_RIGHT):
+	if (_map->tile[_ship.getY() * 41 + _ship.getX() + 1] != arcade::TileType::BLOCK)
 	  _ship.setX(_ship.getX() + 1);
-	}
-      break;
-    default:
-      break;
+	break;
+      default:
+	break;
   }
 
   for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; it++)
     {
-      switch ((*it).getDirection())
-	{
-	case arcade::CommandType::GO_UP :
-	  if ((*it).getY() == 1)
-	    (*it).setDirection(arcade::CommandType::GO_DOWN);
-	  else
-	    {
-	      _map->tile[(*it).getY() * 41 + (*it).getX()] = arcade::TileType::EMPTY;
-	      _map->tile[((*it).getY() - 1) * 41 + (*it).getX()] = arcade::TileType::EVIL_DUDE;
+      if ((*it).checkAction(false))
+	switch ((*it).getDirection())
+	  {
+	  case arcade::CommandType::GO_UP :
+	    if ((*it).getY() == 1)
+	      (*it).setDirection(arcade::CommandType::GO_DOWN);
+	    else
 	      (*it).setY((*it).getY() - 1);
-	    }
-	  break;
-	case arcade::CommandType::GO_DOWN :
-	  if ((*it).getY() == 39)
-	    (*it).setDirection(arcade::CommandType::GO_UP);
-	  else
-	    {
-	      _map->tile[(*it).getY() * 41 + (*it).getX()] = arcade::TileType::EMPTY;
-	      _map->tile[((*it).getY() + 1) * 41 + (*it).getX()] = arcade::TileType::EVIL_DUDE;
+	    break;
+	  case arcade::CommandType::GO_DOWN :
+	    if ((*it).getY() == 39)
+	      (*it).setDirection(arcade::CommandType::GO_UP);
+	    else
 	      (*it).setY((*it).getY() + 1);
-	    }
-	  break;
-	case arcade::CommandType::GO_LEFT :
-	  if ((*it).getX() == 1)
-	    (*it).setDirection(arcade::CommandType::GO_RIGHT);
-	  else
-	    {
-	      _map->tile[(*it).getY() * 41 + (*it).getX()] = arcade::TileType::EMPTY;
-	      _map->tile[(*it).getY() * 41 + ((*it).getX() - 1)] = arcade::TileType::EVIL_DUDE;
+	    break;
+	  case arcade::CommandType::GO_LEFT :
+	    if ((*it).getX() == 1)
+	      (*it).setDirection(arcade::CommandType::GO_RIGHT);
+	    else
 	      (*it).setX((*it).getX() - 1);
-	    }
-	  break;
-	case arcade::CommandType::GO_RIGHT :
-	  if ((*it).getX() == 39)
-	    (*it).setDirection(arcade::CommandType::GO_LEFT);
-	  else
-	    {
-	      _map->tile[(*it).getY() * 41 + (*it).getX()] = arcade::TileType::EMPTY;
-	      _map->tile[(*it).getY() * 41 + ((*it).getX() + 1)] = arcade::TileType::EVIL_DUDE;
+	    break;
+	  case arcade::CommandType::GO_RIGHT :
+	    if ((*it).getX() == 39)
+	      (*it).setDirection(arcade::CommandType::GO_LEFT);
+	    else
 	      (*it).setX((*it).getX() + 1);
-	    }
-	  break;
-	default:
-	  break;
+	    break;
+	  default:
+	    break;
 	}
     }
 }
