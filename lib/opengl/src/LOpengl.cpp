@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Thu Apr 06 00:58:28 2017 gastal_r
+** Last update	Thu Apr 06 13:54:03 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -40,7 +40,6 @@ void            LOpengl::aInit(arcade::ICore *core, size_t width, size_t height)
 
   glViewport(0, 0, _win.getSize().x, _win.getSize().y);
   glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
   GLfloat ratio = static_cast<float>(_win.getSize().x) / _win.getSize().y;
   glFrustum(-ratio, ratio, -1.f, 1.f, 1.f, 1000.f);
 
@@ -54,6 +53,8 @@ void            LOpengl::aInit(arcade::ICore *core, size_t width, size_t height)
 
 void            LOpengl::aClose()
 {
+  glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+  _win.setActive(false);
   _win.close();
 }
 
@@ -276,7 +277,7 @@ void            LOpengl::aAssignTexture(arcade::TileType tile, const std::string
       _powerupTex.generateMipmap();
       break;
     case arcade::TileType::SHIP :
-      if (!_shipTex.loadFromFile("games/solar_fox/res/img/floor2.png"))
+      if (!_shipTex.loadFromFile("games/solarfox/res/img/floor2.png"))
         _shipTex = createColoredTexture(color);
       _shipTex.generateMipmap();
       break;

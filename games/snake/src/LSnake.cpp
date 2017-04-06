@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Thu Apr 06 01:10:39 2017 gastal_r
+** Last update	Thu Apr 06 13:37:53 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -32,7 +32,7 @@ void      LSnake::initTextures()
 {
   _core->getLib()->aAssignTexture(arcade::TileType::EMPTY, SNAKE_RES "img/floor2.png", arcade::Color::A_WHITE);
   _core->getLib()->aAssignTexture(arcade::TileType::OBSTACLE, SNAKE_RES "img/wall.png", arcade::Color::A_RED);
-  _core->getLib()->aAssignTexture(arcade::TileType::SHIP,"games/solar_fox/res/img/ship.png", arcade::Color::A_GREEN);
+  _core->getLib()->aAssignTexture(arcade::TileType::SHIP,"games/solarfox/res/img/ship.png", arcade::Color::A_GREEN);
   _core->getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, SNAKE_RES "img/wall3.png", arcade::Color::A_MAGENTA);
   _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, SNAKE_RES "img/mooncat.jpg", arcade::Color::A_MAGENTA);
 }

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-// Last update Thu Apr  6 11:27:57 2017 sellet_f
+** Last update	Thu Apr 06 13:54:46 2017 gastal_r
 */
 
 #include        "LSolarFox.hpp"
@@ -18,9 +18,13 @@ LSolarFox::~LSolarFox()
 {
 }
 
+#include <chrono>
+#include <thread>
 void		        LSolarFox::printGame(void)
 {
   _core->getLib()->aClear();
+
+  std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
   if (_missile.size() > 1)
     for (std::vector<Missile>::iterator it = _missile.begin() ; it != _missile.end() - 1 ; ++it)
@@ -33,11 +37,11 @@ void		        LSolarFox::printGame(void)
   	_core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, (*it).getSpeed(), arcade::TileType::EVIL_SHOOT, getDirection((*it), (*(it + 1))));
 
   if (_ship.checkAction(true) == true)
-    _core->getLib()->aTile(_ship.getX() + 1, _ship.getY() + 1, 6, arcade::TileType::OTHER, _ship.getDirection());
+    _core->getLib()->aTile(_ship.getX() + 1, _ship.getY() + 1, _ship.getSpeed(), arcade::TileType::OTHER, _ship.getDirection());
 
   for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
     if ((*it).checkAction(true) == true)
-      _core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, (*it).getSpeed(), arcade::TileType::EVIL_DUDE, getDirection((*it), (*(it + 1))));
+      _core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, (*it).getSpeed(), arcade::TileType::EVIL_DUDE, it->getDirection());
 
   for (unsigned int i = 0 ; i < 41 * 41 ; i++)
     _core->getLib()->aTile((i % _map->width) + 1, (i / _map->height) + 1, 0, _map->tile[i], arcade::CommandType::UNDEFINED);
@@ -48,17 +52,17 @@ void		        LSolarFox::printGame(void)
 
 void			LSolarFox::initTextures(void)
 {
-  _core->getLib()->aAssignTexture(arcade::TileType::EMPTY, "games/solar_fox/res/img/floor2.png", arcade::Color::A_WHITE);
-  _core->getLib()->aAssignTexture(arcade::TileType::BLOCK, "games/solar_fox/res/img/wall2.png", arcade::Color::A_RED);
-  _core->getLib()->aAssignTexture(arcade::TileType::OTHER, "games/solar_fox/res/img/tron.png", arcade::Color::A_BLACK);
-  _core->getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, "games/solar_fox/res/img/wall3.png", arcade::Color::A_MAGENTA);
-  _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, "games/solar_fox/res/img/mooncat.jpg", arcade::Color::A_MAGENTA);
-  _core->getLib()->aAssignTexture(arcade::TileType::EVIL_DUDE, "games/solar_fox/res/img/wall.png", arcade::Color::A_BLUE);
+  _core->getLib()->aAssignTexture(arcade::TileType::EMPTY, "games/solarfox/res/img/floor2.png", arcade::Color::A_WHITE);
+  _core->getLib()->aAssignTexture(arcade::TileType::BLOCK, "games/solarfox/res/img/wall2.png", arcade::Color::A_RED);
+  _core->getLib()->aAssignTexture(arcade::TileType::OTHER, "games/solarfox/res/img/tron.png", arcade::Color::A_BLACK);
+  _core->getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, "games/solarfox/res/img/wall3.png", arcade::Color::A_MAGENTA);
+  _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, "games/solarfox/res/img/mooncat.jpg", arcade::Color::A_MAGENTA);
+  _core->getLib()->aAssignTexture(arcade::TileType::EVIL_DUDE, "games/solarfox/res/img/wall.png", arcade::Color::A_BLUE);
 }
 
 void			LSolarFox::initGame(bool lPDM)
 {
-  std::ifstream		file("games/solar_fox/res/map/level_1.map");
+  std::ifstream		file("games/solarfox/res/map/level_1.map");
   EnemyShip		enemyShip;
   int			sizeLine;
   std::string		content;
@@ -189,7 +193,7 @@ void    LSolarFox::move()
 	break;
   }
 
-  for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; it++)
+  for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
     {
       if ((*it).checkAction(false))
 	switch ((*it).getDirection())

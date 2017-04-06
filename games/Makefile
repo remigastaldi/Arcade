@@ -10,15 +10,15 @@
 
 all:
 	@make -C snake/
-	@make -C solar_fox/
+	@make -C solarfox/
 
 clean:
 	@make clean -C snake/
-	@make clean -C solar_fox/
+	@make clean -C solarfox/
 
 fclean:	clean
 	@make fclean -C snake/
-	@make fclean -C solar_fox/
+	@make fclean -C solarfox/
 
 re: fclean all
 
