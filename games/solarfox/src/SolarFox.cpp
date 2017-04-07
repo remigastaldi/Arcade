@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update Fri Apr 07 17:55:57 2017 Leo Hubert Froideval
+** Last update Fri Apr 07 18:13:13 2017 Leo Hubert Froideval
 */
 
 #include        "LSolarFox.hpp"
@@ -236,7 +236,14 @@ void			LSolarFox::gameOver(void)
 
 void			LSolarFox::lPDM_getMap() const
 {
-  std::cout.write(reinterpret_cast<char *>(_map), sizeof(arcade::GetMap) + (_map->width * _map->height * sizeof(arcade::TileType)));
+  arcade::GetMap *map;
+
+  map = _map;
+  if (_missile.getY() != 0 && _missile.getX() != 0)
+  {
+    map->tile[_missile.getY() * MAP_WIDTH + _missile.getX()] = arcade::TileType::MY_SHOOT;
+  }
+  std::cout.write(reinterpret_cast<char *>(map), sizeof(arcade::GetMap) + (_map->width * _map->height * sizeof(arcade::TileType)));
 }
 
 void			LSolarFox::lPDM_whereAmI()
@@ -271,6 +278,9 @@ void			LSolarFox::lPDM_start()
         break;
       case (arcade::CommandType::WHERE_AM_I):
         lPDM_whereAmI();
+        break;
+      case (arcade::CommandType::SHOOT):
+         _ship.shoot(_missile);
         break;
       case (arcade::CommandType::GO_UP):
           direction = arcade::CommandType::GO_UP;
