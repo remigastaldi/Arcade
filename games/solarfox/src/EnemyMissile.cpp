@@ -36,7 +36,7 @@ void	EnemyMissile::print(arcade::ICore *core)
     core->getLib()->aTile(_x + 1, _y + 1, _speed, arcade::TileType::EVIL_SHOOT, _direction);
 }
 
-bool	EnemyMissile::checkColisions(arcade::CommandType direction, Object obj)
+bool	EnemyMissile::checkColisions(Object obj)
 {
   if (obj.getX() == _x && obj.getY() == _y)
     return (true);
@@ -72,9 +72,9 @@ int	EnemyMissile::move(Missile missile, Ship ship)
     	  break;
     	}
     }
-    if (checkColisions(_direction, ship) == true)
+    if (checkColisions(ship) == true)
      return (SHIP_DESTROYED);
-    else if (checkColisions(_direction, missile) == true)
+    else if (checkColisions(missile) == true)
      return (MISSILE_DESTROYED);
   return (0);
 }

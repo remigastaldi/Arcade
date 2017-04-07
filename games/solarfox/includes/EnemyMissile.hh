@@ -25,7 +25,7 @@ public:
 
   void	print(arcade::ICore *);
   int	move(Missile, Ship);
-  bool	checkColisions(arcade::CommandType, Object);
+  bool	checkColisions(Object);
 };
 
 #endif

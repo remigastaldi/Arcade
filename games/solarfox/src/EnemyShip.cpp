@@ -1,9 +1,9 @@
 //
 // EnemyShip.cpp for Project-Master in /home/sellet_f/Projets/Tek2/Arcade
-// 
+//
 // Made by sellet_f
 // Login   <flavien.sellet@epitech.eu>
-// 
+//
 // Started on  Tue Apr  4 16:46:49 2017 sellet_f
 // Last update Fri Apr  7 16:06:51 2017 sellet_f
 //
@@ -38,7 +38,7 @@ void		EnemyShip::print(arcade::ICore *core)
     core->getLib()->aTile(_x + 1, _y + 1, _speed, arcade::TileType::EVIL_DUDE, _direction);
 }
 
-void		EnemyShip::move(std::vector<EnemyMissile> &enemyMissile)
+void		EnemyShip::move(arcade::ICore *core, std::vector<EnemyMissile> &enemyMissile)
 {
   if (checkAction(false))
     switch (_direction)
@@ -70,17 +70,17 @@ void		EnemyShip::move(std::vector<EnemyMissile> &enemyMissile)
       default:
 	break;
       }
-  
+
   if (rand() % 5000 < 200)
     {
       if (_x == 1 && (_direction == arcade::CommandType::GO_UP || _direction == arcade::CommandType::GO_DOWN))
 	enemyMissile.push_back(EnemyMissile(_x + 1, _y, arcade::CommandType::GO_RIGHT));
       else if (_x == 39 && (_direction == arcade::CommandType::GO_UP || _direction == arcade::CommandType::GO_DOWN))
 	enemyMissile.push_back(EnemyMissile(_x - 1, _y, arcade::CommandType::GO_LEFT));
-      else if (_y == 1 && (_direction == arcade::CommandType::GO_LEFT || _direction == arcade::CommandType::GO_LEFT))
+      else if (_y == 1 && (_direction == arcade::CommandType::GO_LEFT || _direction == arcade::CommandType::GO_RIGHT))
 	enemyMissile.push_back(EnemyMissile(_x, _y + 1, arcade::CommandType::GO_DOWN));
       else if (_y == 39 && (_direction == arcade::CommandType::GO_LEFT || _direction == arcade::CommandType::GO_RIGHT))
 	enemyMissile.push_back(EnemyMissile(_x, _y - 1, arcade::CommandType::GO_UP));
+    core->getLib()->aPlaySound(arcade::EVIL_SHOOT);
     }
-
 }
