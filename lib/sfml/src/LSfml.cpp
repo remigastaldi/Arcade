@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Fri Apr 07 17:14:24 2017 gastal_r
+** Last update	Fri Apr 07 18:14:53 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -348,7 +348,7 @@ arcade::CommandType   LSfml::aCommand()
   {
     switch (_event.key.code)
     {
-      case sf::Keyboard::LShift :
+      case sf::Keyboard::S :
         return (arcade::CommandType::GO_FORWARD);
       case sf::Keyboard::Escape :
         return (arcade::CommandType::ESCAPE);
