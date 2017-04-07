@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Fri Apr 07 16:49:14 2017 gastal_r
+** Last update	Fri Apr 07 17:14:30 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -440,6 +440,8 @@ arcade::CommandType   LOpengl::aCommand()
   {
     switch (_event.key.code)
     {
+      case sf::Keyboard::LShift :
+        return (arcade::CommandType::GO_FORWARD);
       case sf::Keyboard::Escape :
         return (arcade::CommandType::ESCAPE);
       case sf::Keyboard::Space :
