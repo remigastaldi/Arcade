@@ -93,7 +93,7 @@ void          Core::chooseGameMenu()
 void            Core::startCore()
 {
   _graph->aInit(this, WIDTH, HEIGHT);
-  _graph->aPlayMusic(CORE_RES "sounds/menu_music.ogg");
+  _graph->aPlayMusic(CORE_RES "sounds/menu_music.wav");
   setGuiData();
   _save.loadPlayerSave();
   _player = getName(*this);
@@ -127,7 +127,7 @@ void            Core::coreLoop()
         switchGame(arcade::CommandType::PREV_GAME);
         break;
       case arcade::CommandType::MENU :
-        _graph->aPlayMusic(CORE_RES "sounds/menu_music.ogg");
+        _graph->aPlayMusic(CORE_RES "sounds/menu_music.wav");
         _game->close();
         delete(_game);
         _game = 0;
@@ -229,7 +229,7 @@ std::vector<std::string> Core::getSounds()
   sounds.push_back(CORE_RES "sounds/enemy_shoot.wav");
   sounds.push_back(CORE_RES "sounds/coin.wav");
   sounds.push_back(CORE_RES "sounds/explosion.wav");
-  sounds.push_back(CORE_RES "sounds/select.ogg");
+  sounds.push_back(CORE_RES "sounds/select.wav");
   return (sounds);
 }
 

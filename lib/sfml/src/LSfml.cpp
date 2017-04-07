@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Fri Apr 07 15:25:38 2017 gastal_r
+** Last update	Fri Apr 07 16:48:48 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -350,6 +350,8 @@ arcade::CommandType   LSfml::aCommand()
     {
       case sf::Keyboard::Escape :
         return (arcade::CommandType::ESCAPE);
+      case sf::Keyboard::Space :
+        return (arcade::CommandType::SHOOT);
       case sf::Keyboard::Up :
         return (arcade::CommandType::GO_UP);
       case sf::Keyboard::Down :

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Fri Apr 07 15:29:13 2017 gastal_r
+** Last update	Fri Apr 07 16:49:14 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -442,6 +442,8 @@ arcade::CommandType   LOpengl::aCommand()
     {
       case sf::Keyboard::Escape :
         return (arcade::CommandType::ESCAPE);
+      case sf::Keyboard::Space :
+        return (arcade::CommandType::SHOOT);
       case sf::Keyboard::Up :
         _dir = arcade::CommandType::GO_UP;
         return (arcade::CommandType::GO_UP);

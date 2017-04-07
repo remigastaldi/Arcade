@@ -164,12 +164,12 @@ const std::string     Gui::chooseGame(arcade::ICore &core)
       else if (cmd == arcade::CommandType::NEXT_LIB)
         {
           core.switchLib(arcade::CommandType::NEXT_LIB);
-          _graph->aPlayMusic(CORE_RES "sounds/menu_music.ogg");
+          _graph->aPlayMusic(CORE_RES "sounds/menu_music.wav");
         }
       else if (cmd == arcade::CommandType::PREV_LIB)
       {
         core.switchLib(arcade::CommandType::PREV_LIB);
-        _graph->aPlayMusic(CORE_RES "sounds/menu_music.ogg");
+        _graph->aPlayMusic(CORE_RES "sounds/menu_music.wav");
       }
       if (cmd == arcade::CommandType::GO_UP)
         (i == 0 ? i = _games.size() - 1: i--);
