@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-// Last update Fri Apr  7 17:11:52 2017 sellet_f
+** Last update Fri Apr 07 17:55:57 2017 Leo Hubert Froideval
 */
 
 #include        "LSolarFox.hpp"
@@ -61,8 +61,7 @@ void			LSolarFox::initGame(bool lPDM)
   _lPDM = lPDM;
   srand(time(NULL));
 
-  if ((_map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap) + (MAP_HEIGHT * MAP_WIDTH * sizeof(arcade::TileType)))) == NULL)
-    throw arcade::Exception("Malloc failed\n");
+  _map = new arcade::GetMap[(MAP_HEIGHT * MAP_WIDTH * sizeof(arcade::TileType))];
   _map->type = arcade::CommandType::GO_UP;
   _map->width = MAP_WIDTH;
   _map->height = MAP_HEIGHT;
@@ -237,23 +236,22 @@ void			LSolarFox::gameOver(void)
 
 void			LSolarFox::lPDM_getMap() const
 {
-  write(1, _map, sizeof(arcade::GetMap) + (_map->width * _map->height * sizeof(arcade::TileType)));
+  std::cout.write(reinterpret_cast<char *>(_map), sizeof(arcade::GetMap) + (_map->width * _map->height * sizeof(arcade::TileType)));
 }
 
 void			LSolarFox::lPDM_whereAmI()
 {
-  arcade::WhereAmI	*snake;
+  arcade::WhereAmI	*solarfox;
   int			length;
 
   length = 1;
-  if ((snake = (arcade::WhereAmI *)malloc(sizeof(arcade::WhereAmI) + (length * sizeof(arcade::Position)))) == NULL)
-    return ;
-  snake->type = _map->type;
-  snake->lenght = length;
-  snake->position[0].x = _ship.getX();
-  snake->position[0].y = _ship.getY();
-  write(1, snake, sizeof(arcade::WhereAmI) + (length * sizeof(arcade::Position)));
-  free(snake);
+  solarfox = new arcade::WhereAmI[(length * sizeof(arcade::Position))];
+  solarfox->type = _map->type;
+  solarfox->lenght = length;
+  solarfox->position[0].x = _ship.getX();
+  solarfox->position[0].y = _ship.getY();
+  std::cout.write(reinterpret_cast<char *>(solarfox), sizeof(arcade::WhereAmI) + (length * sizeof(arcade::Position)));
+  delete(solarfox);
 }
 
 void			LSolarFox::lPDM_start()

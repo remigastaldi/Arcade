@@ -23,7 +23,7 @@ Ship::Ship(unsigned int x, unsigned int y)
 {
   _x = x;
   _y = y;
-  _speed = 3;
+  _speed = 9;
   _direction = arcade::CommandType::GO_UP;
   _it = 10;
 }
