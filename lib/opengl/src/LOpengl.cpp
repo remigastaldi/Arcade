@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Fri Apr 07 18:14:47 2017 gastal_r
+** Last update	Fri Apr 07 18:41:40 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -142,8 +142,6 @@ void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, arcad
 
   if (type == arcade::TileType::OTHER || type == arcade::TileType::SHIP)
   {
-      //_xView = -((x - 26.0) * 10.0) - dx;
-      //_yView = -((y - 26.0) * 10.0) + dy;
     _xView = -((x - 26.0) * 15.0) - dx * 1.5;
     _yView = -((y - 26.0) * 15.0) + dy * 1.5;
   }
@@ -182,14 +180,16 @@ void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, arcad
       break;
     case arcade::TileType::EVIL_SHOOT :
       loadVertex("EVIL_SHOOT");
-      sf::Texture::bind(&_evilDudeTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 10);
+      sf::Texture::bind(&_evilShootTex);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 8);
+      checkRotation(dir);
       glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("EVIL_SHOOT") / 5);
       break;
     case arcade::TileType::MY_SHOOT :
       loadVertex("MY_SHOOT");
       sf::Texture::bind(&_myShootTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 25);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 8);
+      checkRotation(dir);
       glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("MY_SHOOT") / 5);
       break;
     case arcade::TileType::POWERUP :

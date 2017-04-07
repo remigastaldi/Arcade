@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update Fri Apr 07 18:13:13 2017 Leo Hubert Froideval
+** Last update	Fri Apr 07 18:43:36 2017 gastal_r
 */
 
 #include        "LSolarFox.hpp"
@@ -45,7 +45,7 @@ void			LSolarFox::initTextures(void)
   _core->getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, SOLAR_RES "img/wall3.png", arcade::Color::A_MAGENTA);
   _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, SOLAR_RES "img/mooncat.jpg", arcade::Color::A_MAGENTA);
   _core->getLib()->aAssignTexture(arcade::TileType::EVIL_DUDE, SOLAR_RES "img/wall.png", arcade::Color::A_BLUE);
-  _core->getLib()->aAssignTexture(arcade::TileType::EVIL_SHOOT, SOLAR_RES "img/wall3.png", arcade::Color::A_BLUE);
+  _core->getLib()->aAssignTexture(arcade::TileType::EVIL_SHOOT, SOLAR_RES "img/wall.png", arcade::Color::A_RED);
 }
 
 void			LSolarFox::initGame(bool lPDM)
