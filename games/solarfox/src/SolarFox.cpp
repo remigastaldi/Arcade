@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Fri Apr 07 21:05:46 2017 gastal_r
+** Last update	Fri Apr 07 21:59:17 2017 gastal_r
 */
 
 #include        "LSolarFox.hpp"
@@ -51,9 +51,9 @@ void			LSolarFox::initTextures(void)
 void			LSolarFox::initGame(bool lPDM)
 {
   std::ifstream		file(SOLAR_RES "map/level_moul.map");
-  int			sizeLine;
   std::string		content;
   std::string		line;
+  int			sizeLine;
   int			j;
 
   j = -1;
@@ -148,22 +148,24 @@ void    LSolarFox::move()
 {
   int	colisions;
 
+  _missile.move();
+  _ship.move(_map);
   for (std::vector<EnemyMissile>::iterator it = _enemyMissile.begin() ; it != _enemyMissile.end() ; ++it)
     {
       colisions = it->move(_missile, _ship);
       if (colisions == SHIP_DESTROYED)
-	{
-	  _enemyMissile.erase(it);
-	  gameOver();
-	}
+	     {
+	        it = _enemyMissile.erase(it);
+          it = it--;
+	        gameOver();
+	      }
       else if (colisions == MISSILE_DESTROYED)
-	{
-	  _missile.empty();
-	  _enemyMissile.erase(it);
-	}
+	     {
+	      _missile.empty();
+	      it = _enemyMissile.erase(it);
+        it == it--;
+	     }
     }
-  _ship.move(_map);
-  _missile.move();
   for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
     it->move(_enemyMissile);
 }

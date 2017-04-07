@@ -38,27 +38,8 @@ void	EnemyMissile::print(arcade::ICore *core)
 
 bool	EnemyMissile::checkColisions(arcade::CommandType direction, Object obj)
 {
-  switch (direction)
-    {
-    case arcade::CommandType::GO_UP :
-      if ((obj.getX() == _x && obj.getY() == _y) || (obj.getX() == _x && obj.getY() - 1 == _y))
-	return (true);
-      break;
-    case arcade::CommandType::GO_DOWN :
-      if ((obj.getX() == _x && obj.getY() == _y) || (obj.getX() == _x && obj.getY() + 1 == _y))
-	return (true);
-      break;
-    case arcade::CommandType::GO_LEFT :
-      if ((obj.getX() == _x && obj.getY() == _y) || (obj.getX() == _x - 1 && obj.getY()  == _y))
-	return (true);
-      break;
-    case arcade::CommandType::GO_RIGHT :
-      if ((obj.getX() == _x && obj.getY() == _y) || (obj.getX() == _x + 1 && obj.getY() == _y))
-	return (true);
-      break;
-    default:
-      break;
-    }
+  if (obj.getX() == _x && obj.getY() == _y)
+    return (true);
   return (false);
 }
 
@@ -66,34 +47,34 @@ int	EnemyMissile::move(Missile missile, Ship ship)
 {
   if (checkAction(false))
     {
-      if (checkColisions(_direction, ship) == true)
-	return (SHIP_DESTROYED);
-      else if (checkColisions(_direction, missile) == true)
-	return (MISSILE_DESTROYED);
       switch (_direction)
-	{
-	case arcade::CommandType::GO_UP :
-	  if (_y == 1)
-	    return (MISSILE_DESTROYED);
-	  _y -= 1;
-	  break;
-	case arcade::CommandType::GO_DOWN :
-	  if (_y == 39)
-	    return (MISSILE_DESTROYED);
-	  _y += 1;
-	  break;
-	case arcade::CommandType::GO_LEFT :
-	  if (_x == 1)
-	    return (MISSILE_DESTROYED);
-	  _x -= 1;
-	  break;
-	case arcade::CommandType::GO_RIGHT :
-	  if (_x == 39)
-	    return (MISSILE_DESTROYED);
-	  _x += 1;
-	default:
-	  break;
-	}
+    	{
+    	case arcade::CommandType::GO_UP :
+    	  if (_y == 1)
+    	    return (MISSILE_DESTROYED);
+    	  _y -= 1;
+    	  break;
+    	case arcade::CommandType::GO_DOWN :
+    	  if (_y == 39)
+    	    return (MISSILE_DESTROYED);
+    	  _y += 1;
+    	  break;
+    	case arcade::CommandType::GO_LEFT :
+    	  if (_x == 1)
+    	    return (MISSILE_DESTROYED);
+    	  _x -= 1;
+    	  break;
+    	case arcade::CommandType::GO_RIGHT :
+    	  if (_x == 39)
+    	    return (MISSILE_DESTROYED);
+    	  _x += 1;
+    	default:
+    	  break;
+    	}
     }
+    if (checkColisions(_direction, ship) == true)
+     return (SHIP_DESTROYED);
+    else if (checkColisions(_direction, missile) == true)
+     return (MISSILE_DESTROYED);
   return (0);
 }
