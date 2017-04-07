@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Thu Apr 06 22:11:15 2017 gastal_r
+** Last update	Fri Apr 07 13:39:15 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -27,7 +27,7 @@ void            LOpengl::aInit(arcade::ICore *core, size_t width, size_t height)
 
   _freakyFont.loadFromFile("lib/res/fonts/freaky_font.ttf");
   _pressStartFont.loadFromFile("lib/res/fonts/press_start.ttf");
-  loadSounds();
+  _sound.loadSounds(core->getSounds());
 
   contextSettings.depthBits = 24;
   _win.create(sf::VideoMode(width, height),"Arcade",  sf::Style::Fullscreen, contextSettings);
@@ -297,79 +297,6 @@ void            *LOpengl::aGetTexture(const std::string &path)
   if (!texture->loadFromFile(path))
     throw arcade::Exception("Failed to load ", path);
   return (texture);
-}
-
-void          LOpengl::loadSounds()
-{
-  std::vector<std::string> path = _core->getSounds();
-
-  int i = 0;
-  for (std::vector<std::string>::const_iterator it = path.begin(); it != path.end(); ++it)
-  {
-    switch (i)
-    {
-      case 0 :
-        if (!_newGameSound.loadFromFile(*it))
-          std::cerr << "Failed to load " << *it << std::endl;
-      break;
-      case 1 :
-        if (!_gameOverSound.loadFromFile(*it))
-          std::cerr << "Failed to load " << *it << std::endl;
-      break;
-      case 2 :
-        if (!_myShootSound.loadFromFile(*it))
-          std::cerr << "Failed to load " << *it << std::endl;
-      break;
-      case 3 :
-        if (!_evilShootSound.loadFromFile(*it))
-          std::cerr << "Failed to load " << *it << std::endl;
-      break;
-      case 4 :
-        if (!_powerupSound.loadFromFile(*it))
-          std::cerr << "Failed to load " << *it << std::endl;
-      break;
-      case 5 :
-        if (!_explosionSound.loadFromFile(*it))
-          std::cerr << "Failed to load " << *it << std::endl;
-      break;
-      case 6 :
-        if (!_otherSound.loadFromFile(*it))
-          std::cerr << "Failed to load " << *it << std::endl;
-      break;
-    }
-    ++i;
-  }
-}
-
-void          LOpengl::aPlaySound(arcade::Sound soundBuffer)
-{
-  sf::Sound sound;
-
-  switch (soundBuffer)
-  {
-    case arcade::NEW_GAME :
-      sound.setBuffer(_newGameSound);
-    break;
-    case arcade::GAME_OVER :
-      sound.setBuffer(_gameOverSound);
-    break;
-    case arcade::MY_SHOOT :
-      sound.setBuffer(_myShootSound);
-    break;
-    case arcade::EVIL_SHOOT :
-      sound.setBuffer(_evilShootSound);
-    break;
-    case arcade::POWERUP :
-      sound.setBuffer(_powerupSound);
-    break;
-    case arcade::EXPLOSION :
-      sound.setBuffer(_explosionSound);
-    break;
-    case arcade::OTHER :
-      sound.setBuffer(_otherSound);
-    break;
-  }
-  sound.play();
 }
 
 void          LOpengl::aPlayMusic(const std::string &path)

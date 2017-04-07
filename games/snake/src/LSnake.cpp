@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Thu Apr 06 13:37:53 2017 gastal_r
+** Last update	Fri Apr 07 13:54:20 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -102,33 +102,6 @@ void			LSnake::printGame()
     _speed++;
   _core->getLib()->aTile(_apple.x, _apple.y, 0,arcade::TileType::POWERUP, arcade::CommandType::UNDEFINED);
 
-static int i = 10;
-static int j = 10;
-static int x = 5;
-static int k = 5;
-
-if (i == 10)
-{
-  _core->getLib()->aTile(x, 20, 4, arcade::TileType::MY_SHOOT, arcade::CommandType::GO_RIGHT);
-  x++;
-  if (x == 40)
-    x = 5;
-  i = 4;
-}
-else
-  i++;
-
-if (j == 10)
-{
-  _core->getLib()->aTile(k, 21, 8, arcade::TileType::MY_SHOOT, arcade::CommandType::GO_RIGHT);
-  k++;
-  if (k == 40)
-    k = 5;
-  j = 8;
-}
-else
-  j++;
-
 for (int i = 0 ; i < MAP_WIDTH * MAP_HEIGHT ; ++i)
   _core->getLib()->aTile((i % _map->width) + 1 , (i / _map->width) + 1, 0, _map->tile[i], arcade::CommandType::UNDEFINED);
 
@@ -189,6 +162,7 @@ bool			LSnake::checkNextTile(int y, int x)
 
   if (x == _apple.x - 1 && y == _apple.y - 1)
     {
+      _core->getLib()->aPlaySound(arcade::Sound::POWERUP);
       newApple();
       addQueue();
       addScore(10);

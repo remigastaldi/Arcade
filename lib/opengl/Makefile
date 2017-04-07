@@ -26,7 +26,8 @@ CXXFLAGS	+=    	-lm -lGL -L/usr/X11R6/lib -lGLEW -lXi -lXmu -lGLU
 
 NCNAME          =       ../lib_arcade_opengl.so
 NCSRC           =       src/LOpengl.cpp \
-			src/AObj.cpp
+			src/AObj.cpp	\
+			src/Sound.cpp
 NCOBJ           =       $(NCSRC:.cpp=.o)
 
 all             :	title $(NCNAME)

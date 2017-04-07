@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Thu Apr 06 22:09:04 2017 gastal_r
+** Last update	Fri Apr 07 13:44:19 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -114,6 +114,7 @@ void            Core::coreLoop()
 
   while (getStatus() == CONTINUE)
   {
+    _graph->aPlaySound(arcade::Sound::NEW_GAME);
     gameReturn = _game->play(*this);
     switch (gameReturn)
     {

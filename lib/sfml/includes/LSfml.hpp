@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:07:35 2017 gastal_r
-** Last update	Thu Apr 06 22:09:49 2017 gastal_r
+** Last update	Fri Apr 07 12:15:58 2017 gastal_r
 */
 
 #ifndef         _LSFML_HPP_
@@ -16,6 +16,7 @@
 #include        <thread>
 #include        <chrono>
 #include        "IGraph.hh"
+#include        "Sound.hpp"
 
 #define BLOCK_SFML 27.f
 
@@ -50,8 +51,7 @@ public:
   void          aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color);
   void          *aGetTexture(const std::string &);
 
-  void          loadSounds();
-  void          aPlaySound(arcade::Sound);
+  void          aPlaySound(arcade::Sound sound) {_sound.playSound(sound);}
   void          aPlayMusic(const std::string &);
 
   sf::Color     fillColor(arcade::Color);
@@ -71,6 +71,9 @@ private:
   arcade::ICore    *_core;
   sf::RenderWindow  _win;
 
+  Sound             _sound;
+  sf::Music         _music;
+
   sf::Event         _event;
   sf::Font          _freakyFont;
   sf::Font          _pressStartFont;
@@ -85,14 +88,6 @@ private:
   sf::Texture       _shipTex;
   sf::Texture       _otherTex;
 
-  sf::Music         _music;
-  sf::SoundBuffer   _newGameSound;
-  sf::SoundBuffer   _gameOverSound;
-  sf::SoundBuffer   _myShootSound;
-  sf::SoundBuffer   _evilShootSound;
-  sf::SoundBuffer   _powerupSound;
-  sf::SoundBuffer   _explosionSound;
-  sf::SoundBuffer   _otherSound;
 } ;
 
 #endif         /* !_LSFML_HPP_ */

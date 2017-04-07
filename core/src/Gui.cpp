@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 11:01:41 2017 gastal_r
-** Last update	Thu Apr 06 19:47:19 2017 gastal_r
+** Last update	Fri Apr 07 13:49:01 2017 gastal_r
 */
 
 #include        "Gui.hpp"
@@ -99,6 +99,7 @@ const std::string     Gui::getName(arcade::ICore &core)
                      WIDTH / 60, arcade::A_MAGENTA, "ENTER NAME");
     if (!input.empty())
     {
+      core.getLib()->aPlaySound(arcade::Sound::OTHER);
       if (input == "ESCAPE")
       {
         _status = EXIT;
@@ -154,6 +155,7 @@ const std::string     Gui::chooseGame(arcade::ICore &core)
   {
     if (cmd != arcade::CommandType::UNDEFINED)
     {
+      core.getLib()->aPlaySound(arcade::Sound::OTHER);
       if (cmd == arcade::CommandType::ESCAPE)
       {
         _status = EXIT;
@@ -225,6 +227,7 @@ void                  Gui::guiClearBestScores()
 
 void                  Gui::guiGameOver()
 {
+  _graph->aPlaySound(arcade::Sound::GAME_OVER);
   _graph->aClear();
   _graph->aPutText(pos_x(2.7), pos_y(2.25), arcade::Font::PRESS_START, WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
   _graph->aPutText(pos_x(2.8), pos_y(1.8), arcade::Font::PRESS_START, WIDTH / 100, arcade::Color::A_WHITE, "PRESS ENTER TO PLAY AGAIN.");

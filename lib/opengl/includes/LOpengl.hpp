@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:21 2017 gastal_r
-** Last update	Thu Apr 06 22:09:46 2017 gastal_r
+** Last update	Fri Apr 07 13:40:02 2017 gastal_r
 */
 
 #ifndef         _LOPENGL_HPP_
@@ -24,6 +24,7 @@
 #include        <cmath>
 #include        "IGraph.hh"
 #include        "AObj.hpp"
+#include        "Sound.hpp"
 
 class           LOpengl : public arcade::IGraph
 {
@@ -59,8 +60,7 @@ public:
   void          aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color);
   void          *aGetTexture(const std::string &);
 
-  void          loadSounds();
-  void          aPlaySound(arcade::Sound);
+  void          aPlaySound(arcade::Sound sound) {_sound.playSound(sound);}
   void          aPlayMusic(const std::string &);
 
   sf::Color     fillColor(arcade::Color);
@@ -93,14 +93,8 @@ private:
   sf::Texture        _shipTex;
   sf::Texture        _otherTex;
 
+  Sound              _sound;
   sf::Music          _music;
-  sf::SoundBuffer    _newGameSound;
-  sf::SoundBuffer    _gameOverSound;
-  sf::SoundBuffer    _myShootSound;
-  sf::SoundBuffer    _evilShootSound;
-  sf::SoundBuffer    _powerupSound;
-  sf::SoundBuffer    _explosionSound;
-  sf::SoundBuffer    _otherSound;
 
   float              _xView;
   float              _yView;

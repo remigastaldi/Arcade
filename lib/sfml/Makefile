@@ -24,7 +24,8 @@ CXXFLAGS	+=	-Wextra -Wall -W -fPIC -shared
 CXXFLAGS        +=      -lsfml-{graphics,window,system,audio}
 
 NCNAME          =       ../lib_arcade_sfml.so
-NCSRC           =       src/LSfml.cpp
+NCSRC           =       src/LSfml.cpp	\
+			src/Sound.cpp
 NCOBJ           =       $(NCSRC:.cpp=.o)
 
 all             :	title $(NCNAME)
