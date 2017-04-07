@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Fri Apr 07 13:44:19 2017 gastal_r
+** Last update	Fri Apr 07 19:48:11 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -125,6 +125,15 @@ void            Core::coreLoop()
         break;
       case arcade::CommandType::PREV_GAME :
         switchGame(arcade::CommandType::PREV_GAME);
+        break;
+      case arcade::CommandType::RESTART :
+        _game->close();
+        delete(_game);
+        _game = 0;
+        Dlclose(_gameHandle);
+        openGamesDir();
+        openLibsDir();
+        openGame(_currentGame);
         break;
       case arcade::CommandType::MENU :
         _graph->aPlayMusic(CORE_RES "sounds/menu_music.wav");

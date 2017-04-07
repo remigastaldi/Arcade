@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update Fri Apr 07 17:43:32 2017 Leo Hubert Froideval
+** Last update	Fri Apr 07 19:36:32 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -254,13 +254,20 @@ arcade::CommandType			LSnake::mainLoop()
 	      return(arcade::CommandType::NEXT_GAME);
 	    case arcade::CommandType::PREV_GAME :
 	      return(arcade::CommandType::PREV_GAME);
-	    default :
+      case arcade::CommandType::MENU :
+        _core->getLib()->aClearAnimBuffer();
+        _core->setScore(std::to_string(_score));
+        return (arcade::CommandType::MENU);
+      case arcade::CommandType::RESTART :
+        _core->getLib()->aClearAnimBuffer();
+        _core->setScore(std::to_string(_score));
+        return (arcade::CommandType::RESTART);
+      default :
 	      break;
 	    }
 
       if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 16)
     	{
-        //std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << '\n';
         changeAction();
         if (_speed == 10)
         {

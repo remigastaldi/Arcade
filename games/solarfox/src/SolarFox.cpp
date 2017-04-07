@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Fri Apr 07 18:43:36 2017 gastal_r
+** Last update	Fri Apr 07 19:36:42 2017 gastal_r
 */
 
 #include        "LSolarFox.hpp"
@@ -202,7 +202,15 @@ arcade::CommandType					LSolarFox::mainLoop(void)
 	  return (arcade::CommandType::PREV_GAME);
 	case arcade::CommandType::SHOOT :
 	  _ship.shoot(_missile);
-	default :
+	case arcade::CommandType::MENU :
+	  _core->getLib()->aClearAnimBuffer();
+	  _core->setScore(std::to_string(_score));
+	  return (arcade::CommandType::MENU);
+  case arcade::CommandType::RESTART :
+    _core->getLib()->aClearAnimBuffer();
+    _core->setScore(std::to_string(_score));
+    return (arcade::CommandType::RESTART);
+  default :
 	  break;
 	}
 

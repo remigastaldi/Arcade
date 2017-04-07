@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Fri Apr 07 19:22:59 2017 gastal_r
+** Last update	Fri Apr 07 19:27:55 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -476,6 +476,10 @@ arcade::CommandType   LOpengl::aCommand()
         return (arcade::CommandType::PREV_GAME);
       case sf::Keyboard::Num5 :
         return (arcade::CommandType::NEXT_GAME);
+      case sf::Keyboard::Num8 :
+        return (arcade::CommandType::RESTART);
+      case sf::Keyboard::Num9 :
+        return (arcade::CommandType::MENU);
       default :
         return (arcade::CommandType::UNDEFINED);
     }
