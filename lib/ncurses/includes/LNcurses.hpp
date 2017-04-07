@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:10:52 2017 gastal_r
-** Last update	Wed Apr 05 23:39:18 2017 gastal_r
+** Last update	Fri Apr 07 15:34:35 2017 gastal_r
 */
 
 #ifndef       _LNcurses_HPP_
@@ -13,8 +13,9 @@
 
 #include        <thread>
 #include        <chrono>
-#include      "IGraph.hh"
-#include      "Ncurses.hpp"
+#include        "IGraph.hh"
+#include        "Ncurses.hpp"
+#include        "Sound.hpp"
 
 class LNcurses : public arcade::IGraph
 {
@@ -58,9 +59,8 @@ public:
   void        aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color);
   void        *aGetTexture(const std::string &) {return (NULL);}
 
-  void        aAssignSound(arcade::Sound, const std::string &) {};
-  void        aPlaySound(arcade::Sound) {};
-  void        aPlayMusic(const std::string &) {};
+  void        aPlaySound(arcade::Sound sound) {_sound.playSound(sound);}
+  void        aPlayMusic(const std::string &path) {_sound.playMusic(path);}
 
   void        printText(size_t x, size_t y, int color, const std::string &str);
   void        aPutText(size_t, size_t, arcade::Font, size_t, arcade::Color, const std::string &);
@@ -75,7 +75,9 @@ public:
 
 private:
   std::vector<LNcurses::Data>      _data;
-  WINDOW	*_win;
+  WINDOW	 *_win;
+
+  Sound    _sound;
 
   NColor   _emptyColor;
   NColor   _blockColor;

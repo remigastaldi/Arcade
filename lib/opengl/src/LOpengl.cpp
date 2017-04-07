@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Fri Apr 07 13:39:15 2017 gastal_r
+** Last update	Fri Apr 07 15:29:13 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -297,17 +297,6 @@ void            *LOpengl::aGetTexture(const std::string &path)
   if (!texture->loadFromFile(path))
     throw arcade::Exception("Failed to load ", path);
   return (texture);
-}
-
-void          LOpengl::aPlayMusic(const std::string &path)
-{
-  _music.stop();
-
-  if (!_music.openFromFile(path))
-    std::cerr << "Unable to open " << path << std::endl;
-  _music.setVolume(60);
-  _music.play();
-  _music.setLoop(true);
 }
 
 sf::Color     LOpengl::fillColor(arcade::Color color)

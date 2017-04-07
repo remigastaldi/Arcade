@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:07:35 2017 gastal_r
-** Last update	Fri Apr 07 12:15:58 2017 gastal_r
+** Last update	Fri Apr 07 15:23:36 2017 gastal_r
 */
 
 #ifndef         _LSFML_HPP_
@@ -52,7 +52,7 @@ public:
   void          *aGetTexture(const std::string &);
 
   void          aPlaySound(arcade::Sound sound) {_sound.playSound(sound);}
-  void          aPlayMusic(const std::string &);
+  void          aPlayMusic(const std::string &path) {_sound.playMusic(path);}
 
   sf::Color     fillColor(arcade::Color);
   void          aPutText(size_t, size_t, arcade::Font,size_t, arcade::Color, const std::string &);
@@ -72,7 +72,6 @@ private:
   sf::RenderWindow  _win;
 
   Sound             _sound;
-  sf::Music         _music;
 
   sf::Event         _event;
   sf::Font          _freakyFont;

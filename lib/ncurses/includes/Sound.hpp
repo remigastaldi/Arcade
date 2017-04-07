@@ -5,46 +5,41 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Apr 07 10:40:32 2017 gastal_r
-** Last update	Fri Apr 07 15:28:14 2017 gastal_r
+** Last update	Fri Apr 07 15:38:05 2017 gastal_r
 */
 
 #ifndef       _SOUND_HPP_
 #define       _SOUND_HPP_
 
-#include      <SFML/Graphics.hpp>
-#include      <SFML/Audio.hpp>
+#include      <stdlib.h>
 #include      "IGraph.hh"
 
 class         Sound
 {
+  static int  System(const std::string &path) { return (system(path.c_str()));}
+
   class       Data
   {
   public:
     arcade::Sound       getType()  const {return(_type);}
     void                loadTypeSound(arcade::Sound, const std::string &);
-    void                playSound()
-    {
-      _sound.setBuffer(_soundBuffer);
-      _sound.play();
-    }
+    void                playSound();
 
   private:
     arcade::Sound       _type;
-    sf::SoundBuffer     _soundBuffer;
-    sf::Sound           _sound;
+    std::string         _path;
   };
 
 public:
   Sound() {};
-  virtual ~Sound() {};
+  virtual ~Sound();
 
   void    loadSounds(const std::vector<std::string> &path);
   void    playSound(arcade::Sound);
   void    playMusic(const std::string &);
 
 private:
-  std::vector<Sound::Data>  _data;
-  sf::Music                 _music;
+  std::vector<Sound::Data> _data;
 };
 
 

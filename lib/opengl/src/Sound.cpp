@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Apr 07 10:51:17 2017 gastal_r
-** Last update	Fri Apr 07 13:37:20 2017 gastal_r
+** Last update	Fri Apr 07 15:28:15 2017 gastal_r
 */
 
 #include        "Sound.hpp"
@@ -15,15 +15,6 @@ void            Sound::Data::loadTypeSound(arcade::Sound type, const std::string
   _type = type;
   if (!_soundBuffer.loadFromFile(path))
     std::cerr << "Failed to load " << path << std::endl;
-}
-
-void            Sound::playSound(arcade::Sound type)
-{
-  for (std::vector<Sound::Data>::iterator it = _data.begin(); it != _data.end(); ++it)
-  {
-    if (it->getType() == type)
-      it->playSound();
-  }
 }
 
 void            Sound::loadSounds(const std::vector<std::string> &path)
@@ -60,4 +51,24 @@ void            Sound::loadSounds(const std::vector<std::string> &path)
     _data.push_back(data);
     ++i;
   }
+}
+
+void            Sound::playSound(arcade::Sound type)
+{
+  for (std::vector<Sound::Data>::iterator it = _data.begin(); it != _data.end(); ++it)
+  {
+    if (it->getType() == type)
+      it->playSound();
+  }
+}
+
+void            Sound::playMusic(const std::string &path)
+{
+  _music.stop();
+
+  if (!_music.openFromFile(path))
+    std::cerr << "Unable to open " << path << std::endl;
+  _music.setVolume(80);
+  _music.play();
+  _music.setLoop(true);
 }

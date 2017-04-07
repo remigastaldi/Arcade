@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Thu Apr 06 18:40:56 2017 gastal_r
+** Last update	Fri Apr 07 15:04:57 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -16,7 +16,7 @@ LNcurses::LNcurses()
 LNcurses::~LNcurses()
 {}
 
-void        LNcurses::aInit(arcade::ICore *, size_t, size_t)
+void        LNcurses::aInit(arcade::ICore *core, size_t, size_t)
 {
   Ncurses::Newterm(NULL, stderr, stdin);
   Ncurses::Noecho();
@@ -44,6 +44,8 @@ void        LNcurses::aInit(arcade::ICore *, size_t, size_t)
   Ncurses::InitPair(14, COLOR_MAGENTA, COLOR_BLACK);
   Ncurses::InitPair(15, COLOR_CYAN, COLOR_BLACK);
   Ncurses::InitPair(16, COLOR_YELLOW, COLOR_BLACK);
+
+  _sound.loadSounds(core->getSounds());
 }
 
 void        LNcurses::aClose()

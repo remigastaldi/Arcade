@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Fri Apr 07 13:37:18 2017 gastal_r
+** Last update	Fri Apr 07 15:25:38 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -152,19 +152,6 @@ void            *LSfml::aGetTexture(const std::string &path)
     throw arcade::Exception("Failed to load ", path);
   return (texture);
 }
-
-void          LSfml::aPlayMusic(const std::string &path)
-{
-  //return;
-  _music.stop();
-
-  if (!_music.openFromFile(path))
-    std::cerr << "Unable to open " << path << std::endl;
-  _music.setVolume(80);
-  _music.play();
-  _music.setLoop(true);
-}
-
 
 sf::Color     LSfml::fillColor(arcade::Color color)
 {

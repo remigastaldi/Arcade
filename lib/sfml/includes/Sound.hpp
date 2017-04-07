@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Apr 07 10:40:32 2017 gastal_r
-** Last update	Fri Apr 07 13:29:58 2017 gastal_r
+** Last update	Fri Apr 07 15:24:10 2017 gastal_r
 */
 
 #ifndef       _SOUND_HPP_
@@ -39,10 +39,13 @@ public:
   virtual ~Sound() {};
 
   void    loadSounds(const std::vector<std::string> &path);
+
   void    playSound(arcade::Sound);
+  void    playMusic(const std::string &);
 
 private:
-  std::vector<Sound::Data> _data;
+  std::vector<Sound::Data>  _data;
+  sf::Music                 _music;
 };
 
 

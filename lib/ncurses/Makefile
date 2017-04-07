@@ -23,7 +23,8 @@ CXXFLAGS	+=	-I./includes -I../../common/
 CXXFLAGS	+=	-Wextra -Wall -W -fPIC -shared
 
 NCNAME          =       ../lib_arcade_ncurses.so
-NCSRC           =       src/LNcurses.cpp
+NCSRC           =       src/LNcurses.cpp	\
+			src/Sound.cpp
 NCOBJ           =       $(NCSRC:.cpp=.o)
 
 all             :	title $(NCNAME)

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:21 2017 gastal_r
-** Last update	Fri Apr 07 13:40:02 2017 gastal_r
+** Last update	Fri Apr 07 15:29:05 2017 gastal_r
 */
 
 #ifndef         _LOPENGL_HPP_
@@ -61,7 +61,7 @@ public:
   void          *aGetTexture(const std::string &);
 
   void          aPlaySound(arcade::Sound sound) {_sound.playSound(sound);}
-  void          aPlayMusic(const std::string &);
+  void          aPlayMusic(const std::string &path) {_sound.playMusic(path);}
 
   sf::Color     fillColor(arcade::Color);
   void          aPutText(size_t, size_t, arcade::Font, size_t, arcade::Color, const std::string &);

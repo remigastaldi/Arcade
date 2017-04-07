@@ -5,16 +5,30 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Apr 07 10:51:17 2017 gastal_r
-** Last update	Fri Apr 07 15:25:44 2017 gastal_r
+** Last update	Fri Apr 07 15:38:07 2017 gastal_r
 */
 
 #include        "Sound.hpp"
 
+Sound::~Sound()
+{
+  if (System("killall paplay") < 0)
+    std::cerr << "Cannot close current music" << '\n';
+};
+
 void            Sound::Data::loadTypeSound(arcade::Sound type, const std::string &path)
 {
   _type = type;
-  if (!_soundBuffer.loadFromFile(path))
-    std::cerr << "Failed to load " << path << std::endl;
+  _path = path;
+}
+
+void            Sound::playSound(arcade::Sound type)
+{
+  for (std::vector<Sound::Data>::iterator it = _data.begin(); it != _data.end(); ++it)
+  {
+    if (it->getType() == type)
+      it->playSound();
+  }
 }
 
 void            Sound::loadSounds(const std::vector<std::string> &path)
@@ -53,22 +67,24 @@ void            Sound::loadSounds(const std::vector<std::string> &path)
   }
 }
 
-void            Sound::playSound(arcade::Sound type)
+void           Sound::Data::playSound()
 {
-  for (std::vector<Sound::Data>::iterator it = _data.begin(); it != _data.end(); ++it)
-  {
-    if (it->getType() == type)
-      it->playSound();
-  }
+  std::string path("paplay ");
+
+  path += _path;
+  path += " &";
+  if (System(path) < 0)
+    std::cerr << "Cannot open " << _path << '\n';
 }
 
 void            Sound::playMusic(const std::string &path)
 {
-  _music.stop();
+  std::string tmp("paplay ");
 
-  if (!_music.openFromFile(path))
-    std::cerr << "Unable to open " << path << std::endl;
-  _music.setVolume(80);
-  _music.play();
-  _music.setLoop(true);
+  if (System("killall paplay") < 0)
+    std::cerr << "Cannot close current music" << '\n';
+  tmp += path;
+  tmp += " &";
+  if (System(tmp) < 0)
+    std::cerr << "Cannot open " << path << '\n';
 }
