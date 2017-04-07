@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:08:10 2017 gastal_r
-** Last update Fri Apr 07 17:04:54 2017 Leo Hubert Froideval
+** Last update Fri Apr 07 22:29:50 2017 Leo Hubert Froideval
 */
 
 #ifndef         _Lsolarfox_HPP_
@@ -43,6 +43,7 @@ public:
   void				lPDM_start();
 
 private:
+  int					_nbpower;
   bool				_lPDM;
   arcade::GetMap		*_map;
   Ship				_ship;
@@ -51,6 +52,7 @@ private:
   Missile			_missile;
   std::vector<EnemyShip>	_enemyShip;
   std::vector<EnemyMissile>	_enemyMissile;
+  arcade::CommandType             _exitStatus;
 };
 
 #endif          /* !_solarfox_HPP_ */

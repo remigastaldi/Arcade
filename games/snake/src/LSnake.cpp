@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Fri Apr 07 19:36:32 2017 gastal_r
+** Last update Fri Apr 07 22:35:50 2017 Leo Hubert Froideval
 */
 
 #include          "LSnake.hpp"
@@ -42,7 +42,7 @@ void			LSnake::initGame(bool lPDM)
   arcade::Position	head;
 
   _lPDM = lPDM;
-  srand(time(NULL));
+  std::srand(std::time(NULL));
   _map = new arcade::GetMap[(MAP_WIDTH * MAP_HEIGHT * sizeof(arcade::TileType))];
   _exitStatus = arcade::CommandType::UNDEFINED;
   _map->type = arcade::CommandType::GO_UP;

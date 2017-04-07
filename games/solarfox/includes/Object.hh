@@ -1,9 +1,9 @@
 //
 // Object.hh for Project-Master in /home/sellet_f/Projets/Tek2/Arcade
-// 
+//
 // Made by sellet_f
 // Login   <flavien.sellet@epitech.eu>
-// 
+//
 // Started on  Tue Apr  4 16:19:14 2017 sellet_f
 // Last update Fri Apr  7 15:22:57 2017 sellet_f
 //

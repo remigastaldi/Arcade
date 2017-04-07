@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Fri Apr 07 21:59:17 2017 gastal_r
+** Last update Fri Apr 07 22:30:53 2017 Leo Hubert Froideval
 */
 
 #include        "LSolarFox.hpp"
@@ -58,9 +58,11 @@ void			LSolarFox::initGame(bool lPDM)
 
   j = -1;
   _score = 0;
+  _nbpower = 0;
   _lPDM = lPDM;
-  srand(time(NULL));
+  std::srand(std::time(NULL));
 
+  _exitStatus = arcade::CommandType::UNDEFINED;
   _map = new arcade::GetMap[(MAP_HEIGHT * MAP_WIDTH * sizeof(arcade::TileType))];
   _map->type = arcade::CommandType::GO_UP;
   _map->width = MAP_WIDTH;
@@ -88,6 +90,7 @@ void			LSolarFox::initGame(bool lPDM)
 	    _map->tile[++j] = arcade::TileType::EMPTY;
 	    break;
 	  case '1' :
+      _nbpower++;
 	    _map->tile[++j] = arcade::TileType::POWERUP;
 	    break;
 	  case 'V' :
@@ -150,6 +153,19 @@ void    LSolarFox::move()
 
   _missile.move();
   _ship.move(_map);
+
+  if (_missile.getY() != 0 && _missile.getX() != 0)
+  {
+    if (_map->tile[_missile.getY() * MAP_WIDTH + _missile.getX()] == arcade::TileType::POWERUP)
+    {
+      _map->tile[_missile.getY() * MAP_WIDTH + _missile.getX()] = arcade::TileType::EMPTY;
+      _score += 10;
+      _core->setScore(std::to_string(_score));
+      _missile.setY(0);
+      _missile.setX(0);
+    }
+  }
+
   for (std::vector<EnemyMissile>::iterator it = _enemyMissile.begin() ; it != _enemyMissile.end() ; ++it)
     {
       colisions = it->move(_missile, _ship);
@@ -221,7 +237,11 @@ arcade::CommandType					LSolarFox::mainLoop(void)
       	{
           changeAction();
           move();
-	  printGame();
+	        printGame();
+          if (_exitStatus == arcade::CommandType::MENU || _exitStatus == arcade::CommandType::ESCAPE)
+          {
+      	    return (_exitStatus);
+          }
           t1 = std::chrono::high_resolution_clock::now();
         }
     }
@@ -242,7 +262,25 @@ void			LSolarFox::close(void)
 
 void			LSolarFox::gameOver(void)
 {
-  std::cout << "GAME OVER\n";
+  _core->getLib()->aClearAnimBuffer();
+  _core->setScore(std::to_string(_score));
+  _core->gameOver();
+  while (1)
+    {
+      _map->type = _core->getLib()->aCommand();
+      if (_map->type == arcade::CommandType::ESCAPE)
+      {
+        _core->saveScore(_score);
+        _exitStatus = arcade::CommandType::ESCAPE;
+        return;
+      }
+      if (_map->type == arcade::CommandType::PLAY)
+      {
+        _core->saveScore(_score);
+        _exitStatus = arcade::CommandType::MENU;
+        return;
+      }
+    }
 }
 
 void			LSolarFox::lPDM_getMap() const
