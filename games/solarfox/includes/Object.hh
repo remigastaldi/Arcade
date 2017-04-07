@@ -5,7 +5,7 @@
 // Login   <flavien.sellet@epitech.eu>
 // 
 // Started on  Tue Apr  4 16:19:14 2017 sellet_f
-// Last update Thu Apr  6 11:25:07 2017 sellet_f
+// Last update Thu Apr  6 22:36:53 2017 sellet_f
 //
 
 
@@ -32,6 +32,8 @@ public:
   arcade::CommandType	getDirection(void) const;
 
   bool			checkAction(bool);
+
+  // virtual void		move(void);
 protected:
   unsigned int		_x;
   unsigned int		_y;

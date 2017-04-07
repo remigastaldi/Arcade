@@ -5,7 +5,7 @@
 // Login   <flavien.sellet@epitech.eu>
 // 
 // Started on  Tue Apr  4 14:20:32 2017 sellet_f
-// Last update Wed Apr  5 03:14:10 2017 sellet_f
+// Last update Fri Apr  7 01:46:51 2017 sellet_f
 //
 
 #ifndef		_SHIP_HH_
@@ -19,7 +19,8 @@ public:
   Ship();
   ~Ship();
 
-  // bool	checkMove();
+  void	print(arcade::ICore *);
+  void	move(arcade::GetMap *);
 };
 
 #endif

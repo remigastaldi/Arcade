@@ -5,13 +5,14 @@
 // Login   <flavien.sellet@epitech.eu>
 // 
 // Started on  Tue Apr  4 16:14:47 2017 sellet_f
-// Last update Wed Apr  5 20:14:51 2017 sellet_f
+// Last update Fri Apr  7 02:43:37 2017 sellet_f
 //
 
 #ifndef		_ENEMYSHIP_HH_
 # define	_ENEMYSHIP_HH_
 
 # include	"Object.hh"
+# include	"EnemyMissile.hh"
 
 class		EnemyShip : public Object
 {
@@ -20,7 +21,8 @@ public:
   EnemyShip(unsigned int, unsigned int, arcade::CommandType);
   ~EnemyShip();
 
-  // bool	checkMove();
+  void	print(arcade::ICore *);
+  void	move(std::vector<EnemyMissile> &);
 };
 
 #endif

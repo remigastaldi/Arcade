@@ -5,7 +5,7 @@
 // Login   <flavien.sellet@epitech.eu>
 //
 // Started on  Tue Apr  4 17:48:07 2017 sellet_f
-// Last update Thu Apr  6 13:45:48 2017 sellet_f
+// Last update Thu Apr  6 22:40:08 2017 sellet_f
 //
 
 #include "Object.hh"
@@ -62,6 +62,8 @@ arcade::CommandType	Object::getDirection(void) const
 
 bool			Object::checkAction(bool canIcrement)
 {
+  if (_direction == arcade::CommandType::UNDEFINED)
+    return (false);
   if (_it == 10)
     {
       if (canIcrement)

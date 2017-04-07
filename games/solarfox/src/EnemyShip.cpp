@@ -5,14 +5,18 @@
 // Login   <flavien.sellet@epitech.eu>
 // 
 // Started on  Tue Apr  4 16:46:49 2017 sellet_f
-// Last update Wed Apr  5 20:14:40 2017 sellet_f
+// Last update Fri Apr  7 04:07:48 2017 sellet_f
 //
 
 #include "EnemyShip.hh"
 
 EnemyShip::EnemyShip()
 {
-
+  _x = 0;
+  _y = 0;
+  _speed = 4;
+  _it = 0;
+  _direction = arcade::CommandType::UNDEFINED;
 }
 
 EnemyShip::EnemyShip(unsigned int x, unsigned int y, arcade::CommandType direction)
@@ -26,4 +30,57 @@ EnemyShip::EnemyShip(unsigned int x, unsigned int y, arcade::CommandType directi
 
 EnemyShip::~EnemyShip()
 {
+}
+
+void		EnemyShip::print(arcade::ICore *core)
+{
+  if (checkAction(true) == true)
+    core->getLib()->aTile(_x + 1, _y + 1, _speed, arcade::TileType::EVIL_DUDE, _direction);
+}
+
+void		EnemyShip::move(std::vector<EnemyMissile> &enemyMissile)
+{
+  if (checkAction(false))
+    switch (_direction)
+      {
+      case arcade::CommandType::GO_UP :
+	if (_y == 1)
+	  _direction = arcade::CommandType::GO_DOWN;
+	else
+	  _y -= 1;
+	break;
+      case arcade::CommandType::GO_DOWN :
+	if (_y == 39)
+	  _direction = arcade::CommandType::GO_UP;
+	else
+	  _y += 1;
+	break;
+      case arcade::CommandType::GO_LEFT :
+	if (_x == 1)
+	  _direction = arcade::CommandType::GO_RIGHT;
+	else
+	  _x -= 1;
+	break;
+      case arcade::CommandType::GO_RIGHT :
+	if (_x == 39)
+	  _direction = arcade::CommandType::GO_LEFT;
+	else
+	  _x += 1;
+	break;
+      default:
+	break;
+      }
+  
+  if (rand() % 5000 < 200)
+    {
+      if (_x == 1 && (_direction == arcade::CommandType::GO_UP || _direction == arcade::CommandType::GO_DOWN))
+	enemyMissile.push_back(EnemyMissile(_x + 1, _y, arcade::CommandType::GO_RIGHT));
+      else if (_x == 39 && (_direction == arcade::CommandType::GO_UP || _direction == arcade::CommandType::GO_DOWN))
+	enemyMissile.push_back(EnemyMissile(_x - 1, _y, arcade::CommandType::GO_LEFT));
+      else if (_y == 1 && (_direction == arcade::CommandType::GO_LEFT || _direction == arcade::CommandType::GO_LEFT))
+	enemyMissile.push_back(EnemyMissile(_x, _y + 1, arcade::CommandType::GO_DOWN));
+      else if (_y == 39 && (_direction == arcade::CommandType::GO_LEFT || _direction == arcade::CommandType::GO_RIGHT))
+	enemyMissile.push_back(EnemyMissile(_x, _y - 1, arcade::CommandType::GO_UP));
+    }
+
 }

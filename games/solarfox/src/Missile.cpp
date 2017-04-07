@@ -5,10 +5,19 @@
 // Login   <flavien.sellet@epitech.eu>
 // 
 // Started on  Tue Apr  4 17:20:27 2017 sellet_f
-// Last update Tue Apr  4 19:01:54 2017 sellet_f
+// Last update Thu Apr  6 23:04:53 2017 sellet_f
 //
 
 #include "Missile.hh"
+
+Missile::Missile()
+{
+  _x = 0;
+  _y = 0;
+  _speed = 0;
+  _it = 0;
+  _direction = arcade::CommandType::UNDEFINED;
+}
 
 Missile::Missile(unsigned int x, unsigned int y, arcade::CommandType direction)
 {
@@ -22,4 +31,10 @@ Missile::Missile(unsigned int x, unsigned int y, arcade::CommandType direction)
 Missile::~Missile()
 {
 
+}
+
+void	Missile::print(arcade::ICore *core)
+{
+  if (checkAction(true) == true)
+    core->getLib()->aTile(_x + 1, _y + 1, _speed, arcade::TileType::MY_SHOOT, _direction);
 }

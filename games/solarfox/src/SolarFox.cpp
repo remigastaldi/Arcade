@@ -18,31 +18,16 @@ LSolarFox::~LSolarFox()
 {
 }
 
-#include <chrono>
-#include <thread>
 void		        LSolarFox::printGame(void)
 {
   _core->getLib()->aClear();
 
-  std::this_thread::sleep_for(std::chrono::milliseconds(100));
-
-  if (_missile.size() > 1)
-    for (std::vector<Missile>::iterator it = _missile.begin() ; it != _missile.end() - 1 ; ++it)
-      if ((*it).checkAction(true) == true)
-  	_core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, (*it).getSpeed(), arcade::TileType::MY_SHOOT, (*it).getDirection());
-
   if (_enemyMissile.size() > 1)
     for (std::vector<EnemyMissile>::iterator it = _enemyMissile.begin() ; it != _enemyMissile.end() - 1 ; ++it)
-      if ((*it).checkAction(true) == true)
-  	_core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, (*it).getSpeed(), arcade::TileType::EVIL_SHOOT, (*it).getDirection());
-
-  if (_ship.checkAction(true) == true)
-    _core->getLib()->aTile(_ship.getX() + 1, _ship.getY() + 1, _ship.getSpeed(), arcade::TileType::OTHER, _ship.getDirection());
-
+      it->print(_core);
+  _ship.print(_core);
   for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
-    if ((*it).checkAction(true) == true)
-      _core->getLib()->aTile((*it).getX() + 1, (*it).getY() + 1, (*it).getSpeed(), arcade::TileType::EVIL_DUDE, it->getDirection());
-
+    it->print(_core);
   for (unsigned int i = 0 ; i < 41 * 41 ; i++)
     _core->getLib()->aTile((i % _map->width) + 1, (i / _map->height) + 1, 0, _map->tile[i], arcade::CommandType::UNDEFINED);
 
@@ -54,10 +39,11 @@ void			LSolarFox::initTextures(void)
 {
   _core->getLib()->aAssignTexture(arcade::TileType::EMPTY, SOLAR_RES "img/floor2.png", arcade::Color::A_WHITE);
   _core->getLib()->aAssignTexture(arcade::TileType::BLOCK, SOLAR_RES "img/wall2.png", arcade::Color::A_RED);
-  _core->getLib()->aAssignTexture(arcade::TileType::OTHER, SOLAR_RES "img/tron.png", arcade::Color::A_BLACK);
+  _core->getLib()->aAssignTexture(arcade::TileType::SHIP, SOLAR_RES "img/ship.png", arcade::Color::A_BLACK);
   _core->getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, SOLAR_RES "img/wall3.png", arcade::Color::A_MAGENTA);
   _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, SOLAR_RES "img/mooncat.jpg", arcade::Color::A_MAGENTA);
   _core->getLib()->aAssignTexture(arcade::TileType::EVIL_DUDE, SOLAR_RES "img/wall.png", arcade::Color::A_BLUE);
+  _core->getLib()->aAssignTexture(arcade::TileType::EVIL_SHOOT, SOLAR_RES "img/wall3.png", arcade::Color::A_BLUE);
 }
 
 void			LSolarFox::initGame(bool lPDM)
@@ -79,7 +65,6 @@ void			LSolarFox::initGame(bool lPDM)
   _map->type = arcade::CommandType::GO_UP;
   _map->width = 41;
   _map->height = 41;
-
   if (file)
     {
       std::getline(file, line);
@@ -170,62 +155,11 @@ void			LSolarFox::changeAction()
 
 void    LSolarFox::move()
 {
-  if (_ship.checkAction(false))
-    switch (_ship.getDirection())
-      {
-      case (arcade::CommandType::GO_UP):
-	if (_map->tile[(_ship.getY() - 1) * 41 + _ship.getX()] != arcade::TileType::BLOCK)
-	  _ship.setY(_ship.getY() - 1);
-	break;
-      case (arcade::CommandType::GO_DOWN):
-	if (_map->tile[(_ship.getY() + 1) * 41 + _ship.getX()] != arcade::TileType::BLOCK)
-	  _ship.setY(_ship.getY() + 1);
-	break;
-      case (arcade::CommandType::GO_LEFT):
-	if (_map->tile[_ship.getY() * 41 + _ship.getX() - 1] != arcade::TileType::BLOCK)
-	  _ship.setX(_ship.getX() - 1);
-	break;
-      case (arcade::CommandType::GO_RIGHT):
-	if (_map->tile[_ship.getY() * 41 + _ship.getX() + 1] != arcade::TileType::BLOCK)
-	  _ship.setX(_ship.getX() + 1);
-	break;
-      default:
-	break;
-  }
-
+  _ship.move(_map);
+  for (std::vector<EnemyMissile>::iterator it = _enemyMissile.begin() ; it != _enemyMissile.end() ; ++it)
+    it->move(_missile, _ship);
   for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
-    {
-      if ((*it).checkAction(false))
-	switch ((*it).getDirection())
-	  {
-	  case arcade::CommandType::GO_UP :
-	    if ((*it).getY() == 1)
-	      (*it).setDirection(arcade::CommandType::GO_DOWN);
-	    else
-	      (*it).setY((*it).getY() - 1);
-	    break;
-	  case arcade::CommandType::GO_DOWN :
-	    if ((*it).getY() == 39)
-	      (*it).setDirection(arcade::CommandType::GO_UP);
-	    else
-	      (*it).setY((*it).getY() + 1);
-	    break;
-	  case arcade::CommandType::GO_LEFT :
-	    if ((*it).getX() == 1)
-	      (*it).setDirection(arcade::CommandType::GO_RIGHT);
-	    else
-	      (*it).setX((*it).getX() - 1);
-	    break;
-	  case arcade::CommandType::GO_RIGHT :
-	    if ((*it).getX() == 39)
-	      (*it).setDirection(arcade::CommandType::GO_LEFT);
-	    else
-	      (*it).setX((*it).getX() + 1);
-	    break;
-	  default:
-	    break;
-	}
-    }
+    it->move(_enemyMissile);
 }
 
 arcade::CommandType	LSolarFox::mainLoop(void)
@@ -242,7 +176,7 @@ arcade::CommandType	LSolarFox::mainLoop(void)
       lastCommand = _core->getLib()->aCommand();
 
       if (lastCommand != arcade::CommandType::UNDEFINED)
-	       _map->type = lastCommand;
+	_map->type = lastCommand;
 
       switch(_map->type)
 	{

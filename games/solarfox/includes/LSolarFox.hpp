@@ -30,26 +30,26 @@ public:
   virtual ~LSolarFox ();
 
   arcade::CommandType		play(arcade::ICore &);
+  void				initTextures(void);
+  void				printGame(void);
+  void				changeAction();
   arcade::CommandType		mainLoop(void);
   void				initGame(bool);
   void				close(void);
-  void				initTextures(void);
-  void				changeAction();
-  void        move();
-  void				printGame(void);
+  void			        move();
 
   void				lPDM_getMap() const;
   void				lPDM_whereAmI();
   void				lPDM_start();
 
 private:
-  int				_score;
-  arcade::ICore			*_core;
   bool				_lPDM;
   arcade::GetMap		*_map;
   Ship				_ship;
+  int				_score;
+  arcade::ICore			*_core;
+  Missile			_missile;
   std::vector<EnemyShip>	_enemyShip;
-  std::vector<Missile>		_missile;
   std::vector<EnemyMissile>	_enemyMissile;
 };
 
