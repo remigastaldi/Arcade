@@ -1,9 +1,9 @@
 //
 // Missile.cpp for Project-Master in /home/sellet_f/Projets/Tek2/Arcade
-// 
+//
 // Made by sellet_f
 // Login   <flavien.sellet@epitech.eu>
-// 
+//
 // Started on  Tue Apr  4 17:20:27 2017 sellet_f
 // Last update Thu Apr  6 23:04:53 2017 sellet_f
 //
@@ -23,6 +23,7 @@ Missile::Missile(unsigned int x, unsigned int y, arcade::CommandType direction)
 {
   _x = x;
   _y = y;
+  _moves = 6;
   _speed = 10;
   _direction = direction;
   _it = 10;

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update Fri Apr 07 11:16:40 2017 Leo Hubert Froideval
+** Last update Fri Apr 07 17:04:30 2017 Leo Hubert Froideval
 */
 
 #include        "LSolarFox.hpp"
@@ -24,11 +24,21 @@ void		        LSolarFox::printGame(void)
 
   if (_enemyMissile.size() > 1)
     for (std::vector<EnemyMissile>::iterator it = _enemyMissile.begin() ; it != _enemyMissile.end() - 1 ; ++it)
-      it->print(_core);
+    {
+      if (it->getMoves() == 0)
+      {
+        it = _enemyMissile.erase(it);
+        it--;
+      }
+      else
+      {
+        it->print(_core);
+      }
+    }
   _ship.print(_core);
   for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
     it->print(_core);
-  for (unsigned int i = 0 ; i < 41 * 41 ; i++)
+  for (unsigned int i = 0 ; i < MAP_HEIGHT * MAP_WIDTH; i++)
     _core->getLib()->aTile((i % _map->width) + 1, (i / _map->height) + 1, 0, _map->tile[i], arcade::CommandType::UNDEFINED);
 
   _core->refreshGui();
@@ -60,11 +70,11 @@ void			LSolarFox::initGame(bool lPDM)
   _lPDM = lPDM;
   srand(time(NULL));
 
-  if ((_map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap) + (41 * 41 * sizeof(arcade::TileType)))) == NULL)
+  if ((_map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap) + (MAP_HEIGHT * MAP_WIDTH * sizeof(arcade::TileType)))) == NULL)
     throw arcade::Exception("Malloc failed\n");
   _map->type = arcade::CommandType::GO_UP;
-  _map->width = 41;
-  _map->height = 41;
+  _map->width = MAP_WIDTH;
+  _map->height = MAP_HEIGHT;
   if (file)
     {
       std::getline(file, line);
@@ -128,22 +138,22 @@ void			LSolarFox::changeAction()
     {
     case (arcade::CommandType::GO_UP):
       if (direction != arcade::CommandType::GO_DOWN &&
-	  _map->tile[(_ship.getY() - 1) * 41 + _ship.getX()] != arcade::TileType::BLOCK)
+	  _map->tile[(_ship.getY() - 1) * MAP_WIDTH + _ship.getX()] != arcade::TileType::BLOCK)
 	direction = arcade::CommandType::GO_UP;
       break;
     case (arcade::CommandType::GO_DOWN):
       if (direction != arcade::CommandType::GO_UP &&
-	  _map->tile[(_ship.getY() + 1) * 41 + _ship.getX()] != arcade::TileType::BLOCK)
+	  _map->tile[(_ship.getY() + 1) * MAP_WIDTH + _ship.getX()] != arcade::TileType::BLOCK)
 	direction = arcade::CommandType::GO_DOWN;
       break;
     case (arcade::CommandType::GO_LEFT):
       if (direction != arcade::CommandType::GO_RIGHT &&
-	  _map->tile[_ship.getY() * 41 + _ship.getX() - 1] != arcade::TileType::BLOCK)
+	  _map->tile[_ship.getY() * MAP_WIDTH + _ship.getX() - 1] != arcade::TileType::BLOCK)
 	direction = arcade::CommandType::GO_LEFT;
       break;
     case (arcade::CommandType::GO_RIGHT):
       if (direction != arcade::CommandType::GO_LEFT &&
-	  _map->tile[_ship.getY() * 41 + _ship.getX() + 1] != arcade::TileType::BLOCK)
+	  _map->tile[_ship.getY() * MAP_WIDTH + _ship.getX() + 1] != arcade::TileType::BLOCK)
 	direction = arcade::CommandType::GO_RIGHT;
       break;
     default:
