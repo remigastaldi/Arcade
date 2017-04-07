@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Fri Apr 07 18:41:40 2017 gastal_r
+** Last update	Fri Apr 07 19:22:59 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -175,7 +175,13 @@ void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, arcad
     case arcade::TileType::EVIL_DUDE :
       loadVertex("EVIL_DUDE");
       sf::Texture::bind(&_evilDudeTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 10);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
+      if (x == 40)
+        glRotatef(-180.f, 0.f, 0.f, 1.f);
+      else if (y == 2)
+        glRotatef(-90.f, 0.f, 0.f, 1.f);
+      else if (y == 40)
+        glRotatef(90.f, 0.f, 0.f, 1.f);
       glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("EVIL_DUDE") / 5);
       break;
     case arcade::TileType::EVIL_SHOOT :
