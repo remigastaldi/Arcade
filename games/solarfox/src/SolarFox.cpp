@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Thu Apr 06 14:15:22 2017 gastal_r
+** Last update Fri Apr 07 11:16:40 2017 Leo Hubert Froideval
 */
 
 #include        "LSolarFox.hpp"
@@ -48,7 +48,7 @@ void			LSolarFox::initTextures(void)
 
 void			LSolarFox::initGame(bool lPDM)
 {
-  std::ifstream		file(SOLAR_RES "map/level_1.map");
+  std::ifstream		file(SOLAR_RES "map/level_moul.map");
   EnemyShip		enemyShip;
   int			sizeLine;
   std::string		content;
