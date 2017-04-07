@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:10:52 2017 gastal_r
-** Last update	Fri Apr 07 15:34:35 2017 gastal_r
+** Last update	Fri Apr 07 16:02:28 2017 gastal_r
 */
 
 #ifndef       _LNcurses_HPP_
@@ -46,7 +46,7 @@ class LNcurses : public arcade::IGraph
 
 public:
   LNcurses ();
-  virtual ~LNcurses ();
+  virtual ~LNcurses () {};
 
   void        aInit(arcade::ICore *, size_t, size_t);
   void        aClose();
@@ -76,6 +76,7 @@ public:
 private:
   std::vector<LNcurses::Data>      _data;
   WINDOW	 *_win;
+  bool      _init;
 
   Sound    _sound;
 

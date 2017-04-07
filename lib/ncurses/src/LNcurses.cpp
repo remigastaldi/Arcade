@@ -5,16 +5,16 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Fri Apr 07 15:04:57 2017 gastal_r
+** Last update	Fri Apr 07 16:03:28 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
 
 LNcurses::LNcurses()
-{}
-
-LNcurses::~LNcurses()
-{}
+{
+  _win = 0;
+  _init = false;
+}
 
 void        LNcurses::aInit(arcade::ICore *core, size_t, size_t)
 {
@@ -308,6 +308,11 @@ std::string   LNcurses::aChar()
 {
   std::string input;
 
+  if (_init == false)
+  {
+    _init = true;
+    return ("BACKSPACE");
+  }
   Ncurses::Nodelay(stdscr, FALSE);
   int value = Ncurses::Getch();
   switch (value)
