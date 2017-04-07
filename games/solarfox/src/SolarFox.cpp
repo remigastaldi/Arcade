@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Fri Apr 07 22:45:33 2017 gastal_r
+** Last update	Fri Apr 07 22:51:41 2017 gastal_r
 */
 
 #include        "LSolarFox.hpp"
@@ -176,6 +176,7 @@ void    LSolarFox::move()
 	        it = _enemyMissile.erase(it);
           it = it--;
 	        gameOver();
+          return;
 	      }
       else if (colisions == MISSILE_DESTROYED)
 	     {
@@ -240,11 +241,9 @@ arcade::CommandType					LSolarFox::mainLoop(void)
       	{
           changeAction();
           move();
-	        printGame();
           if (_exitStatus == arcade::CommandType::MENU || _exitStatus == arcade::CommandType::ESCAPE)
-          {
       	    return (_exitStatus);
-          }
+          printGame();
           t1 = std::chrono::high_resolution_clock::now();
         }
     }
