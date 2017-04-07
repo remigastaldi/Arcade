@@ -5,7 +5,7 @@
 // Login   <flavien.sellet@epitech.eu>
 //
 // Started on  Tue Apr  4 16:21:08 2017 sellet_f
-// Last update Thu Apr  6 22:37:33 2017 sellet_f
+// Last update Fri Apr  7 16:39:13 2017 sellet_f
 //
 
 #ifndef _MISSILE_HH_
@@ -23,6 +23,8 @@ public:
   ~Missile();
 
   void	print(arcade::ICore *);
+  void	empty(void);
+  void	move(void);
 };
 
 #endif

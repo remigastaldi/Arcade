@@ -5,7 +5,7 @@
 // Login   <flavien.sellet@epitech.eu>
 //
 // Started on  Tue Apr  4 16:22:15 2017 sellet_f
-// Last update Fri Apr  7 04:05:49 2017 sellet_f
+// Last update Fri Apr  7 15:35:39 2017 sellet_f
 //
 
 #ifndef _ENEMYMISSILE_HH_
@@ -24,8 +24,8 @@ public:
   ~EnemyMissile();
 
   void	print(arcade::ICore *);
-  bool	move(Missile, Ship);
-  int		getMoves(void) const;
+  int	move(Missile, Ship);
+  bool	checkColisions(arcade::CommandType, Object);
 };
 
 #endif

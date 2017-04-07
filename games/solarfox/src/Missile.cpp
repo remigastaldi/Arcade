@@ -5,7 +5,7 @@
 // Login   <flavien.sellet@epitech.eu>
 //
 // Started on  Tue Apr  4 17:20:27 2017 sellet_f
-// Last update Thu Apr  6 23:04:53 2017 sellet_f
+// Last update Fri Apr  7 16:38:55 2017 sellet_f
 //
 
 #include "Missile.hh"
@@ -38,4 +38,34 @@ void	Missile::print(arcade::ICore *core)
 {
   if (checkAction(true) == true)
     core->getLib()->aTile(_x + 1, _y + 1, _speed, arcade::TileType::MY_SHOOT, _direction);
+}
+
+void	Missile::move(void)
+{
+  if (checkAction(false))
+    {
+      switch (_direction)
+	{
+	case arcade::CommandType::GO_UP :
+	  _y -= 1;
+	  break;
+	case arcade::CommandType::GO_DOWN :
+	  _y += 1;
+	  break;
+	case arcade::CommandType::GO_LEFT :
+	  _x -= 1;
+	  break;
+	case arcade::CommandType::GO_RIGHT :
+	  _x += 1;
+	default:
+	  break;
+	}
+    }
+}
+
+void	Missile::empty(void)
+{
+  _x = 0;
+  _y = 0;
+  _direction = arcade::CommandType::UNDEFINED;
 }
