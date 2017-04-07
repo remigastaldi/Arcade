@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:08:10 2017 gastal_r
-** Last update Fri Apr 07 22:29:50 2017 Leo Hubert Froideval
+** Last update	Fri Apr 07 23:13:51 2017 gastal_r
 */
 
 #ifndef         _Lsolarfox_HPP_
@@ -49,7 +49,7 @@ private:
   Ship				_ship;
   int				_score;
   arcade::ICore			*_core;
-  Missile			_missile;
+  std::vector<Missile>			_missile;
   std::vector<EnemyShip>	_enemyShip;
   std::vector<EnemyMissile>	_enemyMissile;
   arcade::CommandType             _exitStatus;

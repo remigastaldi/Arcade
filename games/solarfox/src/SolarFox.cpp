@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Fri Apr 07 22:51:41 2017 gastal_r
+** Last update	Sat Apr 08 00:40:48 2017 gastal_r
 */
 
 #include        "LSolarFox.hpp"
@@ -26,7 +26,8 @@ void		        LSolarFox::printGame(void)
     for (std::vector<EnemyMissile>::iterator it = _enemyMissile.begin() ; it != _enemyMissile.end() - 1 ; ++it)
       it->print(_core);
   _ship.print(_core);
-  _missile.print(_core);
+  for (std::vector<Missile>::iterator it = _missile.begin(); it != _missile.end(); ++it)
+    it->print(_core);
   for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
     it->print(_core);
 
@@ -151,40 +152,57 @@ void    LSolarFox::move()
 {
   int	colisions;
 
-  _missile.move();
+  for (std::vector<Missile>::iterator it = _missile.begin(); it != _missile.end(); ++it)
+    it->move();
   _ship.move(_map);
 
-  if (_missile.getY() != 0 && _missile.getX() != 0)
+  if (_missile.size() != 0)
   {
-    if (_map->tile[_missile.getY() * MAP_WIDTH + _missile.getX()] == arcade::TileType::POWERUP)
+    for (std::vector<Missile>::iterator it = _missile.begin(); it != _missile.end(); ++it)
     {
-      _map->tile[_missile.getY() * MAP_WIDTH + _missile.getX()] = arcade::TileType::EMPTY;
-      _score += 10;
-      _core->setScore(std::to_string(_score));
-      _missile.setY(0);
-      _missile.setX(0);
-      _core->getLib()->aPlaySound(arcade::Sound::POWERUP);
+      if (_map->tile[it->getY() * MAP_WIDTH + it->getX()] == arcade::TileType::POWERUP)
+      {
+        _map->tile[it->getY() * MAP_WIDTH + it->getX()] = arcade::TileType::EMPTY;
+        _score += 10;
+        _core->setScore(std::to_string(_score));
+        it->setY(0);
+        it->setX(0);
+        _core->getLib()->aPlaySound(arcade::Sound::POWERUP);
+      }
     }
   }
 
-  for (std::vector<EnemyMissile>::iterator it = _enemyMissile.begin() ; it != _enemyMissile.end() ; ++it)
+  if (_missile.size() == 0)
+  {
+    Missile missile;
+    missile.setX(0);
+    missile.setY(0);
+    _missile.push_back(missile);
+  }
+  for (std::vector<EnemyMissile>::iterator itE = _enemyMissile.begin() ; itE != _enemyMissile.end() ; ++itE)
     {
-      colisions = it->move(_missile, _ship);
-      if (colisions == SHIP_DESTROYED)
-	     {
-          _core->getLib()->aPlaySound(arcade::Sound::EXPLOSION);
-	        it = _enemyMissile.erase(it);
-          it = it--;
-	        gameOver();
-          return;
-	      }
-      else if (colisions == MISSILE_DESTROYED)
-	     {
-	      _missile.empty();
-	      it = _enemyMissile.erase(it);
-        it == it--;
-	     }
-    }
+      for (std::vector<Missile>::iterator it = _missile.begin(); it != _missile.end(); ++it)
+      {
+        colisions = itE->move(*it, _ship);
+        if (colisions == SHIP_DESTROYED)
+  	     {
+            _core->getLib()->aPlaySound(arcade::Sound::EXPLOSION);
+  	        itE = _enemyMissile.erase(itE);
+            itE = itE--;
+  	        gameOver();
+            return;
+  	      }
+        else if (colisions == MISSILE_DESTROYED)
+  	     {
+          it = _missile.erase(it);
+          it = it - 1;
+  	      itE = _enemyMissile.erase(itE);
+          itE == itE--;
+  	     }
+     }
+   }
+   if (_missile[0].getX() == 0 && _missile[0].getY() == 0)
+    _missile.clear();
   for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
     it->move(_core, _enemyMissile);
 }
@@ -192,8 +210,10 @@ void    LSolarFox::move()
 arcade::CommandType					LSolarFox::mainLoop(void)
 {
   std::chrono::high_resolution_clock::time_point	t1 = std::chrono::high_resolution_clock::now();
+  std::chrono::high_resolution_clock::time_point  m1 = std::chrono::high_resolution_clock::now();
   std::chrono::high_resolution_clock::time_point	t2;
   arcade::CommandType					lastCommand;
+
 
   initTextures();
   _core->setScore(std::to_string(_score));
@@ -203,9 +223,11 @@ arcade::CommandType					LSolarFox::mainLoop(void)
       lastCommand = _core->getLib()->aCommand();
 
       if (lastCommand != arcade::CommandType::UNDEFINED)
-	_map->type = lastCommand;
+	     _map->type = lastCommand;
 
-      switch(_map->type)
+
+  Missile missile;
+  switch(_map->type)
 	{
 	case arcade::CommandType::NEXT_LIB :
 	  _core->switchLib(arcade::CommandType::NEXT_LIB);
@@ -222,8 +244,13 @@ arcade::CommandType					LSolarFox::mainLoop(void)
 	case arcade::CommandType::PREV_GAME :
 	  return (arcade::CommandType::PREV_GAME);
 	case arcade::CommandType::SHOOT :
-	  _ship.shoot(_missile);
-    _core->getLib()->aPlaySound(arcade::Sound::MY_SHOOT);
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - m1).count() >= 200)
+    {
+  	  _ship.shoot(missile);
+      _missile.push_back(missile);
+      _core->getLib()->aPlaySound(arcade::Sound::MY_SHOOT);
+      m1 = std::chrono::high_resolution_clock::now();
+    }
     break;
 	case arcade::CommandType::MENU :
 	  _core->getLib()->aClearAnimBuffer();
@@ -290,9 +317,9 @@ void			LSolarFox::lPDM_getMap() const
   arcade::GetMap *map;
 
   map = _map;
-  if (_missile.getY() != 0 && _missile.getX() != 0)
+  if (_missile.size() != 0)
   {
-    map->tile[_missile.getY() * MAP_WIDTH + _missile.getX()] = arcade::TileType::MY_SHOOT;
+    map->tile[_missile.end()->getY() * MAP_WIDTH + _missile.end()->getX()] = arcade::TileType::MY_SHOOT;
   }
   std::cout.write(reinterpret_cast<char *>(map), sizeof(arcade::GetMap) + (_map->width * _map->height * sizeof(arcade::TileType)));
 }
@@ -316,6 +343,7 @@ void			LSolarFox::lPDM_start()
 {
   arcade::CommandType	command;
   arcade::CommandType	direction;
+  Missile missile;
 
   while (!std::cin.eof())
   {
@@ -331,7 +359,8 @@ void			LSolarFox::lPDM_start()
         lPDM_whereAmI();
         break;
       case (arcade::CommandType::SHOOT):
-         _ship.shoot(_missile);
+         _ship.shoot(missile);
+         _missile.push_back(missile);
         break;
       case (arcade::CommandType::GO_UP):
           direction = arcade::CommandType::GO_UP;
