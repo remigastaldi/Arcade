@@ -5,19 +5,17 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Apr 07 10:40:32 2017 gastal_r
-** Last update	Fri Apr 07 15:38:05 2017 gastal_r
+** Last update	Fri Apr 07 15:53:27 2017 gastal_r
 */
 
 #ifndef       _SOUND_HPP_
 #define       _SOUND_HPP_
 
-#include      <stdlib.h>
+#include      <cstdlib>
 #include      "IGraph.hh"
 
 class         Sound
 {
-  static int  System(const std::string &path) { return (system(path.c_str()));}
-
   class       Data
   {
   public:

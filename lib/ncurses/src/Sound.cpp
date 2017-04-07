@@ -5,14 +5,14 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Apr 07 10:51:17 2017 gastal_r
-** Last update	Fri Apr 07 15:38:07 2017 gastal_r
+** Last update	Fri Apr 07 15:54:06 2017 gastal_r
 */
 
 #include        "Sound.hpp"
 
 Sound::~Sound()
 {
-  if (System("killall paplay") < 0)
+  if (std::system("killall paplay") < 0)
     std::cerr << "Cannot close current music" << '\n';
 };
 
@@ -73,7 +73,7 @@ void           Sound::Data::playSound()
 
   path += _path;
   path += " &";
-  if (System(path) < 0)
+  if (std::system(path.c_str()) < 0)
     std::cerr << "Cannot open " << _path << '\n';
 }
 
@@ -81,10 +81,10 @@ void            Sound::playMusic(const std::string &path)
 {
   std::string tmp("paplay ");
 
-  if (System("killall paplay") < 0)
+  if (std::system("killall paplay") < 0)
     std::cerr << "Cannot close current music" << '\n';
   tmp += path;
   tmp += " &";
-  if (System(tmp) < 0)
+  if (std::system(tmp.c_str()) < 0)
     std::cerr << "Cannot open " << path << '\n';
 }
