@@ -5,7 +5,7 @@
 // Login   <flavien.sellet@epitech.eu>
 // 
 // Started on  Tue Apr  4 16:19:14 2017 sellet_f
-// Last update Thu Apr  6 22:36:53 2017 sellet_f
+// Last update Fri Apr  7 15:22:57 2017 sellet_f
 //
 
 
@@ -13,6 +13,9 @@
 # define	_OBJECT_HH_
 
 # include	"ICore.hh"
+
+# define	SHIP_DESTROYED 1
+# define	MISSILE_DESTROYED 2
 
 class			Object
 {

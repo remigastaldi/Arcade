@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update Fri Apr 07 17:04:30 2017 Leo Hubert Froideval
+** Last update Fri Apr 07 18:13:13 2017 Leo Hubert Froideval
 */
 
 #include        "LSolarFox.hpp"
@@ -24,20 +24,12 @@ void		        LSolarFox::printGame(void)
 
   if (_enemyMissile.size() > 1)
     for (std::vector<EnemyMissile>::iterator it = _enemyMissile.begin() ; it != _enemyMissile.end() - 1 ; ++it)
-    {
-      if (it->getMoves() == 0)
-      {
-        it = _enemyMissile.erase(it);
-        it--;
-      }
-      else
-      {
-        it->print(_core);
-      }
-    }
+      it->print(_core);
   _ship.print(_core);
+  _missile.print(_core);
   for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
     it->print(_core);
+
   for (unsigned int i = 0 ; i < MAP_HEIGHT * MAP_WIDTH; i++)
     _core->getLib()->aTile((i % _map->width) + 1, (i / _map->height) + 1, 0, _map->tile[i], arcade::CommandType::UNDEFINED);
 
@@ -59,7 +51,6 @@ void			LSolarFox::initTextures(void)
 void			LSolarFox::initGame(bool lPDM)
 {
   std::ifstream		file(SOLAR_RES "map/level_moul.map");
-  EnemyShip		enemyShip;
   int			sizeLine;
   std::string		content;
   std::string		line;
@@ -70,8 +61,7 @@ void			LSolarFox::initGame(bool lPDM)
   _lPDM = lPDM;
   srand(time(NULL));
 
-  if ((_map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap) + (MAP_HEIGHT * MAP_WIDTH * sizeof(arcade::TileType)))) == NULL)
-    throw arcade::Exception("Malloc failed\n");
+  _map = new arcade::GetMap[(MAP_HEIGHT * MAP_WIDTH * sizeof(arcade::TileType))];
   _map->type = arcade::CommandType::GO_UP;
   _map->width = MAP_WIDTH;
   _map->height = MAP_HEIGHT;
@@ -102,23 +92,14 @@ void			LSolarFox::initGame(bool lPDM)
 	    break;
 	  case 'V' :
 	    _map->tile[++j] = arcade::TileType::EMPTY;
-	    _ship.setX(i % _map->width);
-	    _ship.setY(i / _map->height);
-	    _ship.setSpeed(7);
-	    _ship.setIt(10);
-	    _ship.setDirection(arcade::CommandType::GO_UP);
+	    _ship = Ship(i % _map->width, i / _map->height);
 	    break;
 	  case 'E':
 	    _map->tile[++j] = arcade::TileType::EMPTY;
-	    enemyShip.setX(i % _map->width);
-	    enemyShip.setY(i / _map->height);
-	    enemyShip.setSpeed(7);
-	    enemyShip.setIt(10);
 	    if ((i % _map->width == 1 && i / _map->height == 1) || (i % _map->width == 39 && i / _map->height == 39))
-	      enemyShip.setDirection(arcade::CommandType::GO_LEFT);
+	      _enemyShip.push_back(EnemyShip(i % _map->width, i / _map->height, arcade::CommandType::GO_LEFT));
 	    else
-	      enemyShip.setDirection(arcade::CommandType::GO_UP);
-	    _enemyShip.push_back(enemyShip);
+	      _enemyShip.push_back(EnemyShip(i % _map->width, i / _map->height, arcade::CommandType::GO_UP));
 	    break;
 	  default :
 	    throw arcade::Exception("Invalid map.");
@@ -165,18 +146,33 @@ void			LSolarFox::changeAction()
 
 void    LSolarFox::move()
 {
-  _ship.move(_map);
+  int	colisions;
+
   for (std::vector<EnemyMissile>::iterator it = _enemyMissile.begin() ; it != _enemyMissile.end() ; ++it)
-    it->move(_missile, _ship);
+    {
+      colisions = it->move(_missile, _ship);
+      if (colisions == SHIP_DESTROYED)
+	{
+	  _enemyMissile.erase(it);
+	  gameOver();
+	}
+      else if (colisions == MISSILE_DESTROYED)
+	{
+	  _missile.empty();
+	  _enemyMissile.erase(it);
+	}
+    }
+  _ship.move(_map);
+  _missile.move();
   for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
     it->move(_enemyMissile);
 }
 
-arcade::CommandType	LSolarFox::mainLoop(void)
+arcade::CommandType					LSolarFox::mainLoop(void)
 {
-  std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
-  std::chrono::high_resolution_clock::time_point t2;
-  arcade::CommandType	lastCommand;
+  std::chrono::high_resolution_clock::time_point	t1 = std::chrono::high_resolution_clock::now();
+  std::chrono::high_resolution_clock::time_point	t2;
+  arcade::CommandType					lastCommand;
 
   initTextures();
   _core->setScore(std::to_string(_score));
@@ -204,6 +200,8 @@ arcade::CommandType	LSolarFox::mainLoop(void)
 	  return (arcade::CommandType::NEXT_GAME);
 	case arcade::CommandType::PREV_GAME :
 	  return (arcade::CommandType::PREV_GAME);
+	case arcade::CommandType::SHOOT :
+	  _ship.shoot(_missile);
 	default :
 	  break;
 	}
@@ -231,31 +229,42 @@ void			LSolarFox::close(void)
 
 }
 
+void			LSolarFox::gameOver(void)
+{
+  std::cout << "GAME OVER\n";
+}
+
 void			LSolarFox::lPDM_getMap() const
 {
-  write(1, _map, sizeof(arcade::GetMap) + (_map->width * _map->height * sizeof(arcade::TileType)));
+  arcade::GetMap *map;
+
+  map = _map;
+  if (_missile.getY() != 0 && _missile.getX() != 0)
+  {
+    map->tile[_missile.getY() * MAP_WIDTH + _missile.getX()] = arcade::TileType::MY_SHOOT;
+  }
+  std::cout.write(reinterpret_cast<char *>(map), sizeof(arcade::GetMap) + (_map->width * _map->height * sizeof(arcade::TileType)));
 }
 
 void			LSolarFox::lPDM_whereAmI()
 {
-  arcade::WhereAmI	*snake;
+  arcade::WhereAmI	*solarfox;
   int			length;
 
   length = 1;
-  if ((snake = (arcade::WhereAmI *)malloc(sizeof(arcade::WhereAmI) + (length * sizeof(arcade::Position)))) == NULL)
-    return ;
-  snake->type = _map->type;
-  snake->lenght = length;
-  snake->position[0].x = _ship.getX();
-  snake->position[0].y = _ship.getY();
-  write(1, snake, sizeof(arcade::WhereAmI) + (length * sizeof(arcade::Position)));
-  free(snake);
+  solarfox = new arcade::WhereAmI[(length * sizeof(arcade::Position))];
+  solarfox->type = _map->type;
+  solarfox->lenght = length;
+  solarfox->position[0].x = _ship.getX();
+  solarfox->position[0].y = _ship.getY();
+  std::cout.write(reinterpret_cast<char *>(solarfox), sizeof(arcade::WhereAmI) + (length * sizeof(arcade::Position)));
+  delete(solarfox);
 }
 
 void			LSolarFox::lPDM_start()
 {
-  arcade::CommandType command;
-  arcade::CommandType direction;
+  arcade::CommandType	command;
+  arcade::CommandType	direction;
 
   while (!std::cin.eof())
   {
@@ -269,6 +278,9 @@ void			LSolarFox::lPDM_start()
         break;
       case (arcade::CommandType::WHERE_AM_I):
         lPDM_whereAmI();
+        break;
+      case (arcade::CommandType::SHOOT):
+         _ship.shoot(_missile);
         break;
       case (arcade::CommandType::GO_UP):
           direction = arcade::CommandType::GO_UP;

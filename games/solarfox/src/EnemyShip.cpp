@@ -5,7 +5,7 @@
 // Login   <flavien.sellet@epitech.eu>
 // 
 // Started on  Tue Apr  4 16:46:49 2017 sellet_f
-// Last update Fri Apr  7 04:07:48 2017 sellet_f
+// Last update Fri Apr  7 16:06:51 2017 sellet_f
 //
 
 #include "EnemyShip.hh"
@@ -15,7 +15,7 @@ EnemyShip::EnemyShip()
   _x = 0;
   _y = 0;
   _speed = 4;
-  _it = 0;
+  _it = 10;
   _direction = arcade::CommandType::UNDEFINED;
 }
 
@@ -25,7 +25,7 @@ EnemyShip::EnemyShip(unsigned int x, unsigned int y, arcade::CommandType directi
   _y = y;
   _speed = 4;
   _direction = direction;
-  _it = 6;
+  _it = 10;
 }
 
 EnemyShip::~EnemyShip()

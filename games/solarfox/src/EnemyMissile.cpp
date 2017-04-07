@@ -5,7 +5,7 @@
 // Login   <flavien.sellet@epitech.eu>
 //
 // Started on  Tue Apr  4 17:31:02 2017 sellet_f
-// Last update Fri Apr  7 04:05:19 2017 sellet_f
+// Last update Fri Apr  7 16:40:37 2017 sellet_f
 //
 
 #include "EnemyMissile.hh"
@@ -36,47 +36,64 @@ void	EnemyMissile::print(arcade::ICore *core)
     core->getLib()->aTile(_x + 1, _y + 1, _speed, arcade::TileType::EVIL_SHOOT, _direction);
 }
 
-int		EnemyMissile::getMoves(void) const
+bool	EnemyMissile::checkColisions(arcade::CommandType direction, Object obj)
 {
-  return (_moves);
+  switch (direction)
+    {
+    case arcade::CommandType::GO_UP :
+      if ((obj.getX() == _x && obj.getY() == _y) || (obj.getX() == _x && obj.getY() - 1 == _y))
+	return (true);
+      break;
+    case arcade::CommandType::GO_DOWN :
+      if ((obj.getX() == _x && obj.getY() == _y) || (obj.getX() == _x && obj.getY() + 1 == _y))
+	return (true);
+      break;
+    case arcade::CommandType::GO_LEFT :
+      if ((obj.getX() == _x && obj.getY() == _y) || (obj.getX() == _x - 1 && obj.getY()  == _y))
+	return (true);
+      break;
+    case arcade::CommandType::GO_RIGHT :
+      if ((obj.getX() == _x && obj.getY() == _y) || (obj.getX() == _x + 1 && obj.getY() == _y))
+	return (true);
+      break;
+    default:
+      break;
+    }
+  return (false);
 }
 
-bool	EnemyMissile::move(Missile missile, Ship ship)
+int	EnemyMissile::move(Missile missile, Ship ship)
 {
   if (checkAction(false))
-  {
-    if (_moves > 0)
-      _moves--;
-    switch (_direction)
-        {
-        case arcade::CommandType::GO_UP :
-    if (((missile.getX() == _x && missile.getY() == _y) || (ship.getX() == _x && ship.getY() == _y)) &&
-        ((missile.getX() == _x && missile.getY() == _y - 1) || (ship.getX() == _x && ship.getY() == _y - 1)))
-      return (false);
-    _y -= 1;
-    break;
-        case arcade::CommandType::GO_DOWN :
-    if (((missile.getX() == _x && missile.getY() == _y) || (ship.getX() == _x && ship.getY() == _y)) &&
-        ((missile.getX() == _x && missile.getY() == _y + 1) || (ship.getX() == _x && ship.getY() == _y + 1)))
-      return (false);
-    _y += 1;
-    break;
-        case arcade::CommandType::GO_LEFT :
-    if (((missile.getX() == _x && missile.getY() == _y) || (ship.getX() == _x && ship.getY() == _y)) &&
-        ((missile.getX() == _x && missile.getY() + 1 == _y) || (ship.getX() == _x && ship.getY() + 1== _y)))
-      return (false);
-    _x -= 1;
-    break;
-        case arcade::CommandType::GO_RIGHT :
-    if (((missile.getX() == _x && missile.getY() == _y) || (ship.getX() == _x && ship.getY() == _y)) &&
-        ((missile.getX() == _x && missile.getY() - 1 == _y) || (ship.getX() == _x && ship.getY() - 1== _y)))
-      return (false);
-    _x += 1;
-    break;
-        default:
-    return (false);
-    break;
-        }
-  }
-  return (true);
+    {
+      if (checkColisions(_direction, ship) == true)
+	return (SHIP_DESTROYED);
+      else if (checkColisions(_direction, missile) == true)
+	return (MISSILE_DESTROYED);
+      switch (_direction)
+	{
+	case arcade::CommandType::GO_UP :
+	  if (_y == 1)
+	    return (MISSILE_DESTROYED);
+	  _y -= 1;
+	  break;
+	case arcade::CommandType::GO_DOWN :
+	  if (_y == 39)
+	    return (MISSILE_DESTROYED);
+	  _y += 1;
+	  break;
+	case arcade::CommandType::GO_LEFT :
+	  if (_x == 1)
+	    return (MISSILE_DESTROYED);
+	  _x -= 1;
+	  break;
+	case arcade::CommandType::GO_RIGHT :
+	  if (_x == 39)
+	    return (MISSILE_DESTROYED);
+	  _x += 1;
+	default:
+	  break;
+	}
+    }
+  return (0);
 }

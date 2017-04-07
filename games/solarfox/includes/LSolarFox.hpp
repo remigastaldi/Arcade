@@ -35,7 +35,8 @@ public:
   arcade::CommandType		mainLoop(void);
   void				initGame(bool);
   void				close(void);
-  void			        move();
+  void			        move(void);
+  void				gameOver(void);
 
   void				lPDM_getMap() const;
   void				lPDM_whereAmI();

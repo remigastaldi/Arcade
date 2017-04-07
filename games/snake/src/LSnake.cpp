@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Fri Apr 07 13:54:20 2017 gastal_r
+** Last update Fri Apr 07 17:43:32 2017 Leo Hubert Froideval
 */
 
 #include          "LSnake.hpp"
@@ -18,7 +18,7 @@ LSnake::LSnake()
 
 LSnake::~LSnake()
 {
-  _map ? free(_map) : (void)0;
+  _map ? delete(_map) : (void)0;
 }
 
 arcade::CommandType				LSnake::play(arcade::ICore &core)
@@ -43,9 +43,7 @@ void			LSnake::initGame(bool lPDM)
 
   _lPDM = lPDM;
   srand(time(NULL));
-  if ((_map = (arcade::GetMap *)malloc(sizeof(arcade::GetMap) + (MAP_WIDTH * MAP_HEIGHT * sizeof(arcade::TileType)))) == NULL)
-    throw arcade::Exception("Malloc failed\n");
-
+  _map = new arcade::GetMap[(MAP_WIDTH * MAP_HEIGHT * sizeof(arcade::TileType))];
   _exitStatus = arcade::CommandType::UNDEFINED;
   _map->type = arcade::CommandType::GO_UP;
   _direction = arcade::CommandType::GO_UP;
@@ -337,7 +335,7 @@ void			LSnake::newApple()
 
 void                  LSnake::lPDM_getMap() const
 {
-  write(1, _map, sizeof(arcade::GetMap) + (MAP_WIDTH * MAP_HEIGHT * sizeof(arcade::TileType)));
+  std::cout.write(reinterpret_cast<char *>(_map), sizeof(arcade::GetMap) + (MAP_WIDTH * MAP_HEIGHT * sizeof(arcade::TileType)));
 }
 
 void			LSnake::lPDM_whereAmI()
@@ -348,8 +346,7 @@ void			LSnake::lPDM_whereAmI()
 
   i = 0;
   length = _position.size() - 1;
-  if ((snake = (arcade::WhereAmI *)malloc(sizeof(arcade::WhereAmI) + (length * sizeof(arcade::Position)))) == NULL)
-    return ;
+  snake = new arcade::WhereAmI[(length * sizeof(arcade::Position))];
   snake->type = _map->type;
   snake->lenght = length;
   for (std::vector<arcade::Position>::iterator it = _position.begin(); it != _position.end() - 1; ++it)
@@ -357,8 +354,8 @@ void			LSnake::lPDM_whereAmI()
     snake->position[i] = *it;
     i++;
   }
-  write(1, snake, sizeof(arcade::WhereAmI) + (length * sizeof(arcade::Position)));
-  free(snake);
+  std::cout.write(reinterpret_cast<char *>(snake), sizeof(arcade::WhereAmI) + (length * sizeof(arcade::Position)));
+  delete(snake);
 }
 
 void			LSnake::lPDM_start()

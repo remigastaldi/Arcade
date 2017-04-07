@@ -5,7 +5,7 @@
 // Login   <flavien.sellet@epitech.eu>
 //
 // Started on  Tue Apr  4 16:29:13 2017 sellet_f
-// Last update Fri Apr  7 03:53:36 2017 sellet_f
+// Last update Fri Apr  7 16:44:02 2017 sellet_f
 //
 
 #include "Ship.hh"
@@ -16,7 +16,16 @@ Ship::Ship()
   _y = 26;
   _speed = 10;
   _direction = arcade::CommandType::GO_UP;
-  _it = 7;
+  _it = 10;
+}
+
+Ship::Ship(unsigned int x, unsigned int y)
+{
+  _x = x;
+  _y = y;
+  _speed = 9;
+  _direction = arcade::CommandType::GO_UP;
+  _it = 10;
 }
 
 Ship::~Ship()
@@ -54,5 +63,26 @@ void	Ship::move(arcade::GetMap *map)
 	default :
 	  break;
 	}
+    }
+}
+
+void	Ship::shoot(Missile &missile)
+{
+  switch (_direction)
+    {
+    case arcade::CommandType::GO_UP :
+      missile = Missile(_x, _y - 1, _direction);
+      break;
+    case arcade::CommandType::GO_DOWN :
+      missile = Missile(_x, _y + 1, _direction);
+      break;
+    case arcade::CommandType::GO_LEFT :
+      missile = Missile(_x - 1, _y, _direction);
+      break;
+    case arcade::CommandType::GO_RIGHT :
+      missile = Missile(_x + 1, _y, _direction);
+      break;
+    default:
+      break;
     }
 }
