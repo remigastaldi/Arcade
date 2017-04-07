@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Fri Apr 07 16:52:53 2017 gastal_r
+** Last update	Fri Apr 07 17:33:35 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -276,6 +276,8 @@ arcade::CommandType	LNcurses::aCommand()
 {
   switch(Ncurses::Getch())
     {
+    case (KEY_SLEFT) :
+      return (arcade::CommandType::GO_FORWARD);
     case (32) :
       return (arcade::CommandType::ESCAPE);
     case (27) :
