@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:08:10 2017 gastal_r
-** Last update	Sat Apr 08 11:00:18 2017 gastal_r
+** Last update	Sat Apr 08 19:32:14 2017 gastal_r
 */
 
 #ifndef         _Lsolarfox_HPP_
@@ -55,6 +55,7 @@ private:
   std::vector<EnemyShip>	_enemyShip;
   arcade::CommandType           _exitStatus;
   std::vector<EnemyMissile>	_enemyMissile;
+  arcade::CommandType _keepCommand;
 };
 
 #endif          /* !_solarfox_HPP_ */

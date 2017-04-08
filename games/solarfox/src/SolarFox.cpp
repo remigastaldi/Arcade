@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Sat Apr 08 19:15:42 2017 gastal_r
+** Last update	Sat Apr 08 19:41:49 2017 gastal_r
 */
 
 #include	        "LSolarFox.hpp"
@@ -92,7 +92,7 @@ void			LSolarFox::parseMap(std::string const content)
 
 void			LSolarFox::initGame(bool lPDM)
 {
-  std::ifstream		file(SOLAR_RES "map/level_moul.map");
+  std::ifstream		file(SOLAR_RES "map/level_1.map");
   int			sizeLine;
   std::string		content;
   std::string		line;
@@ -133,27 +133,44 @@ void			LSolarFox::changeAction()
   switch (_map->type)
     {
     case (arcade::CommandType::GO_UP):
-      if (direction != arcade::CommandType::GO_DOWN &&
-	  _map->tile[(_ship.getY() - 1) * MAP_WIDTH + _ship.getX()] != arcade::TileType::BLOCK)
-	direction = arcade::CommandType::GO_UP;
+      _keepCommand = arcade::CommandType::GO_UP;
       break;
     case (arcade::CommandType::GO_DOWN):
-      if (direction != arcade::CommandType::GO_UP &&
-	  _map->tile[(_ship.getY() + 1) * MAP_WIDTH + _ship.getX()] != arcade::TileType::BLOCK)
-	direction = arcade::CommandType::GO_DOWN;
+      _keepCommand = arcade::CommandType::GO_DOWN;
       break;
     case (arcade::CommandType::GO_LEFT):
-      if (direction != arcade::CommandType::GO_RIGHT &&
-	  _map->tile[_ship.getY() * MAP_WIDTH + _ship.getX() - 1] != arcade::TileType::BLOCK)
-	direction = arcade::CommandType::GO_LEFT;
+      _keepCommand = arcade::CommandType::GO_LEFT;
       break;
     case (arcade::CommandType::GO_RIGHT):
-      if (direction != arcade::CommandType::GO_LEFT &&
-	  _map->tile[_ship.getY() * MAP_WIDTH + _ship.getX() + 1] != arcade::TileType::BLOCK)
-	direction = arcade::CommandType::GO_RIGHT;
+      _keepCommand = arcade::CommandType::GO_RIGHT;
       break;
     default:
       break;
+    }
+    switch (_keepCommand)
+    {
+      case (arcade::CommandType::GO_UP):
+        if (direction != arcade::CommandType::GO_DOWN &&
+  	      _map->tile[(_ship.getY() - 1) * MAP_WIDTH + _ship.getX()] != arcade::TileType::BLOCK)
+  	       direction = arcade::CommandType::GO_UP;
+        break;
+      case (arcade::CommandType::GO_DOWN):
+        if (direction != arcade::CommandType::GO_UP &&
+  	      _map->tile[(_ship.getY() + 1) * MAP_WIDTH + _ship.getX()] != arcade::TileType::BLOCK)
+  	       direction = arcade::CommandType::GO_DOWN;
+        break;
+      case (arcade::CommandType::GO_LEFT):
+        if (direction != arcade::CommandType::GO_RIGHT &&
+  	      _map->tile[_ship.getY() * MAP_WIDTH + _ship.getX() - 1] != arcade::TileType::BLOCK)
+  	       direction = arcade::CommandType::GO_LEFT;
+        break;
+      case (arcade::CommandType::GO_RIGHT):
+        if (direction != arcade::CommandType::GO_LEFT &&
+  	      _map->tile[_ship.getY() * MAP_WIDTH + _ship.getX() + 1] != arcade::TileType::BLOCK)
+  	       direction = arcade::CommandType::GO_RIGHT;
+        break;
+      default:
+        break;
     }
   _ship.setDirection(direction);
   _map->type = arcade::CommandType::UNDEFINED;
