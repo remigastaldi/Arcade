@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Fri Apr 07 19:27:37 2017 gastal_r
+** Last update	Sat Apr 08 18:37:59 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
@@ -262,7 +262,7 @@ void          LSfml::transition()
   while (i < 9)
   {
     std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
-    if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 3)
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 1)
     {
       aClear();
       for (std::vector<LSfml::Data>::iterator it = _data.begin(); it != _data.end(); ++it)
@@ -334,9 +334,7 @@ void            LSfml::aClear()
 void            LSfml::aRefresh()
 {
   if (!_data.empty())
-  {
     transition();
-  }
   _win.display();
 }
 

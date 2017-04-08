@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Fri Apr 07 22:39:26 2017 gastal_r
+** Last update	Sat Apr 08 18:39:52 2017 gastal_r
 */
 
 #include          "LNcurses.hpp"
@@ -118,7 +118,7 @@ void        LNcurses::transition()
   while (i < 10 / 2)
   {
     std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
-    if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 6)
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 2)
     {
       for (std::vector<LNcurses::Data>::iterator it = _data.begin(); it != _data.end(); ++it)
       {

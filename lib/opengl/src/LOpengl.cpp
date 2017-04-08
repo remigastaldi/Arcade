@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Sat Apr 08 11:35:21 2017 gastal_r
+** Last update	Sat Apr 08 18:34:35 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -107,10 +107,15 @@ void            LOpengl::aTile(size_t x, size_t y, int speed, arcade::TileType t
   _data.push_back(data);
 }
 
-void          LOpengl::loadVertex(const std::string &type)
+void          LOpengl::loadVertex(std::pair<AObj::Data, size_t> &obj, const std::string &name)
 {
-  glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex(type));
-  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), _objs.getObjVertex(type) + 3);
+  if (obj.first.getSize() == 0)
+    {
+      obj.first = _objs.getObj(name);
+      obj.second = obj.first.getIndex(name);
+    }
+  glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), obj.first.getVertex());
+  glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), obj.first.getVertex() + 3);
 }
 
 void          LOpengl::checkRotation(arcade::CommandType dir)
@@ -140,7 +145,7 @@ void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, arcad
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
-  if (type == arcade::TileType::OTHER || type == arcade::TileType::SHIP)
+  if (type == arcade::TileType::SHIP)
   {
     _xView = -((x - 26.0) * 15.0) - dx * 1.5;
     _yView = -((y - 26.0) * 15.0) + dy * 1.5;
@@ -152,72 +157,72 @@ void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, arcad
             0.f, 0.f, 1.f);
 
   glPushMatrix();
+
   switch (type)
   {
     case arcade::TileType::BLOCK :
-      loadVertex("BLOCK");
+      loadVertex(_blockObj, "BLOCK");
       sf::Texture::bind(&_blockTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 10);
-      glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("BLOCK") / 5);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), _blockObj.second);
+      glDrawArrays(GL_TRIANGLES, 0, _blockObj.first.getSize() / 5);
       break;
     case arcade::TileType::EMPTY :
-      loadVertex("EMPTY");
+      loadVertex(_emptyObj, "EMPTY");
       sf::Texture::bind(&_emptyTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 0);
-      glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("EMPTY") / 5);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), _emptyObj.second);
+      glDrawArrays(GL_TRIANGLES, 0, _emptyObj.first.getSize() / 5);
       break;
     case arcade::TileType::OBSTACLE :
-      loadVertex("OBSTACLE");
+      loadVertex(_obstacleObj, "OBSTACLE");
       sf::Texture::bind(&_obstacleTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 10);
-      glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("OBSTACLE") / 5);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), _obstacleObj.second);
+      glDrawArrays(GL_TRIANGLES, 0, _obstacleObj.first.getSize() / 5);
       break;
     case arcade::TileType::EVIL_DUDE :
-      loadVertex("EVIL_DUDE");
+      loadVertex(_evilDudeObj, "EVIL_DUDE");
       sf::Texture::bind(&_evilDudeTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), _evilDudeObj.second);
       if (x == 40)
         glRotatef(-180.f, 0.f, 0.f, 1.f);
       else if (y == 2)
         glRotatef(-90.f, 0.f, 0.f, 1.f);
       else if (y == 40)
         glRotatef(90.f, 0.f, 0.f, 1.f);
-      glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("EVIL_DUDE") / 5);
+      glDrawArrays(GL_TRIANGLES, 0, _evilDudeObj.first.getSize() / 5);
       break;
     case arcade::TileType::EVIL_SHOOT :
-      loadVertex("EVIL_SHOOT");
+      loadVertex(_evilShootObj, "EVIL_SHOOT");
       sf::Texture::bind(&_evilShootTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 8);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), _evilShootObj.second);
       checkRotation(dir);
-      glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("EVIL_SHOOT") / 5);
+      glDrawArrays(GL_TRIANGLES, 0, _evilShootObj.first.getSize() / 5);
       break;
     case arcade::TileType::MY_SHOOT :
-      loadVertex("MY_SHOOT");
+      loadVertex(_myShootObj, "MY_SHOOT");
       sf::Texture::bind(&_myShootTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 8);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), _myShootObj.second);
       checkRotation(dir);
-      glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("MY_SHOOT") / 5);
+      glDrawArrays(GL_TRIANGLES, 0, _myShootObj.first.getSize() / 5);
       break;
     case arcade::TileType::POWERUP :
-      loadVertex("POWERUP");
+      loadVertex(_powerUpObj, "POWERUP");
       sf::Texture::bind(&_powerupTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
-      glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("POWERUP") / 5);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), _powerUpObj.second);
+      glDrawArrays(GL_TRIANGLES, 0, _powerUpObj.first.getSize() / 5);
       break;
     case arcade::TileType::SHIP :
-      loadVertex("SHIP");
+      loadVertex(_shipObj, "SHIP");
       sf::Texture::bind(&_shipTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), _shipObj.second);
       checkRotation(dir);
-      glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("SHIP") / 5);
+      glDrawArrays(GL_TRIANGLES, 0, _shipObj.first.getSize() / 5);
       break;
     case arcade::TileType::OTHER :
     {
-      loadVertex("OTHER");
+      loadVertex(_otherObj, "OTHER");
       sf::Texture::bind(&_otherTex);
-      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), 5);
-      checkRotation(dir);
-      glDrawArrays(GL_TRIANGLES, 0, _objs.getObjSize("OTHER") / 5);
+      glTranslatef((x * 10) + dx, 500.f  -((y * 10) - dy), _otherObj.second);
+      glDrawArrays(GL_TRIANGLES, 0, _otherObj.first.getSize() / 5);
     }
       break;
   }
@@ -239,7 +244,15 @@ void            LOpengl::aAssignTexture(arcade::TileType tile, const std::string
 {
   if (_core->getCurrentGame() != _currentGame)
   {
-    std::cout << _core->getCurrentGame() << '\n';
+    _blockObj.first.reset();
+    _emptyObj.first.reset();
+    _obstacleObj.first.reset();
+    _evilDudeObj.first.reset();
+    _evilShootObj.first.reset();
+    _myShootObj.first.reset();
+    _powerUpObj.first.reset();
+    _shipObj.first.reset();
+    _otherObj.first.reset();
     std::string game = _core->getCurrentGame().substr(0, _core->getCurrentGame().find_last_of("."));
     game.erase(0, game.find_last_of("_") + 1);
     _objs.setGame(game);
@@ -285,7 +298,7 @@ void            LOpengl::aAssignTexture(arcade::TileType tile, const std::string
       _powerupTex.generateMipmap();
       break;
     case arcade::TileType::SHIP :
-      if (!_shipTex.loadFromFile("games/solarfox/res/img/floor2.png"))
+      if (!_shipTex.loadFromFile(path))
         _shipTex = createColoredTexture(color);
       _shipTex.generateMipmap();
       break;
@@ -361,12 +374,12 @@ void            LOpengl::transition()
   glEnable(GL_TEXTURE_2D);
   float i = 0;
 
-  //std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+  std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
   while (i < 5)
   {
-    //std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
-//    if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= )
-  //  {
+    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+    if (std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count() >= 10000)
+    {
       aClear();
       for (std::vector<LOpengl::Data>::iterator it = _data.begin(); it != _data.end(); ++it)
       {
@@ -376,19 +389,15 @@ void            LOpengl::transition()
           {
             case arcade::CommandType::GO_LEFT :
               drawElem(it->x + 1, it->y, it->type, it->dir, -it->nbf, 0);
-              it->type == arcade::TileType::OTHER ? _xView++ : 0;
               break;
             case arcade::CommandType::GO_RIGHT :
               drawElem(it->x - 1, it->y, it->type, it->dir, it->nbf, 0);
-              it->type == arcade::TileType::OTHER ? _xView-- : 0;
               break;
             case arcade::CommandType::GO_UP :
               drawElem(it->x, it->y + 1, it->type, it->dir, 0, it->nbf);
-              it->type == arcade::TileType::OTHER ? _yView++ : 0;
               break;
             case arcade::CommandType::GO_DOWN :
               drawElem(it->x, it->y - 1, it->type, it->dir, 0, -it->nbf);
-              it->type == arcade::TileType::OTHER ? _yView-- : 0;
               break;
             default:
               drawElem(it->x, it->y, it->type, it->dir, 0, 0);
@@ -423,8 +432,8 @@ void            LOpengl::transition()
       ++i;
       _core->refreshGui();
       _win.display();
-    //  t1 = std::chrono::high_resolution_clock::now();
-    //}
+      t1 = std::chrono::high_resolution_clock::now();
+    }
   }
   _win.setActive(false);
 }
@@ -432,10 +441,7 @@ void            LOpengl::transition()
 void            LOpengl::aRefresh()
 {
   if (!_data.empty())
-  {
     transition();
-    //_data.clear();
-  }
   _win.display();
 }
 

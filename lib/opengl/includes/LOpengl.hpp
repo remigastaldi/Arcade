@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:21 2017 gastal_r
-** Last update	Sat Apr 08 11:30:57 2017 gastal_r
+** Last update	Sat Apr 08 18:06:18 2017 gastal_r
 */
 
 #ifndef         _LOPENGL_HPP_
@@ -45,9 +45,10 @@ public:
   virtual ~LOpengl ();
 
   void          aInit(arcade::ICore *, size_t, size_t);
+  void          initObj();
   void          aClose();
 
-  void          loadVertex(const std::string &);
+  void          loadVertex(std::pair<AObj::Data, size_t> &, const std::string &);
   void          checkRotation(arcade::CommandType dir);
 
   sf::Uint8     *fillPixelsColor(arcade::Color);
@@ -68,6 +69,7 @@ public:
 
   void          transition();
   void          drawElem(size_t x, size_t y, arcade::TileType type, arcade::CommandType, int dx, int dy);
+
   void          aClearAnimBuffer();
   void          aClear();
   void          aRefresh();
@@ -93,6 +95,16 @@ private:
   sf::Texture        _shipTex;
   sf::Texture        _otherTex;
 
+  std::pair<AObj::Data, size_t>  _blockObj;
+  std::pair<AObj::Data, size_t>  _emptyObj;
+  std::pair<AObj::Data, size_t>  _obstacleObj;
+  std::pair<AObj::Data, size_t>  _evilDudeObj;
+  std::pair<AObj::Data, size_t>  _evilShootObj;
+  std::pair<AObj::Data, size_t>  _myShootObj;
+  std::pair<AObj::Data, size_t>  _powerUpObj;
+  std::pair<AObj::Data, size_t>  _shipObj;
+  std::pair<AObj::Data, size_t>  _otherObj;
+  
   Sound              _sound;
   sf::Music          _music;
 

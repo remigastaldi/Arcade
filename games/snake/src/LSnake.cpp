@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-// Last update Sat Apr  8 14:07:50 2017 sellet_f
+** Last update	Sat Apr 08 17:37:44 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -33,7 +33,7 @@ void      LSnake::initTextures()
   _core->getLib()->aAssignTexture(arcade::TileType::EMPTY, SNAKE_RES "img/floor2.png", arcade::Color::A_WHITE);
   _core->getLib()->aAssignTexture(arcade::TileType::OBSTACLE, SNAKE_RES "img/wall.png", arcade::Color::A_RED);
   _core->getLib()->aAssignTexture(arcade::TileType::SHIP,"games/solarfox/res/img/ship.png", arcade::Color::A_GREEN);
-  _core->getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, SNAKE_RES "img/wall3.png", arcade::Color::A_MAGENTA);
+  _core->getLib()->aAssignTexture(arcade::TileType::OTHER, SNAKE_RES "img/wall3.png", arcade::Color::A_MAGENTA);
   _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, SNAKE_RES "img/mooncat.jpg", arcade::Color::A_MAGENTA);
 }
 
@@ -93,7 +93,7 @@ void			LSnake::printGame()
     _core->getLib()->aTile(_position[0].x + 1, _position[0].y + 1, SNAKE_SPEED, arcade::TileType::SHIP, _direction);
     if (_position.size() > 1)
       for (std::vector<arcade::Position>::iterator it = _position.begin() + 1; it != _position.end() - 1; ++it)
-        _core->getLib()->aTile((*it).x + 1, (*it).y + 1, SNAKE_SPEED, arcade::TileType::MY_SHOOT, getDirection((*it), (*(it + 1))));
+        _core->getLib()->aTile((*it).x + 1, (*it).y + 1, SNAKE_SPEED, arcade::TileType::OTHER, getDirection((*it), (*(it + 1))));
   _speed = SNAKE_SPEED;
   }
   else
