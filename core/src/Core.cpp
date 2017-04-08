@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Sat Apr 08 16:23:28 2017 gastal_r
+** Last update	Sat Apr 08 20:53:16 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -187,6 +187,8 @@ void            Core::switchGame(const arcade::CommandType m)
   Dlclose(_gameHandle);
   _graph->aClearAnimBuffer();
   openGame(name);
+  guiSetPlayerBestScore(_save.getSavedScore(_currentGame));
+  guiSetBestScores(_save.getBestPlayersScores(_currentGame));
   setGuiData();
 }
 

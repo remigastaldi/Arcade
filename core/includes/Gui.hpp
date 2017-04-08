@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:55:17 2017 gastal_r
-** Last update	Wed Apr 05 18:53:58 2017 gastal_r
+** Last update	Sat Apr 08 20:52:16 2017 gastal_r
 */
 
 #ifndef         _GUI_HPP_
@@ -54,10 +54,11 @@ public:
   void          guiSetLibs(const std::vector<std::string> &libs)   {_libs = libs;}
   void          guiSetCurrentGraph(const std::string &graph)       {_currentGraph = graph;}
   void          guiSetGames(const std::vector<std::string> &games) {_games = games;}
-  void          guiSetCurrentGame(const std::string &game) {_currentGame = game;}
-  void          guiSetPlayer(const std::string &player)    {_player = player;}
-  void          guiSetBestScore(const std::string &score)   {_bestScore = score;}
-  void          guiSetScore(const std::string &score)      {_score = score;}
+  void          guiSetCurrentGame(const std::string &game)         {_currentGame = game;}
+  void          guiSetPlayer(const std::string &player)            {_player = player;}
+  void          guiSetPlayerBestScore(const std::string &score)    {_bestPlayerScore = score;}
+  void          guiSetScore(const std::string &score)              {_score = score;}
+  void          guiSetBestScores(const std::vector<std::string> &scores) {_bestPlayersScores = scores;}
   void          guiClearBestScores();
   void          guiGameOver();
 
@@ -69,7 +70,7 @@ private:
   std::vector<std::string>  _games;
   std::vector<std::string>  _libs;
   std::string               _player;
-  std::string               _bestScore;
+  std::string               _bestPlayerScore;
   std::string               _score;
   std::vector<std::string>  _bestPlayersScores;
 };

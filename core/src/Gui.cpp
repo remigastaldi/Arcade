@@ -24,12 +24,12 @@ void            Gui::affName()
 {
   _graph->aPutText(pos_x(2.4) - _player.length() / 2, pos_y(1.05), arcade::Font::PRESS_START,
                    WIDTH / 90, arcade::A_MAGENTA, _player);
-  if (!_bestScore.empty())
+  if (!_bestPlayerScore.empty())
   {
      _graph->aPutText(pos_x(1.9), pos_y(1.05) , arcade::Font::PRESS_START,
                       WIDTH / 100, arcade::A_WHITE, "Best:");
      _graph->aPutText(pos_x(1.7), pos_y(1.05) , arcade::Font::PRESS_START,
-                      WIDTH / 100, arcade::A_WHITE, _bestScore);
+                      WIDTH / 100, arcade::A_WHITE, _bestPlayerScore);
   }
 }
 
@@ -181,7 +181,7 @@ const std::string     Gui::chooseGame(arcade::ICore &core)
     }
   }
   _currentGame = _games[i];
-  _bestScore = core.getSave().getSavedScore(_games[i]);
+  _bestPlayerScore = core.getSave().getSavedScore(_games[i]);
   _bestPlayersScores = core.getSave().getBestPlayersScores(_games[i]);
   return (_games[i]);
 }
@@ -222,7 +222,7 @@ Status                Gui::getStatus()
 void                  Gui::guiClearBestScores()
 {
   _bestPlayersScores.clear();
-  _bestScore.clear();
+  _bestPlayerScore.clear();
 }
 
 void                  Gui::guiGameOver()
