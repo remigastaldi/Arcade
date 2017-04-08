@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update Sat Apr 08 16:37:48 2017 Leo Hubert Froideval
+** Last update	Sat Apr 08 19:15:42 2017 gastal_r
 */
 
 #include	        "LSolarFox.hpp"
@@ -244,6 +244,7 @@ arcade::CommandType					LSolarFox::mainLoop(void)
 {
   std::chrono::high_resolution_clock::time_point	t1 = std::chrono::high_resolution_clock::now();
   std::chrono::high_resolution_clock::time_point	m1 = std::chrono::high_resolution_clock::now();
+  std::chrono::high_resolution_clock::time_point	gf = std::chrono::high_resolution_clock::now();
   std::chrono::high_resolution_clock::time_point	t2;
   arcade::CommandType					lastCommand;
   Missile						missile;
@@ -257,8 +258,15 @@ arcade::CommandType					LSolarFox::mainLoop(void)
 
       if (lastCommand != arcade::CommandType::UNDEFINED)
 	_map->type = lastCommand;
-      if (lastCommand != arcade::CommandType::GO_FORWARD)
-      	_ship.setSpeed(9);
+
+  if (lastCommand == arcade::CommandType::UNDEFINED)
+  {
+      if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - gf).count() >= 800)
+      {
+        _ship.setSpeed(9);
+        gf = std::chrono::high_resolution_clock::now();
+      }
+    }
 
       switch(_map->type)
 	{
