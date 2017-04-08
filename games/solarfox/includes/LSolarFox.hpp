@@ -28,6 +28,7 @@ public:
   LSolarFox();
   virtual ~LSolarFox ();
 
+  void				parseMap(std::string const);
   arcade::CommandType		play(arcade::ICore &);
   void				initTextures(void);
   void				printGame(void);

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update Fri Apr 07 22:35:50 2017 Leo Hubert Froideval
+// Last update Sat Apr  8 14:07:50 2017 sellet_f
 */
 
 #include          "LSnake.hpp"
@@ -254,32 +254,30 @@ arcade::CommandType			LSnake::mainLoop()
 	      return(arcade::CommandType::NEXT_GAME);
 	    case arcade::CommandType::PREV_GAME :
 	      return(arcade::CommandType::PREV_GAME);
-      case arcade::CommandType::MENU :
-        _core->getLib()->aClearAnimBuffer();
-        _core->setScore(std::to_string(_score));
-        return (arcade::CommandType::MENU);
-      case arcade::CommandType::RESTART :
-        _core->getLib()->aClearAnimBuffer();
-        _core->setScore(std::to_string(_score));
-        return (arcade::CommandType::RESTART);
-      default :
+	    case arcade::CommandType::MENU :
+	      _core->getLib()->aClearAnimBuffer();
+	      _core->setScore(std::to_string(_score));
+	      return (arcade::CommandType::MENU);
+	    case arcade::CommandType::RESTART :
+	      _core->getLib()->aClearAnimBuffer();
+	      _core->setScore(std::to_string(_score));
+	      return (arcade::CommandType::RESTART);
+	    default :
 	      break;
 	    }
 
-      if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 16)
-    	{
-        changeAction();
-        if (_speed == 10)
-        {
-          move();
-        }
-    	  if (_exitStatus == arcade::CommandType::MENU || _exitStatus == arcade::CommandType::ESCAPE)
-        {
-    	    return (_exitStatus);
-        }
-  	    printGame();
-        t1 = std::chrono::high_resolution_clock::now();
-    	}
+	  if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 16)
+	    {
+	      changeAction();
+
+	      if (_speed == 10)
+		move();
+	      if (_exitStatus == arcade::CommandType::MENU || _exitStatus == arcade::CommandType::ESCAPE)
+		return (_exitStatus);
+
+	      printGame();
+	      t1 = std::chrono::high_resolution_clock::now();
+	    }
     }
   return (_map->type);
 }

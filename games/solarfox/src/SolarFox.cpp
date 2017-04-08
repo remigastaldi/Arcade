@@ -50,22 +50,59 @@ void			LSolarFox::initTextures(void)
   _core->getLib()->aAssignTexture(arcade::TileType::EVIL_SHOOT, SOLAR_RES "img/wall.png", arcade::Color::A_RED);
 }
 
+void			LSolarFox::parseMap(std::string const content)
+{
+  arcade::Position	powerUp;
+  int			j;
+
+  j = -1;
+
+  for (unsigned int i = 0 ; i < content.length() ; i++)
+    switch (content[i])
+      {
+      case '#' :
+	_map->tile[++j] = arcade::TileType::BLOCK;
+	break;
+      case ' ' :
+	_map->tile[++j] = arcade::TileType::EMPTY;
+	break;
+      case '1' :
+	_nbpower++;
+	powerUp.x = i % _map->width;
+	powerUp.y = i / _map->width;
+	_powerUp.push_back(powerUp);
+	_map->tile[++j] = arcade::TileType::EMPTY;
+	break;
+      case 'V' :
+	_map->tile[++j] = arcade::TileType::EMPTY;
+	_ship = Ship(i % _map->width, i / _map->height);
+	break;
+      case 'E':
+	_map->tile[++j] = arcade::TileType::EMPTY;
+	if ((i % _map->width == 1 && i / _map->height == 1) || (i % _map->width == 39 && i / _map->height == 39))
+	  _enemyShip.push_back(EnemyShip(i % _map->width, i / _map->height, arcade::CommandType::GO_LEFT));
+	else
+	  _enemyShip.push_back(EnemyShip(i % _map->width, i / _map->height, arcade::CommandType::GO_UP));
+	break;
+      default :
+	throw arcade::Exception("Invalid map.");
+	break;
+      }
+}
+
 void			LSolarFox::initGame(bool lPDM)
 {
   std::ifstream		file(SOLAR_RES "map/level_moul.map");
   int			sizeLine;
-  arcade::Position	powerUp;
   std::string		content;
   std::string		line;
-  int			j;
 
-  j = -1;
   _score = 0;
   _nbpower = 0;
   _lPDM = lPDM;
+  _exitStatus = arcade::CommandType::UNDEFINED;
   std::srand(std::time(NULL));
 
-  _exitStatus = arcade::CommandType::UNDEFINED;
   _map = new arcade::GetMap[(MAP_HEIGHT * MAP_WIDTH * sizeof(arcade::TileType))];
   _map->type = arcade::CommandType::GO_UP;
   _map->width = MAP_WIDTH;
@@ -82,38 +119,7 @@ void			LSolarFox::initGame(bool lPDM)
       	    throw arcade::Exception("Invalid map.");
       	  content += line;
       	}
-
-      for (unsigned int i = 0 ; i < content.length() ; i++)
-	switch (content[i])
-	  {
-	  case '#' :
-	    _map->tile[++j] = arcade::TileType::BLOCK;
-	    break;
-	  case ' ' :
-	    _map->tile[++j] = arcade::TileType::EMPTY;
-	    break;
-	  case '1' :
-	    _nbpower++;
-	    powerUp.x = i % _map->width;
-	    powerUp.y = i / _map->width;
-	    _powerUp.push_back(powerUp);
-	    _map->tile[++j] = arcade::TileType::EMPTY;
-	    break;
-	  case 'V' :
-	    _map->tile[++j] = arcade::TileType::EMPTY;
-	    _ship = Ship(i % _map->width, i / _map->height);
-	    break;
-	  case 'E':
-	    _map->tile[++j] = arcade::TileType::EMPTY;
-	    if ((i % _map->width == 1 && i / _map->height == 1) || (i % _map->width == 39 && i / _map->height == 39))
-	      _enemyShip.push_back(EnemyShip(i % _map->width, i / _map->height, arcade::CommandType::GO_LEFT));
-	    else
-	      _enemyShip.push_back(EnemyShip(i % _map->width, i / _map->height, arcade::CommandType::GO_UP));
-	    break;
-	  default :
-	    throw arcade::Exception("Invalid map.");
-	    break;
-	  }
+      parseMap(content);
     }
   else
     throw arcade::Exception("Invalid file.");
@@ -164,15 +170,6 @@ void    LSolarFox::move()
     {
       for (std::vector<Missile>::iterator it = _missile.begin(); it != _missile.end(); ++it)
 	{
-	  // if (_map->tile[it->getY() * MAP_WIDTH + it->getX()] == arcade::TileType::POWERUP)
-	  //   {
-	  //     _map->tile[it->getY() * MAP_WIDTH + it->getX()] = arcade::TileType::EMPTY;
-	  //     _score += 10;
-	  //     _core->setScore(std::to_string(_score));
-	  //     _core->getLib()->aPlaySound(arcade::Sound::POWERUP);
-	  //     it = _missile.erase(it);
-	  //     it = it - 1;
-	  //   }
 	  for (std::vector<arcade::Position>::iterator itpow = _powerUp.begin() ; itpow != _powerUp.end() ; ++itpow)
 	    {
 	      if (itpow->x == it->getX() && itpow->y == it->getY())
@@ -208,7 +205,6 @@ void    LSolarFox::move()
 	}
 
       colisionType = itE->move(_ship);
-
       if (colisionType == SHIP_DESTROYED)
 	{
 	  _core->getLib()->aPlaySound(arcade::Sound::EXPLOSION);
@@ -222,6 +218,7 @@ void    LSolarFox::move()
 	  itE = _enemyMissile.erase(itE);
 	  itE == itE - 1;
 	}
+
       for (std::vector<Missile>::iterator it = _missile.begin(); it != _missile.end(); ++it)
 	{
 	  colision = itE->checkColisions(*it);
@@ -255,6 +252,8 @@ arcade::CommandType					LSolarFox::mainLoop(void)
 
       if (lastCommand != arcade::CommandType::UNDEFINED)
 	_map->type = lastCommand;
+      if (lastCommand != arcade::CommandType::GO_FORWARD)
+      	_ship.setSpeed(9);
 
       switch(_map->type)
 	{
