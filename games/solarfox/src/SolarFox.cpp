@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Sat Apr 08 02:36:38 2017 gastal_r
+** Last update	Sat Apr 08 10:58:27 2017 gastal_r
 */
 
 #include        "LSolarFox.hpp"

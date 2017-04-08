@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:21 2017 gastal_r
-** Last update	Fri Apr 07 15:29:05 2017 gastal_r
+** Last update	Sat Apr 08 11:30:57 2017 gastal_r
 */
 
 #ifndef         _LOPENGL_HPP_
@@ -100,6 +100,7 @@ private:
   float              _yView;
   arcade::ICore     *_core;
   bool               _checkLoadObj;
+  std::string        _currentGame;
   AObj               _objs;
 };
 

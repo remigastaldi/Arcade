@@ -8,7 +8,7 @@
 // Last update Fri Apr  7 16:40:37 2017 sellet_f
 //
 
-#include "EnemyMissile.hh"
+#include "EnemyMissile.hpp"
 
 EnemyMissile::~EnemyMissile()
 {
@@ -25,9 +25,9 @@ EnemyMissile::EnemyMissile(unsigned int x, unsigned int y, arcade::CommandType d
   _x = x;
   _y = y;
   _moves = 38;
-  _speed = 4;
+  _speed = 7;
   _direction = direction;
-  _it = 4;
+  _it = 7;
 }
 
 void	EnemyMissile::print(arcade::ICore *core)

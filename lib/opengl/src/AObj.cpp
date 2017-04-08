@@ -5,16 +5,10 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Apr 02 23:40:00 2017 gastal_r
-** Last update	Mon Apr 03 17:57:06 2017 gastal_r
+** Last update	Sat Apr 08 11:38:46 2017 gastal_r
 */
 
 #include    "AObj.hpp"
-
-AObj::AObj()
-{}
-
-AObj::~AObj()
-{}
 
 void        AObj::readObj(const std::string &path)
 {
@@ -42,10 +36,8 @@ void        AObj::readObj(const std::string &path)
       {
         float value;
         s >> value;
-        //std::cout << value << ' ';
         data.addVertex(value);
       }
-      //std::cout << std::endl;
     }
   }
   _objs.push_back(data);
@@ -63,6 +55,8 @@ void      AObj::loadObjs()
   DIR                      *dir;
   std::vector <std::string> result;
 
+
+  _objs.clear();
   std::string path("games/");
   path += _game;
   path += "/res/objs/";
@@ -78,12 +72,10 @@ void      AObj::loadObjs()
       {
         std::ostringstream filename;
         filename << path << de->d_name;
-
         readObj(filename.str());
       }
     }
     File::Closedir(dir);
-    std::sort(result.begin(), result.end());
   }
 }
 

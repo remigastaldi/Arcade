@@ -8,7 +8,7 @@
 // Last update Fri Apr  7 16:06:51 2017 sellet_f
 //
 
-#include "EnemyShip.hh"
+#include "EnemyShip.hpp"
 
 EnemyShip::EnemyShip()
 {

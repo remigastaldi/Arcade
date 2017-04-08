@@ -11,9 +11,9 @@
 #ifndef _ENEMYMISSILE_HH_
 # define _ENEMYMISSILE_HH_
 
-# include "Object.hh"
-# include "Missile.hh"
-# include "Ship.hh"
+# include "Object.hpp"
+# include "Missile.hpp"
+# include "Ship.hpp"
 
 class	EnemyMissile : public Object
 {

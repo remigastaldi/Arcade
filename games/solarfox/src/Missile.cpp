@@ -8,7 +8,7 @@
 // Last update Sat Apr  8 00:13:06 2017 sellet_f
 //
 
-#include "Missile.hh"
+#include "Missile.hpp"
 
 Missile::Missile()
 {
@@ -17,7 +17,7 @@ Missile::Missile()
   _speed = 0;
   _it = 0;
   _direction = arcade::CommandType::UNDEFINED;
-  _moves = 2;
+  _moves = 6;
 }
 
 Missile::Missile(unsigned int x, unsigned int y, arcade::CommandType direction)
@@ -28,7 +28,6 @@ Missile::Missile(unsigned int x, unsigned int y, arcade::CommandType direction)
   _speed = 10;
   _direction = direction;
   _it = 10;
-  _moves = 2;
 }
 
 Missile::~Missile()
@@ -73,5 +72,5 @@ void	Missile::empty(void)
   _x = 0;
   _y = 0;
   _direction = arcade::CommandType::UNDEFINED;
-  _moves = 2;
+  _moves = 6;
 }

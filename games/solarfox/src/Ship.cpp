@@ -8,7 +8,7 @@
 // Last update Sat Apr  8 03:31:31 2017 sellet_f
 //
 
-#include "Ship.hh"
+#include "Ship.hpp"
 
 Ship::Ship()
 {

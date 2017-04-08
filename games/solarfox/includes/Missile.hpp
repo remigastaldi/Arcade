@@ -11,7 +11,7 @@
 #ifndef _MISSILE_HH_
 # define _MISSILE_HH_
 
-# include "Object.hh"
+# include "Object.hpp"
 
 class	Missile : public Object
 {
@@ -23,6 +23,9 @@ public:
   void	print(arcade::ICore *);
   void	empty(void);
   void	move(void);
+
+private:
+  int   _moves;
 };
 
 #endif

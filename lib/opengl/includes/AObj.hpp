@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Apr 02 23:40:58 2017 gastal_r
-** Last update	Mon Apr 03 17:51:48 2017 gastal_r
+** Last update	Sat Apr 08 11:37:53 2017 gastal_r
 */
 
 #ifndef       _AObj_HPP_
@@ -37,8 +37,8 @@ class         AObj
   };
 
 public:
-  AObj ();
-  virtual         ~AObj ();
+  AObj() {};
+  virtual         ~AObj() {};
   void            loadObjs();
   void            readObj(const std::string &);
   bool            checkExtension(const std::string &str) const;

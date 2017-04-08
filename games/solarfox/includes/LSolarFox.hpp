@@ -5,17 +5,17 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:08:10 2017 gastal_r
-** Last update	Fri Apr 07 23:13:51 2017 gastal_r
+** Last update	Sat Apr 08 11:00:18 2017 gastal_r
 */
 
 #ifndef         _Lsolarfox_HPP_
 # define         _Lsolarfox_HPP_
 
-# include	"EnemyMissile.hh"
-# include	"EnemyShip.hh"
-# include	"Missile.hh"
+# include	"EnemyMissile.hpp"
+# include	"EnemyShip.hpp"
+# include	"Missile.hpp"
 # include	"ICore.hh"
-# include	"Ship.hh"
+# include	"Ship.hpp"
 # include	<chrono>
 
 # define MAP_WIDTH 41

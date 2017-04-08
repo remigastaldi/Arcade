@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Fri Apr 07 19:27:55 2017 gastal_r
+** Last update	Sat Apr 08 11:35:21 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -237,13 +237,14 @@ void            LOpengl::aTile(size_t x, size_t y, void *texture)
 
 void            LOpengl::aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color)
 {
-  if (_checkLoadObj)
+  if (_core->getCurrentGame() != _currentGame)
   {
+    std::cout << _core->getCurrentGame() << '\n';
     std::string game = _core->getCurrentGame().substr(0, _core->getCurrentGame().find_last_of("."));
     game.erase(0, game.find_last_of("_") + 1);
     _objs.setGame(game);
     _objs.loadObjs();
-    _checkLoadObj = false;
+    _currentGame = _core->getCurrentGame();
   }
 
   switch (tile)

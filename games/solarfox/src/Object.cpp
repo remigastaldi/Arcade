@@ -8,7 +8,7 @@
 // Last update Thu Apr  6 22:40:08 2017 sellet_f
 //
 
-#include "Object.hh"
+#include "Object.hpp"
 
 void			Object::setX(unsigned int x)
 {

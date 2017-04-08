@@ -12,8 +12,8 @@
 # define	_ENEMYSHIP_HH_
 
 # include "ICore.hh"
-# include	"Object.hh"
-# include	"EnemyMissile.hh"
+# include	"Object.hpp"
+# include	"EnemyMissile.hpp"
 
 class		EnemyShip : public Object
 {
