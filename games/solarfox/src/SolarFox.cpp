@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Sat Apr 08 02:11:05 2017 gastal_r
+** Last update	Sat Apr 08 02:18:20 2017 gastal_r
 */
 
 #include        "LSolarFox.hpp"
@@ -163,9 +163,9 @@ void    LSolarFox::move()
         _map->tile[it->getY() * MAP_WIDTH + it->getX()] = arcade::TileType::EMPTY;
         _score += 10;
         _core->setScore(std::to_string(_score));
-        it->setY(0);
-        it->setX(0);
         _core->getLib()->aPlaySound(arcade::Sound::POWERUP);
+        it = _missile.erase(it);
+        it = it - 1;
       }
     }
   }
@@ -181,7 +181,7 @@ void    LSolarFox::move()
         if (colision == true)
         {
           it = _missile.erase(it);
-          it = it - 1;
+          it = it--;
           itE = _enemyMissile.erase(itE);
           itE == itE--;
         }
@@ -208,7 +208,7 @@ void    LSolarFox::move()
         if (colision == true)
         {
           it = _missile.erase(it);
-          it = it - 1;
+          it = it--;
           itE = _enemyMissile.erase(itE);
           itE == itE--;
         }
