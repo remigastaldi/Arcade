@@ -5,7 +5,7 @@
 // Login   <flavien.sellet@epitech.eu>
 //
 // Started on  Tue Apr  4 16:29:13 2017 sellet_f
-// Last update Sat Apr  8 03:31:31 2017 sellet_f
+// Last update Sat Apr  8 20:04:34 2017 sellet_f
 //
 
 #include "Ship.hpp"
@@ -45,28 +45,28 @@ int	Ship::move(arcade::GetMap *map)
       switch(_direction)
 	{
 	case arcade::CommandType::GO_UP :
+	  if (map->tile[(_y - 1) * 41 + _x] == arcade::TileType::OBSTACLE)
+	    return (SHIP_DESTROYED);
 	  if (map->tile[(_y - 1) * 41 + _x] != arcade::TileType::BLOCK)
 	    _y -= 1;
-	  else if (_y == 5)
-	    return (SHIP_DESTROYED);
 	  break;
 	case arcade::CommandType::GO_DOWN :
+	  if (map->tile[(_y + 1) * 41 + _x] == arcade::TileType::OBSTACLE)
+	    return (SHIP_DESTROYED);
 	  if (map->tile[(_y + 1) * 41 + _x] != arcade::TileType::BLOCK)
 	    _y += 1;
-	  else if (_y == 35)
-	    return (SHIP_DESTROYED);
 	  break;
 	case arcade::CommandType::GO_LEFT :
+	  if (map->tile[_y * 41 + _x - 1] == arcade::TileType::OBSTACLE)
+	    return (SHIP_DESTROYED);
 	  if (map->tile[_y * 41 + _x - 1] != arcade::TileType::BLOCK)
 	    _x -= 1;
-	  else if (_x == 5)
-	    return (SHIP_DESTROYED);
 	  break;
 	case arcade::CommandType::GO_RIGHT :
+	  if (map->tile[_y * 41 + _x + 1] == arcade::TileType::OBSTACLE)
+	    return (SHIP_DESTROYED);
 	  if (map->tile[_y * 41 + _x + 1] != arcade::TileType::BLOCK)
 	    _x += 1;
-	  else if (_x == 35)
-	    return (SHIP_DESTROYED);
 	  break;
 	default :
 	  break;

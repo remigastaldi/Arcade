@@ -48,6 +48,8 @@ void			LSolarFox::initTextures(void)
   _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, SOLAR_RES "img/wall.png", arcade::Color::A_MAGENTA);
   _core->getLib()->aAssignTexture(arcade::TileType::EVIL_DUDE, SOLAR_RES "img/wall.png", arcade::Color::A_BLUE);
   _core->getLib()->aAssignTexture(arcade::TileType::EVIL_SHOOT, SOLAR_RES "img/wall.png", arcade::Color::A_RED);
+  _core->getLib()->aAssignTexture(arcade::TileType::OBSTACLE, SOLAR_RES "img/ship.png", arcade::Color::A_BLACK);
+  _core->getLib()->aAssignTexture(arcade::TileType::OTHER, SOLAR_RES "img/wall3.png", arcade::Color::A_YELLOW);
 }
 
 void			LSolarFox::parseMap(std::string const content)
@@ -83,6 +85,12 @@ void			LSolarFox::parseMap(std::string const content)
 	  _enemyShip.push_back(EnemyShip(i % _map->width, i / _map->height, arcade::CommandType::GO_LEFT));
 	else
 	  _enemyShip.push_back(EnemyShip(i % _map->width, i / _map->height, arcade::CommandType::GO_UP));
+	break;
+      case 'X' :
+	_map->tile[++j] = arcade::TileType::OBSTACLE;
+	break;
+      case 'O' :
+	_map->tile[++j] = arcade::TileType::OTHER;
 	break;
       default :
 	throw arcade::Exception("Invalid map.");

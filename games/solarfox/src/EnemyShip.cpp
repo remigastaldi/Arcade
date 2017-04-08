@@ -5,7 +5,7 @@
 // Login   <flavien.sellet@epitech.eu>
 //
 // Started on  Tue Apr  4 16:46:49 2017 sellet_f
-// Last update Fri Apr  7 16:06:51 2017 sellet_f
+// Last update Sat Apr  8 20:20:08 2017 sellet_f
 //
 
 #include "EnemyShip.hpp"
@@ -41,49 +41,49 @@ void		EnemyShip::print(arcade::ICore *core)
 void		EnemyShip::move(arcade::ICore *core, std::vector<EnemyMissile> &enemyMissile, bool lPDM)
 {
   if (checkAction(false))
-  {
-    switch (_direction)
-      {
-      case arcade::CommandType::GO_UP :
-    if (_y == 1)
-    _direction = arcade::CommandType::GO_DOWN;
-    else
-    _y -= 1;
-    break;
-      case arcade::CommandType::GO_DOWN :
-    if (_y == 39)
-    _direction = arcade::CommandType::GO_UP;
-    else
-    _y += 1;
-    break;
-      case arcade::CommandType::GO_LEFT :
-    if (_x == 1)
-    _direction = arcade::CommandType::GO_RIGHT;
-    else
-    _x -= 1;
-    break;
-      case arcade::CommandType::GO_RIGHT :
-    if (_x == 39)
-    _direction = arcade::CommandType::GO_LEFT;
-    else
-    _x += 1;
-    break;
-      default:
-    break;
-      }
-
-    if (rand() % 5000 < 200 && lPDM == false)
     {
-      if (_x == 1 && (_direction == arcade::CommandType::GO_UP || _direction == arcade::CommandType::GO_DOWN))
-    enemyMissile.push_back(EnemyMissile(_x + 1, _y, arcade::CommandType::GO_RIGHT));
-      else if (_x == 39 && (_direction == arcade::CommandType::GO_UP || _direction == arcade::CommandType::GO_DOWN))
-    enemyMissile.push_back(EnemyMissile(_x - 1, _y, arcade::CommandType::GO_LEFT));
-      else if (_y == 1 && (_direction == arcade::CommandType::GO_LEFT || _direction == arcade::CommandType::GO_RIGHT))
-    enemyMissile.push_back(EnemyMissile(_x, _y + 1, arcade::CommandType::GO_DOWN));
-      else if (_y == 39 && (_direction == arcade::CommandType::GO_LEFT || _direction == arcade::CommandType::GO_RIGHT))
-    enemyMissile.push_back(EnemyMissile(_x, _y - 1, arcade::CommandType::GO_UP));
-    core->getLib()->aPlaySound(arcade::EVIL_SHOOT);
-    }
+      switch (_direction)
+	{
+	case arcade::CommandType::GO_UP :
+	  if (_y == 1)
+	    _direction = arcade::CommandType::GO_DOWN;
+	  else
+	    _y -= 1;
+	  break;
+	case arcade::CommandType::GO_DOWN :
+	  if (_y == 39)
+	    _direction = arcade::CommandType::GO_UP;
+	  else
+	    _y += 1;
+	  break;
+	case arcade::CommandType::GO_LEFT :
+	  if (_x == 1)
+	    _direction = arcade::CommandType::GO_RIGHT;
+	  else
+	    _x -= 1;
+	  break;
+	case arcade::CommandType::GO_RIGHT :
+	  if (_x == 39)
+	    _direction = arcade::CommandType::GO_LEFT;
+	  else
+	    _x += 1;
+	  break;
+	default:
+	  break;
+	}
 
-  }
+      if (rand() % 5000 < 200 && lPDM == false)
+	{
+	  if (_x == 1 && (_direction == arcade::CommandType::GO_UP || _direction == arcade::CommandType::GO_DOWN))
+	    enemyMissile.push_back(EnemyMissile(_x + 1, _y, arcade::CommandType::GO_RIGHT));
+	  else if (_x == 39 && (_direction == arcade::CommandType::GO_UP || _direction == arcade::CommandType::GO_DOWN))
+	    enemyMissile.push_back(EnemyMissile(_x - 1, _y, arcade::CommandType::GO_LEFT));
+	  else if (_y == 1 && (_direction == arcade::CommandType::GO_LEFT || _direction == arcade::CommandType::GO_RIGHT))
+	    enemyMissile.push_back(EnemyMissile(_x, _y + 1, arcade::CommandType::GO_DOWN));
+	  else if (_y == 39 && (_direction == arcade::CommandType::GO_LEFT || _direction == arcade::CommandType::GO_RIGHT))
+	    enemyMissile.push_back(EnemyMissile(_x, _y - 1, arcade::CommandType::GO_UP));
+	  core->getLib()->aPlaySound(arcade::EVIL_SHOOT);
+	}
+
+    }
 }
