@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Mar 17 00:03:17 2017 gastal_r
-** Last update	Mon Apr 03 01:24:13 2017 gastal_r
+** Last update	Sat Apr 08 21:40:39 2017 gastal_r
 */
 
 #include        "Save.hpp"
@@ -22,18 +22,19 @@ void            Save::loadPlayerSave()
   std::string   token;
   size_t        pos;
   Save::Data    data;
+  std::fstream  file;
 
-	_file.open(SAVE_PATH, std::fstream::in);
-  if (!_file.is_open())
+	file.open(SAVE_PATH, std::fstream::in);
+  if (!file.is_open())
     return;
-  while(!_file.eof())
+  while(!file.eof())
   {
     Save::PlayerSave playerSave;
-    getline(_file, line);
+    getline(file, line);
     if (line.empty() || line == "\n")
       continue;
     playerSave.setPlayer(line);
-    getline(_file, line);
+    getline(file, line);
     while ((pos = line.find(":")) != std::string::npos)
     {
       token = line.substr(0, pos);
@@ -47,7 +48,7 @@ void            Save::loadPlayerSave()
    }
    _playerSave.push_back(playerSave);
   }
-  _file.close();
+  file.close();
 }
 
 void                  Save::checkExistingUser()

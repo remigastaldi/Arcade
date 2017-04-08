@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:55:17 2017 gastal_r
-** Last update	Sat Apr 08 20:52:16 2017 gastal_r
+** Last update	Sun Apr 09 00:13:23 2017 gastal_r
 */
 
 #ifndef         _GUI_HPP_
@@ -60,6 +60,7 @@ public:
   void          guiSetScore(const std::string &score)              {_score = score;}
   void          guiSetBestScores(const std::vector<std::string> &scores) {_bestPlayersScores = scores;}
   void          guiClearBestScores();
+  void          guiGameWin();
   void          guiGameOver();
 
 private:

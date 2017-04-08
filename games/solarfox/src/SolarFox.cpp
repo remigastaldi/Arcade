@@ -5,13 +5,14 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Sat Apr 08 19:41:49 2017 gastal_r
+** Last update	Sun Apr 09 00:41:10 2017 gastal_r
 */
 
 #include	        "LSolarFox.hpp"
 
 LSolarFox::LSolarFox()
 {
+  _status = CONTINUE;
 }
 
 LSolarFox::~LSolarFox()
@@ -52,7 +53,7 @@ void			LSolarFox::initTextures(void)
   _core->getLib()->aAssignTexture(arcade::TileType::OTHER, SOLAR_RES "img/wall3.png", arcade::Color::A_YELLOW);
 }
 
-void			LSolarFox::parseMap(std::string const content)
+void			LSolarFox::parseMap(std::string const &content)
 {
   arcade::Position	powerUp;
   int			j;
@@ -98,39 +99,64 @@ void			LSolarFox::parseMap(std::string const content)
       }
 }
 
-void			LSolarFox::initGame(bool lPDM)
+arcade::CommandType  	LSolarFox::initGame(bool lPDM)
 {
-  std::ifstream		file(SOLAR_RES "map/level_1.map");
   int			sizeLine;
   std::string		content;
   std::string		line;
 
   _score = 0;
-  _nbpower = 0;
   _lPDM = lPDM;
   _exitStatus = arcade::CommandType::UNDEFINED;
   std::srand(std::time(NULL));
 
   _map = new arcade::GetMap[(MAP_HEIGHT * MAP_WIDTH * sizeof(arcade::TileType))];
-  _map->type = arcade::CommandType::GO_UP;
   _map->width = MAP_WIDTH;
   _map->height = MAP_HEIGHT;
-  if (file)
-    {
-      std::getline(file, line);
-      sizeLine = line.length();
-      content += line;
 
-      while (getline(file, line))
-      	{
-      	  if ((unsigned int)sizeLine != line.length())
-      	    throw arcade::Exception("Invalid map.");
-      	  content += line;
-      	}
-      parseMap(content);
-    }
-  else
-    throw arcade::Exception("Invalid file.");
+  initTextures();
+
+  Level level;
+  if (level.getNbLvl() == 0)
+    throw arcade::Exception("No map found");
+  while (_status != EXIT)
+  {
+    _nbpower = 0;
+    _map->type = arcade::CommandType::GO_UP;
+    std::ifstream		file(level.getNextLvl());
+    if (file)
+      {
+        content.clear();
+        std::getline(file, line);
+        sizeLine = line.length();
+        content += line;
+
+        while (getline(file, line))
+        	{
+        	  if ((unsigned int)sizeLine != line.length())
+        	    throw arcade::Exception("Invalid map.");
+        	  content += line;
+        	}
+        parseMap(content);
+      }
+    else
+      throw arcade::Exception("Invalid file.");
+    file.close();
+    arcade::CommandType val = mainLoop();
+    if (val != arcade::CommandType::UNDEFINED)
+      return (val);
+
+    if (level.getCurrentLvl() == level.getNbLvl() - 1)
+      {
+        gameWin();
+        return(_exitStatus);
+      }
+      _missile.clear();
+      _enemyMissile.clear();
+      _powerUp.clear();
+      _enemyShip.clear();
+  }
+  return (arcade::CommandType::MENU);
 }
 
 void			LSolarFox::changeAction()
@@ -200,6 +226,7 @@ void    LSolarFox::move()
 	      if (itpow->x == it->getX() && itpow->y == it->getY())
 		{
 		  _score += 10;
+      _nbpower--;
       if (_lPDM == false)
       {
         _core->setScore(std::to_string(_score));
@@ -274,9 +301,8 @@ arcade::CommandType					LSolarFox::mainLoop(void)
   arcade::CommandType					lastCommand;
   Missile						missile;
 
-  initTextures();
   _core->setScore(std::to_string(_score));
-  while (_map->type != arcade::CommandType::ESCAPE && _map->type != arcade::CommandType::MENU)
+  while (_map->type != arcade::CommandType::ESCAPE && _map->type != arcade::CommandType::MENU && _nbpower > 0)
     {
       t2 = std::chrono::high_resolution_clock::now();
       lastCommand = _core->getLib()->aCommand();
@@ -293,7 +319,7 @@ arcade::CommandType					LSolarFox::mainLoop(void)
       }
     }
 
-      switch(_map->type)
+  switch(_map->type)
 	{
 	case arcade::CommandType::NEXT_LIB :
 	  _core->switchLib(arcade::CommandType::NEXT_LIB);
@@ -338,24 +364,50 @@ arcade::CommandType					LSolarFox::mainLoop(void)
           changeAction();
           move();
           if (_exitStatus == arcade::CommandType::MENU || _exitStatus == arcade::CommandType::ESCAPE)
+          {
+            _core->getLib()->aClearAnimBuffer();
       	    return (_exitStatus);
+          }
           printGame();
           t1 = std::chrono::high_resolution_clock::now();
         }
     }
-  return (_map->type);
+  _core->getLib()->aClearAnimBuffer();
+  return (_nbpower == 0 ? arcade::CommandType::UNDEFINED : _map->type);
 }
 
 arcade::CommandType	LSolarFox::play(arcade::ICore& core)
 {
   _core = &core;
-  initGame(false);
-  return (mainLoop());
+  return (initGame(false));
 }
 
 void			LSolarFox::close(void)
 {
 
+}
+
+void			LSolarFox::gameWin(void)
+{
+  _core->getLib()->aClearAnimBuffer();
+  _core->setScore(std::to_string(_score));
+  _core->gameWin();
+  while (1)
+    {
+      _map->type = _core->getLib()->aCommand();
+      if (_map->type == arcade::CommandType::ESCAPE)
+      {
+        _core->saveScore(_score);
+        _exitStatus = arcade::CommandType::ESCAPE;
+        return;
+      }
+      if (_map->type == arcade::CommandType::PLAY)
+      {
+        _core->saveScore(_score);
+        _exitStatus = arcade::CommandType::MENU;
+        return;
+      }
+    }
 }
 
 void			LSolarFox::gameOver(void)

@@ -28,7 +28,8 @@ SNSRC           =       src/SolarFox.cpp	\
 			src/Ship.cpp		\
 			src/EnemyShip.cpp	\
 			src/Missile.cpp		\
-			src/EnemyMissile.cpp
+			src/EnemyMissile.cpp	\
+			src/Level.cpp
 SNOBJ           =       $(SNSRC:.cpp=.o)
 
 all             :	title $(SNNAME)

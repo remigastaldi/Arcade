@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 11:01:41 2017 gastal_r
-** Last update	Fri Apr 07 13:49:01 2017 gastal_r
+** Last update	Sun Apr 09 00:16:27 2017 gastal_r
 */
 
 #include        "Gui.hpp"
@@ -225,13 +225,23 @@ void                  Gui::guiClearBestScores()
   _bestPlayerScore.clear();
 }
 
+void                  Gui::guiGameWin()
+{
+  _graph->aPlaySound(arcade::Sound::GAME_OVER);
+  _graph->aClear();
+  _graph->aPutText(pos_x(2.7), pos_y(2.25), arcade::Font::PRESS_START, WIDTH / 40, arcade::Color::A_RED, "GG YOU WIN!");
+  _graph->aPutText(pos_x(2.8), pos_y(1.8), arcade::Font::PRESS_START, WIDTH / 100, arcade::Color::A_WHITE, "PRESS ENTER TO PLAY AGAIN.");
+  _graph->aPutText(pos_x(2.1) - _score.length() * BLOCK_X, pos_y(6), arcade::Font::PRESS_START,
+                            WIDTH / 15, arcade::Color::A_YELLOW, _score);
+  _graph->aRefresh();
+}
+
 void                  Gui::guiGameOver()
 {
   _graph->aPlaySound(arcade::Sound::GAME_OVER);
   _graph->aClear();
   _graph->aPutText(pos_x(2.7), pos_y(2.25), arcade::Font::PRESS_START, WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
   _graph->aPutText(pos_x(2.8), pos_y(1.8), arcade::Font::PRESS_START, WIDTH / 100, arcade::Color::A_WHITE, "PRESS ENTER TO PLAY AGAIN.");
-  _graph->aPutText(pos_x(2.7), pos_y(2.25), arcade::Font::PRESS_START, WIDTH / 40, arcade::Color::A_RED, "GAME OVER");
   _graph->aPutText(pos_x(2.1) - _score.length() * BLOCK_X, pos_y(6), arcade::Font::PRESS_START,
                             WIDTH / 15, arcade::Color::A_YELLOW, _score);
   _graph->aRefresh();
