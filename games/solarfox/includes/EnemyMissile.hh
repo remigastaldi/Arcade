@@ -24,7 +24,7 @@ public:
   ~EnemyMissile();
 
   void	print(arcade::ICore *);
-  int	move(Missile, Ship);
+  int	move(Ship);
   bool	checkColisions(Object);
 };
 

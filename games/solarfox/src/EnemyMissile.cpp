@@ -43,7 +43,7 @@ bool	EnemyMissile::checkColisions(Object obj)
   return (false);
 }
 
-int	EnemyMissile::move(Missile missile, Ship ship)
+int	EnemyMissile::move(Ship ship)
 {
   if (checkAction(false))
     {
@@ -74,7 +74,5 @@ int	EnemyMissile::move(Missile missile, Ship ship)
     }
     if (checkColisions(ship) == true)
      return (SHIP_DESTROYED);
-    else if (checkColisions(missile) == true)
-     return (MISSILE_DESTROYED);
   return (0);
 }

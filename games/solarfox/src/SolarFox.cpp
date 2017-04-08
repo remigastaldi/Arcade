@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Sat Apr 08 00:40:48 2017 gastal_r
+** Last update	Sat Apr 08 02:11:05 2017 gastal_r
 */
 
 #include        "LSolarFox.hpp"
@@ -150,8 +150,6 @@ void			LSolarFox::changeAction()
 
 void    LSolarFox::move()
 {
-  int	colisions;
-
   for (std::vector<Missile>::iterator it = _missile.begin(); it != _missile.end(); ++it)
     it->move();
   _ship.move(_map);
@@ -172,37 +170,50 @@ void    LSolarFox::move()
     }
   }
 
-  if (_missile.size() == 0)
-  {
-    Missile missile;
-    missile.setX(0);
-    missile.setY(0);
-    _missile.push_back(missile);
-  }
+
+  int	colisionType;
+  bool colision = false;
   for (std::vector<EnemyMissile>::iterator itE = _enemyMissile.begin() ; itE != _enemyMissile.end() ; ++itE)
     {
       for (std::vector<Missile>::iterator it = _missile.begin(); it != _missile.end(); ++it)
       {
-        colisions = itE->move(*it, _ship);
-        if (colisions == SHIP_DESTROYED)
-  	     {
-            _core->getLib()->aPlaySound(arcade::Sound::EXPLOSION);
-  	        itE = _enemyMissile.erase(itE);
-            itE = itE--;
-  	        gameOver();
-            return;
-  	      }
-        else if (colisions == MISSILE_DESTROYED)
-  	     {
+        colision = itE->checkColisions(*it);
+        if (colision == true)
+        {
           it = _missile.erase(it);
           it = it - 1;
-  	      itE = _enemyMissile.erase(itE);
+          itE = _enemyMissile.erase(itE);
           itE == itE--;
-  	     }
-     }
-   }
-   if (_missile[0].getX() == 0 && _missile[0].getY() == 0)
-    _missile.clear();
+        }
+      }
+
+      colisionType = itE->move(_ship);
+
+      if (colisionType == SHIP_DESTROYED)
+      {
+        _core->getLib()->aPlaySound(arcade::Sound::EXPLOSION);
+        itE = _enemyMissile.erase(itE);
+        itE = itE--;
+        gameOver();
+        return;
+       }
+       else if (colisionType == MISSILE_DESTROYED)
+       {
+         itE = _enemyMissile.erase(itE);
+         itE == itE--;
+       }
+       for (std::vector<Missile>::iterator it = _missile.begin(); it != _missile.end(); ++it)
+      {
+        colision = itE->checkColisions(*it);
+        if (colision == true)
+        {
+          it = _missile.erase(it);
+          it = it - 1;
+          itE = _enemyMissile.erase(itE);
+          itE == itE--;
+        }
+      }
+    }
   for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
     it->move(_core, _enemyMissile);
 }
