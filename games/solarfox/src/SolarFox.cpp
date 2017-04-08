@@ -8,7 +8,7 @@
 ** Last update	Sat Apr 08 11:45:48 2017 gastal_r
 */
 
-#include        "LSolarFox.hpp"
+#include	        "LSolarFox.hpp"
 
 LSolarFox::LSolarFox()
 {
@@ -30,7 +30,8 @@ void		        LSolarFox::printGame(void)
     it->print(_core);
   for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
     it->print(_core);
-
+  for (std::vector<arcade::Position>::iterator it = _powerUp.begin() ; it != _powerUp.end() ; ++it)
+    _core->getLib()->aTile(it->x + 1, it->y + 1, 0, arcade::TileType::POWERUP, arcade::CommandType::UNDEFINED);
   for (unsigned int i = 0 ; i < MAP_HEIGHT * MAP_WIDTH; i++)
     _core->getLib()->aTile((i % _map->width) + 1, (i / _map->height) + 1, 0, _map->tile[i], arcade::CommandType::UNDEFINED);
 
@@ -52,9 +53,10 @@ void			LSolarFox::initTextures(void)
 void			LSolarFox::initGame(bool lPDM)
 {
   std::ifstream		file(SOLAR_RES "map/level_moul.map");
+  int			sizeLine;
+  arcade::Position	powerUp;
   std::string		content;
   std::string		line;
-  int			sizeLine;
   int			j;
 
   j = -1;
@@ -91,8 +93,11 @@ void			LSolarFox::initGame(bool lPDM)
 	    _map->tile[++j] = arcade::TileType::EMPTY;
 	    break;
 	  case '1' :
-      _nbpower++;
-	    _map->tile[++j] = arcade::TileType::POWERUP;
+	    _nbpower++;
+	    powerUp.x = i % _map->width;
+	    powerUp.y = i / _map->width;
+	    _powerUp.push_back(powerUp);
+	    _map->tile[++j] = arcade::TileType::EMPTY;
 	    break;
 	  case 'V' :
 	    _map->tile[++j] = arcade::TileType::EMPTY;
@@ -156,64 +161,78 @@ void    LSolarFox::move()
     gameOver();
 
   if (_missile.size() != 0)
-  {
-    for (std::vector<Missile>::iterator it = _missile.begin(); it != _missile.end(); ++it)
     {
-      if (_map->tile[it->getY() * MAP_WIDTH + it->getX()] == arcade::TileType::POWERUP)
-      {
-        _map->tile[it->getY() * MAP_WIDTH + it->getX()] = arcade::TileType::EMPTY;
-        _score += 10;
-        _core->setScore(std::to_string(_score));
-        _core->getLib()->aPlaySound(arcade::Sound::POWERUP);
-        it = _missile.erase(it);
-        it = it - 1;
-      }
+      for (std::vector<Missile>::iterator it = _missile.begin(); it != _missile.end(); ++it)
+	{
+	  // if (_map->tile[it->getY() * MAP_WIDTH + it->getX()] == arcade::TileType::POWERUP)
+	  //   {
+	  //     _map->tile[it->getY() * MAP_WIDTH + it->getX()] = arcade::TileType::EMPTY;
+	  //     _score += 10;
+	  //     _core->setScore(std::to_string(_score));
+	  //     _core->getLib()->aPlaySound(arcade::Sound::POWERUP);
+	  //     it = _missile.erase(it);
+	  //     it = it - 1;
+	  //   }
+	  for (std::vector<arcade::Position>::iterator itpow = _powerUp.begin() ; itpow != _powerUp.end() ; ++itpow)
+	    {
+	      if (itpow->x == it->getX() && itpow->y == it->getY())
+		{
+		  _score += 10;
+		  _core->setScore(std::to_string(_score));
+		  _core->getLib()->aPlaySound(arcade::Sound::POWERUP);
+		  it = _missile.erase(it);
+		  it = it - 1;
+		  itpow = _powerUp.erase(itpow);
+		  itpow = itpow - 1;
+		}
+	    }
+	}
     }
-  }
 
 
   int	colisionType;
   bool colision = false;
+
   for (std::vector<EnemyMissile>::iterator itE = _enemyMissile.begin() ; itE != _enemyMissile.end() ; ++itE)
     {
       for (std::vector<Missile>::iterator it = _missile.begin(); it != _missile.end(); ++it)
-      {
-        colision = itE->checkColisions(*it);
-        if (colision == true)
-        {
-          it = _missile.erase(it);
-          it = it - 1;
-          itE = _enemyMissile.erase(itE);
-          itE == itE - 1;
-        }
-      }
+	{
+	  colision = itE->checkColisions(*it);
+	  if (colision == true)
+	    {
+	      it = _missile.erase(it);
+	      it = it - 1;
+	      itE = _enemyMissile.erase(itE);
+	      itE == itE - 1;
+	    }
+	}
 
       colisionType = itE->move(_ship);
 
       if (colisionType == SHIP_DESTROYED)
-      {
-        _core->getLib()->aPlaySound(arcade::Sound::EXPLOSION);
-        itE = _enemyMissile.erase(itE);
-        itE = itE - 1;
-        gameOver();
-        return;
-       }
-       else if (colisionType == MISSILE_DESTROYED)
-       {
-         itE = _enemyMissile.erase(itE);
-         itE == itE - 1;
-       }
-       for (std::vector<Missile>::iterator it = _missile.begin(); it != _missile.end(); ++it)
-      {
-        colision = itE->checkColisions(*it);
-        if (colision == true)
-        {
-          it = _missile.erase(it);
-          it = it - 1;
-          itE = _enemyMissile.erase(itE);
-          itE == itE - 1;
-        }
-      }
+	{
+	  _core->getLib()->aPlaySound(arcade::Sound::EXPLOSION);
+	  itE = _enemyMissile.erase(itE);
+	  itE = itE - 1;
+	  gameOver();
+	  return;
+	}
+      else if (colisionType == MISSILE_DESTROYED)
+	{
+	  itE = _enemyMissile.erase(itE);
+	  itE == itE - 1;
+	}
+      for (std::vector<Missile>::iterator it = _missile.begin(); it != _missile.end(); ++it)
+	{
+	  colision = itE->checkColisions(*it);
+	  if (colision == true)
+	    {
+	      it = _missile.erase(it);
+	      it = it - 1;
+	      itE = _enemyMissile.erase(itE);
+	      itE == itE - 1;
+	    }
+	}
     }
   for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
     it->move(_core, _enemyMissile);

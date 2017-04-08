@@ -34,25 +34,26 @@ public:
   void				changeAction();
   arcade::CommandType		mainLoop(void);
   void				initGame(bool);
+  void				gameOver(void);
   void				close(void);
   void			        move(void);
-  void				gameOver(void);
 
   void				lPDM_getMap() const;
   void				lPDM_whereAmI();
   void				lPDM_start();
 
 private:
-  int					_nbpower;
   bool				_lPDM;
   arcade::GetMap		*_map;
   Ship				_ship;
   int				_score;
   arcade::ICore			*_core;
-  std::vector<Missile>			_missile;
+  int				_nbpower;
+  std::vector<Missile>		_missile;
+  std::vector<arcade::Position>	_powerUp;
   std::vector<EnemyShip>	_enemyShip;
+  arcade::CommandType           _exitStatus;
   std::vector<EnemyMissile>	_enemyMissile;
-  arcade::CommandType             _exitStatus;
 };
 
 #endif          /* !_solarfox_HPP_ */
