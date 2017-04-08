@@ -38,49 +38,52 @@ void		EnemyShip::print(arcade::ICore *core)
     core->getLib()->aTile(_x + 1, _y + 1, _speed, arcade::TileType::EVIL_DUDE, _direction);
 }
 
-void		EnemyShip::move(arcade::ICore *core, std::vector<EnemyMissile> &enemyMissile)
+void		EnemyShip::move(arcade::ICore *core, std::vector<EnemyMissile> &enemyMissile, bool lPDM)
 {
   if (checkAction(false))
+  {
     switch (_direction)
       {
       case arcade::CommandType::GO_UP :
-	if (_y == 1)
-	  _direction = arcade::CommandType::GO_DOWN;
-	else
-	  _y -= 1;
-	break;
+    if (_y == 1)
+    _direction = arcade::CommandType::GO_DOWN;
+    else
+    _y -= 1;
+    break;
       case arcade::CommandType::GO_DOWN :
-	if (_y == 39)
-	  _direction = arcade::CommandType::GO_UP;
-	else
-	  _y += 1;
-	break;
+    if (_y == 39)
+    _direction = arcade::CommandType::GO_UP;
+    else
+    _y += 1;
+    break;
       case arcade::CommandType::GO_LEFT :
-	if (_x == 1)
-	  _direction = arcade::CommandType::GO_RIGHT;
-	else
-	  _x -= 1;
-	break;
+    if (_x == 1)
+    _direction = arcade::CommandType::GO_RIGHT;
+    else
+    _x -= 1;
+    break;
       case arcade::CommandType::GO_RIGHT :
-	if (_x == 39)
-	  _direction = arcade::CommandType::GO_LEFT;
-	else
-	  _x += 1;
-	break;
+    if (_x == 39)
+    _direction = arcade::CommandType::GO_LEFT;
+    else
+    _x += 1;
+    break;
       default:
-	break;
+    break;
       }
 
-  if (rand() % 5000 < 200)
+    if (rand() % 5000 < 200 && lPDM == false)
     {
       if (_x == 1 && (_direction == arcade::CommandType::GO_UP || _direction == arcade::CommandType::GO_DOWN))
-	enemyMissile.push_back(EnemyMissile(_x + 1, _y, arcade::CommandType::GO_RIGHT));
+    enemyMissile.push_back(EnemyMissile(_x + 1, _y, arcade::CommandType::GO_RIGHT));
       else if (_x == 39 && (_direction == arcade::CommandType::GO_UP || _direction == arcade::CommandType::GO_DOWN))
-	enemyMissile.push_back(EnemyMissile(_x - 1, _y, arcade::CommandType::GO_LEFT));
+    enemyMissile.push_back(EnemyMissile(_x - 1, _y, arcade::CommandType::GO_LEFT));
       else if (_y == 1 && (_direction == arcade::CommandType::GO_LEFT || _direction == arcade::CommandType::GO_RIGHT))
-	enemyMissile.push_back(EnemyMissile(_x, _y + 1, arcade::CommandType::GO_DOWN));
+    enemyMissile.push_back(EnemyMissile(_x, _y + 1, arcade::CommandType::GO_DOWN));
       else if (_y == 39 && (_direction == arcade::CommandType::GO_LEFT || _direction == arcade::CommandType::GO_RIGHT))
-	enemyMissile.push_back(EnemyMissile(_x, _y - 1, arcade::CommandType::GO_UP));
+    enemyMissile.push_back(EnemyMissile(_x, _y - 1, arcade::CommandType::GO_UP));
     core->getLib()->aPlaySound(arcade::EVIL_SHOOT);
     }
+
+  }
 }

@@ -23,7 +23,7 @@ public:
   ~EnemyShip();
 
   void	print(arcade::ICore *);
-  void	move(arcade::ICore *, std::vector<EnemyMissile> &);
+  void	move(arcade::ICore *, std::vector<EnemyMissile> &, bool);
 };
 
 #endif

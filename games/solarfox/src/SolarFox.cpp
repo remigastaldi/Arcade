@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Sat Apr 08 11:45:48 2017 gastal_r
+** Last update Sat Apr 08 16:37:48 2017 Leo Hubert Froideval
 */
 
 #include	        "LSolarFox.hpp"
@@ -163,7 +163,7 @@ void    LSolarFox::move()
 {
   for (std::vector<Missile>::iterator it = _missile.begin(); it != _missile.end(); ++it)
     it->move();
-  if (_ship.move(_map) == SHIP_DESTROYED)
+  if (_ship.move(_map) == SHIP_DESTROYED && _lPDM == false)
     gameOver();
 
   if (_missile.size() != 0)
@@ -175,8 +175,11 @@ void    LSolarFox::move()
 	      if (itpow->x == it->getX() && itpow->y == it->getY())
 		{
 		  _score += 10;
-		  _core->setScore(std::to_string(_score));
-		  _core->getLib()->aPlaySound(arcade::Sound::POWERUP);
+      if (_lPDM == false)
+      {
+        _core->setScore(std::to_string(_score));
+        _core->getLib()->aPlaySound(arcade::Sound::POWERUP);
+      }
 		  it = _missile.erase(it);
 		  it = it - 1;
 		  itpow = _powerUp.erase(itpow);
@@ -207,10 +210,12 @@ void    LSolarFox::move()
       colisionType = itE->move(_ship);
       if (colisionType == SHIP_DESTROYED)
 	{
-	  _core->getLib()->aPlaySound(arcade::Sound::EXPLOSION);
+    if (_lPDM == false)
+	   _core->getLib()->aPlaySound(arcade::Sound::EXPLOSION);
 	  itE = _enemyMissile.erase(itE);
 	  itE = itE - 1;
-	  gameOver();
+    if (_lPDM == false)
+	   gameOver();
 	  return;
 	}
       else if (colisionType == MISSILE_DESTROYED)
@@ -232,7 +237,7 @@ void    LSolarFox::move()
 	}
     }
   for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
-    it->move(_core, _enemyMissile);
+    it->move(_core, _enemyMissile, _lPDM);
 }
 
 arcade::CommandType					LSolarFox::mainLoop(void)
@@ -350,7 +355,7 @@ void			LSolarFox::lPDM_getMap() const
   map = _map;
   if (_missile.size() != 0)
   {
-    map->tile[_missile.end()->getY() * MAP_WIDTH + _missile.end()->getX()] = arcade::TileType::MY_SHOOT;
+    map->tile[_missile.at(_missile.size() - 1).getY() * MAP_WIDTH + _missile.at(_missile.size() - 1).getX()] = arcade::TileType::MY_SHOOT;
   }
   std::cout.write(reinterpret_cast<char *>(map), sizeof(arcade::GetMap) + (_map->width * _map->height * sizeof(arcade::TileType)));
 }
