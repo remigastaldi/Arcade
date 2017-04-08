@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Sat Apr 08 02:18:20 2017 gastal_r
+** Last update	Sat Apr 08 02:36:38 2017 gastal_r
 */
 
 #include        "LSolarFox.hpp"
@@ -181,9 +181,9 @@ void    LSolarFox::move()
         if (colision == true)
         {
           it = _missile.erase(it);
-          it = it--;
+          it = it - 1;
           itE = _enemyMissile.erase(itE);
-          itE == itE--;
+          itE == itE - 1;
         }
       }
 
@@ -193,14 +193,14 @@ void    LSolarFox::move()
       {
         _core->getLib()->aPlaySound(arcade::Sound::EXPLOSION);
         itE = _enemyMissile.erase(itE);
-        itE = itE--;
+        itE = itE - 1;
         gameOver();
         return;
        }
        else if (colisionType == MISSILE_DESTROYED)
        {
          itE = _enemyMissile.erase(itE);
-         itE == itE--;
+         itE == itE - 1;
        }
        for (std::vector<Missile>::iterator it = _missile.begin(); it != _missile.end(); ++it)
       {
@@ -208,9 +208,9 @@ void    LSolarFox::move()
         if (colision == true)
         {
           it = _missile.erase(it);
-          it = it--;
+          it = it - 1;
           itE = _enemyMissile.erase(itE);
-          itE == itE--;
+          itE == itE - 1;
         }
       }
     }
