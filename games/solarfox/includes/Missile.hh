@@ -5,7 +5,7 @@
 // Login   <flavien.sellet@epitech.eu>
 //
 // Started on  Tue Apr  4 16:21:08 2017 sellet_f
-// Last update Fri Apr  7 16:39:13 2017 sellet_f
+// Last update Sat Apr  8 00:11:58 2017 sellet_f
 //
 
 #ifndef _MISSILE_HH_
@@ -15,8 +15,6 @@
 
 class	Missile : public Object
 {
-private:
-  unsigned int	_moves;
 public:
   Missile();
   Missile(unsigned int, unsigned int, arcade::CommandType);

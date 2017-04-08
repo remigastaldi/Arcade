@@ -152,7 +152,8 @@ void    LSolarFox::move()
 {
   for (std::vector<Missile>::iterator it = _missile.begin(); it != _missile.end(); ++it)
     it->move();
-  _ship.move(_map);
+  if (_ship.move(_map) == SHIP_DESTROYED)
+    gameOver();
 
   if (_missile.size() != 0)
   {
@@ -221,10 +222,10 @@ void    LSolarFox::move()
 arcade::CommandType					LSolarFox::mainLoop(void)
 {
   std::chrono::high_resolution_clock::time_point	t1 = std::chrono::high_resolution_clock::now();
-  std::chrono::high_resolution_clock::time_point  m1 = std::chrono::high_resolution_clock::now();
+  std::chrono::high_resolution_clock::time_point	m1 = std::chrono::high_resolution_clock::now();
   std::chrono::high_resolution_clock::time_point	t2;
   arcade::CommandType					lastCommand;
-
+  Missile						missile;
 
   initTextures();
   _core->setScore(std::to_string(_score));
@@ -234,11 +235,9 @@ arcade::CommandType					LSolarFox::mainLoop(void)
       lastCommand = _core->getLib()->aCommand();
 
       if (lastCommand != arcade::CommandType::UNDEFINED)
-	     _map->type = lastCommand;
+	_map->type = lastCommand;
 
-
-  Missile missile;
-  switch(_map->type)
+      switch(_map->type)
 	{
 	case arcade::CommandType::NEXT_LIB :
 	  _core->switchLib(arcade::CommandType::NEXT_LIB);
@@ -255,23 +254,26 @@ arcade::CommandType					LSolarFox::mainLoop(void)
 	case arcade::CommandType::PREV_GAME :
 	  return (arcade::CommandType::PREV_GAME);
 	case arcade::CommandType::SHOOT :
-    if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - m1).count() >= 200)
-    {
-  	  _ship.shoot(missile);
-      _missile.push_back(missile);
-      _core->getLib()->aPlaySound(arcade::Sound::MY_SHOOT);
-      m1 = std::chrono::high_resolution_clock::now();
-    }
-    break;
+	  if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - m1).count() >= 200)
+	    {
+	      _ship.shoot(missile);
+	      _missile.push_back(missile);
+	      _core->getLib()->aPlaySound(arcade::Sound::MY_SHOOT);
+	      m1 = std::chrono::high_resolution_clock::now();
+	    }
+	  break;
+	case arcade::CommandType::GO_FORWARD :
+	  _ship.setSpeed(10);
+	  break;
 	case arcade::CommandType::MENU :
 	  _core->getLib()->aClearAnimBuffer();
 	  _core->setScore(std::to_string(_score));
 	  return (arcade::CommandType::MENU);
-  case arcade::CommandType::RESTART :
-    _core->getLib()->aClearAnimBuffer();
-    _core->setScore(std::to_string(_score));
-    return (arcade::CommandType::RESTART);
-  default :
+	case arcade::CommandType::RESTART :
+	  _core->getLib()->aClearAnimBuffer();
+	  _core->setScore(std::to_string(_score));
+	  return (arcade::CommandType::RESTART);
+	default :
 	  break;
 	}
 

@@ -5,7 +5,7 @@
 // Login   <flavien.sellet@epitech.eu>
 // 
 // Started on  Tue Apr  4 14:20:32 2017 sellet_f
-// Last update Fri Apr  7 16:43:54 2017 sellet_f
+// Last update Sat Apr  8 03:24:58 2017 sellet_f
 //
 
 #ifndef		_SHIP_HH_
@@ -22,7 +22,7 @@ public:
   ~Ship();
 
   void		print(arcade::ICore *);
-  void		move(arcade::GetMap *);
+  int		move(arcade::GetMap *);
   void		shoot(Missile &);
 };
 

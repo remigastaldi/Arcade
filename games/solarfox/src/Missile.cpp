@@ -5,7 +5,7 @@
 // Login   <flavien.sellet@epitech.eu>
 //
 // Started on  Tue Apr  4 17:20:27 2017 sellet_f
-// Last update Fri Apr  7 16:38:55 2017 sellet_f
+// Last update Sat Apr  8 00:13:06 2017 sellet_f
 //
 
 #include "Missile.hh"
@@ -17,6 +17,7 @@ Missile::Missile()
   _speed = 0;
   _it = 0;
   _direction = arcade::CommandType::UNDEFINED;
+  _moves = 2;
 }
 
 Missile::Missile(unsigned int x, unsigned int y, arcade::CommandType direction)
@@ -27,11 +28,11 @@ Missile::Missile(unsigned int x, unsigned int y, arcade::CommandType direction)
   _speed = 10;
   _direction = direction;
   _it = 10;
+  _moves = 2;
 }
 
 Missile::~Missile()
 {
-
 }
 
 void	Missile::print(arcade::ICore *core)
@@ -60,6 +61,10 @@ void	Missile::move(void)
 	default:
 	  break;
 	}
+      if (_moves > 0)
+	_moves -= 1;
+      else
+	empty();
     }
 }
 
@@ -68,4 +73,5 @@ void	Missile::empty(void)
   _x = 0;
   _y = 0;
   _direction = arcade::CommandType::UNDEFINED;
+  _moves = 2;
 }
