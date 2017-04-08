@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update Sun Apr 09 01:22:32 2017 Leo Hubert Froideval
+** Last update	Sun Apr 09 01:32:26 2017 gastal_r
 */
 
 #include	        "LSolarFox.hpp"
@@ -124,7 +124,7 @@ arcade::CommandType  	LSolarFox::initGame(bool lPDM)
   {
     _nbpower = 0;
     _map->type = arcade::CommandType::GO_UP;
-    std::ifstream		file(level.getNextLvl());
+    std::ifstream		file(lPDM ? SOLAR_RES "map/level_moul.map" : level.getNextLvl());
     if (file)
       {
         content.clear();
