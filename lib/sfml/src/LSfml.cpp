@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Sat Apr 08 18:37:59 2017 gastal_r
+** Last update Sat Apr 08 20:03:34 2017 Leo Hubert Froideval
 */
 
 #include        "LSfml.hpp"
@@ -56,6 +56,11 @@ sf::Sprite      LSfml::createSprite(const sf::Texture &texture)
   sprite.setTexture(texture);
   sprite.setScale(sf::Vector2f(BLOCK_SFML / texture.getSize().x, BLOCK_SFML / texture.getSize().y));
   return (sprite);
+}
+
+void            LSfml::aTile(size_t x, size_t y, arcade::TileType type)
+{
+  aTile(x, y, 0, type, arcade::CommandType::UNDEFINED);
 }
 
 void            LSfml::aTile(size_t x, size_t y, int speed, arcade::TileType type, arcade::CommandType dir)

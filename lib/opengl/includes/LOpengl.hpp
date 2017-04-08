@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:21 2017 gastal_r
-** Last update	Sat Apr 08 18:06:18 2017 gastal_r
+** Last update Sat Apr 08 20:08:18 2017 Leo Hubert Froideval
 */
 
 #ifndef         _LOPENGL_HPP_
@@ -55,6 +55,7 @@ public:
   sf::Sprite    createSprite(const sf::Texture &texture);
   sf::Texture   createColoredTexture(arcade::Color color);
 
+  void          aTile(size_t, size_t, arcade::TileType);
   void          aTile(size_t, size_t, int, arcade::TileType, arcade::CommandType);
   void          aTile(size_t, size_t, void *);
 
@@ -104,7 +105,7 @@ private:
   std::pair<AObj::Data, size_t>  _powerUpObj;
   std::pair<AObj::Data, size_t>  _shipObj;
   std::pair<AObj::Data, size_t>  _otherObj;
-  
+
   Sound              _sound;
   sf::Music          _music;
 

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Sun Apr 09 00:41:10 2017 gastal_r
+** Last update Sun Apr 09 01:22:32 2017 Leo Hubert Froideval
 */
 
 #include	        "LSolarFox.hpp"
@@ -114,7 +114,8 @@ arcade::CommandType  	LSolarFox::initGame(bool lPDM)
   _map->width = MAP_WIDTH;
   _map->height = MAP_HEIGHT;
 
-  initTextures();
+  if (_lPDM == false)
+    initTextures();
 
   Level level;
   if (level.getNbLvl() == 0)
@@ -142,13 +143,16 @@ arcade::CommandType  	LSolarFox::initGame(bool lPDM)
     else
       throw arcade::Exception("Invalid file.");
     file.close();
-    arcade::CommandType val = mainLoop();
+    arcade::CommandType val;
+    if (_lPDM == false)
+       val = mainLoop();
     if (val != arcade::CommandType::UNDEFINED)
       return (val);
 
     if (level.getCurrentLvl() == level.getNbLvl() - 1)
       {
-        gameWin();
+        if (_lPDM == false)
+          gameWin();
         return(_exitStatus);
       }
       _missile.clear();

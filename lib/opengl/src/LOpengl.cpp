@@ -93,6 +93,11 @@ sf::Sprite      LOpengl::createSprite(const sf::Texture &texture)
   return (sprite);
 }
 
+void            LOpengl::aTile(size_t x, size_t y, arcade::TileType type)
+{
+  aTile(x, y, 0, type, arcade::CommandType::UNDEFINED);
+}
+
 void            LOpengl::aTile(size_t x, size_t y, int speed, arcade::TileType type, arcade::CommandType dir)
 {
   LOpengl::Data data;

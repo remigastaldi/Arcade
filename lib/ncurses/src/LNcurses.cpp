@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:45:49 2017 gastal_r
-** Last update	Sat Apr 08 18:39:52 2017 gastal_r
+** Last update Sun Apr 09 01:19:22 2017 Leo Hubert Froideval
 */
 
 #include          "LNcurses.hpp"
@@ -59,6 +59,11 @@ void        LNcurses::printTile(size_t x, size_t y, LNcurses::NColor color)
   mvprintw(Y_PAD + y, X_PAD + x, " ");
   mvprintw(Y_PAD + y, X_PAD + x + 1, " ");
   Ncurses::Attroff(COLOR_PAIR(color));
+}
+
+void        LNcurses::aTile(size_t x, size_t y, arcade::TileType type)
+{
+  aTile(x, y, 0, type, arcade::CommandType::UNDEFINED);
 }
 
 void        LNcurses::aTile(size_t x, size_t y, int speed, arcade::TileType type, arcade::CommandType dir)

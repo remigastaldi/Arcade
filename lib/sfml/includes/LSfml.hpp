@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:07:35 2017 gastal_r
-** Last update	Fri Apr 07 15:23:36 2017 gastal_r
+** Last update Sat Apr 08 20:08:11 2017 Leo Hubert Froideval
 */
 
 #ifndef         _LSFML_HPP_
@@ -45,6 +45,7 @@ public:
   sf::Sprite    createSprite(const sf::Texture &texture);
   sf::Texture   createColoredTexture(arcade::Color color);
 
+  void          aTile(size_t, size_t, arcade::TileType);
   void          aTile(size_t, size_t, int, arcade::TileType, arcade::CommandType);
   void          aTile(size_t, size_t, void *);
 

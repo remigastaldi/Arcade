@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:10:52 2017 gastal_r
-** Last update	Fri Apr 07 16:02:28 2017 gastal_r
+** Last update Sat Apr 08 20:08:21 2017 Leo Hubert Froideval
 */
 
 #ifndef       _LNcurses_HPP_
@@ -52,6 +52,8 @@ public:
   void        aClose();
 
   void        printTile(size_t x, size_t y, LNcurses::NColor color);
+
+  void          aTile(size_t, size_t, arcade::TileType);
   void        aTile(size_t, size_t, int, arcade::TileType, arcade::CommandType);
   void        aTile(size_t, size_t, void *){};
 
