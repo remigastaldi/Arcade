@@ -162,10 +162,14 @@ bool			LSnake::checkNextTile(int y, int x)
     {
       _core->getLib()->aPlaySound(arcade::Sound::POWERUP);
       newApple();
-      addQueue();
+      for (int i = rand() % 3 + 1 ; i > 0 ; --i)
+	addQueue();
       addScore(10);
       if (_lPDM == false)
-	_core->setScore(std::to_string(_score));
+	{
+	  _core->setScore(std::to_string(_score));
+	  newBlock();
+	}
     }
   return (true);
 }
@@ -314,6 +318,24 @@ void			LSnake::addQueue()
   _position.push_back(_position[_position.size() - 1]);
 }
 
+bool			LSnake::checkDistance(int tile)
+{
+  for (std::vector<arcade::Position>::iterator it = _position.begin() ; it != _position.end() ; ++it)
+    if (tile - (it->y * 50 + it->x) < 5 || tile - (it->y * 50 + it->x) > -5)
+      return (false);
+  return (true);
+}
+
+void			LSnake::newBlock()
+{
+  int			tile;
+
+  tile = rand() % (MAP_WIDTH * MAP_HEIGHT - 2);
+  while (checkDistance(tile) == true && _map->tile[tile] != arcade::TileType::EMPTY)
+    tile = rand() % (MAP_WIDTH * MAP_HEIGHT - 2);
+  _map->tile[tile] = arcade::TileType::OBSTACLE;
+}
+
 void			LSnake::newApple()
 {
   int			tile;
@@ -333,9 +355,6 @@ void			LSnake::newApple()
 	  }
       tile = (_apple.y) * MAP_HEIGHT + _apple.x;
     }
-  // for (std::vector<arcade::Position>::iterator it = _position.end(); it != _position.begin(); it--)
-  //   if (_apple.x == (*it).x && _apple.y == (*it).y)
-  //     newApple();
 }
 
 void                  LSnake::lPDM_getMap() const

@@ -37,7 +37,9 @@ public:
   void		changeAction();
   void		printGame();
   void		move();
+  bool		checkDistance(int);
   void		newApple();
+  void		newBlock();
   void		addQueue();
   void		addScore(int);
   void		gameOver();

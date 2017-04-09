@@ -81,7 +81,7 @@ void			LSolarFox::parseMap(std::string const &content)
 	_ship = Ship(i % _map->width, i / _map->height);
 	break;
       case 'E':
-	_map->tile[++j] = arcade::TileType::EMPTY;
+	_map->tile[++j] = arcade::TileType::OTHER;
 	if ((i % _map->width == 1 && i / _map->height == 1) || (i % _map->width == 39 && i / _map->height == 39))
 	  _enemyShip.push_back(EnemyShip(i % _map->width, i / _map->height, arcade::CommandType::GO_LEFT));
 	else
