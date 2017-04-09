@@ -31,10 +31,10 @@ void            Core::openLib(const std::string &name)
 {
     arcade::IGraph *(*create_lib)();
 
-    _graphHandle = Core::Dlopen(name.c_str(), RTLD_LOCAL | RTLD_LAZY);
+    _graphHandle = Dlopen(name.c_str(), RTLD_LOCAL | RTLD_LAZY);
     if (!_graphHandle)
       throw arcade::Exception("Cannot open", name);
-    create_lib = reinterpret_cast<arcade::IGraph* (*)()>(dlsym(_graphHandle, "createGraph"));
+    create_lib = reinterpret_cast<arcade::IGraph* (*)()>(Dlsym(_graphHandle, "createGraph"));
     if (!create_lib)
       throw arcade::Exception("Cannot load library symbol");
     _graph = create_lib();
@@ -45,10 +45,10 @@ void            Core::openGame(const std::string &name)
 {
     arcade::IGame *(*create_game)();
 
-    _gameHandle = Core::Dlopen(name.c_str(), RTLD_LOCAL | RTLD_LAZY);
+    _gameHandle = Dlopen(name.c_str(), RTLD_LOCAL | RTLD_LAZY);
     if (!_gameHandle)
       throw arcade::Exception("Cannot load", name);
-    create_game = reinterpret_cast<arcade::IGame* (*)()>(dlsym(_gameHandle, "createGame"));
+    create_game = reinterpret_cast<arcade::IGame* (*)()>(Dlsym(_gameHandle, "createGame"));
     if (!create_game)
       throw arcade::Exception("Cannot load game symbol");
     _game = create_game();
@@ -126,7 +126,7 @@ void            Core::coreLoop()
       case arcade::CommandType::RESTART :
         delete(_game);
         _game = 0;
-        Dlclose(_gameHandle);
+	Dlclose(_gameHandle);
         openGamesDir();
         openLibsDir();
         openGame(_currentGame);

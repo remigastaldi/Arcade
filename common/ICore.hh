@@ -20,7 +20,7 @@
 #include          "Protocol.hpp"
 #include          "IGraph.hh"
 #include          "IGame.hh"
-#include			    "Exception.hpp"
+#include	  "Exception.hpp"
 #include          "File.hpp"
 
 #define CORE_RES  "core/res/"
