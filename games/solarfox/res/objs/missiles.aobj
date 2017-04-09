@@ -1,4 +1,4 @@
-MY_SHOOT=8:EVIL_SHOOT=8:
+MY_SHOOT=10:EVIL_SHOOT=10:
 -5 -2 -2  0 0
 -5  2 -2  1 0
 -5 -2  2  0 1

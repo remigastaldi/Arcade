@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Sun Apr 09 15:38:09 2017 gastal_r
+** Last update	Sun Apr 09 17:01:08 2017 gastal_r
 */
 
 #include	        "LSolarFox.hpp"
@@ -13,10 +13,7 @@
 LSolarFox::LSolarFox()
 {
   _status = CONTINUE;
-}
-
-LSolarFox::~LSolarFox()
-{
+  _keepCommand = arcade::CommandType::UNDEFINED;
 }
 
 void		        LSolarFox::printGame(void)
@@ -45,10 +42,10 @@ void			LSolarFox::initTextures(void)
   _core->getLib()->aAssignTexture(arcade::TileType::EMPTY, SOLAR_RES "img/green_darker2.png", arcade::Color::A_WHITE);
   _core->getLib()->aAssignTexture(arcade::TileType::BLOCK, SOLAR_RES "img/black.png", arcade::Color::A_BLACK);
   _core->getLib()->aAssignTexture(arcade::TileType::SHIP, SOLAR_RES "img/blue_neon2.png", arcade::Color::A_BLUE);
-  _core->getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, SOLAR_RES "img/blue_neon.png", arcade::Color::A_BLUE);
+  _core->getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, SOLAR_RES "img/blue_neon2.png", arcade::Color::A_BLUE);
   _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, SOLAR_RES "img/yellow_neon.png", arcade::Color::A_YELLOW);
   _core->getLib()->aAssignTexture(arcade::TileType::EVIL_DUDE, SOLAR_RES "img/red_neon.png", arcade::Color::A_RED);
-  _core->getLib()->aAssignTexture(arcade::TileType::EVIL_SHOOT, SOLAR_RES "img/red_neon.png", arcade::Color::A_RED);
+  _core->getLib()->aAssignTexture(arcade::TileType::EVIL_SHOOT, SOLAR_RES "img/red_neon2.png", arcade::Color::A_RED);
   _core->getLib()->aAssignTexture(arcade::TileType::OBSTACLE, SOLAR_RES "img/red.png", arcade::Color::A_RED);
   _core->getLib()->aAssignTexture(arcade::TileType::OTHER, SOLAR_RES "img/black.png", arcade::Color::A_BLACK);
 }
@@ -210,7 +207,6 @@ void			LSolarFox::changeAction()
         break;
     }
   _ship.setDirection(direction);
-  _map->type = arcade::CommandType::UNDEFINED;
 }
 
 void    LSolarFox::move()
@@ -292,6 +288,7 @@ void    LSolarFox::move()
     }
   for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
     it->move(_core, _enemyMissile, _level, _lPDM);
+  _map->type = arcade::CommandType::UNDEFINED;
 }
 
 arcade::CommandType					LSolarFox::mainLoop(void)
@@ -309,7 +306,7 @@ arcade::CommandType					LSolarFox::mainLoop(void)
       t2 = std::chrono::high_resolution_clock::now();
       lastCommand = _core->getLib()->aCommand();
 
-      if (lastCommand != arcade::CommandType::UNDEFINED)
+      if (_map->type == arcade::CommandType::UNDEFINED)
 	_map->type = lastCommand;
 
   if (lastCommand == arcade::CommandType::UNDEFINED)
