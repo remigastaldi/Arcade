@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:10:52 2017 gastal_r
-** Last update Sat Apr 08 20:08:21 2017 Leo Hubert Froideval
+** Last update	Sun Apr 09 15:39:07 2017 gastal_r
 */
 
 #ifndef       _LNcurses_HPP_
@@ -53,13 +53,10 @@ public:
 
   void        printTile(size_t x, size_t y, LNcurses::NColor color);
 
-  void          aTile(size_t, size_t, arcade::TileType);
   void        aTile(size_t, size_t, int, arcade::TileType, arcade::CommandType);
-  void        aTile(size_t, size_t, void *){};
 
   NColor      fillColor(arcade::Color color);
   void        aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color);
-  void        *aGetTexture(const std::string &) {return (NULL);}
 
   void        aPlaySound(arcade::Sound sound) {_sound.playSound(sound);}
   void        aPlayMusic(const std::string &path) {_sound.playMusic(path);}
@@ -67,12 +64,13 @@ public:
   void        printText(size_t x, size_t y, int color, const std::string &str);
   void        aPutText(size_t, size_t, arcade::Font, size_t, arcade::Color, const std::string &);
 
-  void          transition();
-  void          drawElem(size_t x, size_t y, arcade::TileType type, arcade::CommandType);
-  void          aClearAnimBuffer();
-  void          aClear();
-  void          aRefresh();
-  std::string   aChar();
+  void        transition();
+  void        drawElem(size_t x, size_t y, arcade::TileType type, arcade::CommandType);
+
+  void                aClearAnimBuffer();
+  void                aClear();
+  void                aRefresh();
+  std::string         aChar();
   arcade::CommandType aCommand();
 
 private:

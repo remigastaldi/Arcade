@@ -8,7 +8,7 @@
 // Last update Sat Apr  8 20:20:08 2017 sellet_f
 //
 
-#include "EnemyShip.hpp"
+#include      "EnemyShip.hpp"
 
 EnemyShip::EnemyShip()
 {
@@ -32,13 +32,13 @@ EnemyShip::~EnemyShip()
 {
 }
 
-void		EnemyShip::print(arcade::ICore *core)
+void		        EnemyShip::print(arcade::ICore *core)
 {
   if (checkAction(true) == true)
     core->getLib()->aTile(_x + 1, _y + 1, _speed, arcade::TileType::EVIL_DUDE, _direction);
 }
 
-void		EnemyShip::move(arcade::ICore *core, std::vector<EnemyMissile> &enemyMissile, const Level &level, bool lPDM)
+void		        EnemyShip::move(arcade::ICore *core, std::vector<EnemyMissile> &enemyMissile, const Level &level, bool lPDM)
 {
   if (checkAction(false))
     {

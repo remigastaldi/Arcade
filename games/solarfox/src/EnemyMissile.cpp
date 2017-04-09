@@ -8,7 +8,7 @@
 // Last update Fri Apr  7 16:40:37 2017 sellet_f
 //
 
-#include "EnemyMissile.hpp"
+#include      "EnemyMissile.hpp"
 
 EnemyMissile::~EnemyMissile()
 {
@@ -30,20 +30,20 @@ EnemyMissile::EnemyMissile(unsigned int x, unsigned int y, arcade::CommandType d
   _it = 7;
 }
 
-void	EnemyMissile::print(arcade::ICore *core)
+void	         EnemyMissile::print(arcade::ICore *core)
 {
   if (checkAction(true) == true)
     core->getLib()->aTile(_x + 1, _y + 1, _speed, arcade::TileType::EVIL_SHOOT, _direction);
 }
 
-bool	EnemyMissile::checkColisions(Object obj)
+bool	         EnemyMissile::checkColisions(Object obj)
 {
   if (obj.getX() == _x && obj.getY() == _y)
     return (true);
   return (false);
 }
 
-int	EnemyMissile::move(Ship ship)
+int           EnemyMissile::move(Ship ship)
 {
   if (checkAction(false))
     {
@@ -51,28 +51,28 @@ int	EnemyMissile::move(Ship ship)
     	{
     	case arcade::CommandType::GO_UP :
     	  if (_y == 1)
-    	    return (MISSILE_DESTROYED);
+    	    return (Destroyed::MISSILE);
     	  _y -= 1;
     	  break;
     	case arcade::CommandType::GO_DOWN :
     	  if (_y == 39)
-    	    return (MISSILE_DESTROYED);
+    	    return (Destroyed::MISSILE);
     	  _y += 1;
     	  break;
     	case arcade::CommandType::GO_LEFT :
     	  if (_x == 1)
-    	    return (MISSILE_DESTROYED);
+    	    return (Destroyed::MISSILE);
     	  _x -= 1;
     	  break;
     	case arcade::CommandType::GO_RIGHT :
     	  if (_x == 39)
-    	    return (MISSILE_DESTROYED);
+    	    return (Destroyed::MISSILE);
     	  _x += 1;
     	default:
     	  break;
     	}
     }
     if (checkColisions(ship) == true)
-     return (SHIP_DESTROYED);
+     return (SHIP);
   return (0);
 }

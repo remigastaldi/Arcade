@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:21 2017 gastal_r
-** Last update Sat Apr 08 20:08:18 2017 Leo Hubert Froideval
+** Last update	Sun Apr 09 15:40:02 2017 gastal_r
 */
 
 #ifndef         _LOPENGL_HPP_
@@ -55,12 +55,9 @@ public:
   sf::Sprite    createSprite(const sf::Texture &texture);
   sf::Texture   createColoredTexture(arcade::Color color);
 
-  void          aTile(size_t, size_t, arcade::TileType);
   void          aTile(size_t, size_t, int, arcade::TileType, arcade::CommandType);
-  void          aTile(size_t, size_t, void *);
 
   void          aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color);
-  void          *aGetTexture(const std::string &);
 
   void          aPlaySound(arcade::Sound sound) {_sound.playSound(sound);}
   void          aPlayMusic(const std::string &path) {_sound.playMusic(path);}

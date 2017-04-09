@@ -9,16 +9,21 @@
 //
 
 
-#ifndef		_OBJECT_HH_
-# define	_OBJECT_HH_
+#ifndef		   _OBJECT_HH_
+# define	   _OBJECT_HH_
 
-# include	"ICore.hh"
-
-# define	SHIP_DESTROYED 1
-# define	MISSILE_DESTROYED 2
+# include	    "ICore.hh"
 
 class			Object
 {
+  public:
+    enum Destroyed
+  {
+    NOTHING,
+    SHIP,
+    MISSILE
+  };
+
 public:
   virtual		~Object() {}
 
@@ -28,15 +33,14 @@ public:
   void			setSpeed(unsigned int);
   void			setDirection(arcade::CommandType);
 
-  unsigned int		getX(void) const;
-  unsigned int		getY(void) const;
-  unsigned int		getIt(void) const;
-  unsigned int		getSpeed(void) const;
+  unsigned int		    getX(void) const;
+  unsigned int		    getY(void) const;
+  unsigned int		    getIt(void) const;
+  unsigned int		    getSpeed(void) const;
   arcade::CommandType	getDirection(void) const;
 
   bool			checkAction(bool);
 
-  // virtual void		move(void);
 protected:
   unsigned int		_x;
   unsigned int		_y;

@@ -5,11 +5,11 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 11:01:41 2017 gastal_r
-** Last update	Sun Apr 09 00:16:27 2017 gastal_r
+** Last update	Sun Apr 09 15:05:27 2017 gastal_r
 */
 
 #include        "Gui.hpp"
-#include        "../../common/IGraph.hh"
+#include        "IGraph.hh"
 
 Gui::Gui()
 {

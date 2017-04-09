@@ -46,25 +46,25 @@ int	Ship::move(arcade::GetMap *map)
 	{
 	case arcade::CommandType::GO_UP :
 	  if (map->tile[(_y - 1) * 41 + _x] == arcade::TileType::OBSTACLE)
-	    return (SHIP_DESTROYED);
+	    return (Destroyed::SHIP);
 	  if (map->tile[(_y - 1) * 41 + _x] != arcade::TileType::BLOCK)
 	    _y -= 1;
 	  break;
 	case arcade::CommandType::GO_DOWN :
 	  if (map->tile[(_y + 1) * 41 + _x] == arcade::TileType::OBSTACLE)
-	    return (SHIP_DESTROYED);
+	    return (Destroyed::SHIP);
 	  if (map->tile[(_y + 1) * 41 + _x] != arcade::TileType::BLOCK)
 	    _y += 1;
 	  break;
 	case arcade::CommandType::GO_LEFT :
 	  if (map->tile[_y * 41 + _x - 1] == arcade::TileType::OBSTACLE)
-	    return (SHIP_DESTROYED);
+	    return (Destroyed::SHIP);
 	  if (map->tile[_y * 41 + _x - 1] != arcade::TileType::BLOCK)
 	    _x -= 1;
 	  break;
 	case arcade::CommandType::GO_RIGHT :
 	  if (map->tile[_y * 41 + _x + 1] == arcade::TileType::OBSTACLE)
-	    return (SHIP_DESTROYED);
+	    return (Destroyed::SHIP);
 	  if (map->tile[_y * 41 + _x + 1] != arcade::TileType::BLOCK)
 	    _x += 1;
 	  break;

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Mon Mar 13 16:23:03 2017 gastal_r
-** Last update	Mon Apr 03 00:46:39 2017 gastal_r
+** Last update	Sun Apr 09 14:56:36 2017 gastal_r
 */
 
 #ifndef         _FILE_HPP_
@@ -24,20 +24,12 @@ public:
   explicit File (const std::string &);
   virtual ~File (){};
 
-  bool          checkExtension(const std::string &str) const;
+  bool                     checkExtension(const std::string &str) const;
   std::vector<std::string> getLibs();
 
-  static DIR    *Opendir(const char *name)
-  {
-    return (opendir(name));
-  }
-
-  static struct dirent *Readdir(DIR *dirp)
-  {
-    return (readdir(dirp));
-  }
-
-  static int Closedir(DIR *dirp) { return (closedir(dirp)); }
+  static DIR           *Opendir(const char *name) { return (opendir(name)); }
+  static struct dirent *Readdir(DIR *dirp)        { return (readdir(dirp)); }
+  static int           Closedir(DIR *dirp)        { return (closedir(dirp)); }
 
 private:
   std::string   _path;

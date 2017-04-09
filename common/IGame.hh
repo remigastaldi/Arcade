@@ -23,7 +23,6 @@ namespace	        arcade
     virtual       ~IGame(){};
 
     virtual arcade::CommandType  play(arcade::ICore &) = 0;
-    virtual void  close() = 0;
   };
 }
 

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:07:35 2017 gastal_r
-** Last update	Sun Apr 09 14:24:50 2017 gastal_r
+** Last update	Sun Apr 09 15:45:07 2017 gastal_r
 */
 
 #ifndef         _LSFML_HPP_
@@ -27,9 +27,9 @@ class LSfml : public arcade::IGraph
   public:
     int         x;
     int         y;
-    float       cf;
     int         speed;
     int         nbf;
+    float       cf;
     arcade::TileType    type;
     arcade::CommandType dir;
   };

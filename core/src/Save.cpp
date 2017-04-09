@@ -5,16 +5,10 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Mar 17 00:03:17 2017 gastal_r
-** Last update	Sat Apr 08 21:40:39 2017 gastal_r
+** Last update	Sun Apr 09 15:08:26 2017 gastal_r
 */
 
 #include        "Save.hpp"
-
-Save::Save()
-{}
-
-Save::~Save()
-{}
 
 void            Save::loadPlayerSave()
 {

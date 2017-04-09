@@ -5,23 +5,23 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:08:10 2017 gastal_r
-** Last update	Sun Apr 09 04:51:00 2017 gastal_r
+** Last update	Sun Apr 09 15:36:52 2017 gastal_r
 */
 
 #ifndef         _Lsolarfox_HPP_
-# define         _Lsolarfox_HPP_
+# define        _Lsolarfox_HPP_
 
-# include	<chrono>
-# include	"EnemyMissile.hpp"
-# include	"EnemyShip.hpp"
-# include	"Missile.hpp"
-# include	"ICore.hh"
-# include	"Ship.hpp"
-# include "Level.hpp"
+# include     	<chrono>
+# include     	"EnemyMissile.hpp"
+# include     	"EnemyShip.hpp"
+# include     	"Missile.hpp"
+# include     	"ICore.hh"
+# include     	"Ship.hpp"
+# include       "Level.hpp"
 
-# define MAP_WIDTH 41
-# define MAP_HEIGHT 41
-# define SOLAR_RES "games/solarfox/res/"
+# define        MAP_WIDTH 41
+# define        MAP_HEIGHT 41
+# define        SOLAR_RES "games/solarfox/res/"
 
 class           LSolarFox : public arcade::IGame
 {
@@ -35,20 +35,20 @@ public:
   LSolarFox();
   virtual ~LSolarFox ();
 
-  void				initTextures(void);
+  void				          initTextures(void);
   arcade::CommandType		initGame(bool);
 
   void				parseMap(std::string const &);
-  arcade::CommandType		play(arcade::ICore &);
   void				printGame(void);
   void				changeAction();
+
   arcade::CommandType		mainLoop(void);
+  arcade::CommandType		play(arcade::ICore &);
 
   void        win(void);
   void				gameWin(void);
   void				gameOver(void);
 
-  void				close(void);
   void        move(void);
 
   void				lPDM_getMap() const;
@@ -56,18 +56,21 @@ public:
   void				lPDM_start();
 
 private:
-  Level             _level;
-  bool				      _lPDM;
+  arcade::ICore			*_core;
   arcade::GetMap		*_map;
+  Level             _level;
   Ship				      _ship;
   int				        _score;
-  arcade::ICore			*_core;
-  size_t             _nbpower;
+  bool				      _lPDM;
+  size_t            _nbpower;
+
   std::vector<Missile>	       	_missile;
-  std::vector<arcade::Position>	_powerUp;
-  std::vector<EnemyShip>	      _enemyShip;
-  arcade::CommandType           _exitStatus;
   std::vector<EnemyMissile>	    _enemyMissile;
+  std::vector<EnemyShip>	      _enemyShip;
+
+  std::vector<arcade::Position>	_powerUp;
+
+  arcade::CommandType           _exitStatus;
   arcade::CommandType           _keepCommand;
   LSolarFox::Status             _status;
 };

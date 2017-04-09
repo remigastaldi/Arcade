@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:55:17 2017 gastal_r
-** Last update	Sun Apr 09 00:13:23 2017 gastal_r
+** Last update	Sun Apr 09 15:47:10 2017 gastal_r
 */
 
 #ifndef         _GUI_HPP_
@@ -14,7 +14,7 @@
 #include          <iostream>
 #include          <vector>
 #include          <string>
-#include          "../../common/Protocol.hpp"
+#include          "Protocol.hpp"
 
 namespace arcade
 {
@@ -41,9 +41,10 @@ public:
   void          affDispGames();
   void          affScore();
 
-  const std::string   getName(arcade::ICore &);
   void                listGame(arcade::ICore &, size_t);
+  const std::string   getName(arcade::ICore &);
   const std::string   chooseGame(arcade::ICore &);
+
   void                affPlayersScores(arcade::ICore &, std::string);
   void                affPlayersScores();
 

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:42:03 2017 gastal_r
-** Last update	Tue Mar 14 11:03:40 2017 gastal_r
+** Last update	Sun Apr 09 15:07:13 2017 gastal_r
 */
 
 #include  "Core.hpp"
@@ -14,7 +14,7 @@ int       main(int ac, char *av[])
 {
   if (ac != 2)
   {
-    std::cout << "Need argument" << std::endl;
+    std::cout << "Usage : ./arcade lib/libname"  << std::endl;
     return (0);
   }
   try

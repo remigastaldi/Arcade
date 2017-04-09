@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Apr 08 19:20:30 2017 gastal_r
-** Last update	Sun Apr 09 00:36:38 2017 gastal_r
+** Last update	Sun Apr 09 15:19:18 2017 gastal_r
 */
 
 #ifndef       _LEVEL_HPP
@@ -29,8 +29,8 @@ public:
   bool        checkFileName(const std::string &str) const;
 
   const std::string &getNextLvl();
-  size_t      getNbLvl() const        {return (_lvlNames.size());}
-  size_t      getCurrentLvl() const   {return (_currentLvl);}
+  size_t            getNbLvl() const        {return (_lvlNames.size());}
+  size_t            getCurrentLvl() const   {return (_currentLvl);}
 
 private:
   std::vector<std::string> _lvlNames;

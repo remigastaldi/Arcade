@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 22:59:05 2017 gastal_r
-** Last update	Sat Apr 08 20:53:16 2017 gastal_r
+** Last update	Sun Apr 09 15:42:49 2017 gastal_r
 */
 
 #include        "Core.hpp"
@@ -32,11 +32,8 @@ void            Core::openLib(const std::string &name)
     arcade::IGraph *(*create_lib)();
 
     _graphHandle = Core::Dlopen(name.c_str(), RTLD_LOCAL | RTLD_LAZY);
-    if (!_graphHandle) {
-        std::cerr << "Cannot load library: " << dlerror() << '\n';
-    }
     if (!_graphHandle)
-      throw arcade::Exception(name, " doesn't exist or isn't in lib folder");
+      throw arcade::Exception("Cannot open", name);
     create_lib = reinterpret_cast<arcade::IGraph* (*)()>(dlsym(_graphHandle, "createGraph"));
     if (!create_lib)
       throw arcade::Exception("Cannot load library symbol");
@@ -50,7 +47,7 @@ void            Core::openGame(const std::string &name)
 
     _gameHandle = Core::Dlopen(name.c_str(), RTLD_LOCAL | RTLD_LAZY);
     if (!_gameHandle)
-      throw arcade::Exception(name, " doesn't exist or isn't in lib folder");
+      throw arcade::Exception("Cannot load", name);
     create_game = reinterpret_cast<arcade::IGame* (*)()>(dlsym(_gameHandle, "createGame"));
     if (!create_game)
       throw arcade::Exception("Cannot load game symbol");
@@ -127,7 +124,6 @@ void            Core::coreLoop()
         switchGame(arcade::CommandType::PREV_GAME);
         break;
       case arcade::CommandType::RESTART :
-        _game->close();
         delete(_game);
         _game = 0;
         Dlclose(_gameHandle);
@@ -137,7 +133,6 @@ void            Core::coreLoop()
         break;
       case arcade::CommandType::MENU :
         _graph->aPlayMusic(CORE_RES "sounds/menu_music.wav");
-        _game->close();
         delete(_game);
         _game = 0;
         Dlclose(_gameHandle);
@@ -181,7 +176,6 @@ void            Core::switchGame(const arcade::CommandType m)
     else
       name = _games[pos - 1];
   }
-  _game->close();
   delete(_game);
   _game = 0;
   Dlclose(_gameHandle);

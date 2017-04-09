@@ -8,23 +8,23 @@
 // Last update Fri Apr  7 02:43:37 2017 sellet_f
 //
 
-#ifndef		_ENEMYSHIP_HH_
-# define	_ENEMYSHIP_HH_
+#ifndef		   _ENEMYSHIP_HH_
+# define	   _ENEMYSHIP_HH_
 
-# include "ICore.hh"
-# include	"Object.hpp"
-# include	"EnemyMissile.hpp"
-# include "Level.hpp"
+# include    "ICore.hh"
+# include	   "Object.hpp"
+# include	   "EnemyMissile.hpp"
+# include    "Level.hpp"
 
-class		EnemyShip : public Object
+class		     EnemyShip : public Object
 {
 public:
   EnemyShip();
   EnemyShip(unsigned int, unsigned int, arcade::CommandType);
   ~EnemyShip();
 
-  void	print(arcade::ICore *);
-  void	move(arcade::ICore *, std::vector<EnemyMissile> &, const Level &, bool);
+  void	     print(arcade::ICore *);
+  void	     move(arcade::ICore *, std::vector<EnemyMissile> &, const Level &, bool);
 };
 
 #endif

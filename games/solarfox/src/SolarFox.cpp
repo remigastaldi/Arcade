@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Sun Apr 09 14:45:17 2017 gastal_r
+** Last update	Sun Apr 09 15:38:09 2017 gastal_r
 */
 
 #include	        "LSolarFox.hpp"
@@ -217,7 +217,7 @@ void    LSolarFox::move()
 {
   for (std::vector<Missile>::iterator it = _missile.begin(); it != _missile.end(); ++it)
     it->move(_map);
-  if (_ship.move(_map) == SHIP_DESTROYED && _lPDM == false)
+  if (_ship.move(_map) == Object::Destroyed::SHIP && _lPDM == false)
     gameOver();
 
   if (_missile.size() != 0)
@@ -247,7 +247,6 @@ void    LSolarFox::move()
 
   int	colisionType;
   bool colision = false;
-
   for (std::vector<EnemyMissile>::iterator itE = _enemyMissile.begin() ; itE != _enemyMissile.end() ; ++itE)
     {
       for (std::vector<Missile>::iterator it = _missile.begin(); it != _missile.end(); ++it)
@@ -263,7 +262,7 @@ void    LSolarFox::move()
 	}
 
       colisionType = itE->move(_ship);
-      if (colisionType == SHIP_DESTROYED)
+      if (colisionType == Object::Destroyed::SHIP)
 	{
     if (_lPDM == false)
 	   _core->getLib()->aPlaySound(arcade::Sound::EXPLOSION);
@@ -273,7 +272,7 @@ void    LSolarFox::move()
 	   gameOver();
 	  return;
 	}
-      else if (colisionType == MISSILE_DESTROYED)
+      else if (colisionType == Object::Destroyed::MISSILE)
 	{
 	  itE = _enemyMissile.erase(itE);
 	  itE == itE - 1;
@@ -383,11 +382,6 @@ arcade::CommandType	LSolarFox::play(arcade::ICore& core)
 {
   _core = &core;
   return (initGame(false));
-}
-
-void			LSolarFox::close(void)
-{
-
 }
 
 void			LSolarFox::gameWin(void)

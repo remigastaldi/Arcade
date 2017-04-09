@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:30 2017 gastal_r
-** Last update	Sat Apr 08 21:44:52 2017 gastal_r
+** Last update	Sun Apr 09 15:41:52 2017 gastal_r
 */
 
 #include        "LOpengl.hpp"
@@ -91,11 +91,6 @@ sf::Sprite      LOpengl::createSprite(const sf::Texture &texture)
   sprite.setTexture(texture);
   sprite.setScale(sf::Vector2f(16.f / texture.getSize().x, 16.f / texture.getSize().x));
   return (sprite);
-}
-
-void            LOpengl::aTile(size_t x, size_t y, arcade::TileType type)
-{
-  aTile(x, y, 0, type, arcade::CommandType::UNDEFINED);
 }
 
 void            LOpengl::aTile(size_t x, size_t y, int speed, arcade::TileType type, arcade::CommandType dir)
@@ -234,17 +229,6 @@ void          LOpengl::drawElem(size_t x, size_t y, arcade::TileType type, arcad
   glPopMatrix();
 }
 
-void            LOpengl::aTile(size_t x, size_t y, void *texture)
-{
-  sf::Sprite sprite;
-  sf::Texture *test = (sf::Texture*) texture;
-
-  sprite.setTexture(*test);
-  sprite.scale(sf::Vector2f(1.f, 1.f));
-  sprite.setPosition((x * BLOCK_Y) + X_PAD * BLOCK_X, (y * BLOCK_Y) + Y_PAD * BLOCK_Y);
-  _win.draw(sprite);
-}
-
 void            LOpengl::aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color)
 {
   if (_core->getCurrentGame() != _currentGame)
@@ -313,15 +297,6 @@ void            LOpengl::aAssignTexture(arcade::TileType tile, const std::string
       _otherTex.generateMipmap();
       break;
       }
-}
-
-void            *LOpengl::aGetTexture(const std::string &path)
-{
-  sf::Texture *texture = new sf::Texture();
-
-  if (!texture->loadFromFile(path))
-    throw arcade::Exception("Failed to load ", path);
-  return (texture);
 }
 
 sf::Color     LOpengl::fillColor(arcade::Color color)

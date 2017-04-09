@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Mar 17 00:03:26 2017 gastal_r
-** Last update	Sun Apr 02 01:25:06 2017 gastal_r
+** Last update	Sun Apr 09 15:08:42 2017 gastal_r
 */
 
 #ifndef         _SAVE_HPP_
@@ -24,11 +24,11 @@ class           Save
   class         Data
   {
   public:
-    void               setGame(const std::string &game)   {_game = game;}
-    void               setValue(const std::string &value) {_value = value;}
+    void               setGame(const std::string &game)   { _game = game; }
+    void               setValue(const std::string &value) { _value = value; }
 
-    const std::string  &getValue() const {return (_value);}
-    const std::string  &getGame() const  {return (_game);}
+    const std::string  &getValue() const { return (_value); }
+    const std::string  &getGame() const  { return (_game); }
 
   private:
     std::string _game;
@@ -38,13 +38,13 @@ class           Save
   class         PlayerSave
   {
   public:
-    const std::string &getPlayer() const {return (_player);}
-    std::vector<Save::Data> &getSave()   {return (_data);}
-    const std::string getValue(const std::string &) const;
+    const std::string       &getPlayer() const  { return (_player); }
+    std::vector<Save::Data> &getSave()          { return (_data); }
+    const std::string       getValue(const std::string &) const;
 
-    void              setPlayer(const std::string &player) {_player = player;}
     void              addValue(const std::string &, const std::string &);
-    void              addSave(Save::Data data) {_data.push_back(data);}
+    void              addSave(Save::Data data)             { _data.push_back(data); }
+    void              setPlayer(const std::string &player) { _player = player; }
 
   private:
     std::vector<Save::Data> _data;
@@ -52,16 +52,17 @@ class           Save
   };
 
 public:
-  Save ();
-  virtual ~Save ();
+  Save () {};
+  virtual ~Save () {};
 
+  void        saveScore(std::string, const std::string &);
   void        saveSetPlayer(const std::string &player) {_player = player;}
   void        loadPlayerSave();
   void        checkExistingUser();
 
-  const std::string     getSavedScore(std::string) const;
-  void                  saveScore(std::string, const std::string &);
+  const std::string               getSavedScore(std::string) const;
   const std::vector<std::string>  getBestPlayersScores(std::string);
+
 
 private:
   std::vector<Save::PlayerSave>  _playerSave;

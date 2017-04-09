@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 12 21:30:45 2017 gastal_r
-** Last update	Sun Apr 09 00:13:32 2017 gastal_r
+** Last update	Sun Apr 09 15:04:41 2017 gastal_r
 */
 
 #ifndef           _ICORE_HH_
@@ -41,10 +41,10 @@ namespace	        arcade
     virtual void    gameWin() = 0;
     virtual void    gameOver() = 0;
 
+    virtual Save                     &getSave() = 0;
     virtual std::vector<std::string> getSounds() = 0;
-    virtual Save    &getSave() = 0;
-    virtual arcade::IGraph  *getLib() const = 0;
-    virtual const std::string &getCurrentGame() const = 0;
+    virtual arcade::IGraph           *getLib() const = 0;
+    virtual const std::string        &getCurrentGame() const = 0;
 
     virtual void    saveScore(size_t score) = 0;
     virtual void    setScore(const std::string &score) = 0;

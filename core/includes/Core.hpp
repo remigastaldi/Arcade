@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 19:09:59 2017 gastal_r
-** Last update	Sun Apr 09 00:08:30 2017 gastal_r
+** Last update	Sun Apr 09 14:58:15 2017 gastal_r
 */
 
 #ifndef         _CORE_HPP_
@@ -21,7 +21,7 @@
 class           Core : public arcade::ICore, public Gui
 {
 public:
-  explicit Core(const std::string &lib);
+  explicit      Core(const std::string &lib);
   virtual       ~Core();
 
   void          openLib(const std::string &lib);
@@ -45,9 +45,9 @@ public:
   void          saveScore(size_t score);
 
   std::vector<std::string> getSounds();
-  Save            &getSave() { return (_save);}
-  arcade::IGraph  *getLib() const;
-  const std::string &getCurrentGame() const {return (_currentGame);}
+  arcade::IGraph           *getLib() const;
+  Save                     &getSave()              { return (_save); }
+  const std::string        &getCurrentGame() const { return (_currentGame); }
 
   static void   *Dlsym(void *handle, const char *symbol);
   static void   *Dlopen(const char *filename, int flag);

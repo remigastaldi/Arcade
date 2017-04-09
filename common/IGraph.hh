@@ -63,11 +63,8 @@ namespace	       arcade
     virtual void aInit(arcade::ICore *, size_t, size_t) = 0;
     virtual void aClose() = 0;
 
-    virtual void aTile(size_t, size_t, arcade::TileType) = 0;
     virtual void aTile(size_t, size_t, int, arcade::TileType, arcade::CommandType) = 0;
-    virtual void aTile(size_t x, size_t y, void *texture) = 0;
 
-    virtual void *aGetTexture(const std::string &) = 0;
     virtual void aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color) = 0;
 
     virtual void aPlaySound(arcade::Sound) = 0;
@@ -80,7 +77,7 @@ namespace	       arcade
     virtual void aRefresh() = 0;
 
     virtual arcade::CommandType aCommand() = 0;
-    virtual std::string  aChar() = 0;
+    virtual std::string         aChar() = 0;
   };
 }
 

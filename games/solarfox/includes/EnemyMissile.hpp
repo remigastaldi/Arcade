@@ -8,24 +8,25 @@
 // Last update Fri Apr  7 15:35:39 2017 sellet_f
 //
 
-#ifndef _ENEMYMISSILE_HH_
-# define _ENEMYMISSILE_HH_
+#ifndef     _ENEMYMISSILE_HH_
+# define    _ENEMYMISSILE_HH_
 
-# include "Object.hpp"
-# include "Missile.hpp"
-# include "Ship.hpp"
+# include   "Object.hpp"
+# include   "Missile.hpp"
+# include   "Ship.hpp"
 
-class	EnemyMissile : public Object
+class	      EnemyMissile : public Object
 {
-private:
-  unsigned int	_moves;
 public:
   EnemyMissile(unsigned int, unsigned int, arcade::CommandType);
   ~EnemyMissile();
 
-  void	print(arcade::ICore *);
-  int	move(Ship);
-  bool	checkColisions(Object);
+  void	   print(arcade::ICore *);
+  int	     move(Ship);
+  bool	   checkColisions(Object);
+
+private:
+  unsigned int	_moves;
 };
 
 #endif

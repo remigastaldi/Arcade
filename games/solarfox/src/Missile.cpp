@@ -8,7 +8,7 @@
 // Last update Sun Apr  9 13:32:34 2017 sellet_f
 //
 
-#include "Missile.hpp"
+#include      "Missile.hpp"
 
 Missile::Missile()
 {
@@ -34,13 +34,13 @@ Missile::~Missile()
 {
 }
 
-void	Missile::print(arcade::ICore *core)
+void	         Missile::print(arcade::ICore *core)
 {
   if (checkAction(true) == true)
     core->getLib()->aTile(_x + 1, _y + 1, _speed, arcade::TileType::MY_SHOOT, _direction);
 }
 
-void	Missile::move(arcade::GetMap *map)
+void	         Missile::move(arcade::GetMap *map)
 {
   if (checkAction(false))
     {
@@ -67,7 +67,7 @@ void	Missile::move(arcade::GetMap *map)
     }
 }
 
-void	Missile::empty(void)
+void	         Missile::empty(void)
 {
   _x = 0;
   _y = 0;

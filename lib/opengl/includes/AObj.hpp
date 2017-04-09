@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Apr 02 23:40:58 2017 gastal_r
-** Last update	Sat Apr 08 18:10:25 2017 gastal_r
+** Last update	Sun Apr 09 15:39:51 2017 gastal_r
 */
 
 #ifndef       _AObj_HPP_
@@ -29,6 +29,7 @@ public:
     void              addVertex(float value)  {_vertex.push_back(value);}
 
     bool              checkName(const std::string &) const;
+
     const GLfloat     *getVertex() const {return (&_vertex[0]);}
     size_t            getSize()    const {return (_vertex.size());}
     size_t            getIndex(const std::string &)   const;

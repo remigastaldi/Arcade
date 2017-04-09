@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Sun Apr 09 14:07:34 2017 gastal_r
+** Last update	Sun Apr 09 15:37:35 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -307,10 +307,6 @@ void							LSnake::gameOver()
         return;
       }
     }
-}
-
-void			LSnake::close()
-{
 }
 
 void			LSnake::addQueue()
