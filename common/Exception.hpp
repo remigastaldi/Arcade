@@ -22,7 +22,7 @@ namespace arcade
     explicit Exception(const std::string &message) : _message(message) {;}
     Exception(const std::string &message, const std::string &var) : _message(message)
     {
-       _message += var;
+      _message += var;
     }
     virtual ~Exception() throw() {};
     virtual const char* what() const throw() { return(_message.c_str());}

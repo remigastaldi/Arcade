@@ -24,13 +24,13 @@ namespace		arcade
       SHOOT	    	= 7,		// SHOOT (FOR SOLAR FOX AND CENTIPEDE)
       ILLEGAL		  = 8,		// THE INSTRUCTION WAS ILLEGAL
       PLAY		    = 9, 		// PLAY A ROUND
-      ESCAPE		  = 10,
-      MENU		    = 11,
-      NEXT_LIB		= 12,
-      PREV_LIB		= 13,
-      PREV_GAME		= 14,
-      NEXT_GAME		= 15,
-      RESTART		  = 16,
+      ESCAPE		  = 10,   // EXIT ARCADE
+      MENU		    = 11,   // RETURN TO MENU
+      NEXT_LIB		= 12,   // CHANGE TO NEXT LIB
+      PREV_LIB		= 13,   // CHANGE TO PREV LIB
+      PREV_GAME		= 14,   // CHANGE TO PREV GAME
+      NEXT_GAME		= 15,   // CHANGE TO NEXT GAME
+      RESTART		  = 16,   // RESTART TO MENU
       UNDEFINED   = 17
     };
   enum class		TileType : uint16_t
@@ -40,7 +40,7 @@ namespace		arcade
       OBSTACLE		= 2,		// FOR CENTIPEDE
       EVIL_DUDE		= 3,		// EVIL DUDE
       EVIL_SHOOT	= 4,		// EVIL SHOOT
-      MY_SHOOT		= 5,
+      MY_SHOOT		= 5,    // MY SHOOTs
       POWERUP		  = 6,		// POWERUP
       OTHER		    = 7,		// ANYTHING THAT WILL BE IGNORED BY THE KOALINETTE
       SHIP        = 8
