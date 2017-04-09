@@ -40,6 +40,7 @@
                 <li><a href="#games" class="cc-active">Games</a></li>
                 <li><a href="#graphic" class="cc-active">Graphique</a></li>
                 <li><a href="#enums" class="cc-active">Enums</a></li>
+                <li><a href="#interfaces" class="cc-active">Interfaces</a></li>
 
 
             </ul>
@@ -48,12 +49,12 @@
                 <h2> La Michel Documentation</h2>
                 <h3 id="welcome"> Bienvenue</h3>
 
-                <p> UN PETIT RESUMER DU PROJET</p>
+                <p> UN PETIT RESUMÉ DU PROJET</p>
                 <hr>
                 <div id="core">
                     <h3>Core</h3>
                     <div>
-                        <h1><strong>Changement de jeux: <pre class="prettyprint">void switchGame(arcade::CommandType); </pre></strong></h1><br><br>
+                        <h1><strong>Changement de jeu: <pre class="prettyprint">void switchGame(arcade::CommandType); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
                             Cette fonction sert à changer de jeu, elle prend en paramètre un <strong> arcade::CommandType </strong>.<br>
@@ -76,25 +77,25 @@
                         <h1><strong>Rafraichir le GUI: <pre class="prettyprint">void refreshGui(); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Cette fonction sert à rafraichir la GUI ( Affichage des libs graphique disponibles, Affichage du score ect... ).
+                                Cette fonction sert à rafraichir la GUI ( Affichage des libs graphique disponibles, Affichage du score ect... ).
                             </font>
                         </p>
 
                     </div>
                     <div>
-                        <h1><strong>Ecran de WIN: <pre class="prettyprint">void gameWin(); </pre></strong></h1><br><br>
+                        <h1><strong>Ecran de victoire: <pre class="prettyprint">void gameWin(); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Cette fonction sert à afficher l'écran de victoire.
+                                Cette fonction sert à afficher l'écran de victoire.
                             </font>
                         </p>
 
                     </div>
                     <div>
-                        <h1><strong>Ecran de GameOver: <pre class="prettyprint">void gameOver(); </pre></strong></h1><br><br>
+                        <h1><strong>Ecran de défaite: <pre class="prettyprint">void gameOver(); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Cette fonction sert à afficher l'écran de défaite.
+                                Cette fonction sert à afficher l'écran de défaite.
                             </font>
                         </p>
 
@@ -103,7 +104,7 @@
                         <h1><strong>Récupérer les Saves: <pre class="prettyprint">Save &getSave(); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Cette fonction sert à récuperer une Class de type Save.    <a href="#save">Cliquez ici pour voir la Class Save</a>
+                            Cette fonction sert à récuperer une Class de type Save.
                             </font>
                         </p>
                     </div>
@@ -155,7 +156,7 @@
                         <h1><strong>Initialiser le jeu: <pre class="prettyprint">IGame &createGame(); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Crée un instance du jeu actuelement chargé par le Core.
+                            Crée une instance du jeu actuellement chargé par le Core.
                             </font>
                         </p>
 
@@ -164,7 +165,7 @@
                         <h1><strong>Detruire le jeu: <pre class="prettyprint">void deleteGame(IGame &); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                                Détruis le jeu actuelement chargé par le Core.
+                                Détruit le jeu actuellement chargé par le Core.
                             </font>
                         </p>
 
@@ -211,7 +212,7 @@
                         <h1><strong>Assigner une texture à un cube: <pre class="prettyprint">void aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                                Cette fonction assigne une texture à un block de type <strong>TileType</strong> donné en paramètre, grâce au <strong>PATH</strong> et une couleur par default en cas d'erreur de chargement de la texture. <a href="#color"> Cliquez ici pour voir l'enum Color</a>
+                                Cette fonction assigne une texture à un block de type <strong>TileType</strong> donnée en paramètre, grâce au <strong>PATH</strong> et une couleur par default en cas d'erreur de chargement de la texture. <a href="#color"> Cliquez ici pour voir l'enum Color</a>
                             </font>
                         </p>
                     </div>
@@ -219,7 +220,7 @@
                         <h1><strong>Lire un son: <pre class="prettyprint">void aPlaySound(arcade::Sound); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                                Cette fonction lis par apport à l'action de type <strong>Sound</strong> donné en paramètre. <a href="#sound">Cliquez ici pour voir l'enum Sound</a>
+                                Cette fonction lit par apport à l'action de type <strong>Sound</strong> donné en paramètre. <a href="#sound">Cliquez ici pour voir l'enum Sound</a>
                             </font>
                         </p>
                     </div>
@@ -328,6 +329,169 @@ enum Color
 };
                         </pre></strong></h1>
 
+                    </div>
+                    <br><br><br><br><br><br><br>
+                    <hr>
+                    <div id="interfaces">
+                        <h3>Interfaces</h3>
+                        <div>
+                            <ul>
+                                <li>IGame</li>
+                            </ul>
+                            <h1><strong><pre class="prettyprint">
+#ifndef           IGAME_HH__
+# define	        IGAME_HH__
+
+# include	        <unistd.h>
+# include	        "Protocol.hpp"
+
+namespace	        arcade
+{
+  class           ICore;
+  class           IGame
+  {
+  public:
+    virtual       ~IGame(){};
+
+    virtual arcade::CommandType  play(arcade::ICore &) = 0;
+  };
+}
+
+#endif
+
+                            </pre></strong></h1>
+                            <br><br><br><br><br><br><br><br><br><br><br>
+                            <ul>
+                                <li>IGraph</li>
+                            </ul>
+                            <h1><strong><pre class="prettyprint">
+#ifndef		       IGRAPH_HH__
+# define	       IGRAPH_HH__
+
+#include "ICore.hh"
+
+#define BLOCK_X      8
+#define BLOCK_Y      16
+#define WIDTH        1920
+#define HEIGHT       1080
+#define pos_x(x)     (WIDTH / BLOCK_X) / x
+#define pos_y(y)     (HEIGHT / BLOCK_Y) / y
+#define X_PAD        pos_x(3.5)
+#define Y_PAD        pos_y(6)
+
+namespace	       arcade
+{
+  class ICore;
+  enum Font
+  {
+    FREAKY,
+    PRESS_START
+  };
+
+  enum    Sound
+  {
+    NEW_GAME,
+    GAME_OVER,
+    MY_SHOOT,
+    EVIL_SHOOT,
+    POWERUP,
+    EXPLOSION,
+    OTHER
+  };
+
+  enum Color
+  {
+    A_BLACK,
+    A_RED,
+    A_GREEN,
+    A_YELLOW,
+    A_BLUE,
+    A_MAGENTA,
+    A_CYAN,
+    A_WHITE
+  };
+
+  class		       IGraph
+  {
+  public:
+    virtual      ~IGraph(){};
+
+    virtual void aInit(arcade::ICore *, size_t, size_t) = 0;
+    virtual void aClose() = 0;
+
+    virtual void aTile(size_t, size_t, int, arcade::TileType, arcade::CommandType) = 0;
+
+    virtual void aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color) = 0;
+
+    virtual void aPlaySound(arcade::Sound) = 0;
+    virtual void aPlayMusic(const std::string &) = 0;
+
+    virtual void aPutText(size_t, size_t, arcade::Font, size_t, arcade::Color, const std::string &) = 0;
+
+    virtual void aClear() = 0;
+    virtual void aClearAnimBuffer() = 0;
+    virtual void aRefresh() = 0;
+
+    virtual arcade::CommandType aCommand() = 0;
+    virtual std::string         aChar() = 0;
+  };
+}
+
+#endif
+
+
+                            </pre></strong></h1>
+                            <ul>
+                                <li>IGame</li>
+                            </ul>
+                            <h1><strong><pre class="prettyprint">
+#ifndef           _ICORE_HH_
+#define           _ICORE_HH_
+
+#include          <dlfcn.h>
+#include          <iostream>
+#include          <vector>
+#include          <string>
+#include          "../core/includes/Gui.hpp"
+#include          "../core/includes/Save.hpp"
+#include          "Protocol.hpp"
+#include          "IGraph.hh"
+#include          "IGame.hh"
+#include	  "Exception.hpp"
+#include          "File.hpp"
+
+#define CORE_RES  "core/res/"
+
+
+namespace	        arcade
+{
+  class             ICore
+  {
+  public:
+    virtual         ~ICore () {};
+
+    virtual void    switchGame(arcade::CommandType) = 0;
+    virtual void    switchLib(arcade::CommandType) = 0;
+
+    virtual void    refreshGui() = 0;
+
+    virtual void    gameWin() = 0;
+    virtual void    gameOver() = 0;
+
+    virtual Save                     &getSave() = 0;
+    virtual std::vector<std::string> getSounds() = 0;
+    virtual arcade::IGraph           *getLib() const = 0;
+    virtual const std::string        &getCurrentGame() const = 0;
+
+    virtual void    saveScore(size_t score) = 0;
+    virtual void    setScore(const std::string &score) = 0;
+  };
+}
+
+#endif           /* !_ICORE_HH_ */
+
+                            </pre></strong></h1>
+                        </div>
                     </div>
             </div>
         </div>
