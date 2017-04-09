@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sat Mar 11 23:42:03 2017 gastal_r
-** Last update	Sun Apr 09 17:22:27 2017 gastal_r
+** Last update	Sun Apr 09 17:31:50 2017 gastal_r
 */
 
 #ifndef			        _LSnake_HPP_
@@ -38,7 +38,7 @@ public:
   void		    changeAction();
   void		    printGame();
   void		    move();
-  bool		    checkSnakeColision(int);
+  bool		    checkSnakeColision(int) const;
 
   void		    newApple();
   void		    newBlock();

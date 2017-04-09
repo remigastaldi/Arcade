@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Sun Apr 09 17:22:34 2017 gastal_r
+** Last update	Sun Apr 09 18:26:24 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -161,7 +161,7 @@ bool			LSnake::checkNextTile(int y, int x)
     {
       _core->getLib()->aPlaySound(arcade::Sound::POWERUP);
       newApple();
-      for (int i = rand() % 3 + 1 ; i > 0 ; --i)
+      for (int i = std::rand() % 3 + 1 ; i > 0 ; --i)
 	addQueue();
       addScore(10);
       if (_lPDM == false)
@@ -314,9 +314,9 @@ void			LSnake::addQueue()
   _position.push_back(_position[_position.size() - 1]);
 }
 
-bool			LSnake::checkSnakeColision(int tile)
+bool			LSnake::checkSnakeColision(int tile) const
 {
-  for (std::vector<arcade::Position>::iterator it = _position.begin() ; it != _position.end() ; ++it)
+  for (std::vector<arcade::Position>::const_iterator it = _position.begin() ; it != _position.end() ; ++it)
     if (tile % MAP_WIDTH == it->x && tile / MAP_HEIGHT == it->y)
       return (false);
   return (true);
@@ -326,9 +326,8 @@ void			LSnake::newBlock()
 {
   int			tile;
 
-  tile = rand() % (MAP_WIDTH * MAP_HEIGHT - 2);
-  while (checkSnakeColision(tile) == false || _map->tile[tile] != arcade::TileType::EMPTY)
-    tile = rand() % (MAP_WIDTH * MAP_HEIGHT - 2);
+  while (checkSnakeColision(tile = std::rand() % (MAP_WIDTH * MAP_HEIGHT - 2)) == false
+                            || _map->tile[tile] != arcade::TileType::EMPTY);
   _map->tile[tile] = arcade::TileType::OBSTACLE;
 }
 
@@ -336,14 +335,14 @@ void			LSnake::newApple()
 {
   int			tile;
 
-  _apple.x = (rand() % (MAP_WIDTH - 2)) + 2;
-  _apple.y = (rand() % (MAP_HEIGHT - 2)) + 2;
-  tile = (_apple.y) * MAP_HEIGHT + _apple.x;
+  _apple.x = (std::rand() % (MAP_WIDTH - 2)) + 2;
+  _apple.y = (std::rand() % (MAP_HEIGHT - 2)) + 2;
+  tile = (_apple.y - 1) * MAP_HEIGHT + _apple.x - 1;
   while (checkSnakeColision(tile) == false || _map->tile[tile] != arcade::TileType::EMPTY)
     {
-      _apple.x = (rand() % (MAP_WIDTH - 2)) + 2;
-      _apple.y = (rand() % (MAP_HEIGHT - 2)) + 2;
-      tile = (_apple.y) * MAP_HEIGHT + _apple.x;
+      _apple.x = (std::rand() % (MAP_WIDTH - 2)) + 2;
+      _apple.y = (std::rand() % (MAP_HEIGHT - 2)) + 2;
+      tile = (_apple.y - 1) * MAP_HEIGHT + _apple.x - 1;
     }
 }
 
