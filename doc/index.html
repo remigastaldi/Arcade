@@ -1,0 +1,242 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>La Michel | Doc</title>
+    <link rel="alternate" type="application/rss+xml" title="frittt.com" href="feed/index.html">
+    <link href="http://fonts.googleapis.com/css?family=Raleway:700,300" rel="stylesheet"
+          type="text/css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/prettify.css">
+</head>
+<body>
+<div class="wrapper">
+    <nav>
+
+        <div class="pull-left">
+            <h1><a href="javascript:"><img src="img/icon.png" alt="La Michel"/> <span>La Michel Documentation</span></a>
+            </h1>
+        </div>
+
+    </nav>
+    <header>
+        <div class="container">
+            <h2 class="lone-header">La Michel Documentation</h2>
+        </div>
+    </header>
+    <section>
+        <div class="container">
+
+            <ul class="docs-nav">
+                <li><strong>Préparation</strong></li>
+                <li><a href="#welcome" class="cc-active">Présentation</a></li>
+                <li class="separator"></li>
+                <li><strong>Documentation</strong></li>
+                <li><a href="#core" class="cc-active">Core</a></li>
+                <li><a href="#games" class="cc-active">Games</a></li>
+                <li><a href="#graphic" class="cc-active">Grapique</a></li>
+
+
+            </ul>
+
+            <div class="docs-content">
+                <h2> La Michel Documentation</h2>
+                <h3 id="welcome"> Bienvenue</h3>
+
+                <p> UN PETIT RESUMER DU PROJET</p>
+                <hr>
+                <div id="core">
+                    <h3>Core</h3>
+                    <div>
+                        <h1><strong>Changement de jeux: <pre class="prettyprint">void switchGame(arcade::CommandType); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à changer de jeu mdr ..
+                        </p>
+
+                    </div>
+                    <div>
+                        <h1><strong>Changement de lib: <pre class="prettyprint">void switchLib(arcade::CommandType); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à changer la lib mdr ..
+                        </p>
+
+                    </div>
+                    <div>
+                        <h1><strong>Rafraichir le GUI: <pre class="prettyprint">void refreshGui(); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à rafraichir la GUI mdr xptdr ..
+                        </p>
+
+                    </div>
+                    <div>
+                        <h1><strong>Ecran de WIN: <pre class="prettyprint">void gameWin(); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à afficher l'écran de WIN..
+                        </p>
+
+                    </div>
+                    <div>
+                        <h1><strong>Ecran de GameOver: <pre class="prettyprint">void gameOver(); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à afficher l'écran de gameOver..
+                        </p>
+
+                    </div>
+                    <div>
+                        <h1><strong>Récupérer les Saves: <pre class="prettyprint">Save &getSave(); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à get les Save.
+                        </p>
+                    </div>
+                    <div>
+                        <h1><strong>Récupérer les sons: <pre class="prettyprint">std::vector<std::string> getSounds(); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à get les Sound.
+                        </p>
+                    </div>
+                    <div>
+                        <h1><strong>Récupérer les libs: <pre class="prettyprint">arcade::IGraph           *getLib() const; </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à get les Sound.
+                        </p>
+                    </div>
+                    <div>
+                        <h1><strong>Récupérer le jeu actuel: <pre class="prettyprint">const std::string        &getCurrentGame() const;</pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à get les Sound.
+                        </p>
+                    </div>
+                    <div>
+                        <h1><strong>Sauvegarder le score: <pre class="prettyprint">void    saveScore(size_t score);</pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à sauvegarder le score sur le jeu actuelement en cour d'utilisation.
+                        </p>
+                    </div>
+                    <div>
+                        <h1><strong>Set le score: <pre class="prettyprint">void    setScore(const std::string &score);</pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à sauvegarder le score sur le jeu actuelement en cour d'utilisation.
+                        </p>
+                    </div>
+                </div>
+                <hr>
+                <div id="games">
+                    <h3>Games</h3>
+                    <div>
+                        <h1><strong>Initialiser le jeu: <pre class="prettyprint">IGame &createGame(); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à initaliser le jeu mdr ..
+                        </p>
+
+                    </div>
+                    <div>
+                        <h1><strong>Detruire le jeu: <pre class="prettyprint">void delete(IGame &); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à detruire le jeu mdr ..
+                        </p>
+
+                    </div>
+                    <div>
+                        <h1><strong>Lancer le jeu: <pre class="prettyprint">arcade::CommandType  play(arcade::ICore &); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à initaliser le jeu mdr ..
+                        </p>
+                    </div>
+                </div>
+                <hr>
+                <div id="graphic">
+                    <h3>Graphique</h3>
+                    <div>
+                        <h1><strong>Créer une fenêtre: <pre class="prettyprint">void aInit(arcade::ICore *, size_t, size_t); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à initaliser le jeu mdr ..
+                        </p>
+
+                    </div>
+                    <div>
+                        <h1><strong>Fermer la fenêtre: <pre class="prettyprint">void delete(IGame &); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à detruire le jeu mdr ..
+                        </p>
+
+                    </div>
+                    <div>
+                        <h1><strong>Afficher un cube dans la fenêtre: <pre class="prettyprint">void aTile(size_t, size_t, int, arcade::TileType, arcade::CommandType); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à initaliser le jeu mdr ..
+                        </p>
+                    </div>
+                    <div>
+                        <h1><strong>Assigner une texture à un cube: <pre class="prettyprint">void aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à initaliser le jeu mdr ..
+                        </p>
+                    </div>
+                    <div>
+                        <h1><strong>Lire un son: <pre class="prettyprint">void aPlaySound(arcade::Sound); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à initaliser le jeu mdr ..
+                        </p>
+                    </div>
+                    <div>
+                        <h1><strong>Lire une music: <pre class="prettyprint">void aPlayMusic(const std::string &); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à initaliser le jeu mdr ..
+                        </p>
+                    </div>
+                    <div>
+                        <h1><strong>Affichier du texte: <pre class="prettyprint">void aPutText(size_t, size_t, arcade::Font, size_t, arcade::Color, const std::string &); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à initaliser le jeu mdr ..
+                        </p>
+                    </div>
+                    <div>
+                        <h1><strong>Clear la fenêtre: <pre class="prettyprint">void aClear(); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à initaliser le jeu mdr ..
+                        </p>
+                    </div>
+                    <div>
+                        <h1><strong>Clear les animations: <pre class="prettyprint">void aClearAnimBuffer(); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à initaliser le jeu mdr ..
+                        </p>
+                    </div>
+                    <div>
+                        <h1><strong>Rafraichir la fenêtre: <pre class="prettyprint">void aRefresh(); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à initaliser le jeu mdr ..
+                        </p>
+                    </div>
+                    <div>
+                        <h1><strong>Récupérer les commandes: <pre class="prettyprint">arcade::CommandType aCommand(); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à initaliser le jeu mdr ..
+                        </p>
+                    </div>
+                    <div>
+                        <h1><strong>Récupérer les touches: <pre class="prettyprint">std::string         aChar(); </pre></strong></h1><br><br>
+                        <p>
+                            Cette fonction sert à initaliser le jeu mdr ..
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="">
+            <p> &copy; Copyright Epitech. All Rights Reserved.</p>
+        </div>
+    </footer>
+</div>
+<script src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/prettify/prettify.js"></script>
+<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css&skin=sunburst"></script>
+<script src="js/layout.js"></script>
+</body>
+</html>
