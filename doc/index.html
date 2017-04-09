@@ -38,7 +38,8 @@
                 <li><strong>Documentation</strong></li>
                 <li><a href="#core" class="cc-active">Core</a></li>
                 <li><a href="#games" class="cc-active">Games</a></li>
-                <li><a href="#graphic" class="cc-active">Grapique</a></li>
+                <li><a href="#graphic" class="cc-active">Graphique</a></li>
+                <li><a href="#enums" class="cc-active">Enums</a></li>
 
 
             </ul>
@@ -102,7 +103,7 @@
                         <h1><strong>Récupérer les Saves: <pre class="prettyprint">Save &getSave(); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Cette fonction sert à récuperer une Class de type Save.    <a href="#save">Cliquez ici pour voir la Class</a>
+                            Cette fonction sert à récuperer une Class de type Save.    <a href="#save">Cliquez ici pour voir la Class Save</a>
                             </font>
                         </p>
                     </div>
@@ -154,16 +155,16 @@
                         <h1><strong>Initialiser le jeu: <pre class="prettyprint">IGame &createGame(); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Cette fonction sert à initaliser le jeu mdr ..
+                            Crée un instance du jeu actuelement chargé par le Core.
                             </font>
                         </p>
 
                     </div>
                     <div>
-                        <h1><strong>Detruire le jeu: <pre class="prettyprint">void delete(IGame &); </pre></strong></h1><br><br>
+                        <h1><strong>Detruire le jeu: <pre class="prettyprint">void deleteGame(IGame &); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Cette fonction sert à detruire le jeu mdr ..
+                                Détruis le jeu actuelement chargé par le Core.
                             </font>
                         </p>
 
@@ -172,7 +173,7 @@
                         <h1><strong>Lancer le jeu: <pre class="prettyprint">arcade::CommandType  play(arcade::ICore &); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Cette fonction sert à initaliser le jeu mdr ..
+                                Lance le jeu chargé par le Core.
                             </font>
                         </p>
                     </div>
@@ -181,19 +182,19 @@
                 <div id="graphic">
                     <h3>Graphique</h3>
                     <div>
-                        <h1><strong>Créer une fenêtre: <pre class="prettyprint">void aInit(arcade::ICore *, size_t, size_t); </pre></strong></h1><br><br>
+                        <h1><strong>Créer une fenêtre: <pre class="prettyprint">void aInit(arcade::ICore *core, size_t HEIGHT, size_t WIDTH); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Cette fonction sert à initaliser le jeu mdr ..
+                                Ouvre une fenêtre, de <strong>HEIGHT</strong> par <strong>WIDTH</strong>.
                             </font>
                         </p>
 
                     </div>
                     <div>
-                        <h1><strong>Fermer la fenêtre: <pre class="prettyprint">void delete(IGame &); </pre></strong></h1><br><br>
+                        <h1><strong>Ferme la fenêtre: <pre class="prettyprint">void aClose(); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Cette fonction sert à detruire le jeu mdr ..
+                                Ferme la fenêtre si celle ci est ouverte.
                             </font>
                         </p>
 
@@ -202,7 +203,7 @@
                         <h1><strong>Afficher un cube dans la fenêtre: <pre class="prettyprint">void aTile(size_t, size_t, int, arcade::TileType, arcade::CommandType); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Cette fonction sert à initaliser le jeu mdr ..
+                                Affiche un cube à une position <strong>x</strong>, <strong>y</strong>, puis on lui envoie la vitesse du block, le type du block à afficher et la direction du block pour l'animer.
                             </font>
                         </p>
                     </div>
@@ -210,7 +211,7 @@
                         <h1><strong>Assigner une texture à un cube: <pre class="prettyprint">void aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Cette fonction sert à initaliser le jeu mdr ..
+                                Cette fonction assigne une texture à un block de type <strong>TileType</strong> donné en paramètre, grâce au <strong>PATH</strong> et une couleur par default en cas d'erreur de chargement de la texture. <a href="#color"> Cliquez ici pour voir l'enum Color</a>
                             </font>
                         </p>
                     </div>
@@ -218,7 +219,7 @@
                         <h1><strong>Lire un son: <pre class="prettyprint">void aPlaySound(arcade::Sound); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Cette fonction sert à initaliser le jeu mdr ..
+                                Cette fonction lis par apport à l'action de type <strong>Sound</strong> donné en paramètre. <a href="#sound">Cliquez ici pour voir l'enum Sound</a>
                             </font>
                         </p>
                     </div>
@@ -226,59 +227,108 @@
                         <h1><strong>Lire une music: <pre class="prettyprint">void aPlayMusic(const std::string &); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Cette fonction sert à initaliser le jeu mdr ..
+                                Cette fonction sert à lire une music par apport au <strong>PATH</strong> de celle-ci donné en paramètre ce cette fonction.
                             </font>
                         </p>
                     </div>
                     <div>
-                        <h1><strong>Affichier du texte: <pre class="prettyprint">void aPutText(size_t, size_t, arcade::Font, size_t, arcade::Color, const std::string &); </pre></strong></h1><br><br>
+                        <h1><strong>Afficher du texte: <pre class="prettyprint">void aPutText(size_t, size_t, arcade::Font, size_t, arcade::Color, const std::string &); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Cette fonction sert à initaliser le jeu mdr ..
-                        </font>
+                                Cette fonction sert à afficher du text à une position <strong>x</strong>,  <strong>y</strong>, un font, la taille du texte, une couleur et le texte donné en paramètre. <br><a href="#font"> Cliquez ici pour voir l'enum Font</a><br><a href="#color"> Cliquez ici pour voir l'enum Color</a>
+                            </font>
                         </p>
                     </div>
                     <div>
                         <h1><strong>Clear la fenêtre: <pre class="prettyprint">void aClear(); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Cette fonction sert à initaliser le jeu mdr ..
-                        </font>
+                                Cette fonction sert à supprimer tout les block, texte etc... de la fenêtre.
+                            </font>
                         </p>
                     </div>
                     <div>
                         <h1><strong>Clear les animations: <pre class="prettyprint">void aClearAnimBuffer(); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Cette fonction sert à initaliser le jeu mdr ..
-                        </font>
+                                Cette fonction sert à supprimer toute les annimations en cours d'utilisation.
+                            </font>
                         </p>
                     </div>
                     <div>
                         <h1><strong>Rafraichir la fenêtre: <pre class="prettyprint">void aRefresh(); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Cette fonction sert à initaliser le jeu mdr ..
-                        </font>
+                                Cette fonction sert à afficher tout les block, textes etc.. dans la fenêtre.
+                            </font>
                         </p>
                     </div>
                     <div>
                         <h1><strong>Récupérer les commandes: <pre class="prettyprint">arcade::CommandType aCommand(); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Cette fonction sert à initaliser le jeu mdr ..
-                        </font>
+                                Cette fonction sert à récuperer les commandes de type <strong>CommandType</strong>
+                            </font>
                         </p>
                     </div>
                     <div>
                         <h1><strong>Récupérer les touches: <pre class="prettyprint">std::string         aChar(); </pre></strong></h1><br><br>
                         <p>
                             <font size="2">
-                            Cette fonction sert à initaliser le jeu mdr ..
-                        </font>
+                                Cette fonction sert à récuperer les touches de type texte (a, b, c, d, etc ...)
+                            </font>
                         </p>
                     </div>
                 </div>
+                <hr>
+                <div id="enums">
+                    <h3>Enums</h3>
+                    <div>
+                        <ul id="font">
+                            <li>Font</li>
+                        </ul>
+                        <h1><strong><pre class="prettyprint">
+enum Font
+{
+    FREAKY,
+    PRESS_START
+};
+                        </pre></strong></h1>
+<br><br><br><br>
+                        <ul id="sound">
+                            <li>Sound</li>
+                        </ul>
+                        <h1><strong><pre class="prettyprint">
+enum    Sound
+{
+    NEW_GAME,
+    GAME_OVER,
+    MY_SHOOT,
+    EVIL_SHOOT,
+    POWERUP,
+    EXPLOSION,
+    OTHER
+};
+                        </pre></strong></h1>
+                        <br><br><br><br><br><br>
+                        <ul id="color">
+                            <li>Color</li>
+                        </ul>
+                        <h1><strong><pre class="prettyprint">
+enum Color
+{
+  A_BLACK,
+  A_RED,
+  A_GREEN,
+  A_YELLOW,
+  A_BLUE,
+  A_MAGENTA,
+  A_CYAN,
+  A_WHITE
+};
+                        </pre></strong></h1>
+
+                    </div>
             </div>
         </div>
     </section>
