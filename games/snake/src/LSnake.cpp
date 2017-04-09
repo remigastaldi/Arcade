@@ -343,12 +343,6 @@ void			LSnake::newApple()
     {
       _apple.x = (rand() % (MAP_WIDTH - 2)) + 2;
       _apple.y = (rand() % (MAP_HEIGHT - 2)) + 2;
-      for (std::vector<arcade::Position>::iterator it = _position.end() - 1; it != _position.begin(); --it)
-	if (_apple.x == (*it).x && _apple.y == (*it).y)
-	  {
-	    _apple.x = 0;
-	    _apple.y = 0;
-	  }
       tile = (_apple.y) * MAP_HEIGHT + _apple.x;
     }
 }
