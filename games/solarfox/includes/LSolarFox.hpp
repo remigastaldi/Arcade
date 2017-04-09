@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:08:10 2017 gastal_r
-** Last update	Sun Apr 09 15:36:52 2017 gastal_r
+** Last update	Sun Apr 09 16:30:14 2017 gastal_r
 */
 
 #ifndef         _Lsolarfox_HPP_
@@ -33,7 +33,7 @@ class           LSolarFox : public arcade::IGame
 
 public:
   LSolarFox();
-  virtual ~LSolarFox ();
+  virtual ~LSolarFox () {};
 
   void				          initTextures(void);
   arcade::CommandType		initGame(bool);
@@ -60,6 +60,7 @@ private:
   arcade::GetMap		*_map;
   Level             _level;
   Ship				      _ship;
+  
   int				        _score;
   bool				      _lPDM;
   size_t            _nbpower;

@@ -72,7 +72,7 @@ void		        EnemyShip::move(arcade::ICore *core, std::vector<EnemyMissile> &en
 	  break;
 	}
 
-	if (rand() % (level.getNbLvl() * 70) <= (level.getCurrentLvl() + 1) * 10 && lPDM == false)
+	if (rand() % (level.getNbLvl() * 50) <= (level.getCurrentLvl() + 1) * 10 && lPDM == false)
 	{
 	  if (_x == 1 && (_direction == arcade::CommandType::GO_UP || _direction == arcade::CommandType::GO_DOWN))
 	    enemyMissile.push_back(EnemyMissile(_x + 1, _y, arcade::CommandType::GO_RIGHT));

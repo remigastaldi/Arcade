@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Sun Apr 09 15:37:35 2017 gastal_r
+** Last update	Sun Apr 09 17:22:34 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -109,7 +109,7 @@ _core->getLib()->aRefresh();
 
 void			LSnake::changeAction()
 {
-  switch (_map->type)
+    switch (_map->type)
     {
     case (arcade::CommandType::GO_UP):
       if (_direction != arcade::CommandType::GO_DOWN)
@@ -130,7 +130,6 @@ void			LSnake::changeAction()
     default:
       break;
   }
-  _map->type = arcade::CommandType::UNDEFINED;
 }
 
 void			LSnake::addScore(int points)
@@ -226,6 +225,7 @@ void			LSnake::move()
     }
   else if (_lPDM != true)
     gameOver();
+  _map->type = arcade::CommandType::UNDEFINED;
 }
 
 arcade::CommandType			LSnake::mainLoop()
@@ -240,8 +240,9 @@ arcade::CommandType			LSnake::mainLoop()
     {
       t2 = std::chrono::high_resolution_clock::now();
 	  lastCommand = _core->getLib()->aCommand();
-	  if (lastCommand != arcade::CommandType::UNDEFINED)
+	  if (_map->type == arcade::CommandType::UNDEFINED)
 	    _map->type = lastCommand;
+
 	  switch (_map->type)
 	    {
 	    case arcade::CommandType::NEXT_LIB :
@@ -273,7 +274,6 @@ arcade::CommandType			LSnake::mainLoop()
 	  if (std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() >= 16)
 	    {
 	      changeAction();
-
 	      if (_speed == 10)
 		move();
 	      if (_exitStatus == arcade::CommandType::MENU || _exitStatus == arcade::CommandType::ESCAPE)
