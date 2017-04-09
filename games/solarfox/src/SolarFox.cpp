@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Sun Apr 09 12:35:16 2017 gastal_r
+** Last update	Sun Apr 09 14:45:17 2017 gastal_r
 */
 
 #include	        "LSolarFox.hpp"
@@ -42,9 +42,9 @@ void		        LSolarFox::printGame(void)
 
 void			LSolarFox::initTextures(void)
 {
-  _core->getLib()->aAssignTexture(arcade::TileType::EMPTY, SOLAR_RES "img/green_darker.png", arcade::Color::A_WHITE);
+  _core->getLib()->aAssignTexture(arcade::TileType::EMPTY, SOLAR_RES "img/green_darker2.png", arcade::Color::A_WHITE);
   _core->getLib()->aAssignTexture(arcade::TileType::BLOCK, SOLAR_RES "img/black.png", arcade::Color::A_BLACK);
-  _core->getLib()->aAssignTexture(arcade::TileType::SHIP, SOLAR_RES "img/blue_neon.png", arcade::Color::A_BLUE);
+  _core->getLib()->aAssignTexture(arcade::TileType::SHIP, SOLAR_RES "img/blue_neon2.png", arcade::Color::A_BLUE);
   _core->getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, SOLAR_RES "img/blue_neon.png", arcade::Color::A_BLUE);
   _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, SOLAR_RES "img/yellow_neon.png", arcade::Color::A_YELLOW);
   _core->getLib()->aAssignTexture(arcade::TileType::EVIL_DUDE, SOLAR_RES "img/red_neon.png", arcade::Color::A_RED);

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Sun Apr 09 13:46:55 2017 gastal_r
+** Last update	Sun Apr 09 14:07:34 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -30,8 +30,8 @@ arcade::CommandType				LSnake::play(arcade::ICore &core)
 
 void      LSnake::initTextures()
 {
-  _core->getLib()->aAssignTexture(arcade::TileType::EMPTY, SNAKE_RES "img/green_darker.png", arcade::Color::A_WHITE);
-  _core->getLib()->aAssignTexture(arcade::TileType::OBSTACLE, SNAKE_RES "img/red.png", arcade::Color::A_RED);
+  _core->getLib()->aAssignTexture(arcade::TileType::EMPTY, SNAKE_RES "img/green_darker2.png", arcade::Color::A_WHITE);
+  _core->getLib()->aAssignTexture(arcade::TileType::OBSTACLE, SNAKE_RES "img/red_neon.png", arcade::Color::A_RED);
   _core->getLib()->aAssignTexture(arcade::TileType::SHIP, SNAKE_RES "img/blue_neon.png", arcade::Color::A_BLUE);
   _core->getLib()->aAssignTexture(arcade::TileType::OTHER, SNAKE_RES "img/purple_neon.png", arcade::Color::A_MAGENTA);
   _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, SNAKE_RES "img/yellow_neon.png", arcade::Color::A_YELLOW);

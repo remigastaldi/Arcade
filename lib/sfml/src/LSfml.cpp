@@ -5,16 +5,15 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:08:10 2017 gastal_r
-** Last update	Sun Apr 09 12:09:51 2017 gastal_r
+** Last update	Sun Apr 09 14:24:52 2017 gastal_r
 */
 
 #include        "LSfml.hpp"
 
 LSfml::LSfml()
-{}
-
-LSfml::~LSfml()
-{}
+{
+  _core = 0;
+}
 
 void            LSfml::aInit(arcade::ICore *core, size_t width, size_t height)
 {
@@ -104,47 +103,47 @@ void            LSfml::aAssignTexture(arcade::TileType tile, const std::string &
     case arcade::TileType::EMPTY :
       if (!_emptyTex.loadFromFile(path))
         _emptyTex = createColoredTexture(color);
-      //_emptyTex.setSmooth(true);
+      _emptyTex.setSmooth(true);
       break;
     case arcade::TileType::BLOCK :
       if (!_blockTex.loadFromFile(path))
         _blockTex = createColoredTexture(color);
-      //_blockTex.setSmooth(true);
+      _blockTex.setSmooth(true);
       break;
     case arcade::TileType::OBSTACLE :
       if (!_obstacleTex.loadFromFile(path))
         _obstacleTex = createColoredTexture(color);
-      //_obstacleTex.setSmooth(true);
+      _obstacleTex.setSmooth(true);
       break;
     case arcade::TileType::EVIL_DUDE :
       if (!_evilDudeTex.loadFromFile(path))
         _evilDudeTex = createColoredTexture(color);
-      //_evilDudeTex.setSmooth(true);
+      _evilDudeTex.setSmooth(true);
       break;
     case arcade::TileType::EVIL_SHOOT :
       if (!_evilShootTex.loadFromFile(path))
         _evilShootTex = createColoredTexture(color);
-      //_evilShootTex.setSmooth(true);
+      _evilShootTex.setSmooth(true);
       break;
     case arcade::TileType::MY_SHOOT :
       if (!_myShootTex.loadFromFile(path))
         _myShootTex = createColoredTexture(color);
-      //_myShootTex.setSmooth(true);
+      _myShootTex.setSmooth(true);
       break;
     case arcade::TileType::POWERUP :
       if (!_powerupTex.loadFromFile(path))
         _powerupTex = createColoredTexture(color);
-      //_powerupTex.setSmooth(true);
+      _powerupTex.setSmooth(true);
       break;
     case arcade::TileType::SHIP :
       if (!_shipTex.loadFromFile(path))
         _shipTex = createColoredTexture(color);
-      //_shipTex.setSmooth(true);
+      _shipTex.setSmooth(true);
       break;
     case arcade::TileType::OTHER :
       if (!_otherTex.loadFromFile(path))
         _otherTex = createColoredTexture(color);
-      //_otherTex.setSmooth(true);
+      _otherTex.setSmooth(true);
       break;
       }
 }
@@ -222,6 +221,7 @@ void          LSfml::drawElem(size_t x, size_t y, arcade::TileType type, arcade:
 {
   sf::Sprite sprite;
 
+  (void) dir;
   switch (type)
     case arcade::TileType::EMPTY :
     {
@@ -247,12 +247,9 @@ void          LSfml::drawElem(size_t x, size_t y, arcade::TileType type, arcade:
       break;
     case arcade::TileType::SHIP :
       sprite = createSprite(_shipTex);
-    //  sprite.setScale(sf::Vector2f(BLOCK_SFML * 3 / _shipTex.getSize().x, BLOCK_SFML * 3 / _shipTex.getSize().y));
-      //checkRotation(dir, sprite);
       break;
     case arcade::TileType::OTHER :
       sprite = createSprite(_otherTex);
-      //checkRotation(dir, sprite);
       break;
   }
   sprite.setPosition(((float)x * BLOCK_SFML) + dx +  X_PAD * (BLOCK_X - 2), ((float)y * BLOCK_SFML)- 30 - dy);

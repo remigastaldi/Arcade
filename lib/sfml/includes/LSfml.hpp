@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:07:35 2017 gastal_r
-** Last update Sat Apr 08 20:08:11 2017 Leo Hubert Froideval
+** Last update	Sun Apr 09 14:24:50 2017 gastal_r
 */
 
 #ifndef         _LSFML_HPP_
@@ -36,7 +36,7 @@ class LSfml : public arcade::IGraph
 
 public:
   LSfml ();
-  virtual ~LSfml ();
+  virtual ~LSfml () {};
 
   void          aInit(arcade::ICore *, size_t, size_t);
   void          aClose();
