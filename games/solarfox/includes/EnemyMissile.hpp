@@ -22,8 +22,8 @@ public:
   ~EnemyMissile();
 
   void	   print(arcade::ICore *);
-  int	     move(Ship);
-  bool	   checkColisions(Object);
+  int	     move(const Ship &);
+  bool	   checkColisions(const Object &);
 
 private:
   unsigned int	_moves;

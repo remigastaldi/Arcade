@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 19 01:04:21 2017 gastal_r
-** Last update	Sun Apr 09 15:40:02 2017 gastal_r
+** Last update	Sun Apr 09 23:14:39 2017 gastal_r
 */
 
 #ifndef         _LOPENGL_HPP_
@@ -59,8 +59,8 @@ public:
 
   void          aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color);
 
-  void          aPlaySound(arcade::Sound sound) {_sound.playSound(sound);}
-  void          aPlayMusic(const std::string &path) {_sound.playMusic(path);}
+  void          aPlaySound(arcade::Sound sound)     { _sound.playSound(sound); }
+  void          aPlayMusic(const std::string &path) { _sound.playMusic(path); }
 
   sf::Color     fillColor(arcade::Color);
   void          aPutText(size_t, size_t, arcade::Font, size_t, arcade::Color, const std::string &);
@@ -75,9 +75,16 @@ public:
   arcade::CommandType aCommand();
 
 private:
-  std::vector<LOpengl::Data> _data;
-  arcade::CommandType        _dir;
+  arcade::ICore     *_core;
+  AObj               _objs;
+  float              _xView;
+  float              _yView;
+  bool               _checkLoadObj;
+  std::string        _currentGame;
   sf::RenderWindow   _win;
+  arcade::CommandType        _dir;
+
+  std::vector<LOpengl::Data> _data;
 
   sf::Event          _event;
   sf::Font           _freakyFont;
@@ -105,13 +112,6 @@ private:
 
   Sound              _sound;
   sf::Music          _music;
-
-  float              _xView;
-  float              _yView;
-  arcade::ICore     *_core;
-  bool               _checkLoadObj;
-  std::string        _currentGame;
-  AObj               _objs;
 };
 
 #endif          /* !_LOPENGL_HPP_ */

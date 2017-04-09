@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:08:10 2017 gastal_r
-** Last update	Sun Apr 09 16:30:14 2017 gastal_r
+** Last update	Sun Apr 09 23:00:57 2017 gastal_r
 */
 
 #ifndef         _Lsolarfox_HPP_
@@ -42,9 +42,6 @@ public:
   void				printGame(void);
   void				changeAction();
 
-  arcade::CommandType		mainLoop(void);
-  arcade::CommandType		play(arcade::ICore &);
-
   void        win(void);
   void				gameWin(void);
   void				gameOver(void);
@@ -55,12 +52,15 @@ public:
   void				lPDM_whereAmI();
   void				lPDM_start();
 
+  arcade::CommandType		mainLoop(void);
+  arcade::CommandType		play(arcade::ICore &);
+
 private:
   arcade::ICore			*_core;
   arcade::GetMap		*_map;
   Level             _level;
   Ship				      _ship;
-  
+
   int				        _score;
   bool				      _lPDM;
   size_t            _nbpower;

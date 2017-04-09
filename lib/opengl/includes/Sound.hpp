@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Apr 07 10:40:32 2017 gastal_r
-** Last update	Fri Apr 07 15:28:14 2017 gastal_r
+** Last update	Sun Apr 09 23:14:50 2017 gastal_r
 */
 
 #ifndef       _SOUND_HPP_
@@ -20,7 +20,7 @@ class         Sound
   class       Data
   {
   public:
-    arcade::Sound       getType()  const {return(_type);}
+    arcade::Sound       getType()  const { return(_type); }
     void                loadTypeSound(arcade::Sound, const std::string &);
     void                playSound()
     {

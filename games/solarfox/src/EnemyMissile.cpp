@@ -36,14 +36,14 @@ void	         EnemyMissile::print(arcade::ICore *core)
     core->getLib()->aTile(_x + 1, _y + 1, _speed, arcade::TileType::EVIL_SHOOT, _direction);
 }
 
-bool	         EnemyMissile::checkColisions(Object obj)
+bool	         EnemyMissile::checkColisions(const Object &obj)
 {
   if (obj.getX() == _x && obj.getY() == _y)
     return (true);
   return (false);
 }
 
-int           EnemyMissile::move(Ship ship)
+int           EnemyMissile::move(const Ship &ship)
 {
   if (checkAction(false))
     {

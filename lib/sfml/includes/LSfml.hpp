@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:07:35 2017 gastal_r
-** Last update	Sun Apr 09 15:45:07 2017 gastal_r
+** Last update	Sun Apr 09 23:15:30 2017 gastal_r
 */
 
 #ifndef         _LSFML_HPP_
@@ -52,8 +52,8 @@ public:
   void          aAssignTexture(arcade::TileType tile, const std::string &path, arcade::Color color);
   void          *aGetTexture(const std::string &);
 
-  void          aPlaySound(arcade::Sound sound) {_sound.playSound(sound);}
-  void          aPlayMusic(const std::string &path) {_sound.playMusic(path);}
+  void          aPlaySound(arcade::Sound sound)     { _sound.playSound(sound); }
+  void          aPlayMusic(const std::string &path) { _sound.playMusic(path); }
 
   sf::Color     fillColor(arcade::Color);
   void          aPutText(size_t, size_t, arcade::Font,size_t, arcade::Color, const std::string &);

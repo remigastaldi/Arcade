@@ -5,16 +5,16 @@
 ** Login	gastal_r
 **
 ** Started on	Tue Mar 14 10:55:17 2017 gastal_r
-** Last update	Sun Apr 09 15:47:10 2017 gastal_r
+** Last update	Sun Apr 09 22:48:23 2017 gastal_r
 */
 
 #ifndef         _GUI_HPP_
 #define         _GUI_HPP_
 
-#include          <iostream>
-#include          <vector>
-#include          <string>
-#include          "Protocol.hpp"
+#include        <iostream>
+#include        <vector>
+#include        <string>
+#include        "Protocol.hpp"
 
 namespace arcade
 {
@@ -49,17 +49,18 @@ public:
   void                affPlayersScores();
 
   Status        getStatus();
-  void          setStatus(Status status) {_status = status; }
+  void          setStatus(Status status) { _status = status; }
 
-  void          guiSetGraph(arcade::IGraph *graph)                 {_graph = graph;}
-  void          guiSetLibs(const std::vector<std::string> &libs)   {_libs = libs;}
-  void          guiSetCurrentGraph(const std::string &graph)       {_currentGraph = graph;}
-  void          guiSetGames(const std::vector<std::string> &games) {_games = games;}
-  void          guiSetCurrentGame(const std::string &game)         {_currentGame = game;}
-  void          guiSetPlayer(const std::string &player)            {_player = player;}
-  void          guiSetPlayerBestScore(const std::string &score)    {_bestPlayerScore = score;}
-  void          guiSetScore(const std::string &score)              {_score = score;}
-  void          guiSetBestScores(const std::vector<std::string> &scores) {_bestPlayersScores = scores;}
+  void          guiSetLibs(const std::vector<std::string> &libs)   { _libs = libs; }
+  void          guiSetGraph(arcade::IGraph *graph)                 { _graph = graph; }
+  void          guiSetGames(const std::vector<std::string> &games) { _games = games; }
+  void          guiSetScore(const std::string &score)              { _score = score; }
+  void          guiSetPlayer(const std::string &player)            { _player = player; }
+  void          guiSetCurrentGame(const std::string &game)         { _currentGame = game; }
+  void          guiSetCurrentGraph(const std::string &graph)       { _currentGraph = graph; }
+  void          guiSetPlayerBestScore(const std::string &score)    { _bestPlayerScore = score; }
+  void          guiSetBestScores(const std::vector<std::string> &scores) {_bestPlayersScores = scores; }
+
   void          guiClearBestScores();
   void          guiGameWin();
   void          guiGameOver();

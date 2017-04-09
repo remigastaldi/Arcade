@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Sun Apr 09 18:26:24 2017 gastal_r
+** Last update	Sun Apr 09 22:56:25 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -92,7 +92,7 @@ void			LSnake::printGame()
   {
     _core->getLib()->aTile(_position[0].x + 1, _position[0].y + 1, SNAKE_SPEED, arcade::TileType::SHIP, _direction);
     if (_position.size() > 1)
-      for (std::vector<arcade::Position>::iterator it = _position.begin() + 1; it != _position.end() - 1; ++it)
+      for (std::vector<arcade::Position>::const_iterator it = _position.begin() + 1; it != _position.end() - 1; ++it)
         _core->getLib()->aTile((*it).x + 1, (*it).y + 1, SNAKE_SPEED, arcade::TileType::OTHER, getDirection((*it), (*(it + 1))));
   _speed = SNAKE_SPEED;
   }
@@ -362,7 +362,7 @@ void			LSnake::lPDM_whereAmI()
   snake = new arcade::WhereAmI[(length * sizeof(arcade::Position))];
   snake->type = _map->type;
   snake->lenght = length;
-  for (std::vector<arcade::Position>::iterator it = _position.begin(); it != _position.end() - 1; ++it)
+  for (std::vector<arcade::Position>::const_iterator it = _position.begin(); it != _position.end() - 1; ++it)
   {
     snake->position[i] = *it;
     i++;

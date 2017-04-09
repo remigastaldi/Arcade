@@ -12,7 +12,7 @@
 #ifndef		       IGRAPH_HH__
 # define	       IGRAPH_HH__
 
-#include "ICore.hh"
+#include         "ICore.hh"
 
 #define BLOCK_X      8
 #define BLOCK_Y      16

@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Fri Mar 17 00:03:17 2017 gastal_r
-** Last update	Sun Apr 09 15:08:26 2017 gastal_r
+** Last update	Sun Apr 09 22:53:39 2017 gastal_r
 */
 
 #include        "Save.hpp"
@@ -47,7 +47,7 @@ void            Save::loadPlayerSave()
 
 void                  Save::checkExistingUser()
 {
-  std::vector<Save::PlayerSave>::iterator it = _playerSave.begin();
+  std::vector<Save::PlayerSave>::const_iterator it = _playerSave.begin();
 
   while (it != _playerSave.end() && (*it).getPlayer() != _player)
     ++it;

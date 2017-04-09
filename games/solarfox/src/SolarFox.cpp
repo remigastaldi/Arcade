@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Sun Apr 09 17:01:08 2017 gastal_r
+** Last update	Sun Apr 09 23:11:06 2017 gastal_r
 */
 
 #include	        "LSolarFox.hpp"
@@ -28,7 +28,7 @@ void		        LSolarFox::printGame(void)
     it->print(_core);
   for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
     it->print(_core);
-  for (std::vector<arcade::Position>::iterator it = _powerUp.begin() ; it != _powerUp.end() ; ++it)
+  for (std::vector<arcade::Position>::const_iterator it = _powerUp.begin() ; it != _powerUp.end() ; ++it)
     _core->getLib()->aTile(it->x + 1, it->y + 1, 0, arcade::TileType::POWERUP, arcade::CommandType::UNDEFINED);
   for (unsigned int i = 0 ; i < MAP_HEIGHT * MAP_WIDTH; i++)
     _core->getLib()->aTile((i % _map->width) + 1, (i / _map->height) + 1, 0, _map->tile[i], arcade::CommandType::UNDEFINED);

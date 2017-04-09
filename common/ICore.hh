@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 12 21:30:45 2017 gastal_r
-** Last update	Sun Apr 09 15:04:41 2017 gastal_r
+** Last update	Sun Apr 09 22:41:12 2017 gastal_r
 */
 
 #ifndef           _ICORE_HH_
@@ -20,7 +20,7 @@
 #include          "Protocol.hpp"
 #include          "IGraph.hh"
 #include          "IGame.hh"
-#include	  "Exception.hpp"
+#include	        "Exception.hpp"
 #include          "File.hpp"
 
 #define CORE_RES  "core/res/"
