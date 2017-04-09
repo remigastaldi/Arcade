@@ -37,7 +37,7 @@ public:
   void		changeAction();
   void		printGame();
   void		move();
-  bool		checkDistance(int);
+  bool		checkSnakeColision(int);
   void		newApple();
   void		newBlock();
   void		addQueue();

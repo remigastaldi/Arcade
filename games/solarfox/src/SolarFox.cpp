@@ -217,7 +217,7 @@ void			LSolarFox::changeAction()
 void    LSolarFox::move()
 {
   for (std::vector<Missile>::iterator it = _missile.begin(); it != _missile.end(); ++it)
-    it->move();
+    it->move(_map);
   if (_ship.move(_map) == SHIP_DESTROYED && _lPDM == false)
     gameOver();
 

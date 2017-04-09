@@ -318,10 +318,10 @@ void			LSnake::addQueue()
   _position.push_back(_position[_position.size() - 1]);
 }
 
-bool			LSnake::checkDistance(int tile)
+bool			LSnake::checkSnakeColision(int tile)
 {
   for (std::vector<arcade::Position>::iterator it = _position.begin() ; it != _position.end() ; ++it)
-    if (tile - (it->y * 50 + it->x) < 5 || tile - (it->y * 50 + it->x) > -5)
+    if (tile % MAP_WIDTH == it->x && tile / MAP_HEIGHT == it->y)
       return (false);
   return (true);
 }
@@ -331,7 +331,7 @@ void			LSnake::newBlock()
   int			tile;
 
   tile = rand() % (MAP_WIDTH * MAP_HEIGHT - 2);
-  while (checkDistance(tile) == true && _map->tile[tile] != arcade::TileType::EMPTY)
+  while (checkSnakeColision(tile) == false || _map->tile[tile] != arcade::TileType::EMPTY)
     tile = rand() % (MAP_WIDTH * MAP_HEIGHT - 2);
   _map->tile[tile] = arcade::TileType::OBSTACLE;
 }
@@ -343,7 +343,7 @@ void			LSnake::newApple()
   _apple.x = (rand() % (MAP_WIDTH - 2)) + 2;
   _apple.y = (rand() % (MAP_HEIGHT - 2)) + 2;
   tile = (_apple.y) * MAP_HEIGHT + _apple.x;
-  while (_map->tile[tile] != arcade::TileType::EMPTY)
+  while (checkSnakeColision(tile) == false || _map->tile[tile] != arcade::TileType::EMPTY)
     {
       _apple.x = (rand() % (MAP_WIDTH - 2)) + 2;
       _apple.y = (rand() % (MAP_HEIGHT - 2)) + 2;

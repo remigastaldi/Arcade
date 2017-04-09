@@ -5,7 +5,7 @@
 // Login   <flavien.sellet@epitech.eu>
 //
 // Started on  Tue Apr  4 17:20:27 2017 sellet_f
-// Last update Sat Apr  8 00:13:06 2017 sellet_f
+// Last update Sun Apr  9 13:32:34 2017 sellet_f
 //
 
 #include "Missile.hpp"
@@ -40,7 +40,7 @@ void	Missile::print(arcade::ICore *core)
     core->getLib()->aTile(_x + 1, _y + 1, _speed, arcade::TileType::MY_SHOOT, _direction);
 }
 
-void	Missile::move(void)
+void	Missile::move(arcade::GetMap *map)
 {
   if (checkAction(false))
     {
@@ -60,7 +60,7 @@ void	Missile::move(void)
 	default:
 	  break;
 	}
-      if (_moves > 0)
+      if (_moves > 0 && map->tile[_y * 41 + _x] != arcade::TileType::OBSTACLE)
 	_moves -= 1;
       else
 	empty();

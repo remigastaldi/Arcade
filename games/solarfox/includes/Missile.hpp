@@ -5,7 +5,7 @@
 // Login   <flavien.sellet@epitech.eu>
 //
 // Started on  Tue Apr  4 16:21:08 2017 sellet_f
-// Last update Sat Apr  8 00:11:58 2017 sellet_f
+// Last update Sun Apr  9 12:41:00 2017 sellet_f
 //
 
 #ifndef _MISSILE_HH_
@@ -22,7 +22,7 @@ public:
 
   void	print(arcade::ICore *);
   void	empty(void);
-  void	move(void);
+  void	move(arcade::GetMap *);
 
 private:
   int   _moves;
