@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Sun Apr 09 01:32:26 2017 gastal_r
+** Last update	Sun Apr 09 12:35:16 2017 gastal_r
 */
 
 #include	        "LSolarFox.hpp"
@@ -42,15 +42,15 @@ void		        LSolarFox::printGame(void)
 
 void			LSolarFox::initTextures(void)
 {
-  _core->getLib()->aAssignTexture(arcade::TileType::EMPTY, SOLAR_RES "img/floor2.png", arcade::Color::A_WHITE);
-  _core->getLib()->aAssignTexture(arcade::TileType::BLOCK, SOLAR_RES "img/wall2.png", arcade::Color::A_RED);
-  _core->getLib()->aAssignTexture(arcade::TileType::SHIP, SOLAR_RES "img/ship.png", arcade::Color::A_BLACK);
-  _core->getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, SOLAR_RES "img/wall3.png", arcade::Color::A_MAGENTA);
-  _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, SOLAR_RES "img/wall.png", arcade::Color::A_MAGENTA);
-  _core->getLib()->aAssignTexture(arcade::TileType::EVIL_DUDE, SOLAR_RES "img/wall.png", arcade::Color::A_BLUE);
-  _core->getLib()->aAssignTexture(arcade::TileType::EVIL_SHOOT, SOLAR_RES "img/wall.png", arcade::Color::A_RED);
-  _core->getLib()->aAssignTexture(arcade::TileType::OBSTACLE, SOLAR_RES "img/ship.png", arcade::Color::A_BLACK);
-  _core->getLib()->aAssignTexture(arcade::TileType::OTHER, SOLAR_RES "img/wall3.png", arcade::Color::A_YELLOW);
+  _core->getLib()->aAssignTexture(arcade::TileType::EMPTY, SOLAR_RES "img/green_darker.png", arcade::Color::A_WHITE);
+  _core->getLib()->aAssignTexture(arcade::TileType::BLOCK, SOLAR_RES "img/black.png", arcade::Color::A_BLACK);
+  _core->getLib()->aAssignTexture(arcade::TileType::SHIP, SOLAR_RES "img/blue_neon.png", arcade::Color::A_BLUE);
+  _core->getLib()->aAssignTexture(arcade::TileType::MY_SHOOT, SOLAR_RES "img/blue_neon.png", arcade::Color::A_BLUE);
+  _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, SOLAR_RES "img/yellow_neon.png", arcade::Color::A_YELLOW);
+  _core->getLib()->aAssignTexture(arcade::TileType::EVIL_DUDE, SOLAR_RES "img/red_neon.png", arcade::Color::A_RED);
+  _core->getLib()->aAssignTexture(arcade::TileType::EVIL_SHOOT, SOLAR_RES "img/red_neon.png", arcade::Color::A_RED);
+  _core->getLib()->aAssignTexture(arcade::TileType::OBSTACLE, SOLAR_RES "img/red.png", arcade::Color::A_RED);
+  _core->getLib()->aAssignTexture(arcade::TileType::OTHER, SOLAR_RES "img/black.png", arcade::Color::A_BLACK);
 }
 
 void			LSolarFox::parseMap(std::string const &content)
@@ -117,14 +117,13 @@ arcade::CommandType  	LSolarFox::initGame(bool lPDM)
   if (_lPDM == false)
     initTextures();
 
-  Level level;
-  if (level.getNbLvl() == 0)
+  if (_level.getNbLvl() == 0)
     throw arcade::Exception("No map found");
   while (_status != EXIT)
   {
     _nbpower = 0;
     _map->type = arcade::CommandType::GO_UP;
-    std::ifstream		file(lPDM ? SOLAR_RES "map/level_moul.map" : level.getNextLvl());
+    std::ifstream		file(lPDM ? SOLAR_RES "map/level_moul.map" : _level.getNextLvl());
     if (file)
       {
         content.clear();
@@ -149,7 +148,7 @@ arcade::CommandType  	LSolarFox::initGame(bool lPDM)
     if (val != arcade::CommandType::UNDEFINED)
       return (val);
 
-    if (level.getCurrentLvl() == level.getNbLvl() - 1)
+    if (_level.getCurrentLvl() == _level.getNbLvl() - 1)
       {
         if (_lPDM == false)
           gameWin();
@@ -293,7 +292,7 @@ void    LSolarFox::move()
 	}
     }
   for (std::vector<EnemyShip>::iterator it = _enemyShip.begin() ; it != _enemyShip.end() ; ++it)
-    it->move(_core, _enemyMissile, _lPDM);
+    it->move(_core, _enemyMissile, _level, _lPDM);
 }
 
 arcade::CommandType					LSolarFox::mainLoop(void)

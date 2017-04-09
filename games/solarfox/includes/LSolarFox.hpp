@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:08:10 2017 gastal_r
-** Last update	Sun Apr 09 00:18:34 2017 gastal_r
+** Last update	Sun Apr 09 04:51:00 2017 gastal_r
 */
 
 #ifndef         _Lsolarfox_HPP_
@@ -56,6 +56,7 @@ public:
   void				lPDM_start();
 
 private:
+  Level             _level;
   bool				      _lPDM;
   arcade::GetMap		*_map;
   Ship				      _ship;

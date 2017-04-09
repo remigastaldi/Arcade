@@ -14,6 +14,7 @@
 # include "ICore.hh"
 # include	"Object.hpp"
 # include	"EnemyMissile.hpp"
+# include "Level.hpp"
 
 class		EnemyShip : public Object
 {
@@ -23,7 +24,7 @@ public:
   ~EnemyShip();
 
   void	print(arcade::ICore *);
-  void	move(arcade::ICore *, std::vector<EnemyMissile> &, bool);
+  void	move(arcade::ICore *, std::vector<EnemyMissile> &, const Level &, bool);
 };
 
 #endif

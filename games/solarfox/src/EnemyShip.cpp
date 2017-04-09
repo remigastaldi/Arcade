@@ -38,7 +38,7 @@ void		EnemyShip::print(arcade::ICore *core)
     core->getLib()->aTile(_x + 1, _y + 1, _speed, arcade::TileType::EVIL_DUDE, _direction);
 }
 
-void		EnemyShip::move(arcade::ICore *core, std::vector<EnemyMissile> &enemyMissile, bool lPDM)
+void		EnemyShip::move(arcade::ICore *core, std::vector<EnemyMissile> &enemyMissile, const Level &level, bool lPDM)
 {
   if (checkAction(false))
     {
@@ -72,7 +72,7 @@ void		EnemyShip::move(arcade::ICore *core, std::vector<EnemyMissile> &enemyMissi
 	  break;
 	}
 
-      if (rand() % 5000 < 200 && lPDM == false)
+	if (rand() % (level.getNbLvl() * 70) <= (level.getCurrentLvl() + 1) * 10 && lPDM == false)
 	{
 	  if (_x == 1 && (_direction == arcade::CommandType::GO_UP || _direction == arcade::CommandType::GO_DOWN))
 	    enemyMissile.push_back(EnemyMissile(_x + 1, _y, arcade::CommandType::GO_RIGHT));

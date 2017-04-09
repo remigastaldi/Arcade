@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Apr 02 23:40:00 2017 gastal_r
-** Last update	Sat Apr 08 18:09:29 2017 gastal_r
+** Last update	Sun Apr 09 03:37:58 2017 gastal_r
 */
 
 #include    "AObj.hpp"
@@ -106,7 +106,7 @@ const AObj::Data &AObj::getObj(const std::string &name) const
       return (*it);
     }
   }
-  throw arcade::Exception(name, "1 doesn't exist");
+  throw arcade::Exception(name, " doesn't exist");
 }
 
 size_t            AObj::Data::getIndex(const std::string &name)   const
@@ -116,7 +116,7 @@ size_t            AObj::Data::getIndex(const std::string &name)   const
     if (it->first == name)
       return (it->second);
   }
-  throw arcade::Exception(name, "2 doesn't exist");
+  throw arcade::Exception(name, " doesn't exist");
 }
 
 void              AObj::Data::reset()

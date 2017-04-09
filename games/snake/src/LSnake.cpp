@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Sat Apr 08 17:37:44 2017 gastal_r
+** Last update	Sun Apr 09 13:46:55 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -30,11 +30,11 @@ arcade::CommandType				LSnake::play(arcade::ICore &core)
 
 void      LSnake::initTextures()
 {
-  _core->getLib()->aAssignTexture(arcade::TileType::EMPTY, SNAKE_RES "img/floor2.png", arcade::Color::A_WHITE);
-  _core->getLib()->aAssignTexture(arcade::TileType::OBSTACLE, SNAKE_RES "img/wall.png", arcade::Color::A_RED);
-  _core->getLib()->aAssignTexture(arcade::TileType::SHIP,"games/solarfox/res/img/ship.png", arcade::Color::A_GREEN);
-  _core->getLib()->aAssignTexture(arcade::TileType::OTHER, SNAKE_RES "img/wall3.png", arcade::Color::A_MAGENTA);
-  _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, SNAKE_RES "img/mooncat.jpg", arcade::Color::A_MAGENTA);
+  _core->getLib()->aAssignTexture(arcade::TileType::EMPTY, SNAKE_RES "img/green_darker.png", arcade::Color::A_WHITE);
+  _core->getLib()->aAssignTexture(arcade::TileType::OBSTACLE, SNAKE_RES "img/red.png", arcade::Color::A_RED);
+  _core->getLib()->aAssignTexture(arcade::TileType::SHIP, SNAKE_RES "img/blue_neon.png", arcade::Color::A_BLUE);
+  _core->getLib()->aAssignTexture(arcade::TileType::OTHER, SNAKE_RES "img/purple_neon.png", arcade::Color::A_MAGENTA);
+  _core->getLib()->aAssignTexture(arcade::TileType::POWERUP, SNAKE_RES "img/yellow_neon.png", arcade::Color::A_YELLOW);
 }
 
 void			LSnake::initGame(bool lPDM)
