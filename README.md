@@ -1,5 +1,5 @@
 # Epitech Arcade Project
-![Arcade Logo](logo.jpg)
+![Arcade Logo](logo.jpg =100x20)
 
 
  
