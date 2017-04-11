@@ -11,6 +11,7 @@ A documentation is provided if you want to create your game or gui with our core
 # Usage:
 
 ```bash
+make
 ./arcade lib/lib_of_your_choice
 ```
 
