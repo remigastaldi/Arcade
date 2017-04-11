@@ -15,7 +15,7 @@
 
 # Snake :
 <p align="center">
-  <img src="screenshots/snake_ncurses.png" width="49%"><img src="screenshots/snake_sfml.png" width="49%">
+  <img src="screenshots/snake_ncurses.png" width="49%"> <img src="screenshots/snake_sfml.png" width="49%"><br>
   <img src="screenshots/snake_opengl.png" width="50%">
 </p>
 
