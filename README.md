@@ -8,7 +8,7 @@ This platform include two games and is able to run with three different GUIs, nc
 Games and GUIs are dynamics loaded libraries.
 A documentation is provided if you want to create your game or gui with your core.
 
-## ScreenShots:
+## Screenshots:
 
 # Menu :
 
