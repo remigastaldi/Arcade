@@ -4,14 +4,13 @@
 </center>
 
 
- 
+
 ## Screens:
 
-![Arcade Screen](screen1.png)
-
-![Arcade Screen](screen2.png)
-
-![Arcade Screen](screen3.png)
+# Menu :
+<img src="screenshots/get_name.png" width="50%">
+<img src="screenshots/menu_sfml_opengl.png" width="50%">
+<img src="screenshots/menu_ncurses.png" width="50%">
 
 ## Creators:
 
