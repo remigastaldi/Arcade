@@ -8,22 +8,28 @@ This platform include two games and is able to run with three different GUIs, nc
 Games and GUIs are dynamics loaded libraries.<br>
 A documentation is provided if you want to create your game or gui with our core.
 
-## Screenshots:
+# Usage:
 
-# Menu :
+```bash
+./arcade lib/lib_of_your_choice
+```
+
+# Screenshots:
+
+## Menu :
 
 <p align="center">
   <img src="screenshots/get_name.png" width="49%"> <img src="screenshots/game_over.png" width="49%"><br>
   <img src="screenshots/menu_sfml_opengl.png" width="49%"> <img src="screenshots/menu_ncurses.png" width="49%">
 </p>
 
-# Snake :
+## Snake :
 <p align="center">
   <img src="screenshots/snake_ncurses.png" width="49%"> <img src="screenshots/snake_sfml.png" width="49%"><br>
   <img src="screenshots/snake_opengl.png" width="50%">
 </p>
 
-# SolarFox :
+## SolarFox :
 <p align="center">
   <img src="screenshots/solarfox_ncurses.png" width="49%"> <img src="screenshots/solarfox_sfml.png" width="49%"><br>
   <img src="screenshots/solarfox_opengl1.png" width="49%"> <img src="screenshots/solarfox_opengl2.png" width="49%">
