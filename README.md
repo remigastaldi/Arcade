@@ -7,11 +7,11 @@
 ## Screens:
 
 # Menu :
-<dl>
-  <img src="screenshots/get_name.png" width="50%">
-  <img src="screenshots/menu_sfml_opengl.png" width="50%">
-  <img src="screenshots/menu_ncurses.png" width="50%">
-</dl>
+
+  <img src="screenshots/get_name.png" width="50%" style="display: inline">
+  <img src="screenshots/menu_sfml_opengl.png" width="50%" style="display: inline">
+  <img src="screenshots/menu_ncurses.png" width="50%" style="display: inline">
+
 
 ## Creators:
 
