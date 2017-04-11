@@ -1,6 +1,7 @@
 # Epitech Arcade Project
-<img src="logo.jpg" width="70%">
-
+<p align="center">
+  <img src="logo.jpg" width="70%">
+</p>
 
 
 ## Screens:
