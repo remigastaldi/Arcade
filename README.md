@@ -9,7 +9,7 @@
 # Menu :
 
 <p align="center">
-  <img src="screenshots/get_name.png" width="49%"><img src="screenshots/game_over.png" width="49%">
+  <img src="screenshots/get_name.png" width="49%"> <img src="screenshots/game_over.png" width="49%"><br>
   <img src="screenshots/menu_sfml_opengl.png" width="49%"> <img src="screenshots/menu_ncurses.png" width="49%">
 </p>
 
