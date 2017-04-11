@@ -9,7 +9,7 @@
 # Menu :
 
 <p align="center">
-  <img src="screenshots/get_name.png" width="50%"><br>
+  <img src="screenshots/get_name.png" width="49%"><img src="screenshots/game_over.png" width="49%">
   <img src="screenshots/menu_sfml_opengl.png" width="49%"> <img src="screenshots/menu_ncurses.png" width="49%">
 </p>
 
@@ -17,6 +17,12 @@
 <p align="center">
   <img src="screenshots/snake_ncurses.png" width="49%"><img src="screenshots/snake_sfml.png" width="49%">
   <img src="screenshots/snake_opengl.png" width="50%">
+</p>
+
+# SolarFox :
+<p align="center">
+  <img src="screenshots/solarfox_ncurses.png" width="49%"><img src="screenshots/solarfox_sfml.png" width="49%">
+  <img src="screenshots/solarfox_opengl1.png" width="49%"><img src="screenshots/solarfox_opengl2.png" width="49%">
 </p>
 
 
