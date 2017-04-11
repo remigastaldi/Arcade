@@ -1,5 +1,5 @@
 # Epitech Arcade Project
-<img src="logo.jpg" width="48">
+<img src="logo.jpg" width="200">
 
 
  
