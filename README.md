@@ -8,7 +8,11 @@
 
 # Menu :
 
-<img src="screenshots/get_name.png" width="50%"><img src="screenshots/menu_sfml_opengl.png" width="50%"><img src="screenshots/menu_ncurses.png" width="50%">
+<p align="center">
+  <img src="screenshots/get_name.png" width="50%">
+</p>
+
+<img src="screenshots/menu_sfml_opengl.png" width="50%"><img src="screenshots/menu_ncurses.png" width="50%">
 
 
 ## Creators:
