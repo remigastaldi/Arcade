@@ -3,10 +3,10 @@
   <img src="logo.jpg" width="70%">
 </p>
 
-The goal of this project was to create an arcade gaming platform. 
+The goal of this project was to create an arcade gaming platform.<br>
 This platform include two games and is able to run with three different GUIs, ncurses, sfml and OpenGl.
-Games and GUIs are dynamics loaded libraries.
-A documentation is provided if you want to create your game or gui with your core.
+Games and GUIs are dynamics loaded libraries.<br>
+A documentation is provided if you want to create your game or gui with our core.
 
 ## Screenshots:
 
