@@ -21,8 +21,8 @@
 
 # SolarFox :
 <p align="center">
-  <img src="screenshots/solarfox_ncurses.png" width="49%"><img src="screenshots/solarfox_sfml.png" width="49%">
-  <img src="screenshots/solarfox_opengl1.png" width="49%"><img src="screenshots/solarfox_opengl2.png" width="49%">
+  <img src="screenshots/solarfox_ncurses.png" width="49%"> <img src="screenshots/solarfox_sfml.png" width="49%"><br>
+  <img src="screenshots/solarfox_opengl1.png" width="49%"> <img src="screenshots/solarfox_opengl2.png" width="49%">
 </p>
 
 
