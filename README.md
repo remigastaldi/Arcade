@@ -8,9 +8,9 @@
 
 # Menu :
 
-  <img src="screenshots/get_name.png" width="50%" style="display: inline">
-  <img src="screenshots/menu_sfml_opengl.png" width="50%" style="display: inline">
-  <img src="screenshots/menu_ncurses.png" width="50%" style="display: inline">
+<img src="screenshots/get_name.png" width="50%" style="display: inline">
+<img src="screenshots/menu_sfml_opengl.png" width="50%" style="display: inline">
+<img src="screenshots/menu_ncurses.png" width="50%" style="display: inline">
 
 
 ## Creators:
@@ -42,4 +42,4 @@
   "prenom":"Flavien",
   "email":"flavien.sellet@epitech.eu",
   "linkedin": "https://www.linkedin.com/in/flavien-sellet-32254b10a/"
-}
+}```
