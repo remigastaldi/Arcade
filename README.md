@@ -1,6 +1,6 @@
-![Arcade Logo](logo.jpg)
 # Epitech Arcade Project
-Arcade
+![Arcade Logo](logo.jpg)
+
 
  
 ## Screens:
