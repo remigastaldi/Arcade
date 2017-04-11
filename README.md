@@ -10,10 +10,8 @@
 
 <p align="center">
   <img src="screenshots/get_name.png" width="50%">
+  <img src="screenshots/menu_sfml_opengl.png" width="49%"> <img src="screenshots/menu_ncurses.png" width="49%">
 </p>
-
-<img src="screenshots/menu_sfml_opengl.png" width="45%"> <img src="screenshots/menu_ncurses.png" width="45%">
-
 
 ## Creators:
 
