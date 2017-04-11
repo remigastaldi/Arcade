@@ -1,5 +1,5 @@
 # Epitech Arcade Project
-![Arcade Logo](logo.jpg =100x20)
+<img src="https://github.com/favicon.ico" width="48">
 
 
  
