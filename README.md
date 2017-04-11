@@ -1,4 +1,4 @@
-![Arcade Logo](logo.png)
+![Arcade Logo](logo.jpg)
 # Epitech Arcade Project
 Arcade
 
