@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Thu Mar 09 18:43:53 2017 gastal_r
-** Last update	Sun Apr 09 22:56:25 2017 gastal_r
+** Last update	Thu Apr 13 16:29:43 2017 gastal_r
 */
 
 #include          "LSnake.hpp"
@@ -248,11 +248,13 @@ arcade::CommandType			LSnake::mainLoop()
 	    case arcade::CommandType::NEXT_LIB :
 	      _core->switchLib(arcade::CommandType::NEXT_LIB);
 	      initTextures();
+        _core->getLib()->aPlayMusic("core/res/sounds/menu_music.wav");
 	      _map->type = arcade::CommandType::UNDEFINED;
 	      break;
 	    case arcade::CommandType::PREV_LIB :
 	      _core->switchLib(arcade::CommandType::PREV_LIB);
 	      initTextures();
+        _core->getLib()->aPlayMusic("core/res/sounds/menu_music.wav");
 	      _map->type = arcade::CommandType::UNDEFINED;
 	      break;
 	    case arcade::CommandType::NEXT_GAME :

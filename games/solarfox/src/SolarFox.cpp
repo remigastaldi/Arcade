@@ -5,7 +5,7 @@
 ** Login	gastal_r
 **
 ** Started on	Sun Mar 26 04:07:46 2017 gastal_r
-** Last update	Sun Apr 09 23:11:06 2017 gastal_r
+** Last update	Thu Apr 13 16:28:55 2017 gastal_r
 */
 
 #include	        "LSolarFox.hpp"
@@ -323,11 +323,13 @@ arcade::CommandType					LSolarFox::mainLoop(void)
 	case arcade::CommandType::NEXT_LIB :
 	  _core->switchLib(arcade::CommandType::NEXT_LIB);
 	  initTextures();
+    _core->getLib()->aPlayMusic("core/res/sounds/menu_music.wav");
 	  _map->type = arcade::CommandType::UNDEFINED;
 	  break;
 	case arcade::CommandType::PREV_LIB :
 	  _core->switchLib(arcade::CommandType::PREV_LIB);
 	  initTextures();
+    _core->getLib()->aPlayMusic("core/res/sounds/menu_music.wav");
 	  _map->type = arcade::CommandType::UNDEFINED;
 	  break;
 	case arcade::CommandType::NEXT_GAME :
